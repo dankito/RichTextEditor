@@ -17,6 +17,7 @@ enum class Commands {
     H5,
     H6,
     BLOCKQUOTE,
+    REMOVEFORMAT,
     JUSTIFYCENTER,
     JUSTIFYFULL,
     JUSTIFYLEFT,
