@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="net.dankito.richtexteditor.android.demo.MainActivity">
@@ -10,7 +11,15 @@
     <net.dankito.richtexteditor.android.RichTextEditor
         android:id="@+id/editor"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10"
         />
 
-</android.support.constraint.ConstraintLayout>
+    <net.dankito.richtexteditor.android.toolbar.DefaultEditorToolbar
+        android:id="@+id/editorToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="@color/colorPrimary"
+        />
+
+</LinearLayout>
