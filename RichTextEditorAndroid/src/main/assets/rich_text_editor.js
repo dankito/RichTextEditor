@@ -3,9 +3,19 @@ var editor = {
 
     textField: document.getElementById('editor'),
 
+    currentSelection: {
+        "startContainer": 0,
+        "startOffset": 0,
+        "endContainer": 0,
+        "endOffset": 0
+    },
+
 
     init: function() {
         this.textField.addEventListener("input", this.textChangedCallback);
+
+        document.addEventListener("selectionchange", function() { editor._backupRange(); });
+
         this.textField.addEventListener("click", this.updateCommandStates);
         this.textField.addEventListener("keyup", function(e) {
             var KEY_LEFT = 37, KEY_RIGHT = 39;
@@ -85,8 +95,28 @@ var editor = {
         this._executeCommand('underline', null);
     },
 
+    setTextColor: function(color) {
+        this._executeStyleCommand('foreColor', color);
+    },
+
+    setTextBackgroundColor: function(color) {
+        this._executeStyleCommand('hiliteColor', color);
+    },
+
+    setFontSize: function(fontSize) {
+        this._executeCommand("fontSize", fontSize);
+    },
+
+    setHeading: function(heading) {
+        this._executeCommand('formatBlock', '<h'+heading+'>');
+    },
+
     setBlockQuote: function() {
         this._executeCommand('formatBlock', '<blockquote>');
+    },
+
+    removeFormat: function() {
+        this._executeCommand('removeFormat', null);
     },
     
     setJustifyLeft: function() {
@@ -119,6 +149,15 @@ var editor = {
 
     insertNumberedList: function() {
         this._executeCommand('insertOrderedList', null);
+    },
+
+    _executeStyleCommand: function(command, parameter) {
+        this._backupRange();
+        this._restoreRange();
+
+        this._executeCommand("styleWithCSS", null, true);
+        this._executeCommand(command, parameter);
+        this._executeCommand("styleWithCSS", null, false);
     },
     
     _executeCommand: function(command, parameter) {
@@ -188,6 +227,32 @@ var editor = {
         }
 
         window.location.href = "command-states-changed-callback://" + encodeURI(items.join(','));
+    },
+
+
+    _backupRange: function(){
+        var selection = window.getSelection();
+        if(selection.rangeCount > 0) {
+          var range = selection.getRangeAt(0);
+
+          this.currentSelection = {
+              "startContainer": range.startContainer,
+              "startOffset": range.startOffset,
+              "endContainer": range.endContainer,
+              "endOffset": range.endOffset
+              };
+        }
+    },
+
+    _restoreRange: function(){
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+
+        var range = document.createRange();
+        range.setStart(this.currentSelection.startContainer, this.currentSelection.startOffset);
+        range.setEnd(this.currentSelection.endContainer, this.currentSelection.endOffset);
+
+        selection.addRange(range);
     },
 
 }

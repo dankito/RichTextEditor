@@ -110,8 +110,33 @@ class RichTextEditor : WebView {
         executeJavaScript("setStrikeThrough()")
     }
 
+    fun setTextColor(color: Int) {
+        val hex = convertHexColorString(color)
+        executeJavaScript("setTextColor('$hex')")
+    }
+
+    fun setTextBackgroundColor(color: Int) {
+        val hex = convertHexColorString(color)
+        executeJavaScript("setTextBackgroundColor('$hex')")
+    }
+
+    fun setFontSize(fontSize: Int) {
+        if (fontSize < 1 || fontSize > 7) {
+            log.warn("Font size should have a value between 1-7")
+        }
+        executeJavaScript("setFontSize('$fontSize')")
+    }
+
+    fun setHeading(heading: Int) {
+        executeJavaScript("setHeading('$heading')")
+    }
+
     fun setBlockQuote() {
         executeJavaScript("setBlockQuote()")
+    }
+
+    fun removeFormat() {
+        executeJavaScript("removeFormat()")
     }
 
     fun setJustifyLeft() {
@@ -144,6 +169,10 @@ class RichTextEditor : WebView {
 
     fun insertNumberedList() {
         executeJavaScript("insertNumberedList()")
+    }
+
+    private fun convertHexColorString(color: Int): String {
+        return String.format("#%06X", 0xFFFFFF and color)
     }
 
 
