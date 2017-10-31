@@ -61,7 +61,7 @@ var editor = {
     },
     
     
-    /*      Text Editor Commands        */
+    /*      Text Commands        */
 
     undo: function() {
         this._executeCommand('undo', null);
@@ -149,6 +149,61 @@ var editor = {
 
     insertNumberedList: function() {
         this._executeCommand('insertOrderedList', null);
+    },
+    
+    
+    /*      Editor default settings     */
+    
+    setBaseTextColor: function(color) {
+        this.textField.style.color  = color;
+    },
+
+    setBaseFontFamily: function(fontFamily) {
+        this.textField.style.fontFamily = fontFamily;
+    },
+    
+    setBaseFontSize: function(size) {
+        this.textField.style.fontSize = size;
+    },
+    
+    setPadding: function(left, top, right, bottom) {
+      this.textField.style.paddingLeft = left;
+      this.textField.style.paddingTop = top;
+      this.textField.style.paddingRight = right;
+      this.textField.style.paddingBottom = bottom;
+    },
+
+    // TODO: is this one ever user?
+    setBackgroundColor: function(color) {
+        document.body.style.backgroundColor = color;
+    },
+    
+    setBackgroundImage: function(image) {
+        this.textField.style.backgroundImage = image;
+    },
+    
+    setWidth: function(size) {
+        this.textField.style.minWidth = size;
+    },
+    
+    setHeight: function(size) {
+        this.textField.style.height = size;
+    },
+    
+    setTextAlign: function(align) {
+        this.textField.style.textAlign = align;
+    },
+    
+    setVerticalAlign: function(align) {
+        this.textField.style.verticalAlign = align;
+    },
+    
+    setPlaceholder: function(placeholder) {
+        this.textField.setAttribute("placeholder", placeholder);
+    },
+    
+    setInputEnabled: function(inputEnabled) {
+        this.textField.contentEditable = String(inputEnabled);
     },
 
     _executeStyleCommand: function(command, parameter) {

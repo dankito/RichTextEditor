@@ -8,6 +8,8 @@ import android.os.Build
 import android.os.Looper
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.view.Gravity
+import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -35,10 +37,10 @@ class RichTextEditor : WebView {
     }
 
 
-    constructor(context: Context?) : super(context) { initEditor(context) }
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) { initEditor(context) }
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initEditor(context) }
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { initEditor(context) }
+    constructor(context: Context) : super(context) { initEditor(context, null) }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initEditor(context, attrs) }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initEditor(context, attrs) }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { initEditor(context, attrs) }
 
 
     private var html: String = ""
@@ -53,7 +55,9 @@ class RichTextEditor : WebView {
 
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun initEditor(context: Context?) {
+    private fun initEditor(context: Context, attributes: AttributeSet?) {
+        attributes?.let { applyAttributes(context, it) }
+
         isVerticalScrollBarEnabled = false
         isHorizontalScrollBarEnabled = false
         settings.javaScriptEnabled = true
@@ -64,10 +68,31 @@ class RichTextEditor : WebView {
         loadUrl(EditorHtmlPath)
     }
 
+    private fun applyAttributes(context: Context, attrs: AttributeSet) {
+        val attrsArray = intArrayOf(android.R.attr.gravity)
+        val ta = context.obtainStyledAttributes(attrs, attrsArray)
+
+        val gravity = ta.getInt(0, View.NO_ID)
+        when (gravity) {
+            Gravity.LEFT -> executeEditorJavaScriptFunction("setTextAlign(\"left\")")
+            Gravity.RIGHT -> executeEditorJavaScriptFunction("setTextAlign(\"right\")")
+            Gravity.TOP -> executeEditorJavaScriptFunction("setVerticalAlign(\"top\")")
+            Gravity.BOTTOM -> executeEditorJavaScriptFunction("setVerticalAlign(\"bottom\")")
+            Gravity.CENTER_VERTICAL -> executeEditorJavaScriptFunction("setVerticalAlign(\"middle\")")
+            Gravity.CENTER_HORIZONTAL -> executeEditorJavaScriptFunction("setTextAlign(\"center\")")
+            Gravity.CENTER -> {
+                executeEditorJavaScriptFunction("setVerticalAlign(\"middle\")")
+                executeEditorJavaScriptFunction("setTextAlign(\"center\")")
+            }
+        }
+
+        ta.recycle()
+    }
+
 
     fun setHtml(html: String) {
         try {
-            executeJavaScript("setHtml('" + URLEncoder.encode(html, "UTF-8") + "');")
+            executeEditorJavaScriptFunction("setHtml('" + URLEncoder.encode(html, "UTF-8") + "');")
 
             this.html = html
         } catch (e: UnsupportedEncodingException) {
@@ -76,105 +101,199 @@ class RichTextEditor : WebView {
     }
 
 
-    /*      Commands        */
+    /*      Text Commands        */
 
     fun undo() {
-        executeJavaScript("undo()")
+        executeEditorJavaScriptFunction("undo()")
     }
 
     fun redo() {
-        executeJavaScript("redo()")
+        executeEditorJavaScriptFunction("redo()")
     }
 
     fun setBold() {
-        executeJavaScript("setBold()")
+        executeEditorJavaScriptFunction("setBold()")
     }
 
     fun setItalic() {
-        executeJavaScript("setItalic()")
+        executeEditorJavaScriptFunction("setItalic()")
     }
 
     fun setUnderline() {
-        executeJavaScript("setUnderline()")
+        executeEditorJavaScriptFunction("setUnderline()")
     }
 
     fun setSubscript() {
-        executeJavaScript("setSubscript()")
+        executeEditorJavaScriptFunction("setSubscript()")
     }
 
     fun setSuperscript() {
-        executeJavaScript("setSuperscript()")
+        executeEditorJavaScriptFunction("setSuperscript()")
     }
 
     fun setStrikeThrough() {
-        executeJavaScript("setStrikeThrough()")
+        executeEditorJavaScriptFunction("setStrikeThrough()")
     }
 
     fun setTextColor(color: Int) {
         val hex = convertHexColorString(color)
-        executeJavaScript("setTextColor('$hex')")
+        executeEditorJavaScriptFunction("setTextColor('$hex')")
     }
 
     fun setTextBackgroundColor(color: Int) {
         val hex = convertHexColorString(color)
-        executeJavaScript("setTextBackgroundColor('$hex')")
+        executeEditorJavaScriptFunction("setTextBackgroundColor('$hex')")
     }
 
     fun setFontSize(fontSize: Int) {
         if (fontSize < 1 || fontSize > 7) {
             log.warn("Font size should have a value between 1-7")
         }
-        executeJavaScript("setFontSize('$fontSize')")
+        executeEditorJavaScriptFunction("setFontSize('$fontSize')")
     }
 
     fun setHeading(heading: Int) {
-        executeJavaScript("setHeading('$heading')")
+        executeEditorJavaScriptFunction("setHeading('$heading')")
     }
 
     fun setBlockQuote() {
-        executeJavaScript("setBlockQuote()")
+        executeEditorJavaScriptFunction("setBlockQuote()")
     }
 
     fun removeFormat() {
-        executeJavaScript("removeFormat()")
+        executeEditorJavaScriptFunction("removeFormat()")
     }
 
     fun setJustifyLeft() {
-        executeJavaScript("setJustifyLeft()")
+        executeEditorJavaScriptFunction("setJustifyLeft()")
     }
 
     fun setJustifyCenter() {
-        executeJavaScript("setJustifyCenter()")
+        executeEditorJavaScriptFunction("setJustifyCenter()")
     }
 
     fun setJustifyRight() {
-        executeJavaScript("setJustifyRight()")
+        executeEditorJavaScriptFunction("setJustifyRight()")
     }
 
     fun setJustifyFull() {
-        executeJavaScript("setJustifyFull()")
+        executeEditorJavaScriptFunction("setJustifyFull()")
     }
 
     fun setIndent() {
-        executeJavaScript("setIndent()")
+        executeEditorJavaScriptFunction("setIndent()")
     }
 
     fun setOutdent() {
-        executeJavaScript("setOutdent()")
+        executeEditorJavaScriptFunction("setOutdent()")
     }
 
     fun insertBulletList() {
-        executeJavaScript("insertBulletList()")
+        executeEditorJavaScriptFunction("insertBulletList()")
     }
 
     fun insertNumberedList() {
-        executeJavaScript("insertNumberedList()")
+        executeEditorJavaScriptFunction("insertNumberedList()")
+    }
+
+
+    /*      Editor base settings        */
+
+    fun setEditorFontColor(color: Int) {
+        val hex = convertHexColorString(color)
+        executeEditorJavaScriptFunction("setBaseTextColor('$hex');")
+    }
+
+    fun setEditorFontFamily(fontFamily: String) {
+        executeEditorJavaScriptFunction("setBaseFontFamily('$fontFamily');")
+    }
+
+    fun setEditorFontSize(px: Int) {
+        executeEditorJavaScriptFunction("setBaseFontSize('${px}px');")
+    }
+
+    fun setPadding(padding: Int) {
+        setPadding(padding, padding, padding, padding)
+    }
+
+    override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
+        super.setPadding(left, top, right, bottom)
+        executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
+    }
+
+    override fun setPaddingRelative(start: Int, top: Int, end: Int, bottom: Int) {
+        // still not support RTL.
+        setPadding(start, top, end, bottom)
+    }
+
+    fun setEditorBackgroundColor(color: Int) {
+        setBackgroundColor(color)
+    }
+
+    override fun setBackgroundColor(color: Int) {
+        super.setBackgroundColor(color)
+    }
+
+//    override fun setBackgroundResource(resid: Int) {
+//        val bitmap = Utils.decodeResource(context, resid)
+//        val base64 = Utils.toBase64(bitmap)
+//        bitmap.recycle()
+//
+//        executeEditorJavaScriptFunction("setBackgroundImage('url(data:image/png;base64,$base64)');")
+//    }
+//
+//    override fun setBackground(background: Drawable) {
+//        val bitmap = Utils.toBitmap(background)
+//        val base64 = Utils.toBase64(bitmap)
+//        bitmap.recycle()
+//
+//        executeEditorJavaScriptFunction("setBackgroundImage('url(data:image/png;base64,$base64)');")
+//    }
+
+    fun setBackground(url: String) {
+        executeEditorJavaScriptFunction("setBackgroundImage('url($url)');")
+    }
+
+    fun setEditorWidth(px: Int) {
+        executeEditorJavaScriptFunction("setWidth('" + px + "px');")
+    }
+
+    fun setEditorHeight(px: Int) {
+        executeEditorJavaScriptFunction("setHeight('" + px + "px');")
+    }
+
+    /**
+     * Does actually not work for me
+     */
+    fun setPlaceholder(placeholder: String) {
+        executeEditorJavaScriptFunction("setPlaceholder('$placeholder');")
+    }
+
+    fun setInputEnabled(inputEnabled: Boolean) {
+        executeEditorJavaScriptFunction("setInputEnabled($inputEnabled)")
+    }
+
+    fun loadCSS(cssFile: String) {
+        val jsCSSImport = "(function() {" +
+                "    var head  = document.getElementsByTagName(\"head\")[0];" +
+                "    var link  = document.createElement(\"link\");" +
+                "    link.rel  = \"stylesheet\";" +
+                "    link.type = \"text/css\";" +
+                "    link.href = \"" + cssFile + "\";" +
+                "    link.media = \"all\";" +
+                "    head.appendChild(link);" +
+                "}) ();"
+        executeJavaScript(jsCSSImport)
     }
 
     private fun convertHexColorString(color: Int): String {
         return String.format("#%06X", 0xFFFFFF and color)
     }
 
+
+    private fun executeEditorJavaScriptFunction(javaScript: String) {
+        executeJavaScript("editor." + javaScript)
+    }
 
     private fun executeJavaScript(javaScript: String) {
         addLoadedListener {
@@ -195,14 +314,12 @@ class RichTextEditor : WebView {
     }
 
     private fun executeScriptOnUiThread(javaScript: String) {
-        val statement = "editor." + javaScript
-
         try {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                executeScriptOnUiThreadForAndroid19AndAbove(statement)
+                executeScriptOnUiThreadForAndroid19AndAbove(javaScript)
             }
             else {
-                executeScriptOnUiThreadForAndroidPre19(statement)
+                executeScriptOnUiThreadForAndroidPre19(javaScript)
             }
         } catch (ex: Exception) {
             log.error("Could not evaluate JavaScript " + javaScript, ex)
