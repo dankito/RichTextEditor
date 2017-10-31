@@ -250,6 +250,21 @@ var editor = {
         this.textField.contentEditable = String(inputEnabled);
     },
 
+    focus: function() {
+        var range = document.createRange();
+        range.selectNodeContents(this.textField);
+        range.collapse(false);
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        this.textField.focus();
+    },
+
+    blurFocus: function() {
+        this.textField.blur();
+    },
+
+
     _executeStyleCommand: function(command, parameter) {
         this._backupRange();
         this._restoreRange();

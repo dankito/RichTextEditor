@@ -318,6 +318,16 @@ class RichTextEditor : WebView {
         executeJavaScript(jsCSSImport)
     }
 
+    fun focusEditor() {
+        requestFocus()
+        executeEditorJavaScriptFunction("focus()")
+    }
+
+    fun clearFocusEditor() {
+        executeEditorJavaScriptFunction("blurFocus()")
+        clearFocus()
+    }
+
     private fun convertHexColorString(color: Int): String {
         return String.format("#%06X", 0xFFFFFF and color)
     }
