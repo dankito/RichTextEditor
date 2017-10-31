@@ -1,0 +1,36 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+
+android {
+    compileSdkVersion CompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion MinSdkVersion
+        targetSdkVersion TargetSdkVersion
+        versionCode AppVersionCode
+        versionName AppVersionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    implementation "com.android.support:appcompat-v7:$AppCompatVersion"
+
+    testImplementation "junit:junit:$JUnitVersion"
+
+    androidTestImplementation "com.android.support.test:runner:$AndroidTestRunnerVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$EspressoVersion"
+}
