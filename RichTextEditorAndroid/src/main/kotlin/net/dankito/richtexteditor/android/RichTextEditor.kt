@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Looper
 import android.text.TextUtils
@@ -234,21 +236,22 @@ class RichTextEditor : WebView {
         super.setBackgroundColor(color)
     }
 
-//    override fun setBackgroundResource(resid: Int) {
-//        val bitmap = Utils.decodeResource(context, resid)
-//        val base64 = Utils.toBase64(bitmap)
-//        bitmap.recycle()
-//
-//        executeEditorJavaScriptFunction("setBackgroundImage('url(data:image/png;base64,$base64)');")
-//    }
-//
-//    override fun setBackground(background: Drawable) {
-//        val bitmap = Utils.toBitmap(background)
-//        val base64 = Utils.toBase64(bitmap)
-//        bitmap.recycle()
-//
-//        executeEditorJavaScriptFunction("setBackgroundImage('url(data:image/png;base64,$base64)');")
-//    }
+    override fun setBackgroundResource(resid: Int) {
+        val bitmap = Utils.decodeResource(context, resid)
+        setBackground(bitmap)
+    }
+
+    override fun setBackground(background: Drawable) {
+        val bitmap = Utils.toBitmap(background)
+        setBackground(bitmap)
+    }
+
+    private fun setBackground(bitmap: Bitmap) {
+        val base64 = Utils.toBase64(bitmap)
+        bitmap.recycle()
+
+        executeEditorJavaScriptFunction("setBackgroundImage('url(data:image/png;base64,$base64)');")
+    }
 
     fun setBackground(url: String) {
         executeEditorJavaScriptFunction("setBackgroundImage('url($url)');")
