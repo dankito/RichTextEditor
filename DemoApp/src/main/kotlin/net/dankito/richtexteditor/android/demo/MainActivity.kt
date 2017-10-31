@@ -1,4 +1,4 @@
-package net.dankito.richtexteditor.android
+package net.dankito.richtexteditor.android.demo
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
