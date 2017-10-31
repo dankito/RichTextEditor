@@ -147,6 +147,10 @@ class RichTextEditor : WebView {
         executeEditorJavaScriptFunction("setTextBackgroundColor('$hex')")
     }
 
+    fun setFontName(fontName: String) {
+        executeEditorJavaScriptFunction("setFontName('$fontName')")
+    }
+
     fun setFontSize(fontSize: Int) {
         if (fontSize < 1 || fontSize > 7) {
             log.warn("Font size should have a value between 1-7")

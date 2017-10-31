@@ -103,6 +103,10 @@ var editor = {
         this._executeStyleCommand('hiliteColor', color);
     },
 
+    setFontName: function(fontName) {
+        this._executeCommand("fontName", fontName);
+    },
+
     setFontSize: function(fontSize) {
         this._executeCommand("fontSize", fontSize);
     },
