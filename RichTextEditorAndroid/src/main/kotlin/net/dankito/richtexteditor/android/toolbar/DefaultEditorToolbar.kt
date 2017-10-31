@@ -25,8 +25,10 @@ class DefaultEditorToolbar : EditorToolbar {
         addCommand(UndoCommand())
         addCommand(RedoCommand())
 
-        addCommand(IncreaseIndentCommand())
+        addCommand(RemoveFormatCommand())
+
         addCommand(DecreaseIndentCommand())
+        addCommand(IncreaseIndentCommand())
 
         addCommand(AlignLeftCommand())
         addCommand(AlignCenterCommand())
