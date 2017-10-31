@@ -12,10 +12,13 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import net.dankito.richtexteditor.android.command.Commands
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.net.URLEncoder
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
 
@@ -25,6 +28,8 @@ class RichTextEditor : WebView {
         private const val EditorHtmlPath = "file:///android_asset/editor.html"
 
         private const val TextChangedCallbackScheme = "text-changed-callback://"
+
+        private const val CommandStatesChangedCallbackScheme = "command-states-changed-callback://"
 
         private val log = LoggerFactory.getLogger(RichTextEditor::class.java)
     }
@@ -41,6 +46,10 @@ class RichTextEditor : WebView {
     private var isLoaded = false
 
     private val loadedListeners = mutableSetOf<() -> Unit>()
+
+    private var enabledCommands: List<Commands> = ArrayList()
+
+    private val commandStatesUpdatedListeners = mutableSetOf<(enabledCommands: List<Commands>) -> Unit>()
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -101,8 +110,8 @@ class RichTextEditor : WebView {
         executeJavaScript("setStrikeThrough()")
     }
 
-    fun setBlockquote() {
-        executeJavaScript("setBlockquote()")
+    fun setBlockQuote() {
+        executeJavaScript("setBlockQuote()")
     }
 
     fun setJustifyLeft() {
@@ -214,17 +223,20 @@ class RichTextEditor : WebView {
     }
 
     private fun shouldOverrideUrlLoading(url: String): Boolean {
-        val decode: String
+        val decodedUrl: String
         try {
-            decode = URLDecoder.decode(url, "UTF-8")
+            decodedUrl = URLDecoder.decode(url, "UTF-8")
         } catch (e: UnsupportedEncodingException) {
             // No handling
             return false
         }
 
-
-        if (TextUtils.indexOf(url, TextChangedCallbackScheme) == 0) {
-            textChanged(decode.substring(TextChangedCallbackScheme.length))
+        if(TextUtils.indexOf(url, TextChangedCallbackScheme) == 0) {
+            textChanged(decodedUrl.substring(TextChangedCallbackScheme.length))
+            return true
+        }
+        else if(TextUtils.indexOf(url, CommandStatesChangedCallbackScheme) == 0) {
+            commandStatesChanged(decodedUrl.substring(CommandStatesChangedCallbackScheme.length))
             return true
         }
 
@@ -234,6 +246,26 @@ class RichTextEditor : WebView {
     private fun textChanged(html: String) {
         this.html = html
         log.info("Text changed to $html")
+    }
+
+    private fun commandStatesChanged(commandStates: String) {
+        val states = commandStates.toUpperCase(Locale.ENGLISH)
+        val enabledCommands = ArrayList<Commands>()
+
+        Commands.values().forEach { command ->
+            if(TextUtils.indexOf(states, command.name) != -1) {
+                enabledCommands.add(command)
+            }
+        }
+
+        this.enabledCommands = enabledCommands
+        commandStatesUpdatedListeners.forEach { it.invoke(enabledCommands) }
+    }
+
+    fun addCommandStatesUpdatedListener(listener: (enabledCommands: List<Commands>) -> Unit) {
+        commandStatesUpdatedListeners.add(listener)
+
+        listener.invoke(this.enabledCommands)
     }
 
 
