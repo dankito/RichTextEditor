@@ -67,6 +67,12 @@ class RichTextEditor : WebView {
         webChromeClient = WebChromeClient()
         webViewClient = editorWebViewClient
 
+        settings.domStorageEnabled = true // otherwise images won't load
+        settings.loadsImagesAutomatically = true
+        settings.setSupportZoom(true)
+        settings.builtInZoomControls = true
+        settings.displayZoomControls = false
+
         loadUrl(EditorHtmlPath)
     }
 
@@ -200,6 +206,25 @@ class RichTextEditor : WebView {
 
     fun insertNumberedList() {
         executeEditorJavaScriptFunction("insertNumberedList()")
+    }
+
+
+    /*      Insert element              */
+
+    fun insertLink(url: String, title: String) {
+        executeEditorJavaScriptFunction("insertLink('$url', '$title')")
+    }
+
+    fun insertImage(url: String, alt: String) {
+        executeEditorJavaScriptFunction("insertImage('$url', '$alt')")
+    }
+
+    fun insertCheckbox(text: String) {
+        executeEditorJavaScriptFunction("insertCheckbox('$text')")
+    }
+
+    fun insertHtml(html: String) {
+        executeEditorJavaScriptFunction("insertHtml('$html')")
     }
 
 
@@ -398,7 +423,6 @@ class RichTextEditor : WebView {
 
     private fun textChanged(html: String) {
         this.html = html
-        log.info("Text changed to $html")
     }
 
     private fun commandStatesChanged(commandStates: String) {

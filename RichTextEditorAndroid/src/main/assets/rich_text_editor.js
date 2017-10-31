@@ -154,6 +154,46 @@ var editor = {
     insertNumberedList: function() {
         this._executeCommand('insertOrderedList', null);
     },
+
+
+    /*      Insert elements             */
+
+    insertLink: function(url, title) {
+        this._restoreRange();
+        var sel = document.getSelection();
+
+        if (sel.toString().length == 0) {
+            this.insertHtml("<a href='"+url+"'>"+title+"</a>");
+        }
+        else if (sel.rangeCount) {
+           var el = document.createElement("a");
+           el.setAttribute("href", url);
+           el.setAttribute("title", title);
+
+           var range = sel.getRangeAt(0).cloneRange();
+           range.surroundContents(el);
+           sel.removeAllRanges();
+           sel.addRange(range);
+       }
+
+       this.textChangedCallback();
+    },
+
+    insertImage: function(url, alt) {
+        var html = '<img src="' + url + '" alt="' + alt + '" />';
+        this.insertHtml(html);
+    },
+
+    insertCheckbox: function(text) {
+        var html = '<input type="checkbox" name="'+ text +'" value="'+ text +'"/> &nbsp;';
+        this.insertHtml(html);
+    },
+
+    insertHtml: function(html) {
+        this._backupRange();
+        this._restoreRange();
+        document.execCommand('insertHTML', false, html);
+    },
     
     
     /*      Editor default settings     */
