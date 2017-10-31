@@ -32,6 +32,8 @@ android {
 dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
+    implementation "org.slf4j:slf4j-api:$Slf4jVersion"
+
     implementation "com.android.support:appcompat-v7:$AppCompatVersion"
 
     testImplementation "junit:junit:$JUnitVersion"

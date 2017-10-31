@@ -34,6 +34,8 @@ dependencies {
 
     implementation project(':RichTextEditorAndroid')
 
+    implementation "org.slf4j:slf4j-android:$Slf4jVersion"
+
     implementation "com.android.support:appcompat-v7:$AppCompatVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
