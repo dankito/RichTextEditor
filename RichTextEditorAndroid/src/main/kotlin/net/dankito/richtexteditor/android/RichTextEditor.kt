@@ -64,7 +64,77 @@ class RichTextEditor : WebView {
         } catch (e: UnsupportedEncodingException) {
             // No handling
         }
+    }
 
+
+    /*      Commands        */
+
+    fun undo() {
+        executeJavaScript("undo()")
+    }
+
+    fun redo() {
+        executeJavaScript("redo()")
+    }
+
+    fun setBold() {
+        executeJavaScript("setBold()")
+    }
+
+    fun setItalic() {
+        executeJavaScript("setItalic()")
+    }
+
+    fun setUnderline() {
+        executeJavaScript("setUnderline()")
+    }
+
+    fun setSubscript() {
+        executeJavaScript("setSubscript()")
+    }
+
+    fun setSuperscript() {
+        executeJavaScript("setSuperscript()")
+    }
+
+    fun setStrikeThrough() {
+        executeJavaScript("setStrikeThrough()")
+    }
+
+    fun setBlockquote() {
+        executeJavaScript("setBlockquote()")
+    }
+
+    fun setJustifyLeft() {
+        executeJavaScript("setJustifyLeft()")
+    }
+
+    fun setJustifyCenter() {
+        executeJavaScript("setJustifyCenter()")
+    }
+
+    fun setJustifyRight() {
+        executeJavaScript("setJustifyRight()")
+    }
+
+    fun setJustifyFull() {
+        executeJavaScript("setJustifyFull()")
+    }
+
+    fun setIndent() {
+        executeJavaScript("setIndent()")
+    }
+
+    fun setOutdent() {
+        executeJavaScript("setOutdent()")
+    }
+
+    fun insertBulletList() {
+        executeJavaScript("insertBulletList()")
+    }
+
+    fun insertNumberedList() {
+        executeJavaScript("insertNumberedList()")
     }
 
 
