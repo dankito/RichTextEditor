@@ -1,6 +1,7 @@
 <manifest package="net.dankito.richtexteditor.android"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Only needed to display images with an external url -->
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
