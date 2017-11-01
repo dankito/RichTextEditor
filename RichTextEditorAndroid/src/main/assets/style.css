@@ -40,4 +40,10 @@ body {
 #editor[placeholder]:empty:not(:focus):before {
   content: attr(placeholder);
   opacity: .5;
-}}
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 8px;
+    -webkit-margin-before: 0em;
+}
