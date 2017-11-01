@@ -17,6 +17,16 @@ var editor = {
         document.addEventListener("selectionchange", function() { editor._backupRange(); });
 
         this.textField.addEventListener("click", this.updateCommandStates);
+        this.textField.addEventListener("keydown", function(e) {
+            var BACKSPACE = 8;
+            if(e.which == BACKSPACE) {
+                if(editor.textField.innerText.length == 1) { // prevent that first paragraph gets deleted
+                    e.preventDefault();
+
+                    return false;
+                }
+            }
+        });
         this.textField.addEventListener("keyup", function(e) {
             var KEY_LEFT = 37, KEY_RIGHT = 39;
             if (e.which == KEY_LEFT || e.which == KEY_RIGHT) {
