@@ -5,7 +5,7 @@ import android.view.ViewGroup
 
 
 data class ToolbarCommandStyle(
-        val backgroundColorResourceId: Int = android.R.color.transparent,
+        val backgroundColor: Int = Color.TRANSPARENT,
         val widthDp: Int = DefaultWidthDp,
         val heightDp: Int = ViewGroup.LayoutParams.MATCH_PARENT,
         val marginRightDp: Int = DefaultMarginRightDp,

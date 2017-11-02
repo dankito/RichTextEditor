@@ -49,12 +49,7 @@ open class EditorToolbar : HorizontalScrollView {
         button.setImageResource(command.iconResourceId)
         button.scaleType = ImageView.ScaleType.FIT_CENTER
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            button.setBackgroundColor(context.getColor(command.style.backgroundColorResourceId))
-        }
-        else {
-            button.setBackgroundColor(context.resources.getColor(command.style.backgroundColorResourceId))
-        }
+        button.setBackgroundColor(command.style.backgroundColor)
 
         val displayDensity = context.resources.displayMetrics.density
 

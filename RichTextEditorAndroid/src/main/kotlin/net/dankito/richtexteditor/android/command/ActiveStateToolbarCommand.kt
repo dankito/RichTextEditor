@@ -15,7 +15,7 @@ abstract class ActiveStateToolbarCommand(command: Commands, iconResourceId: Int,
             commandView.setBackgroundColor(style.isActivatedColor)
         }
         else {
-            commandView.setBackgroundResource(style.backgroundColorResourceId)
+            commandView.setBackgroundColor(style.backgroundColor)
         }
     }
 
