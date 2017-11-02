@@ -43,27 +43,31 @@ open class EditorToolbar : HorizontalScrollView {
 
 
     fun addCommand(command: Command) {
-        val button = ImageButton(context)
-        button.setOnClickListener { command.commandInvoked() }
+        val commandView = ImageButton(context)
+        commandView.setOnClickListener { command.commandInvoked() }
 
-        button.setImageResource(command.iconResourceId)
-        button.scaleType = ImageView.ScaleType.FIT_CENTER
+        linearLayout.addView(commandView)
 
-        button.setBackgroundColor(command.style.backgroundColor)
+        commands.put(command, commandView)
+
+        command.editor = editor
+        command.commandView = commandView
+
+        applyCommandStyle(command, commandView)
+    }
+
+    private fun applyCommandStyle(command: Command, commandView: ImageButton) {
+        commandView.setImageResource(command.iconResourceId)
+        commandView.scaleType = ImageView.ScaleType.FIT_CENTER
+
+        commandView.setBackgroundColor(command.style.backgroundColor)
 
         val displayDensity = context.resources.displayMetrics.density
 
         val padding = getPixelSizeForDisplay(command.style.paddingDp, displayDensity)
-        button.setPadding(padding, padding, padding, padding)
+        commandView.setPadding(padding, padding, padding, padding)
 
-        linearLayout.addView(button)
-
-        commands.put(command, button)
-
-        command.editor = editor
-        command.commandView = button
-
-        val layoutParams = button.layoutParams as LinearLayout.LayoutParams
+        val layoutParams = commandView.layoutParams as LinearLayout.LayoutParams
 
         if(command.style.widthDp >= 0) {
             layoutParams.width = getPixelSizeForDisplay(command.style.widthDp, displayDensity)
