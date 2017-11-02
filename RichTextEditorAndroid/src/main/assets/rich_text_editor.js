@@ -87,6 +87,10 @@ var editor = {
     setItalic: function() {
         this._executeCommand('italic', null);
     },
+
+    setUnderline: function() {
+        this._executeCommand('underline', null);
+    },
     
     setSubscript: function() {
         this._executeCommand('subscript', null);
@@ -98,10 +102,6 @@ var editor = {
     
     setStrikeThrough: function() {
         this._executeCommand('strikeThrough', null);
-    },
-
-    setUnderline: function() {
-        this._executeCommand('underline', null);
     },
 
     setTextColor: function(color) {
@@ -122,6 +122,14 @@ var editor = {
 
     setHeading: function(heading) {
         this._executeCommand('formatBlock', '<h'+heading+'>');
+    },
+
+    setFormattingToParagraph: function() {
+        this._executeCommand('formatBlock', '<p>');
+    },
+
+    setPreformatted: function() {
+        this._executeCommand('formatBlock', '<pre>');
     },
 
     setBlockQuote: function() {

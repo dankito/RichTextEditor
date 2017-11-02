@@ -174,6 +174,14 @@ class RichTextEditor : WebView {
         executeEditorJavaScriptFunction("setHeading('$heading')")
     }
 
+    fun setFormattingToParagraph() {
+        executeEditorJavaScriptFunction("setFormattingToParagraph()")
+    }
+
+    fun setPreformatted() {
+        executeEditorJavaScriptFunction("setPreformatted()")
+    }
+
     fun setBlockQuote() {
         executeEditorJavaScriptFunction("setBlockQuote()")
     }
