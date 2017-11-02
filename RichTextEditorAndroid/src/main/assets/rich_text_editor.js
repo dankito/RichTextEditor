@@ -16,7 +16,8 @@ var editor = {
 
         document.addEventListener("selectionchange", function() { editor._backupRange(); });
 
-        this.textField.addEventListener("click", this.updateCommandStates);
+        this.textField.addEventListener("click", function() { editor._updateCommandStates });
+
         this.textField.addEventListener("keydown", function(e) {
             var BACKSPACE = 8;
             if(e.which == BACKSPACE) {
@@ -28,13 +29,11 @@ var editor = {
             }
         });
         this.textField.addEventListener("keyup", function(e) {
-            var KEY_LEFT = 37, KEY_RIGHT = 39;
-            if (e.which == KEY_LEFT || e.which == KEY_RIGHT) {
-                editor.updateCommandStates(e);
-            }
+            editor._updateCommandStates();
         });
 
         this.ensureEditorInsertsParagraphWhenPressingEnter();
+        this._updateCommandStates();
     },
 
     ensureEditorInsertsParagraphWhenPressingEnter: function() {
@@ -100,7 +99,7 @@ var editor = {
     setStrikeThrough: function() {
         this._executeCommand('strikeThrough', null);
     },
-    
+
     setUnderline: function() {
         this._executeCommand('underline', null);
     },
@@ -286,71 +285,54 @@ var editor = {
     
     _executeCommand: function(command, parameter) {
         document.execCommand(command, false, parameter);
+
+        this._updateCommandStates();
     },
 
 
-    updateCommandStates: function(e) {
-        var items = [];
-        if (document.queryCommandState('undo')) {
-            items.push('undo');
-        }
-        if (document.queryCommandState('redo')) {
-            items.push('redo');
-        }
-        if (document.queryCommandState('bold')) {
-            items.push('bold');
-        }
-        if (document.queryCommandState('italic')) {
-            items.push('italic');
-        }
-        if (document.queryCommandState('underline')) {
-            items.push('underline');
-        }
-        if (document.queryCommandState('subscript')) {
-            items.push('subscript');
-        }
-        if (document.queryCommandState('superscript')) {
-            items.push('superscript');
-        }
-        if (document.queryCommandState('strikeThrough')) {
-            items.push('strikeThrough');
-        }
-        if (document.queryCommandState('indent')) {
-            items.push('indent');
-        }
-        if (document.queryCommandState('indent')) {
-            items.push('indent');
-        }
-        if (document.queryCommandState('outdent')) {
-            items.push('outdent');
-        }
-        if (document.queryCommandState('justifyCenter')) {
-            items.push('justifyCenter');
-        }
-        if (document.queryCommandState('justifyFull')) {
-            items.push('justifyFull');
-        }
-        if (document.queryCommandState('justifyLeft')) {
-            items.push('justifyLeft');
-        }
-        if (document.queryCommandState('justifyRight')) {
-            items.push('justifyRight');
-        }
-        if (document.queryCommandState('insertOrderedList')) {
-            items.push('orderedList');
-        }
-        if (document.queryCommandState('insertUnorderedList')) {
-            items.push('unorderedList');
-        }
-        if (document.queryCommandState('insertHorizontalRule')) {
-            items.push('horizontalRule');
-        }
-        var formatBlock = document.queryCommandValue('formatBlock');
-        if (formatBlock.length > 0) {
-            items.push(formatBlock);
-        }
+    _updateCommandStates: function() {
+        var states = {};
 
-        window.location.href = "command-states-changed-callback://" + encodeURI(items.join(','));
+        this._determineStateForCommand('undo', states);
+        this._determineStateForCommand('redo', states);
+
+        this._determineStateForCommand('bold', states);
+        this._determineStateForCommand('italic', states);
+        this._determineStateForCommand('underline', states);
+        this._determineStateForCommand('subscript', states);
+        this._determineStateForCommand('superscript', states);
+        this._determineStateForCommand('strikeThrough', states);
+
+        this._determineStateForCommand('foreColor', states);
+        this._determineStateForCommand('backColor', states);
+
+        this._determineStateForCommand('fontName', states);
+        this._determineStateForCommand('fontSize', states);
+
+        this._determineStateForCommand('formatBlock', states);
+        this._determineStateForCommand('removeFormat', states);
+
+        this._determineStateForCommand('justifyLeft', states);
+        this._determineStateForCommand('justifyCenter', states);
+        this._determineStateForCommand('justifyRight', states);
+        this._determineStateForCommand('justifyFull', states);
+
+        this._determineStateForCommand('indent', states);
+        this._determineStateForCommand('outdent', states);
+
+        this._determineStateForCommand('insertUnorderedList', states);
+        this._determineStateForCommand('insertOrderedList', states);
+        this._determineStateForCommand('insertHorizontalRule', states);
+        this._determineStateForCommand('insertHTML', states);
+
+        window.location.href = "command-states-changed-callback://" + encodeURI(JSON.stringify(states));
+    },
+
+    _determineStateForCommand: function(command, states) {
+        states[command.toUpperCase()] = {
+            'executable': document.queryCommandEnabled(command),
+            'value': document.queryCommandValue(command)
+        }
     },
 
 
@@ -364,7 +346,7 @@ var editor = {
               "startOffset": range.startOffset,
               "endContainer": range.endContainer,
               "endOffset": range.endOffset
-              };
+          };
         }
     },
 

@@ -4,18 +4,26 @@ package net.dankito.richtexteditor.android.command
 enum class Commands {
     UNDO,
     REDO,
+    FORECOLOR,
+    BACKCOLOR,
+    FONTNAME,
+    FONTSIZE,
     BOLD,
     ITALIC,
     UNDERLINE,
     SUBSCRIPT,
     SUPERSCRIPT,
     STRIKETHROUGH,
+    FORMATBLOCK, // passes value for below format
     H1,
     H2,
     H3,
     H4,
     H5,
     H6,
+    P,
+    PRE,
+    BR, // not settable (at least i don't know how)
     BLOCKQUOTE,
     REMOVEFORMAT,
     JUSTIFYCENTER,
@@ -24,6 +32,11 @@ enum class Commands {
     JUSTIFYRIGHT,
     INDENT,
     OUTDENT,
-    ORDEREDLIST,
-    UNORDEREDLIST
+    INSERTUNORDEREDLIST,
+    INSERTORDEREDLIST,
+    INSERTHORIZONTALRULE,
+    INSERTHTML, // determines if the three command below are executable
+    INSERTLINK, // pseudo commands, there are no corresponding values for execCommand()
+    INSERTIMAGE,
+    INSERTCHECKBOX
 }

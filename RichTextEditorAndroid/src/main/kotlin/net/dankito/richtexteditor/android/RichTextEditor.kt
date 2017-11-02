@@ -16,6 +16,8 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.fasterxml.jackson.databind.ObjectMapper
+import net.dankito.richtexteditor.android.command.CommandState
 import net.dankito.richtexteditor.android.command.Commands
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
@@ -23,6 +25,7 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.concurrent.thread
 
 
@@ -50,6 +53,9 @@ class RichTextEditor : WebView {
     private var isLoaded = false
 
     private val loadedListeners = mutableSetOf<() -> Unit>()
+
+    private val objectMapper = ObjectMapper()
+    private val commandStatesType = objectMapper.typeFactory.constructParametricType(HashMap::class.java, Commands::class.java, CommandState::class.java)
 
     private var enabledCommands: List<Commands> = ArrayList()
 
@@ -435,18 +441,37 @@ class RichTextEditor : WebView {
         this.html = html
     }
 
-    private fun commandStatesChanged(commandStates: String) {
-        val states = commandStates.toUpperCase(Locale.ENGLISH)
-        val enabledCommands = ArrayList<Commands>()
+    private fun commandStatesChanged(statesString: String) {
+        try {
+            val commandStates = objectMapper.readValue<MutableMap<Commands, CommandState>>(statesString, commandStatesType)
 
-        Commands.values().forEach { command ->
-            if(TextUtils.indexOf(states, command.name) != -1) {
-                enabledCommands.add(command)
-            }
+            determineDerivedCommandStates(commandStates)
+
+            log.info("Command states are now $commandStates")
+            this.enabledCommands = enabledCommands
+            commandStatesUpdatedListeners.forEach { it.invoke(enabledCommands) }
+        } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
+    }
+
+    private fun determineDerivedCommandStates(commandStates: MutableMap<Commands, CommandState>) {
+        commandStates[Commands.FORMATBLOCK]?.let { formatCommandState ->
+            commandStates.put(Commands.H1, CommandState(formatCommandState.executable, formatCommandState.value == "h1"))
+            commandStates.put(Commands.H2, CommandState(formatCommandState.executable, formatCommandState.value == "h2"))
+            commandStates.put(Commands.H3, CommandState(formatCommandState.executable, formatCommandState.value == "h3"))
+            commandStates.put(Commands.H4, CommandState(formatCommandState.executable, formatCommandState.value == "h4"))
+            commandStates.put(Commands.H5, CommandState(formatCommandState.executable, formatCommandState.value == "h5"))
+            commandStates.put(Commands.H6, CommandState(formatCommandState.executable, formatCommandState.value == "h6"))
+            commandStates.put(Commands.P, CommandState(formatCommandState.executable, formatCommandState.value == "p"))
+            commandStates.put(Commands.PRE, CommandState(formatCommandState.executable, formatCommandState.value == "pre"))
+            commandStates.put(Commands.BR, CommandState(formatCommandState.executable, formatCommandState.value == ""))
+            commandStates.put(Commands.BLOCKQUOTE, CommandState(formatCommandState.executable, formatCommandState.value == "blockquote"))
         }
 
-        this.enabledCommands = enabledCommands
-        commandStatesUpdatedListeners.forEach { it.invoke(enabledCommands) }
+        commandStates[Commands.INSERTHTML]?.let { insertHtmlState ->
+            commandStates.put(Commands.INSERTLINK, insertHtmlState)
+            commandStates.put(Commands.INSERTIMAGE, insertHtmlState)
+            commandStates.put(Commands.INSERTCHECKBOX, insertHtmlState)
+        }
     }
 
     fun addCommandStatesUpdatedListener(listener: (enabledCommands: List<Commands>) -> Unit) {

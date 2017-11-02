@@ -33,6 +33,7 @@ dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     implementation "org.slf4j:slf4j-api:$Slf4jVersion"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$JacksonVersion"
 
     implementation "com.android.support:appcompat-v7:$AppCompatVersion"
 

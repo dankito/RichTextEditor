@@ -12,6 +12,7 @@ buildscript {
     ext.AppCompatVersion = "26.1.0"
 
     ext.Slf4jVersion = "1.7.25"
+    ext.JacksonVersion = "2.9.2"
 
     ext.JUnitVersion = "4.12"
     ext.AndroidTestRunnerVersion = "1.0.1"
