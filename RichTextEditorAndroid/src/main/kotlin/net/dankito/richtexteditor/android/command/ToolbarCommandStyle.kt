@@ -11,7 +11,8 @@ data class ToolbarCommandStyle(
         val marginRightDp: Int = DefaultMarginRightDp,
         val paddingDp: Int = DefaultPaddingDp,
         val enabledTintColor: Int = Color.WHITE,
-        val disabledTintColor: Int = Color.argb(97, 0, 0, 0) // see https://material.io/guidelines/style/color.html#color-usability: Dark text on light backgrounds
+        val disabledTintColor: Int = Color.argb(97, 0, 0, 0), // see https://material.io/guidelines/style/color.html#color-usability: Dark text on light backgrounds
+        val isActivatedColor: Int = Color.DKGRAY
 ) {
 
 
