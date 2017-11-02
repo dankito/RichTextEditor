@@ -66,6 +66,7 @@ open class EditorToolbar : HorizontalScrollView {
         commands.put(command, button)
 
         command.editor = editor
+        command.commandView = button
 
         val layoutParams = button.layoutParams as LinearLayout.LayoutParams
 
