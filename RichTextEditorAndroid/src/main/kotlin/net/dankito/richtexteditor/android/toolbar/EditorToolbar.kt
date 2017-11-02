@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -70,8 +69,19 @@ open class EditorToolbar : HorizontalScrollView {
 
         val layoutParams = button.layoutParams as LinearLayout.LayoutParams
 
-        layoutParams.width = getPixelSizeForDisplay(command.style.widthDp, displayDensity)
-        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        if(command.style.widthDp >= 0) {
+            layoutParams.width = getPixelSizeForDisplay(command.style.widthDp, displayDensity)
+        }
+        else { // e.g. ViewGroup.LayoutParams.MATCH_PARENT
+            layoutParams.width = command.style.widthDp
+        }
+
+        if(command.style.heightDp >= 0) {
+            layoutParams.height = getPixelSizeForDisplay(command.style.heightDp, displayDensity)
+        }
+        else { // e.g. ViewGroup.LayoutParams.MATCH_PARENT
+            layoutParams.height = command.style.heightDp
+        }
 
         val rightMargin = getPixelSizeForDisplay(command.style.marginRightDp, displayDensity)
         layoutParams.rightMargin = rightMargin
