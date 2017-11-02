@@ -4,21 +4,9 @@ import net.dankito.richtexteditor.android.RichTextEditor
 
 
 abstract class Command(val command: Commands,
-              var iconResourceId: Int,
-              var backgroundColorResourceId: Int = android.R.color.transparent,
-              val widthDp: Int = DefaultWidthDp,
-              val marginRightDp: Int = DefaultMarginRightDp,
-              val paddingDp: Int = DefaultPaddingDp,
-              val commandExecutedListener: (() -> Unit)? = null) {
-
-
-    companion object {
-        private const val DefaultWidthDp = 36
-
-        private const val DefaultMarginRightDp = 4
-
-        private const val DefaultPaddingDp = 4
-    }
+                       val iconResourceId: Int,
+                       val style: ToolbarCommandStyle = ToolbarCommandStyle(),
+                       val commandExecutedListener: (() -> Unit)? = null) {
 
 
     var editor: RichTextEditor? = null

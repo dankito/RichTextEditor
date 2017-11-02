@@ -51,28 +51,29 @@ open class EditorToolbar : HorizontalScrollView {
         button.scaleType = ImageView.ScaleType.FIT_CENTER
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            button.setBackgroundColor(context.getColor(command.backgroundColorResourceId))
+            button.setBackgroundColor(context.getColor(command.style.backgroundColorResourceId))
         }
         else {
-            button.setBackgroundColor(context.resources.getColor(command.backgroundColorResourceId))
+            button.setBackgroundColor(context.resources.getColor(command.style.backgroundColorResourceId))
         }
 
         val displayDensity = context.resources.displayMetrics.density
 
-        val padding = getPixelSizeForDisplay(command.paddingDp, displayDensity)
+        val padding = getPixelSizeForDisplay(command.style.paddingDp, displayDensity)
         button.setPadding(padding, padding, padding, padding)
 
         linearLayout.addView(button)
 
         commands.put(command, button)
+
         command.editor = editor
 
         val layoutParams = button.layoutParams as LinearLayout.LayoutParams
 
-        layoutParams.width = getPixelSizeForDisplay(command.widthDp, displayDensity)
+        layoutParams.width = getPixelSizeForDisplay(command.style.widthDp, displayDensity)
         layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
 
-        val rightMargin = getPixelSizeForDisplay(command.marginRightDp, displayDensity)
+        val rightMargin = getPixelSizeForDisplay(command.style.marginRightDp, displayDensity)
         layoutParams.rightMargin = rightMargin
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             layoutParams.marginEnd = rightMargin
