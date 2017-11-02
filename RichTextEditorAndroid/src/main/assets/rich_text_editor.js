@@ -109,7 +109,7 @@ var editor = {
     },
 
     setTextBackgroundColor: function(color) {
-        this._executeStyleCommand('hiliteColor', color);
+        this._executeStyleCommand('backColor', color);
     },
 
     setFontName: function(fontName) {
