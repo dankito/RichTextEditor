@@ -69,19 +69,8 @@ open class EditorToolbar : HorizontalScrollView {
 
         val layoutParams = commandView.layoutParams as LinearLayout.LayoutParams
 
-        if(command.style.widthDp >= 0) {
-            layoutParams.width = getPixelSizeForDisplay(command.style.widthDp, displayDensity)
-        }
-        else { // e.g. ViewGroup.LayoutParams.MATCH_PARENT
-            layoutParams.width = command.style.widthDp
-        }
-
-        if(command.style.heightDp >= 0) {
-            layoutParams.height = getPixelSizeForDisplay(command.style.heightDp, displayDensity)
-        }
-        else { // e.g. ViewGroup.LayoutParams.MATCH_PARENT
-            layoutParams.height = command.style.heightDp
-        }
+        layoutParams.width = getLayoutSize(command.style.widthDp, displayDensity)
+        layoutParams.height = getLayoutSize(command.style.heightDp, displayDensity)
 
         val rightMargin = getPixelSizeForDisplay(command.style.marginRightDp, displayDensity)
         layoutParams.rightMargin = rightMargin
@@ -92,6 +81,15 @@ open class EditorToolbar : HorizontalScrollView {
 
     private fun getPixelSizeForDisplay(deviceIndependentPixel: Int, displayDensity: Float): Int {
         return (deviceIndependentPixel * displayDensity).toInt()
+    }
+
+    private fun getLayoutSize(sizeInDp: Int, displayDensity: Float): Int {
+        if(sizeInDp >= 0) {
+            return getPixelSizeForDisplay(sizeInDp, displayDensity)
+        }
+        else { // e.g. ViewGroup.LayoutParams.MATCH_PARENT
+            return sizeInDp
+        }
     }
 
 
