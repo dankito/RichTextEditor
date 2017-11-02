@@ -24,7 +24,6 @@ import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.concurrent.thread
 
@@ -57,9 +56,9 @@ class RichTextEditor : WebView {
     private val objectMapper = ObjectMapper()
     private val commandStatesType = objectMapper.typeFactory.constructParametricType(HashMap::class.java, Commands::class.java, CommandState::class.java)
 
-    private var enabledCommands: List<Commands> = ArrayList()
+    private var commandStates: Map<Commands, CommandState> = mapOf()
 
-    private val commandStatesUpdatedListeners = mutableSetOf<(enabledCommands: List<Commands>) -> Unit>()
+    private val commandStatesChangedListeners = mutableSetOf<(Map<Commands, CommandState>) -> Unit>()
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -456,8 +455,8 @@ class RichTextEditor : WebView {
             determineDerivedCommandStates(commandStates)
 
             log.info("Command states are now $commandStates")
-            this.enabledCommands = enabledCommands
-            commandStatesUpdatedListeners.forEach { it.invoke(enabledCommands) }
+            this.commandStates = commandStates
+            commandStatesChangedListeners.forEach { it.invoke(this.commandStates) }
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
     }
 
@@ -482,10 +481,10 @@ class RichTextEditor : WebView {
         }
     }
 
-    fun addCommandStatesUpdatedListener(listener: (enabledCommands: List<Commands>) -> Unit) {
-        commandStatesUpdatedListeners.add(listener)
+    fun addCommandStatesChangedListener(listener: (commandStates: Map<Commands, CommandState>) -> Unit) {
+        commandStatesChangedListeners.add(listener)
 
-        listener.invoke(this.enabledCommands)
+        listener.invoke(commandStates)
     }
 
 
