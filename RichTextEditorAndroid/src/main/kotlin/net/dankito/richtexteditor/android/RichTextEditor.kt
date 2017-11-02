@@ -462,16 +462,16 @@ class RichTextEditor : WebView {
 
     private fun determineDerivedCommandStates(commandStates: MutableMap<Commands, CommandState>) {
         commandStates[Commands.FORMATBLOCK]?.let { formatCommandState ->
-            commandStates.put(Commands.H1, CommandState(formatCommandState.executable, formatCommandState.value == "h1"))
-            commandStates.put(Commands.H2, CommandState(formatCommandState.executable, formatCommandState.value == "h2"))
-            commandStates.put(Commands.H3, CommandState(formatCommandState.executable, formatCommandState.value == "h3"))
-            commandStates.put(Commands.H4, CommandState(formatCommandState.executable, formatCommandState.value == "h4"))
-            commandStates.put(Commands.H5, CommandState(formatCommandState.executable, formatCommandState.value == "h5"))
-            commandStates.put(Commands.H6, CommandState(formatCommandState.executable, formatCommandState.value == "h6"))
-            commandStates.put(Commands.P, CommandState(formatCommandState.executable, formatCommandState.value == "p"))
-            commandStates.put(Commands.PRE, CommandState(formatCommandState.executable, formatCommandState.value == "pre"))
-            commandStates.put(Commands.BR, CommandState(formatCommandState.executable, formatCommandState.value == ""))
-            commandStates.put(Commands.BLOCKQUOTE, CommandState(formatCommandState.executable, formatCommandState.value == "blockquote"))
+            commandStates.put(Commands.H1, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h1")))
+            commandStates.put(Commands.H2, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h2")))
+            commandStates.put(Commands.H3, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h3")))
+            commandStates.put(Commands.H4, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h4")))
+            commandStates.put(Commands.H5, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h5")))
+            commandStates.put(Commands.H6, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h6")))
+            commandStates.put(Commands.P, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "p")))
+            commandStates.put(Commands.PRE, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "pre")))
+            commandStates.put(Commands.BR, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "")))
+            commandStates.put(Commands.BLOCKQUOTE, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "blockquote")))
         }
 
         commandStates[Commands.INSERTHTML]?.let { insertHtmlState ->
@@ -479,6 +479,10 @@ class RichTextEditor : WebView {
             commandStates.put(Commands.INSERTIMAGE, insertHtmlState)
             commandStates.put(Commands.INSERTCHECKBOX, insertHtmlState)
         }
+    }
+
+    private fun isFormatActivated(formatCommandState: CommandState, format: String): String {
+        return (formatCommandState.value == format).toString() // rich_text_editor.js reports boolean values as string, so we also have to convert it to string
     }
 
     fun addCommandStatesChangedListener(listener: (commandStates: Map<Commands, CommandState>) -> Unit) {
