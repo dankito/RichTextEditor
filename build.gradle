@@ -9,10 +9,12 @@ buildscript {
     ext.AppVersionCode = 1
     ext.AppVersionName = "1.0"
 
-    ext.AppCompatVersion = "26.1.0"
-
     ext.Slf4jVersion = "1.7.25"
     ext.JacksonVersion = "2.9.2"
+
+    ext.ColorPickerVersion = "1.0.8@aar"
+
+    ext.AppCompatVersion = "26.1.0"
 
     ext.JUnitVersion = "4.12"
     ext.AndroidTestRunnerVersion = "1.0.1"
