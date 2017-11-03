@@ -5,6 +5,7 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Looper
@@ -363,7 +364,14 @@ class RichTextEditor : RelativeLayout {
     }
 
     private fun convertHexColorString(color: Int): String {
-        return String.format("#%06X", 0xFFFFFF and color)
+        val alpha = Color.alpha(color)
+
+        if(alpha == 255) { // without alpha
+            return String.format("#%06X", 0xFFFFFF and color)
+        }
+        else {
+            return "rgba(${Color.red(color)}, ${Color.green(color)}, ${Color.blue(color)}, $alpha)"
+        }
     }
 
 
