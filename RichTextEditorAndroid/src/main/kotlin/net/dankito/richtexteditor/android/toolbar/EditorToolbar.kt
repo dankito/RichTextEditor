@@ -28,6 +28,8 @@ open class EditorToolbar : HorizontalScrollView {
             setRichTextEditorOnCommands(value)
         }
 
+    private val commandInvokedListeners = ArrayList<(Command) -> Unit>()
+
 
     private lateinit var linearLayout: LinearLayout
 
@@ -44,7 +46,7 @@ open class EditorToolbar : HorizontalScrollView {
 
     fun addCommand(command: Command) {
         val commandView = ImageButton(context)
-        commandView.setOnClickListener { command.commandInvoked() }
+        commandView.setOnClickListener { commandInvoked(command) }
 
         linearLayout.addView(commandView)
 
@@ -97,6 +99,23 @@ open class EditorToolbar : HorizontalScrollView {
         commands.keys.forEach {
             it.editor = editor
         }
+    }
+
+
+    private fun commandInvoked(command: Command) {
+        command.commandInvoked()
+
+        commandInvokedListeners.forEach {
+            it.invoke(command)
+        }
+    }
+
+    fun addCommandInvokedListener(listener: (Command) -> Unit) {
+        commandInvokedListeners.add(listener)
+    }
+
+    fun removeCommandInvokedListener(listener: (Command) -> Unit) {
+        commandInvokedListeners.remove(listener)
     }
 
 
