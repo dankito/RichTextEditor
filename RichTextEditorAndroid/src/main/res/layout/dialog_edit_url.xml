@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/dialog_edit_url_margin_left_and_right"
+              android:layout_marginRight="@dimen/dialog_edit_url_margin_left_and_right"
+              android:padding="@dimen/dialog_edit_url_padding"
+>
+
+    <TextView
+        android:id="@+id/txtUrlLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/dialog_edit_url_url_label_margin_top"
+        style="@android:style/TextAppearance.Medium"
+        android:text="@string/dialog_edit_url_url_label"
+    />
+
+    <EditText
+        android:id="@+id/edtxtUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtUrlLabel"
+        android:inputType="textUri|textMultiLine"
+    />
+
+    <TextView
+        android:id="@+id/txtTitleLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtxtUrl"
+        android:layout_marginTop="@dimen/dialog_edit_url_title_label_margin_top"
+        style="@android:style/TextAppearance.Medium"
+        android:text="@string/dialog_edit_url_title_label"
+    />
+
+    <EditText
+        android:id="@+id/edtxtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTitleLabel"
+        android:inputType="text"
+    />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_edit_url_buttons_height"
+        android:layout_below="@+id/edtxtTitle"
+        android:layout_marginTop="@dimen/dialog_edit_url_buttons_margin_top"
+    >
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:gravity="start|center_vertical"
+            android:textAlignment="gravity"
+            android:text="@android:string/cancel"
+        />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:gravity="end|center_vertical"
+            android:textAlignment="gravity"
+            android:text="@android:string/ok"
+        />
+
+    </LinearLayout>
+
+</RelativeLayout>
