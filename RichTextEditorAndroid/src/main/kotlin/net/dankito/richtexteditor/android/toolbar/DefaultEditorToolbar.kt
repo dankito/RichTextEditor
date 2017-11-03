@@ -25,6 +25,16 @@ class DefaultEditorToolbar : EditorToolbar {
         addCommand(UndoCommand())
         addCommand(RedoCommand())
 
+        addCommand(InsertLinkCommand())
+        addCommand(InsertImageCommand())
+        addCommand(InsertCheckboxCommand())
+
+        addCommand(SetTextFormatCommand())
+        addCommand(SetFontNameCommand())
+        addCommand(SetFontSizeCommand())
+        addCommand(SwitchTextBackgroundColorOnOffCommand())
+        addCommand(SetTextBackgroundColorCommand())
+        addCommand(SetTextColorCommand())
         addCommand(RemoveFormatCommand())
 
         addCommand(DecreaseIndentCommand())
