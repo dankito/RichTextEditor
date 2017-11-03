@@ -46,15 +46,19 @@ abstract class SelectValueCommand(command: Commands, iconResourceId: Int, style:
 
     protected fun getHtmlSpanned(stringResourceId: Int): CharSequence {
         editor?.context?.getText(stringResourceId)?.toString()?.let { html ->
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).trim() // Html.fromHtml() sometimes adds new lines add the end
-            }
-            else {
-                return Html.fromHtml(html).trim() // Html.fromHtml() sometimes adds new lines add the end
-            }
+            return getHtmlSpanned(html)
         }
 
         return ""
+    }
+
+    protected fun getHtmlSpanned(html: String): CharSequence {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).trim() // Html.fromHtml() sometimes adds new lines add the end
+        }
+        else {
+            return Html.fromHtml(html).trim() // Html.fromHtml() sometimes adds new lines add the end
+        }
     }
 
 }
