@@ -109,7 +109,12 @@ var editor = {
     },
 
     setTextBackgroundColor: function(color) {
-        this._executeStyleCommand('backColor', color);
+        if(color == 'rgba(0, 0, 0, 0)') { // resetting backColor does not work with any color value (whether #00000000 nor rgba(0, 0, 0, 0)), we have to pass 'inherit'. Thanks to https://stackoverflow.com/a/7071465 for pointing this out to me
+            this._executeStyleCommand('backColor', 'inherit');
+        }
+        else {
+            this._executeStyleCommand('backColor', color);
+        }
     },
 
     setFontName: function(fontName) {
