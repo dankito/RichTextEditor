@@ -12,32 +12,36 @@ class SystemFontsParser {
 
 
     // TODO: for a real parsing of file see https://stackoverflow.com/a/29533686
-    fun parseSystemFonts(): List<String> {
-        val fontNames = ArrayList<String>()
+    fun parseSystemFonts(): List<FontInfo> {
+        val fontInfos = ArrayList<FontInfo>()
 
-        fontNames.addAll(parseFontNamesFromFontsXml()) // newer Androids
+        fontInfos.addAll(parseFontInfosFromFontsXml()) // newer Androids
 
-        fontNames.addAll(parseFontNamesFromSystemFontsXml()) // older systems
+        fontInfos.addAll(parseFontInfosFromSystemFontsXml()) // older systems
 
-        return fontNames
+        determineBestPickForAliasNames(fontInfos)
+
+        return fontInfos
     }
 
 
-    private fun parseFontNamesFromFontsXml(): Collection<String> {
-        val fontNames = ArrayList<String>()
+    private fun parseFontInfosFromFontsXml(): Collection<FontInfo> {
+        val fontInfoMap = HashMap<String, FontInfo>()
 
         try {
             val fontsFile = File("/system/etc/fonts.xml")
             if(fontsFile.exists()) {
                 fontsFile.forEachLine { line ->
                     tryToParseFontsXmlLineToFontName(line)?.let { fontName ->
-                        fontNames.add(fontName)
+                        fontInfoMap.put(fontName, FontInfo(fontName))
                     }
+
+                    tryToParseFontsXmlAlias(line, fontInfoMap)
                 }
             }
         } catch(e: Exception) { log.error("Could not parse font xml file /system/etc/fonts.xml", e) }
 
-        return fontNames
+        return fontInfoMap.values
     }
 
     private fun tryToParseFontsXmlLineToFontName(line: String): String? {
@@ -55,40 +59,108 @@ class SystemFontsParser {
         return null
     }
 
+    private fun tryToParseFontsXmlAlias(line: String, fontInfoMap: HashMap<String, FontInfo>) {
+        try {
+            if(line.trim().startsWith("<alias name=\"")) {
+                var aliasName = line.substring(line.indexOf("<alias name=\"") + "<alias name=\"".length)
+                aliasName = aliasName.substring(0, aliasName.indexOf('\"'))
 
-    private fun parseFontNamesFromSystemFontsXml(): Collection<String> {
-        val fontNames = ArrayList<String>()
+                var fontName = line.substring(line.indexOf("to=\"") + "to=\"".length)
+                fontName = fontName.substring(0, fontName.indexOf('\"'))
+
+                fontInfoMap[fontName]?.let { fontInfo ->
+                    fontInfo.addAliasName(aliasName)
+                }
+            }
+        } catch(e: Exception) { log.error("Could not parse line $line to font name alias", e) }
+    }
+
+
+    private fun parseFontInfosFromSystemFontsXml(): Collection<FontInfo> {
+        val fontInfos = ArrayList<FontInfo>()
 
         try {
             val fontsFile = File("/system/etc/system_fonts.xml")
             if(fontsFile.exists()) {
                 val lines = fontsFile.readLines()
                 for(i in 0..lines.size - 1) {
-                    tryToParseSystemFontsXmlLineToFontName(lines, i)?.let { fontName ->
-                        fontNames.add(fontName)
+                    tryToParseSystemFontsXmlLineToFontInfo(lines, i)?.let { fontInfo ->
+                        fontInfos.add(fontInfo)
                     }
                 }
             }
         } catch(e: Exception) { log.error("Could not parse font xml file /system/etc/system_fonts.xml", e) }
 
-        return fontNames
+        return fontInfos
     }
 
-    private fun tryToParseSystemFontsXmlLineToFontName(lines: List<String>, index: Int): String? {
+    private fun tryToParseSystemFontsXmlLineToFontInfo(lines: List<String>, index: Int): FontInfo? {
         try {
             val line = lines[index]
             if(line.trim() == "<nameset>") {
-                val firstLineInNameSet = lines[index + 1]
-                var fontName = firstLineInNameSet.substring(firstLineInNameSet.indexOf("<name>") + "<name>".length)
-                fontName = fontName.substring(0, fontName.indexOf("</name>"))
+                val fontNameIndex = index + 1
 
-                return fontName
+                tryToParseSystemFontsXmlLineToFontName(lines, fontNameIndex)?.let { fontName ->
+                    val fontInfo = FontInfo(fontName)
+
+                    parseSystemFontsXmlAliases(fontInfo, lines, fontNameIndex)
+
+                    return fontInfo
+                }
             }
         } catch (e: Exception) {
             log.error("Could not parse line", e)
         }
 
         return null
+    }
+
+    private fun parseSystemFontsXmlAliases(fontInfo: FontInfo, lines: List<String>, fontNameIndex: Int) {
+        var nextIndex = fontNameIndex
+        var nextFontName: String?
+
+        do {
+            nextFontName = tryToParseSystemFontsXmlLineToFontName(lines, ++nextIndex)
+
+            nextFontName?.let { fontInfo.addAliasName(it) }
+        } while (nextFontName != null)
+    }
+
+    private fun tryToParseSystemFontsXmlLineToFontName(lines: List<String>, index: Int): String? {
+        try {
+            val line = lines[index]
+
+            if(line.trim().startsWith("<name>")) {
+                var fontName = line.substring(line.indexOf("<name>") + "<name>".length)
+                fontName = fontName.substring(0, fontName.indexOf("</name>"))
+
+                return fontName
+            }
+        } catch(e: Exception) { log.error("Could not parse line for index $index", e) }
+
+        return null
+    }
+
+
+    private fun determineBestPickForAliasNames(fontInfos: ArrayList<FontInfo>) {
+        fontInfos.forEach { fontInfo ->
+            when(fontInfo.fontName.toLowerCase()) {
+                "sans-serif" -> getBestAlias(fontInfo, "Arial", "Helvetica", "Tahoma", "Verdana")
+                "serif" -> getBestAlias(fontInfo, "Times new roman", "Palatino", "Georgia", "Times")
+                "monospace" -> getBestAlias(fontInfo, "Courier New", "Courier", "Monaco")
+            }
+        }
+    }
+
+    private fun getBestAlias(fontInfo: FontInfo, vararg possibleAliases: String) {
+        val lowerCaseAliases = fontInfo.getAliasNames().map { it.toLowerCase() }
+
+        for(possibleAlias in possibleAliases) {
+            if(lowerCaseAliases.contains(possibleAlias.toLowerCase())) {
+                fontInfo.bestAliasPick = possibleAlias
+                break
+            }
+        }
     }
 
 }
