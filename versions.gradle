@@ -13,7 +13,7 @@ ext {
 
     ColorPickerVersion = "1.0.8@aar"
 
-    AppCompatVersion = "26.1.0"
+    AppCompatVersion = "25.4.0"
 
     JUnitVersion = "4.12"
     AndroidTestRunnerVersion = "1.0.1"
