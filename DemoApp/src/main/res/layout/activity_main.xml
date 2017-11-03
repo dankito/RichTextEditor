@@ -15,7 +15,7 @@
         android:layout_weight="10"
     />
 
-    <net.dankito.richtexteditor.android.toolbar.DefaultEditorToolbar
+    <net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
         android:id="@+id/editorToolbar"
         android:layout_width="match_parent"
         android:layout_height="36dp"

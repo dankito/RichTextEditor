@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import net.dankito.richtexteditor.android.command.*
 
 
-class DefaultEditorToolbar : EditorToolbar {
+class AllCommandsEditorToolbar : EditorToolbar {
 
     constructor(context: Context) : super(context) { initToolbar() }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initToolbar() }
