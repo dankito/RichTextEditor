@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply from: '../versions.gradle' // remove when developing in library directly
+
 
 repositories {
     maven { url 'https://dl.bintray.com/azeesoft/maven' } // for ColorPickerDialog

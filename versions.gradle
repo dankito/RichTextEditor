@@ -1,0 +1,21 @@
+
+ext {
+    kotlin_version = '1.1.51'
+
+    CompileSdkVersion = 26
+    MinSdkVersion = 15
+    TargetSdkVersion = 26
+    AppVersionCode = 1
+    AppVersionName = "1.0"
+
+    Slf4jVersion = "1.7.25"
+    JacksonVersion = "2.9.2"
+
+    ColorPickerVersion = "1.0.8@aar"
+
+    AppCompatVersion = "26.1.0"
+
+    JUnitVersion = "4.12"
+    AndroidTestRunnerVersion = "1.0.1"
+    EspressoVersion = "3.0.1"
+}
