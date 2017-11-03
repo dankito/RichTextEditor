@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="dialog_edit_url_margin_left_and_right">24dp</dimen>
+    <dimen name="dialog_edit_url_padding">8dp</dimen>
+    <dimen name="dialog_edit_url_url_label_margin_top">12dp</dimen>
+    <dimen name="dialog_edit_url_title_label_margin_top">20dp</dimen>
+    <dimen name="dialog_edit_url_buttons_margin_top">12dp</dimen>
+    <dimen name="dialog_edit_url_buttons_height">50dp</dimen>
+    <dimen name="dialog_edit_url_buttons_min_width">150dp</dimen>
+
+    <dimen name="dialog_edit_image_margin_left_and_right">24dp</dimen>
+    <dimen name="dialog_edit_image_padding">8dp</dimen>
+    <dimen name="dialog_edit_image_image_url_label_margin_top">12dp</dimen>
+    <dimen name="dialog_edit_image_alternate_text_label_margin_top">20dp</dimen>
+    <dimen name="dialog_edit_image_buttons_margin_top">12dp</dimen>
+    <dimen name="dialog_edit_image_buttons_height">50dp</dimen>
+    <dimen name="dialog_edit_image_buttons_min_width">150dp</dimen>
+
     <dimen name="list_item_select_value_height">40dp</dimen>
     <dimen name="list_item_select_value_margin_left_right">8dp</dimen>
 

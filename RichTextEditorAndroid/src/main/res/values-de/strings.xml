@@ -2,6 +2,13 @@
     <string name="app_name">RichTextEditorAndroid</string>
 
 
+    <string name="dialog_edit_url_url_label">Link Adresse</string>
+    <string name="dialog_edit_url_title_label">Anzeigetext</string>
+
+    <string name="dialog_edit_image_image_url_label">Bild URL</string>
+    <string name="dialog_edit_image_alternate_text_label">Alternativtext (optional)</string>
+
+
 
     <!--        Text formats            -->
 
