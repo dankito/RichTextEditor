@@ -189,8 +189,8 @@ class RichTextEditor : RelativeLayout {
         executeEditorJavaScriptFunction("setFormattingToParagraph()")
     }
 
-    fun setPreformatted() {
-        executeEditorJavaScriptFunction("setPreformatted()")
+    fun setPreformat() {
+        executeEditorJavaScriptFunction("setPreformat()")
     }
 
     fun setBlockQuote() {

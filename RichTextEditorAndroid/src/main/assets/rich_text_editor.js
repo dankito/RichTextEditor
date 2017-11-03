@@ -128,7 +128,7 @@ var editor = {
         this._executeCommand('formatBlock', '<p>');
     },
 
-    setPreformatted: function() {
+    setPreformat: function() {
         this._executeCommand('formatBlock', '<pre>');
     },
 
