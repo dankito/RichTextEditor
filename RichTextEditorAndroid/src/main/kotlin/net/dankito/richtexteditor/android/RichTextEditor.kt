@@ -118,6 +118,10 @@ class RichTextEditor : RelativeLayout {
     }
 
 
+    fun getHtml(): String {
+        return html
+    }
+
     fun setHtml(html: String) {
         try {
             executeEditorJavaScriptFunction("setHtml('" + URLEncoder.encode(html, "UTF-8") + "');")
