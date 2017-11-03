@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="list_item_select_value_height">40dp</dimen>
+    <dimen name="list_item_select_value_margin_left_right">8dp</dimen>
+
+</resources>

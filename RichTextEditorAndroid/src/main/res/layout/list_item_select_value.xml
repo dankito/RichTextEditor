@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="@dimen/list_item_select_value_height">
+
+    <TextView
+        android:id="@+id/txtItemValue"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:textAlignment="gravity"
+        android:layout_marginLeft="@dimen/list_item_select_value_margin_left_right"
+        android:layout_marginStart="@dimen/list_item_select_value_margin_left_right"
+        android:layout_marginRight="@dimen/list_item_select_value_margin_left_right"
+        android:layout_marginEnd="@dimen/list_item_select_value_margin_left_right"
+        android:textColor="#000000"
+    />
+
+</LinearLayout>

@@ -12,10 +12,12 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.RelativeLayout
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.dankito.richtexteditor.android.command.CommandState
 import net.dankito.richtexteditor.android.command.Commands
@@ -28,7 +30,7 @@ import kotlin.collections.HashMap
 import kotlin.concurrent.thread
 
 
-class RichTextEditor : WebView {
+class RichTextEditor : RelativeLayout {
 
     companion object {
         private const val EditorHtmlPath = "file:///android_asset/editor.html"
@@ -47,6 +49,8 @@ class RichTextEditor : WebView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { initEditor(context, attrs) }
 
 
+    private val webView = WebView(context)
+
     private var html: String = ""
 
     private var isLoaded = false
@@ -63,22 +67,29 @@ class RichTextEditor : WebView {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initEditor(context: Context, attributes: AttributeSet?) {
+        val layoutParams = RelativeLayout.LayoutParams(context, attributes)
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+        addView(webView, layoutParams)
+
         attributes?.let { applyAttributes(context, it) }
 
-        isVerticalScrollBarEnabled = false
-        isHorizontalScrollBarEnabled = false
-        settings.javaScriptEnabled = true
+        webView.isVerticalScrollBarEnabled = false
+        webView.isHorizontalScrollBarEnabled = false
+        webView.settings.javaScriptEnabled = true
 
-        webChromeClient = WebChromeClient()
-        webViewClient = editorWebViewClient
+        webView.webChromeClient = WebChromeClient()
+        webView.webViewClient = editorWebViewClient
 
-        settings.domStorageEnabled = true // otherwise images won't load
-        settings.loadsImagesAutomatically = true
-        settings.setSupportZoom(true)
-        settings.builtInZoomControls = true
-        settings.displayZoomControls = false
+        webView.settings.domStorageEnabled = true // otherwise images won't load
+        webView.settings.loadsImagesAutomatically = true
+        webView.settings.setSupportZoom(true)
+        webView.settings.builtInZoomControls = true
+        webView.settings.displayZoomControls = false
 
-        loadUrl(EditorHtmlPath)
+        webView.loadUrl(EditorHtmlPath)
     }
 
     private fun applyAttributes(context: Context, attrs: AttributeSet) {
@@ -261,7 +272,7 @@ class RichTextEditor : WebView {
     }
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
-        super.setPadding(left, top, right, bottom)
+        webView.setPadding(left, top, right, bottom)
         executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
     }
 
@@ -276,6 +287,7 @@ class RichTextEditor : WebView {
 
     override fun setBackgroundColor(color: Int) {
         super.setBackgroundColor(color)
+        webView.setBackgroundColor(color)
     }
 
     override fun setBackgroundResource(resid: Int) {
@@ -332,13 +344,13 @@ class RichTextEditor : WebView {
     }
 
     fun focusEditor() {
-        requestFocus()
+        webView.requestFocus()
         executeEditorJavaScriptFunction("focus()")
     }
 
     fun clearFocusEditor() {
         executeEditorJavaScriptFunction("blurFocus()")
-        clearFocus()
+        webView.clearFocus()
     }
 
     private fun convertHexColorString(color: Int): String {
@@ -385,11 +397,11 @@ class RichTextEditor : WebView {
     @TargetApi(19)
     private fun executeScriptOnUiThreadForAndroid19AndAbove(javaScript: String) {
         // evaluateJavascript() only works on API 19 and newer
-        evaluateJavascript(javaScript, null)
+        webView.evaluateJavascript(javaScript, null)
     }
 
     private fun executeScriptOnUiThreadForAndroidPre19(javaScript: String) {
-        loadUrl("javascript:" + javaScript)
+        webView.loadUrl("javascript:" + javaScript)
     }
 
 
