@@ -3,6 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 
+repositories {
+    maven { url 'https://dl.bintray.com/azeesoft/maven' } // for ColorPickerDialog
+}
+
+
 android {
     compileSdkVersion CompileSdkVersion
 
@@ -27,15 +32,22 @@ android {
         main.java.srcDirs += [ 'src/main/kotlin' ]
     }
 
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+    }
+
 }
 
 dependencies {
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     implementation "org.slf4j:slf4j-api:$Slf4jVersion"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:$JacksonVersion"
 
+    implementation "com.azeesoft.lib.colorpicker:colorpicker:$ColorPickerVersion"
+
     implementation "com.android.support:appcompat-v7:$AppCompatVersion"
+    implementation "com.android.support:design:$AppCompatVersion"
 
     testImplementation "junit:junit:$JUnitVersion"
 
