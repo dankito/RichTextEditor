@@ -66,6 +66,8 @@ class RichTextEditor : RelativeLayout {
 
     private val commandStatesChangedListeners = mutableSetOf<(Map<Commands, CommandState>) -> Unit>()
 
+    private val htmlChangedListeners = mutableSetOf<(String) -> Unit>()
+
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initEditor(context: Context, attributes: AttributeSet?) {
@@ -475,6 +477,8 @@ class RichTextEditor : RelativeLayout {
 
     private fun textChanged(html: String) {
         this.html = html
+
+        htmlChangedListeners.forEach { it.invoke(html) }
     }
 
     private fun commandStatesChanged(statesString: String) {
@@ -518,6 +522,11 @@ class RichTextEditor : RelativeLayout {
         commandStatesChangedListeners.add(listener)
 
         listener.invoke(commandStates)
+    }
+
+
+    fun addHtmlChangedListener(listener: (String) -> Unit) {
+        htmlChangedListeners.add(listener)
     }
 
 
