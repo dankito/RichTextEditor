@@ -21,6 +21,7 @@ import android.widget.RelativeLayout
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.dankito.richtexteditor.android.command.CommandState
 import net.dankito.richtexteditor.android.command.Commands
+import net.dankito.richtexteditor.android.extensions.showKeyboard
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
@@ -348,7 +349,15 @@ class RichTextEditor : RelativeLayout {
         executeEditorJavaScriptFunction("focus()")
     }
 
-    fun clearFocusEditor() {
+    fun focusEditorAndShowKeyboard() {
+        focusEditor()
+
+        webView.showKeyboard()
+    }
+
+    override fun clearFocus() {
+        super.clearFocus()
+
         executeEditorJavaScriptFunction("blurFocus()")
         webView.clearFocus()
     }
