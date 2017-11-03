@@ -6,39 +6,39 @@
     <!--        Text formats            -->
 
     <string name="text_format_header_1"><![CDATA[
-        <h1>Heading 1</h1>
+        <h1>Überschrift 1</h1>
     ]]></string>
 
     <string name="text_format_header_2"><![CDATA[
-        <h2>Heading 2</h2>
+        <h2>Überschrift 2</h2>
     ]]></string>
 
     <string name="text_format_header_3"><![CDATA[
-        <h3>Heading 3</h3>
+        <h3>Überschrift 3</h3>
     ]]></string>
 
     <string name="text_format_header_4"><![CDATA[
-        <h4>Heading 4</h4>
+        <h4>Überschrift 4</h4>
     ]]></string>
 
     <string name="text_format_header_5"><![CDATA[
-        <h5>Heading 5</h5>
+        <h5>Überschrift 5</h5>
     ]]></string>
 
     <string name="text_format_header_6"><![CDATA[
-        <h6>Heading 6</h6>
+        <h6>Überschrift 6</h6>
     ]]></string>
 
     <string name="text_format_paragraph"><![CDATA[
-        <p>Text body</p>
+        <p>Textkörper</p>
     ]]></string>
 
     <string name="text_format_preformat"><![CDATA[
-        <pre><font face=\"courier\">Preformat</font></pre>
+        <pre><font face=\"courier\">Vorformattiert</font></pre>
     ]]></string>
 
     <string name="text_format_block_quote"><![CDATA[
-        <blockquote>Quote</blockquote>
+        <blockquote>Zitat</blockquote>
     ]]></string>
 
 
@@ -48,31 +48,31 @@
     <!-- font size is not implemented in Html.fromHtml(), so use small and big -->
 
     <string name="font_size_very_very_small"><![CDATA[
-        <small><small><small>Teeny</small></small></small>
+        <small><small><small>Winzig</small></small></small>
     ]]></string>
 
     <string name="font_size_very_small"><![CDATA[
-        <small><small>Very small</small></small>
+        <small><small>Sehr klein</small></small>
     ]]></string>
 
     <string name="font_size_small"><![CDATA[
-        <small>Small</small>
+        <small>Klein</small>
     ]]></string>
 
     <string name="font_size_medium"><![CDATA[
-        Medium
+        Mittel
     ]]></string>
 
     <string name="font_size_large"><![CDATA[
-        <big>Large</big>
+        <big>Groß</big>
     ]]></string>
 
     <string name="font_size_very_large"><![CDATA[
-        <big><big>Very large</big></big>
+        <big><big>Sehr groß</big></big>
     ]]></string>
 
     <string name="font_size_very_very_large"><![CDATA[
-        <big><big><big>Huge</big></big></big>
+        <big><big><big>Riesig</big></big></big>
     ]]></string>
 
 </resources>
