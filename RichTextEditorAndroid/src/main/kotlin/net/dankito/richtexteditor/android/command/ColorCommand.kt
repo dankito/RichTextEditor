@@ -39,6 +39,20 @@ abstract class ColorCommand(defaultColor: Int, command: Commands, iconResourceId
                 }
             } catch(e: Exception) { log.error("Could not parse color string $colorString", e) }
         }
+        else if(colorString == "inherit") {
+            return getColorValueForInherit()
+        }
+
+        return null
+    }
+
+    protected open fun getColorValueForInherit(): Int? {
+        if(command == Commands.FORECOLOR) {
+            return Color.BLACK
+        }
+        else if(command == Commands.BACKCOLOR) {
+            return Color.TRANSPARENT
+        }
 
         return null
     }
