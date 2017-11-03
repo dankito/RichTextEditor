@@ -15,6 +15,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ListView
 import android.widget.RelativeLayout
 import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.android.command.Command
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 
 
@@ -43,11 +44,13 @@ class SelectValueView: ListView {
     var itemSelectedListener: ((Int) -> Unit)? = null
 
 
-    private val valuesAdapter = SelectValueAdapter()
+    private var command: SelectValueCommand? = null
 
     private var editor: RichTextEditor? = null
 
     private var toolbar: EditorToolbar? = null
+
+    private val valuesAdapter = SelectValueAdapter()
 
     private var lastEditorHeight = 0
 
@@ -102,6 +105,7 @@ class SelectValueView: ListView {
 
 
     fun initialize(editor: RichTextEditor, selectValueCommand: SelectValueCommand, valuesDisplayTexts: List<CharSequence>, itemSelectedListener: ((Int) -> Unit)? = null) {
+        this.command = selectValueCommand
         this.editor = editor
         this.values = valuesDisplayTexts
         this.itemSelectedListener = itemSelectedListener
@@ -111,6 +115,7 @@ class SelectValueView: ListView {
         while(parent != null) {
             if(parent is EditorToolbar) {
                 this.toolbar = parent
+                parent.addCommandInvokedListener { commandInvoked(it) }
 
                 addToLayout(editor, parent)
 
@@ -137,12 +142,22 @@ class SelectValueView: ListView {
     }
 
     fun toggleShowView() {
-        if(this.visibility == View.GONE) {
-            showView()
-        }
-        else {
+        if(isVisible()) {
             hideView()
         }
+        else {
+            showView()
+        }
+    }
+
+    private fun commandInvoked(command: Command) {
+        if(isVisible() && command != this.command) {
+            hideView()
+        }
+    }
+
+    private fun isVisible(): Boolean {
+        return this.visibility == View.VISIBLE
     }
 
 
