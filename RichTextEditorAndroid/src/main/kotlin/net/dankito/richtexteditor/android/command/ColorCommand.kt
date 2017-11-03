@@ -48,7 +48,7 @@ abstract class ColorCommand(defaultColor: Int, command: Commands, iconResourceId
 
     protected open fun getColorValueForInherit(): Int? {
         if(command == Commands.FORECOLOR) {
-            return Color.BLACK
+            return Color.BLACK // TODO: is this really true?
         }
         else if(command == Commands.BACKCOLOR) {
             return Color.TRANSPARENT
