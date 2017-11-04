@@ -331,6 +331,19 @@ var editor = {
 
 
     _updateEditorState: function() {
+        var commandStates = this._determineCommandStates();
+
+        var didHtmlChange = this.htmlSetByApplication != null && this.htmlSetByApplication != this.getHtml();
+
+        var editorState = {
+            'didHtmlChange': didHtmlChange,
+            'commandStates': commandStates
+        };
+
+        window.location.href = "editor-state-changed-callback://" + encodeURI(JSON.stringify(editorState));
+    },
+
+    _determineCommandStates: function() {
         var commandStates = {};
 
         this._determineStateForCommand('undo', commandStates);
@@ -365,15 +378,7 @@ var editor = {
         this._determineStateForCommand('insertHorizontalRule', commandStates);
         this._determineStateForCommand('insertHTML', commandStates);
 
-
-        var didHtmlChange = this.htmlSetByApplication != null && this.htmlSetByApplication != this.getHtml();
-
-        var editorState = {
-            'didHtmlChange': didHtmlChange,
-            'commandStates': commandStates
-        };
-
-        window.location.href = "editor-state-changed-callback://" + encodeURI(JSON.stringify(editorState));
+        return commandStates;
     },
 
     _determineStateForCommand: function(command, commandStates) {
