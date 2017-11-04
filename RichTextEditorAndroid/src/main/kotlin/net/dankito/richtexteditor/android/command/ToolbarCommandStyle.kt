@@ -5,23 +5,33 @@ import android.view.ViewGroup
 
 
 data class ToolbarCommandStyle(
-        val backgroundColor: Int = Color.TRANSPARENT,
-        val widthDp: Int = DefaultWidthDp,
-        val heightDp: Int = ViewGroup.LayoutParams.MATCH_PARENT,
-        val marginRightDp: Int = DefaultMarginRightDp,
-        val paddingDp: Int = DefaultPaddingDp,
-        val enabledTintColor: Int = Color.WHITE,
-        val disabledTintColor: Int = Color.argb(97, 0, 0, 0), // see https://material.io/guidelines/style/color.html#color-usability: Dark text on light backgrounds
-        val isActivatedColor: Int = Color.DKGRAY
+        var backgroundColor: Int = DefaultBackgroundColor,
+        var widthDp: Int = DefaultWidthDp,
+        var heightDp: Int = DefaultHeightDp,
+        var marginRightDp: Int = DefaultMarginRightDp,
+        var paddingDp: Int = DefaultPaddingDp,
+        var enabledTintColor: Int = DefaultEnabledTintColor,
+        var disabledTintColor: Int = DefaultDisabledTintColor,
+        var isActivatedColor: Int = DefaultIsActivatedColor
 ) {
 
 
     companion object {
-        private const val DefaultWidthDp = 36
+        const val DefaultBackgroundColor = Color.TRANSPARENT
 
-        private const val DefaultMarginRightDp = 4
+        const val DefaultWidthDp = 36
 
-        private const val DefaultPaddingDp = 4
+        const val DefaultHeightDp = ViewGroup.LayoutParams.MATCH_PARENT
+
+        const val DefaultMarginRightDp = 4
+
+        const val DefaultPaddingDp = 4
+
+        const val DefaultEnabledTintColor = Color.WHITE
+
+        val DefaultDisabledTintColor = Color.argb(97, 0, 0, 0) // see https://material.io/guidelines/style/color.html#color-usability: Dark text on light backgrounds
+
+        const val DefaultIsActivatedColor = Color.DKGRAY
     }
 
 }
