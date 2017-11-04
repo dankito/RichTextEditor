@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.Command
+import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
 
 
 open class EditorToolbar : HorizontalScrollView {
@@ -34,6 +35,8 @@ open class EditorToolbar : HorizontalScrollView {
     private lateinit var linearLayout: LinearLayout
 
     private val commands = HashMap<Command, View>()
+
+    val commandStyle = ToolbarCommandStyle()
 
 
     private fun initToolbar(context: Context) {
@@ -62,6 +65,8 @@ open class EditorToolbar : HorizontalScrollView {
         commandView.setImageResource(command.iconResourceId)
         commandView.scaleType = ImageView.ScaleType.FIT_CENTER
 
+        mergeStyles(commandStyle, command.style)
+
         commandView.setBackgroundColor(command.style.backgroundColor)
 
         val displayDensity = context.resources.displayMetrics.density
@@ -78,6 +83,40 @@ open class EditorToolbar : HorizontalScrollView {
         layoutParams.rightMargin = rightMargin
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             layoutParams.marginEnd = rightMargin
+        }
+    }
+
+    private fun mergeStyles(toolbarCommandStyle: ToolbarCommandStyle, commandStyle: ToolbarCommandStyle) {
+        if(commandStyle.backgroundColor == ToolbarCommandStyle.DefaultBackgroundColor) {
+            commandStyle.backgroundColor = toolbarCommandStyle.backgroundColor
+        }
+
+        if(commandStyle.widthDp == ToolbarCommandStyle.DefaultWidthDp) {
+            commandStyle.widthDp = toolbarCommandStyle.widthDp
+        }
+
+        if(commandStyle.heightDp == ToolbarCommandStyle.DefaultHeightDp) {
+            commandStyle.heightDp = toolbarCommandStyle.heightDp
+        }
+
+        if(commandStyle.marginRightDp == ToolbarCommandStyle.DefaultMarginRightDp) {
+            commandStyle.marginRightDp = toolbarCommandStyle.marginRightDp
+        }
+
+        if(commandStyle.paddingDp == ToolbarCommandStyle.DefaultPaddingDp) {
+            commandStyle.paddingDp = toolbarCommandStyle.paddingDp
+        }
+
+        if(commandStyle.enabledTintColor == ToolbarCommandStyle.DefaultEnabledTintColor) {
+            commandStyle.enabledTintColor = toolbarCommandStyle.enabledTintColor
+        }
+
+        if(commandStyle.disabledTintColor == ToolbarCommandStyle.DefaultDisabledTintColor) {
+            commandStyle.disabledTintColor = toolbarCommandStyle.disabledTintColor
+        }
+
+        if(commandStyle.isActivatedColor == ToolbarCommandStyle.DefaultIsActivatedColor) {
+            commandStyle.isActivatedColor = toolbarCommandStyle.isActivatedColor
         }
     }
 
