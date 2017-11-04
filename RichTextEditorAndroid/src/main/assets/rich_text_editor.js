@@ -18,7 +18,7 @@ var editor = {
     init: function() {
         document.addEventListener("selectionchange", function() { editor._backupRange(); });
 
-        this._textField.addEventListener("click", function() { editor._updateEditorState() });
+        this._textField.addEventListener("click", function() { editor._updateEditorState(); });
 
         this._textField.addEventListener("keydown", function(e) {
             var BACKSPACE = 8;
@@ -30,9 +30,8 @@ var editor = {
                 }
             }
         });
-        this._textField.addEventListener("keyup", function(e) {
-            editor._handleTextEntered();
-        });
+
+        this._textField.addEventListener("keyup", function(e) { editor._handleTextEntered(); });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
         this._updateEditorState();
