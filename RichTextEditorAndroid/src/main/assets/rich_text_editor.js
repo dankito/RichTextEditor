@@ -1,13 +1,13 @@
 
 var editor = {
 
-    textField: document.getElementById('editor'),
+    _textField: document.getElementById('editor'),
 
-    htmlSetByApplication: null,
+    _htmlSetByApplication: null,
 
-    informOfEachTextChange: true,
+    _informOfEachTextChange: true,
 
-    currentSelection: {
+    _currentSelection: {
         "startContainer": 0,
         "startOffset": 0,
         "endContainer": 0,
@@ -18,19 +18,19 @@ var editor = {
     init: function() {
         document.addEventListener("selectionchange", function() { editor._backupRange(); });
 
-        this.textField.addEventListener("click", function() { editor._updateEditorState });
+        this._textField.addEventListener("click", function() { editor._updateEditorState });
 
-        this.textField.addEventListener("keydown", function(e) {
+        this._textField.addEventListener("keydown", function(e) {
             var BACKSPACE = 8;
             if(e.which == BACKSPACE) {
-                if(editor.textField.innerText.length == 1) { // prevent that first paragraph gets deleted
+                if(editor._textField.innerText.length == 1) { // prevent that first paragraph gets deleted
                     e.preventDefault();
 
                     return false;
                 }
             }
         });
-        this.textField.addEventListener("keyup", function(e) {
+        this._textField.addEventListener("keyup", function(e) {
             editor._handleTextEntered();
         });
 
@@ -42,11 +42,11 @@ var editor = {
         // see https://stackoverflow.com/a/36373967
         this._executeCommand("DefaultParagraphSeparator", "p");
 
-        this.textField.innerHTML = ""; // clear previous content
+        this._textField.innerHTML = ""; // clear previous content
 
         var newElement = document.createElement("p");
         newElement.innerHTML = "&#8203";
-        this.textField.appendChild(newElement);
+        this._textField.appendChild(newElement);
 
         var selection=document.getSelection();
         var range=document.createRange();
@@ -57,7 +57,7 @@ var editor = {
 
 
     _handleTextEntered: function() {
-        if(this.getHtml() == "<p><br></p>") { // SwiftKey, when deleting all entered text, inserts a pure "<br>" therefore check for <p>​&#8203</p> doesn't work anymore
+        if(this._getHtml() == "<p><br></p>") { // SwiftKey, when deleting all entered text, inserts a pure "<br>" therefore check for <p>​&#8203</p> doesn't work anymore
             this._ensureEditorInsertsParagraphWhenPressingEnter();
         }
 
@@ -67,39 +67,39 @@ var editor = {
     },
 
     _textChanged: function() {
-        if(this.informOfEachTextChange) {
+        if(this._informOfEachTextChange) {
             // wait some time after _updateEditorState() has changed window.location.href before _informApplicationTextChanged() also manipulates it
             setTimeout(editor._informApplicationTextChanged, 100);
         }
     },
 
     _informApplicationTextChanged: function() {
-        window.location.href = "text-changed-callback://" + editor.getEncodedHtml();
+        window.location.href = "text-changed-callback://" + editor._getEncodedHtml();
     },
 
 
-    getHtml: function() {
-        return this.textField.innerHTML;
+    _getHtml: function() {
+        return this._textField.innerHTML;
     },
 
-    getEncodedHtml: function() {
-        return encodeURI(this.getHtml());
+    _getEncodedHtml: function() {
+        return encodeURI(this._getHtml());
     },
 
     setHtml: function(html) {
         if(html.length != 0) {
-            this.textField.innerHTML = decodeURIComponent(html.replace(/\+/g, '%20'));
+            this._textField.innerHTML = decodeURIComponent(html.replace(/\+/g, '%20'));
         }
         else {
             this._ensureEditorInsertsParagraphWhenPressingEnter();
         }
 
         this.didHtmlChange = false;
-        this.htmlSetByApplication = this.textField.innerHTML;
+        this._htmlSetByApplication = this._textField.innerHTML;
     },
 
-    setInformOfEachTextChange: function(informOfEachTextChange) {
-        this.informOfEachTextChange = informOfEachTextChange
+    setInformOfEachTextChange: function(_informOfEachTextChange) {
+        this._informOfEachTextChange = _informOfEachTextChange
     },
     
     
@@ -257,22 +257,22 @@ var editor = {
     /*      Editor default settings     */
     
     setBaseTextColor: function(color) {
-        this.textField.style.color  = color;
+        this._textField.style.color  = color;
     },
 
     setBaseFontFamily: function(fontFamily) {
-        this.textField.style.fontFamily = fontFamily;
+        this._textField.style.fontFamily = fontFamily;
     },
     
     setBaseFontSize: function(size) {
-        this.textField.style.fontSize = size;
+        this._textField.style.fontSize = size;
     },
     
     setPadding: function(left, top, right, bottom) {
-      this.textField.style.paddingLeft = left;
-      this.textField.style.paddingTop = top;
-      this.textField.style.paddingRight = right;
-      this.textField.style.paddingBottom = bottom;
+      this._textField.style.paddingLeft = left;
+      this._textField.style.paddingTop = top;
+      this._textField.style.paddingRight = right;
+      this._textField.style.paddingBottom = bottom;
     },
 
     // TODO: is this one ever user?
@@ -281,45 +281,45 @@ var editor = {
     },
     
     setBackgroundImage: function(image) {
-        this.textField.style.backgroundImage = image;
+        this._textField.style.backgroundImage = image;
     },
     
     setWidth: function(size) {
-        this.textField.style.minWidth = size;
+        this._textField.style.minWidth = size;
     },
     
     setHeight: function(size) {
-        this.textField.style.height = size;
+        this._textField.style.height = size;
     },
     
     setTextAlign: function(align) {
-        this.textField.style.textAlign = align;
+        this._textField.style.textAlign = align;
     },
     
     setVerticalAlign: function(align) {
-        this.textField.style.verticalAlign = align;
+        this._textField.style.verticalAlign = align;
     },
     
     setPlaceholder: function(placeholder) {
-        this.textField.setAttribute("placeholder", placeholder);
+        this._textField.setAttribute("placeholder", placeholder);
     },
     
     setInputEnabled: function(inputEnabled) {
-        this.textField.contentEditable = String(inputEnabled);
+        this._textField.contentEditable = String(inputEnabled);
     },
 
     focus: function() {
         var range = document.createRange();
-        range.selectNodeContents(this.textField);
+        range.selectNodeContents(this._textField);
         range.collapse(false);
         var selection = window.getSelection();
         selection.removeAllRanges();
         selection.addRange(range);
-        this.textField.focus();
+        this._textField.focus();
     },
 
     blurFocus: function() {
-        this.textField.blur();
+        this._textField.blur();
     },
 
 
@@ -342,7 +342,7 @@ var editor = {
     _updateEditorState: function() {
         var commandStates = this._determineCommandStates();
 
-        var didHtmlChange = this.htmlSetByApplication != null && this.htmlSetByApplication != this.getHtml();
+        var didHtmlChange = this._htmlSetByApplication != null && this._htmlSetByApplication != this._getHtml();
 
         var editorState = {
             'didHtmlChange': didHtmlChange,
@@ -403,7 +403,7 @@ var editor = {
         if(selection.rangeCount > 0) {
           var range = selection.getRangeAt(0);
 
-          this.currentSelection = {
+          this._currentSelection = {
               "startContainer": range.startContainer,
               "startOffset": range.startOffset,
               "endContainer": range.endContainer,
@@ -417,8 +417,8 @@ var editor = {
         selection.removeAllRanges();
 
         var range = document.createRange();
-        range.setStart(this.currentSelection.startContainer, this.currentSelection.startOffset);
-        range.setEnd(this.currentSelection.endContainer, this.currentSelection.endOffset);
+        range.setStart(this._currentSelection.startContainer, this._currentSelection.startOffset);
+        range.setEnd(this._currentSelection.endContainer, this._currentSelection.endOffset);
 
         selection.addRange(range);
     },
