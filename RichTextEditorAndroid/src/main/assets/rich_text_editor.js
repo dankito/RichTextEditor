@@ -58,12 +58,18 @@ var editor = {
         this._updateCommandStates();
 
         if(this.informOfEachTextChange) {
-            // wait some time after _updateCommandStates() has changed window.location.href before textChangedCallback() also manipulates it
-            setTimeout(editor.textChangedCallback, 100);
+            // wait some time after _updateCommandStates() has changed window.location.href before _informApplicationTextChanged() also manipulates it
+            setTimeout(editor._textChanged, 100);
         }
     },
 
-    textChangedCallback: function() {
+    _textChanged: function() {
+        if(this.informOfEachTextChange) {
+            this._informApplicationTextChanged()
+        }
+    },
+
+    _informApplicationTextChanged: function() {
         window.location.href = "text-changed-callback://" + editor.getEncodedHtml();
     },
 
@@ -216,9 +222,7 @@ var editor = {
            sel.addRange(range);
        }
 
-       if(this.informOfEachTextChange) {
-          this.textChangedCallback();
-       }
+       this._textChanged();
     },
 
     insertImage: function(url, alt) {
