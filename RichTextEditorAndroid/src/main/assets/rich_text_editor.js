@@ -3,6 +3,8 @@ var editor = {
 
     textField: document.getElementById('editor'),
 
+    htmlSetByApplication: null,
+
     currentSelection: {
         "startContainer": 0,
         "startOffset": 0,
@@ -33,11 +35,11 @@ var editor = {
             setTimeout(editor.textChangedCallback, 100);
         });
 
-        this.ensureEditorInsertsParagraphWhenPressingEnter();
+        this._ensureEditorInsertsParagraphWhenPressingEnter();
         this._updateCommandStates();
     },
 
-    ensureEditorInsertsParagraphWhenPressingEnter: function() {
+    _ensureEditorInsertsParagraphWhenPressingEnter: function() {
         // see https://stackoverflow.com/a/36373967
         this._executeCommand("DefaultParagraphSeparator", "p");
 
@@ -68,6 +70,9 @@ var editor = {
 
     setHtml: function(html) {
         this.textField.innerHTML = decodeURIComponent(html.replace(/\+/g, '%20'));
+
+        this.didHtmlChange = false;
+        this.htmlSetByApplication = this.textField.innerHTML;
     },
     
     
@@ -339,7 +344,15 @@ var editor = {
         this._determineStateForCommand('insertHorizontalRule', states);
         this._determineStateForCommand('insertHTML', states);
 
-        window.location.href = "command-states-changed-callback://" + encodeURI(JSON.stringify(states));
+
+        var didHtmlChange = this.htmlSetByApplication != null && this.htmlSetByApplication != this.getHtml();
+
+        var editorState = {
+            'didHtmlChange': didHtmlChange,
+            'commandStates': states
+        };
+
+        window.location.href = "editor-state-changed-callback://" + encodeURI(JSON.stringify(editorState));
     },
 
     _determineStateForCommand: function(command, states) {

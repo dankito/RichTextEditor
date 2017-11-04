@@ -29,7 +29,6 @@ import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.util.*
-import kotlin.collections.HashMap
 import kotlin.concurrent.thread
 
 
@@ -40,7 +39,7 @@ class RichTextEditor : RelativeLayout {
 
         private const val TextChangedCallbackScheme = "text-changed-callback://"
 
-        private const val CommandStatesChangedCallbackScheme = "command-states-changed-callback://"
+        private const val EditorStateChangedCallbackScheme = "editor-state-changed-callback://"
 
         private val log = LoggerFactory.getLogger(RichTextEditor::class.java)
     }
@@ -63,11 +62,14 @@ class RichTextEditor : RelativeLayout {
     private val loadedListeners = mutableSetOf<() -> Unit>()
 
     private val objectMapper = ObjectMapper()
-    private val commandStatesType = objectMapper.typeFactory.constructParametricType(HashMap::class.java, Commands::class.java, CommandState::class.java)
 
     private var commandStates: Map<Commands, CommandState> = mapOf()
 
     private val commandStatesChangedListeners = mutableSetOf<(Map<Commands, CommandState>) -> Unit>()
+
+    private var didHtmlChange = false
+
+    private val didHtmlChangeListeners = mutableSetOf<(Boolean) -> Unit>()
 
     private val htmlChangedListeners = mutableSetOf<(String) -> Unit>()
 
@@ -484,8 +486,8 @@ class RichTextEditor : RelativeLayout {
             textChanged(decodedUrl.substring(TextChangedCallbackScheme.length))
             return true
         }
-        else if(TextUtils.indexOf(url, CommandStatesChangedCallbackScheme) == 0) {
-            commandStatesChanged(decodedUrl.substring(CommandStatesChangedCallbackScheme.length))
+        else if(TextUtils.indexOf(url, EditorStateChangedCallbackScheme) == 0) {
+            editorStateChanged(decodedUrl.substring(EditorStateChangedCallbackScheme.length))
             return true
         }
 
@@ -498,15 +500,25 @@ class RichTextEditor : RelativeLayout {
         htmlChangedListeners.forEach { it.invoke(html) }
     }
 
-    private fun commandStatesChanged(statesString: String) {
+    private fun editorStateChanged(statesString: String) {
         try {
-            val commandStates = objectMapper.readValue<MutableMap<Commands, CommandState>>(statesString, commandStatesType)
+            val editorState = objectMapper.readValue<EditorState>(statesString, EditorState::class.java)
 
-            determineDerivedCommandStates(commandStates)
+            if(this.didHtmlChange != editorState.didHtmlChange) {
+                this.didHtmlChange = editorState.didHtmlChange
+                didHtmlChangeListeners.forEach { it(didHtmlChange) }
+            }
 
-            this.commandStates = commandStates
-            commandStatesChangedListeners.forEach { it.invoke(this.commandStates) }
+            handleRetrievedCommandStates(editorState.commandStates)
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
+    }
+
+    private fun handleRetrievedCommandStates(commandStates: MutableMap<Commands, CommandState>) {
+        determineDerivedCommandStates(commandStates)
+
+        this.commandStates = commandStates
+
+        commandStatesChangedListeners.forEach { it.invoke(this.commandStates) }
     }
 
     private fun determineDerivedCommandStates(commandStates: MutableMap<Commands, CommandState>) {
@@ -540,6 +552,10 @@ class RichTextEditor : RelativeLayout {
         listener.invoke(commandStates)
     }
 
+
+    fun addDidHtmlChangeListener(listener: (Boolean) -> Unit) {
+        didHtmlChangeListeners.add(listener)
+    }
 
     fun addHtmlChangedListener(listener: (String) -> Unit) {
         htmlChangedListeners.add(listener)
