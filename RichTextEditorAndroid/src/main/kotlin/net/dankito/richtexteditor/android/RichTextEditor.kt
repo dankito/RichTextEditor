@@ -563,6 +563,8 @@ class RichTextEditor : RelativeLayout {
             paddingToSetOnStart = null
         }
 
+        setEditorFontFamily("serif")
+
         for(listener in HashSet<() -> Unit>(loadedListeners)) {
             thread { callInitializationListener(listener) }
         }
