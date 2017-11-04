@@ -5,6 +5,8 @@ var editor = {
 
     htmlSetByApplication: null,
 
+    informOfEachTextChange: true,
+
     currentSelection: {
         "startContainer": 0,
         "startOffset": 0,
@@ -29,10 +31,7 @@ var editor = {
             }
         });
         this.textField.addEventListener("keyup", function(e) {
-            editor._updateCommandStates();
-
-            // wait some time after _updateCommandStates() has changed window.location.href before textChangedCallback() also manipulates it
-            setTimeout(editor.textChangedCallback, 100);
+            editor._handleTextEntered();
         });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
@@ -55,6 +54,15 @@ var editor = {
     },
 
 
+    _handleTextEntered: function() {
+        this._updateCommandStates();
+
+        if(this.informOfEachTextChange) {
+            // wait some time after _updateCommandStates() has changed window.location.href before textChangedCallback() also manipulates it
+            setTimeout(editor.textChangedCallback, 100);
+        }
+    },
+
     textChangedCallback: function() {
         window.location.href = "text-changed-callback://" + editor.getEncodedHtml();
     },
@@ -73,6 +81,10 @@ var editor = {
 
         this.didHtmlChange = false;
         this.htmlSetByApplication = this.textField.innerHTML;
+    },
+
+    setInformOfEachTextChange: function(informOfEachTextChange) {
+        this.informOfEachTextChange = informOfEachTextChange
     },
     
     
@@ -204,7 +216,9 @@ var editor = {
            sel.addRange(range);
        }
 
-       this.textChangedCallback();
+       if(this.informOfEachTextChange) {
+          this.textChangedCallback();
+       }
     },
 
     insertImage: function(url, alt) {
