@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Looper
@@ -54,6 +55,8 @@ class RichTextEditor : RelativeLayout {
     private val webView = WebView(context)
 
     private var html: String = ""
+
+    private var paddingToSetOnStart: Rect? = null
 
     private var isLoaded = false
 
@@ -280,8 +283,13 @@ class RichTextEditor : RelativeLayout {
     }
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
-        webView.setPadding(left, top, right, bottom)
-        executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
+        if(isLoaded) {
+            webView.setPadding(left, top, right, bottom)
+            executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
+        }
+        else { // on older devices setPadding() is called in parent class' constructor -> webView is not set yet
+            paddingToSetOnStart = Rect(left, top, right, bottom)
+        }
     }
 
     override fun setPaddingRelative(start: Int, top: Int, end: Int, bottom: Int) {
@@ -546,6 +554,11 @@ class RichTextEditor : RelativeLayout {
         log.info("RichTextEditor is now loaded")
 
         isLoaded = true
+
+        paddingToSetOnStart?.let {
+            setPadding(it.left, it.top, it.right, it.bottom)
+            paddingToSetOnStart = null
+        }
 
         for(listener in HashSet<() -> Unit>(loadedListeners)) {
             thread { callInitializationListener(listener) }
