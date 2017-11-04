@@ -491,7 +491,6 @@ class RichTextEditor : RelativeLayout {
 
             determineDerivedCommandStates(commandStates)
 
-            log.info("Command states are now $commandStates")
             this.commandStates = commandStates
             commandStatesChangedListeners.forEach { it.invoke(this.commandStates) }
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
