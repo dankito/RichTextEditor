@@ -288,7 +288,10 @@ class RichTextEditor : RelativeLayout {
             executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
         }
         else { // on older devices setPadding() is called in parent class' constructor -> webView is not set yet
-            paddingToSetOnStart = Rect(left, top, right, bottom)
+            // don't know why but setPadding() is called multiple times, last times with all values set to 0 and therefore overwriting correct values
+            if(paddingToSetOnStart == null || (paddingToSetOnStart?.left == 0 && paddingToSetOnStart?.top == 0 && paddingToSetOnStart?.right == 0 && paddingToSetOnStart?.bottom == 0)) {
+                paddingToSetOnStart = Rect(left, top, right, bottom)
+            }
         }
     }
 
