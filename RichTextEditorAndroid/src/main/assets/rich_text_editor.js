@@ -18,7 +18,7 @@ var editor = {
     init: function() {
         document.addEventListener("selectionchange", function() { editor._backupRange(); });
 
-        this._textField.addEventListener("click", function() { editor._updateEditorState });
+        this._textField.addEventListener("click", function() { editor._updateEditorState() });
 
         this._textField.addEventListener("keydown", function(e) {
             var BACKSPACE = 8;
