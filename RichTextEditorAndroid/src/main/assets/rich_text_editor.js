@@ -220,9 +220,9 @@ var editor = {
            range.surroundContents(el);
            sel.removeAllRanges();
            sel.addRange(range);
-       }
 
-       this._textChanged();
+           this._textChanged();
+       }
     },
 
     insertImage: function(url, alt) {
@@ -238,7 +238,10 @@ var editor = {
     insertHtml: function(html) {
         this._backupRange();
         this._restoreRange();
+
         document.execCommand('insertHTML', false, html);
+
+        this._textChanged();
     },
     
     
