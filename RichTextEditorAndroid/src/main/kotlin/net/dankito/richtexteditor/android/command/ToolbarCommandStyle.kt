@@ -32,6 +32,8 @@ data class ToolbarCommandStyle(
         val DefaultDisabledTintColor = Color.argb(97, 0, 0, 0) // see https://material.io/guidelines/style/color.html#color-usability: Dark text on light backgrounds
 
         const val DefaultIsActivatedColor = Color.DKGRAY
+
+        const val GroupDefaultMarginRightDp = 12
     }
 
 }
