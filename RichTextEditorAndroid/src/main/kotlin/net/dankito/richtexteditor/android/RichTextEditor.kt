@@ -275,6 +275,7 @@ class RichTextEditor : RelativeLayout {
     }
 
     fun setEditorFontSize(px: Int) {
+        webView.settings.defaultFontSize = px
         executeEditorJavaScriptFunction("setBaseFontSize('${px}px');")
     }
 
