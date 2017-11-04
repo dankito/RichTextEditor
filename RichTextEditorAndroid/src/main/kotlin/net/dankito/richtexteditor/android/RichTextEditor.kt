@@ -271,6 +271,7 @@ class RichTextEditor : RelativeLayout {
     }
 
     fun setEditorFontFamily(fontFamily: String) {
+        webView.settings.standardFontFamily = fontFamily
         executeEditorJavaScriptFunction("setBaseFontFamily('$fontFamily');")
     }
 
