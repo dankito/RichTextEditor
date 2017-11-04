@@ -18,7 +18,7 @@ var editor = {
     init: function() {
         document.addEventListener("selectionchange", function() { editor._backupRange(); });
 
-        this.textField.addEventListener("click", function() { editor._updateCommandStates });
+        this.textField.addEventListener("click", function() { editor._updateEditorState });
 
         this.textField.addEventListener("keydown", function(e) {
             var BACKSPACE = 8;
@@ -35,7 +35,7 @@ var editor = {
         });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
-        this._updateCommandStates();
+        this._updateEditorState();
     },
 
     _ensureEditorInsertsParagraphWhenPressingEnter: function() {
@@ -55,10 +55,10 @@ var editor = {
 
 
     _handleTextEntered: function() {
-        this._updateCommandStates();
+        this._updateEditorState();
 
         if(this.informOfEachTextChange) {
-            // wait some time after _updateCommandStates() has changed window.location.href before _informApplicationTextChanged() also manipulates it
+            // wait some time after _updateEditorState() has changed window.location.href before _informApplicationTextChanged() also manipulates it
             setTimeout(editor._textChanged, 100);
         }
     },
@@ -326,58 +326,58 @@ var editor = {
     _executeCommand: function(command, parameter) {
         document.execCommand(command, false, parameter);
 
-        this._updateCommandStates();
+        this._updateEditorState();
     },
 
 
-    _updateCommandStates: function() {
-        var states = {};
+    _updateEditorState: function() {
+        var commandStates = {};
 
-        this._determineStateForCommand('undo', states);
-        this._determineStateForCommand('redo', states);
+        this._determineStateForCommand('undo', commandStates);
+        this._determineStateForCommand('redo', commandStates);
 
-        this._determineStateForCommand('bold', states);
-        this._determineStateForCommand('italic', states);
-        this._determineStateForCommand('underline', states);
-        this._determineStateForCommand('subscript', states);
-        this._determineStateForCommand('superscript', states);
-        this._determineStateForCommand('strikeThrough', states);
+        this._determineStateForCommand('bold', commandStates);
+        this._determineStateForCommand('italic', commandStates);
+        this._determineStateForCommand('underline', commandStates);
+        this._determineStateForCommand('subscript', commandStates);
+        this._determineStateForCommand('superscript', commandStates);
+        this._determineStateForCommand('strikeThrough', commandStates);
 
-        this._determineStateForCommand('foreColor', states);
-        this._determineStateForCommand('backColor', states);
+        this._determineStateForCommand('foreColor', commandStates);
+        this._determineStateForCommand('backColor', commandStates);
 
-        this._determineStateForCommand('fontName', states);
-        this._determineStateForCommand('fontSize', states);
+        this._determineStateForCommand('fontName', commandStates);
+        this._determineStateForCommand('fontSize', commandStates);
 
-        this._determineStateForCommand('formatBlock', states);
-        this._determineStateForCommand('removeFormat', states);
+        this._determineStateForCommand('formatBlock', commandStates);
+        this._determineStateForCommand('removeFormat', commandStates);
 
-        this._determineStateForCommand('justifyLeft', states);
-        this._determineStateForCommand('justifyCenter', states);
-        this._determineStateForCommand('justifyRight', states);
-        this._determineStateForCommand('justifyFull', states);
+        this._determineStateForCommand('justifyLeft', commandStates);
+        this._determineStateForCommand('justifyCenter', commandStates);
+        this._determineStateForCommand('justifyRight', commandStates);
+        this._determineStateForCommand('justifyFull', commandStates);
 
-        this._determineStateForCommand('indent', states);
-        this._determineStateForCommand('outdent', states);
+        this._determineStateForCommand('indent', commandStates);
+        this._determineStateForCommand('outdent', commandStates);
 
-        this._determineStateForCommand('insertUnorderedList', states);
-        this._determineStateForCommand('insertOrderedList', states);
-        this._determineStateForCommand('insertHorizontalRule', states);
-        this._determineStateForCommand('insertHTML', states);
+        this._determineStateForCommand('insertUnorderedList', commandStates);
+        this._determineStateForCommand('insertOrderedList', commandStates);
+        this._determineStateForCommand('insertHorizontalRule', commandStates);
+        this._determineStateForCommand('insertHTML', commandStates);
 
 
         var didHtmlChange = this.htmlSetByApplication != null && this.htmlSetByApplication != this.getHtml();
 
         var editorState = {
             'didHtmlChange': didHtmlChange,
-            'commandStates': states
+            'commandStates': commandStates
         };
 
         window.location.href = "editor-state-changed-callback://" + encodeURI(JSON.stringify(editorState));
     },
 
-    _determineStateForCommand: function(command, states) {
-        states[command.toUpperCase()] = {
+    _determineStateForCommand: function(command, commandStates) {
+        commandStates[command.toUpperCase()] = {
             'executable': document.queryCommandEnabled(command),
             'value': document.queryCommandValue(command)
         }
