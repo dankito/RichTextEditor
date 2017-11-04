@@ -23,7 +23,7 @@ data class ToolbarCommandStyle(
 
         const val DefaultHeightDp = ViewGroup.LayoutParams.MATCH_PARENT
 
-        const val DefaultMarginRightDp = 4
+        const val DefaultMarginRightDp = 1
 
         const val DefaultPaddingDp = 4
 
