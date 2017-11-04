@@ -12,8 +12,6 @@ var editor = {
 
 
     init: function() {
-        this.textField.addEventListener("input", this.textChangedCallback);
-
         document.addEventListener("selectionchange", function() { editor._backupRange(); });
 
         this.textField.addEventListener("click", function() { editor._updateCommandStates });
@@ -30,6 +28,9 @@ var editor = {
         });
         this.textField.addEventListener("keyup", function(e) {
             editor._updateCommandStates();
+
+            // wait some time after _updateCommandStates() has changed window.location.href before textChangedCallback() also manipulates it
+            setTimeout(editor.textChangedCallback, 100);
         });
 
         this.ensureEditorInsertsParagraphWhenPressingEnter();
