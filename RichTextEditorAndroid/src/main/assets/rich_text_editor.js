@@ -42,6 +42,8 @@ var editor = {
         // see https://stackoverflow.com/a/36373967
         this._executeCommand("DefaultParagraphSeparator", "p");
 
+        this.textField.innerHTML = ""; // clear previous content
+
         var newElement = document.createElement("p");
         newElement.innerHTML = "&#8203";
         this.textField.appendChild(newElement);
@@ -55,6 +57,10 @@ var editor = {
 
 
     _handleTextEntered: function() {
+        if(this.getHtml() == "<p><br></p>") { // SwiftKey, when deleting all entered text, inserts a pure "<br>" therefore check for <p>​&#8203</p> doesn't work anymore
+            this._ensureEditorInsertsParagraphWhenPressingEnter();
+        }
+
         this._updateEditorState();
 
         this._textChanged();
@@ -81,7 +87,12 @@ var editor = {
     },
 
     setHtml: function(html) {
-        this.textField.innerHTML = decodeURIComponent(html.replace(/\+/g, '%20'));
+        if(html.length != 0) {
+            this.textField.innerHTML = decodeURIComponent(html.replace(/\+/g, '%20'));
+        }
+        else {
+            this._ensureEditorInsertsParagraphWhenPressingEnter();
+        }
 
         this.didHtmlChange = false;
         this.htmlSetByApplication = this.textField.innerHTML;
