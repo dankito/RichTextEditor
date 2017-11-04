@@ -57,15 +57,13 @@ var editor = {
     _handleTextEntered: function() {
         this._updateEditorState();
 
-        if(this.informOfEachTextChange) {
-            // wait some time after _updateEditorState() has changed window.location.href before _informApplicationTextChanged() also manipulates it
-            setTimeout(editor._textChanged, 100);
-        }
+        this._textChanged();
     },
 
     _textChanged: function() {
         if(this.informOfEachTextChange) {
-            this._informApplicationTextChanged()
+            // wait some time after _updateEditorState() has changed window.location.href before _informApplicationTextChanged() also manipulates it
+            setTimeout(editor._informApplicationTextChanged, 100);
         }
     },
 
