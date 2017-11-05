@@ -4,7 +4,7 @@ import android.graphics.Color
 import android.widget.ImageView
 import org.slf4j.LoggerFactory
 
-abstract class ColorCommand(defaultColor: Int, command: Commands, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class ColorCommand(defaultColor: Int, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
 
     companion object {
@@ -47,10 +47,10 @@ abstract class ColorCommand(defaultColor: Int, command: Commands, iconResourceId
     }
 
     protected open fun getColorValueForInherit(): Int? {
-        if(command == Commands.FORECOLOR) {
+        if(command == Command.FORECOLOR) {
             return Color.BLACK // TODO: is this really true?
         }
-        else if(command == Commands.BACKCOLOR) {
+        else if(command == Command.BACKCOLOR) {
             return Color.TRANSPARENT
         }
 

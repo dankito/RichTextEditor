@@ -6,7 +6,7 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditImageDialog
 
 
-class InsertImageCommand : ToolbarCommand(Commands.INSERTIMAGE, R.drawable.ic_insert_photo_white_48dp) {
+class InsertImageCommand : ToolbarCommand(Command.INSERTIMAGE, R.drawable.ic_insert_photo_white_48dp) {
 
 
     override fun executeCommand(editor: RichTextEditor) {

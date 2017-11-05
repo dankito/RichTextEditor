@@ -3,7 +3,7 @@ package net.dankito.richtexteditor.android.command
 import android.widget.ImageView
 
 
-abstract class ActiveStateToolbarCommand(command: Commands, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class ActiveStateToolbarCommand(command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
 
 

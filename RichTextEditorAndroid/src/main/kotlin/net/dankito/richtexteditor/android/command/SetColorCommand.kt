@@ -4,7 +4,7 @@ import com.azeesoft.lib.colorpicker.ColorPickerDialog
 import net.dankito.richtexteditor.android.RichTextEditor
 
 
-abstract class SetColorCommand(defaultColor: Int, command: Commands, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class SetColorCommand(defaultColor: Int, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ColorCommand(defaultColor, command, iconResourceId, style, commandExecutedListener) {
 
 

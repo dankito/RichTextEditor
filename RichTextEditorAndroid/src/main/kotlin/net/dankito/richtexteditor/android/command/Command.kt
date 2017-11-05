@@ -1,7 +1,7 @@
 package net.dankito.richtexteditor.android.command
 
 
-enum class Commands {
+enum class Command {
     UNDO,
     REDO,
     FORECOLOR,

@@ -5,7 +5,7 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import java.util.*
 
 
-class SetTextFormatCommand : SelectValueCommand(Commands.FORMATBLOCK, R.drawable.ic_text_format_white_48dp) {
+class SetTextFormatCommand : SelectValueCommand(Command.FORMATBLOCK, R.drawable.ic_text_format_white_48dp) {
 
 
     override fun initValuesDisplayTexts(): List<CharSequence> {

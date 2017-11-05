@@ -4,7 +4,7 @@ import android.widget.ImageView
 import net.dankito.richtexteditor.android.RichTextEditor
 
 
-abstract class ToolbarCommand(val command: Commands,
+abstract class ToolbarCommand(val command: Command,
                               val iconResourceId: Int,
                               val style: ToolbarCommandStyle = ToolbarCommandStyle(),
                               val commandExecutedListener: (() -> Unit)? = null) {
@@ -31,7 +31,7 @@ abstract class ToolbarCommand(val command: Commands,
     abstract protected fun executeCommand(editor: RichTextEditor)
 
 
-    private fun commandStatesUpdated(commandStates: Map<Commands, CommandState>) {
+    private fun commandStatesUpdated(commandStates: Map<Command, CommandState>) {
         commandStates[command]?.let { commandState ->
             commandView?.let { commandView ->
                 showCommandExecutableState(commandView, commandState.executable)
