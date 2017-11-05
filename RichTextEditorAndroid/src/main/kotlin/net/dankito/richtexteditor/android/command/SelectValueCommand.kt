@@ -7,7 +7,7 @@ import net.dankito.richtexteditor.android.toolbar.SelectValueView
 
 
 abstract class SelectValueCommand(command: Commands, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
-    : Command(command, iconResourceId, style, commandExecutedListener) {
+    : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
 
     private var displayTexts: List<CharSequence>? = null
 

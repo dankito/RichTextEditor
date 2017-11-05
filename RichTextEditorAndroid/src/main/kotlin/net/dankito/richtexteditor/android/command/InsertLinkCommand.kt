@@ -6,7 +6,7 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditUrlDialog
 
 
-class InsertLinkCommand : Command(Commands.INSERTLINK, R.drawable.ic_insert_link_white_48dp) {
+class InsertLinkCommand : ToolbarCommand(Commands.INSERTLINK, R.drawable.ic_insert_link_white_48dp) {
 
 
     override fun executeCommand(editor: RichTextEditor) {

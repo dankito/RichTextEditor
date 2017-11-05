@@ -5,7 +5,7 @@ import android.widget.ImageView
 import org.slf4j.LoggerFactory
 
 abstract class ColorCommand(defaultColor: Int, command: Commands, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
-    : Command(command, iconResourceId, style, commandExecutedListener) {
+    : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
 
     companion object {
         private val log = LoggerFactory.getLogger(ColorCommand::class.java)

@@ -9,7 +9,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.command.Command
+import net.dankito.richtexteditor.android.command.ToolbarCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
 
 
@@ -29,12 +29,12 @@ open class EditorToolbar : HorizontalScrollView {
             setRichTextEditorOnCommands(value)
         }
 
-    private val commandInvokedListeners = ArrayList<(Command) -> Unit>()
+    private val commandInvokedListeners = ArrayList<(ToolbarCommand) -> Unit>()
 
 
     private lateinit var linearLayout: LinearLayout
 
-    private val commands = HashMap<Command, View>()
+    private val commands = HashMap<ToolbarCommand, View>()
 
     val commandStyle = ToolbarCommandStyle()
 
@@ -47,7 +47,7 @@ open class EditorToolbar : HorizontalScrollView {
     }
 
 
-    fun addCommand(command: Command) {
+    fun addCommand(command: ToolbarCommand) {
         val commandView = ImageButton(context)
         commandView.setOnClickListener { commandInvoked(command) }
 
@@ -61,7 +61,7 @@ open class EditorToolbar : HorizontalScrollView {
         applyCommandStyle(command, commandView)
     }
 
-    private fun applyCommandStyle(command: Command, commandView: ImageButton) {
+    private fun applyCommandStyle(command: ToolbarCommand, commandView: ImageButton) {
         commandView.setImageResource(command.iconResourceId)
         commandView.scaleType = ImageView.ScaleType.FIT_CENTER
 
@@ -141,7 +141,7 @@ open class EditorToolbar : HorizontalScrollView {
     }
 
 
-    private fun commandInvoked(command: Command) {
+    private fun commandInvoked(command: ToolbarCommand) {
         command.commandInvoked()
 
         commandInvokedListeners.forEach {
@@ -149,11 +149,11 @@ open class EditorToolbar : HorizontalScrollView {
         }
     }
 
-    fun addCommandInvokedListener(listener: (Command) -> Unit) {
+    fun addCommandInvokedListener(listener: (ToolbarCommand) -> Unit) {
         commandInvokedListeners.add(listener)
     }
 
-    fun removeCommandInvokedListener(listener: (Command) -> Unit) {
+    fun removeCommandInvokedListener(listener: (ToolbarCommand) -> Unit) {
         commandInvokedListeners.remove(listener)
     }
 

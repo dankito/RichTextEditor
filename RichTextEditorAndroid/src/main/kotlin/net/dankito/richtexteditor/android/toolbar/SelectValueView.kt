@@ -15,7 +15,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.ListView
 import android.widget.RelativeLayout
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.command.Command
+import net.dankito.richtexteditor.android.command.ToolbarCommand
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 
 
@@ -150,7 +150,7 @@ class SelectValueView: ListView {
         }
     }
 
-    private fun commandInvoked(command: Command) {
+    private fun commandInvoked(command: ToolbarCommand) {
         if(isVisible() && command != this.command) {
             hideView()
         }

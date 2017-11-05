@@ -4,7 +4,7 @@ import android.widget.ImageView
 
 
 abstract class ActiveStateToolbarCommand(command: Commands, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
-    : Command(command, iconResourceId, style, commandExecutedListener) {
+    : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
 
 
     override fun commandValueChanged(commandView: ImageView, commandValue: Any) {
