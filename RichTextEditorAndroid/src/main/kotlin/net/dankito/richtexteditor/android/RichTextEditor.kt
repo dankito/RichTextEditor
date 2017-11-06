@@ -15,14 +15,15 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.RelativeLayout
 import com.fasterxml.jackson.databind.ObjectMapper
-import net.dankito.richtexteditor.android.command.CommandState
 import net.dankito.richtexteditor.android.command.Command
+import net.dankito.richtexteditor.android.command.CommandState
 import net.dankito.richtexteditor.android.extensions.showKeyboard
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
@@ -92,6 +93,7 @@ class RichTextEditor : RelativeLayout {
         webView.webChromeClient = WebChromeClient()
         webView.webViewClient = editorWebViewClient
 
+        webView.settings.defaultTextEncodingName = "UTF-8" // otherwise non ASCII text doesn't get displayed correctly
         webView.settings.domStorageEnabled = true // otherwise images won't load
         webView.settings.loadsImagesAutomatically = true
         webView.settings.setSupportZoom(true)
@@ -439,7 +441,18 @@ class RichTextEditor : RelativeLayout {
     }
 
     private fun executeScriptOnUiThreadForAndroidPre19(javaScript: String) {
+        // webView.loadUrl() hides keyboard -> so if keyboard is shown ...
+        val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val isShowingKeyboard = inputManager.isActive(webView)
+
         webView.loadUrl("javascript:" + javaScript)
+
+        if(isShowingKeyboard) { // .. re-display it after evaluating JavaScript
+            webView.showKeyboard()
+            webView.postDelayed({
+                webView.showKeyboard()
+            }, 100)
+        }
     }
 
 
