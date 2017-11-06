@@ -85,7 +85,11 @@ var editor = {
         return encodeURI(this._getHtml());
     },
 
-    setHtml: function(html) {
+    setHtml: function(html, baseUrl) {
+        if(baseUrl) {
+            this._setBaseUrl(baseUrl);
+        }
+
         if(html.length != 0) {
             this._textField.innerHTML = decodeURIComponent(html.replace(/\+/g, '%20'));
         }
@@ -95,6 +99,21 @@ var editor = {
 
         this.didHtmlChange = false;
         this._htmlSetByApplication = this._textField.innerHTML;
+    },
+
+    _setBaseUrl: function(baseUrl) {
+        var baseElements = document.head.getElementsByTagName('base');
+        var baseElement = null;
+        if(baseElements.length > 0) {
+            baseElement = baseElements[0];
+        }
+        else {
+            var baseElement = document.createElement('base');
+            document.head.appendChild(baseElement); // don't know why but append() is not available
+        }
+
+        baseElement.setAttribute('href', baseUrl);
+        baseElement.setAttribute('target', '_blank');
     },
 
     setInformOfEachTextChange: function(_informOfEachTextChange) {

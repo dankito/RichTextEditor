@@ -129,9 +129,9 @@ class RichTextEditor : RelativeLayout {
         return html
     }
 
-    fun setHtml(html: String) {
+    fun setHtml(html: String, baseUrl: String? = null) {
         try {
-            executeEditorJavaScriptFunction("setHtml('" + URLEncoder.encode(html, "UTF-8") + "');")
+            executeEditorJavaScriptFunction("setHtml('" + URLEncoder.encode(html, "UTF-8") + "', '$baseUrl');")
 
             this.html = html
         } catch (e: UnsupportedEncodingException) {
