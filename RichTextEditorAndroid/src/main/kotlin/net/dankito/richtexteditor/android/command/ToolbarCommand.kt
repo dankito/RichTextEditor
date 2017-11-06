@@ -19,6 +19,8 @@ abstract class ToolbarCommand(val command: Command,
 
     var commandView: ImageView? = null
 
+    var isExecutable: Boolean = true
+
 
     fun commandInvoked() {
         editor?.let {
@@ -44,9 +46,14 @@ abstract class ToolbarCommand(val command: Command,
     }
 
     private fun showCommandExecutableState(commandView: ImageView, executable: Boolean) {
+        this.isExecutable = executable
         commandView.isEnabled = executable
 
-        if(executable) {
+        setIconTintColorToExecutableState(commandView, executable)
+    }
+
+    protected fun setIconTintColorToExecutableState(commandView: ImageView, isExecutable: Boolean) {
+        if(isExecutable) {
             commandView.setColorFilter(style.enabledTintColor)
         }
         else {
