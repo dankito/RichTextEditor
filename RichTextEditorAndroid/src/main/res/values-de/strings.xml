@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">RichTextEditorAndroid</string>
-
 
     <string name="dialog_edit_url_url_label">Link Adresse</string>
     <string name="dialog_edit_url_title_label">Anzeigetext</string>
