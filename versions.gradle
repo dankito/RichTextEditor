@@ -5,6 +5,7 @@ ext {
     CompileSdkVersion = 26
     MinSdkVersion = 15
     TargetSdkVersion = 26
+    BuildToolsVersion = '26.0.2'
     AppVersionCode = 1
     AppVersionName = "1.0"
 

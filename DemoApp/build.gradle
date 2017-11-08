@@ -9,6 +9,7 @@ apply from: '../versions.gradle' // remove when developing in library directly
 
 android {
     compileSdkVersion CompileSdkVersion
+    buildToolsVersion BuildToolsVersion
 
     defaultConfig {
         applicationId "net.dankito.richtexteditor.android"
@@ -32,17 +33,17 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    implementation project(':RichTextEditorAndroid')
+    compile project(':RichTextEditorAndroid')
 
-    implementation "org.slf4j:slf4j-android:$Slf4jVersion"
+    compile "org.slf4j:slf4j-android:$Slf4jVersion"
 
-    implementation "com.android.support:appcompat-v7:$AppCompatVersion"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.android.support:appcompat-v7:$AppCompatVersion"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    testImplementation "junit:junit:$JUnitVersion"
+    testCompile "junit:junit:$JUnitVersion"
 
-    androidTestImplementation "com.android.support.test:runner:$AndroidTestRunnerVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$EspressoVersion"
+    androidTestCompile "com.android.support.test:runner:$AndroidTestRunnerVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$EspressoVersion"
 }
