@@ -15,21 +15,21 @@ class SetFontNameCommand : SelectValueCommand(Command.FONTNAME, R.drawable.ic_fo
         val displayTexts = ArrayList<CharSequence>()
 
         fontInfos.forEach { fontInfo ->
-            val fontName = fontInfo.fontName
+            val fontFamily = fontInfo.fontFamily
 
-            var fontDisplayText = fontInfo.fontName
-            fontInfo.bestAliasPick?.let { alias ->
-                fontDisplayText = "$fontName ($alias)"
+            var fontDisplayText = fontInfo.fontFamily
+            fontInfo.fontName?.let { fontName ->
+                fontDisplayText = "$fontFamily ($fontName)"
             }
 
-            displayTexts.add(getHtmlSpanned("<font face=\"$fontName\">$fontDisplayText</font>"))
+            displayTexts.add(getHtmlSpanned("<font face=\"$fontFamily\">$fontDisplayText</font>"))
         }
 
         return displayTexts
     }
 
     override fun valueSelected(editor: RichTextEditor, position: Int) {
-        editor.setFontName(fontInfos[position].fontName)
+        editor.setFontName(fontInfos[position].fontFamily)
     }
 
 }
