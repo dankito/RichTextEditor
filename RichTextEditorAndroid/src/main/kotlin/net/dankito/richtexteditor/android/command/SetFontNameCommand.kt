@@ -19,7 +19,7 @@ class SetFontNameCommand : SelectValueCommand(Command.FONTNAME, R.drawable.ic_fo
 
             var fontDisplayText = fontInfo.fontName
             fontInfo.bestAliasPick?.let { alias ->
-                fontDisplayText = "$alias ($fontName)"
+                fontDisplayText = "$fontName ($alias)"
             }
 
             displayTexts.add(getHtmlSpanned("<font face=\"$fontName\">$fontDisplayText</font>"))
