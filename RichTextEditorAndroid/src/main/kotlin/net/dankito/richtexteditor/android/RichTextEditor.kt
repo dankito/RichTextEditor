@@ -38,8 +38,6 @@ class RichTextEditor : RelativeLayout {
     companion object {
         private const val EditorHtmlPath = "file:///android_asset/editor.html"
 
-        private const val TextChangedCallbackScheme = "text-changed-callback://"
-
         private const val EditorStateChangedCallbackScheme = "editor-state-changed-callback://"
 
         private val log = LoggerFactory.getLogger(RichTextEditor::class.java)
@@ -495,11 +493,7 @@ class RichTextEditor : RelativeLayout {
             return false
         }
 
-        if(TextUtils.indexOf(url, TextChangedCallbackScheme) == 0) {
-            textChanged(decodedUrl.substring(TextChangedCallbackScheme.length))
-            return true
-        }
-        else if(TextUtils.indexOf(url, EditorStateChangedCallbackScheme) == 0) {
+        if(TextUtils.indexOf(url, EditorStateChangedCallbackScheme) == 0) {
             editorStateChanged(decodedUrl.substring(EditorStateChangedCallbackScheme.length))
             return true
         }
@@ -507,20 +501,17 @@ class RichTextEditor : RelativeLayout {
         return false
     }
 
-    private fun textChanged(html: String) {
-        this.html = html
-
-        htmlChangedListeners.forEach { it.invoke(html) }
-    }
-
     private fun editorStateChanged(statesString: String) {
         try {
             val editorState = objectMapper.readValue<EditorState>(statesString, EditorState::class.java)
+            this.html = editorState.html
 
             if(this.didHtmlChange != editorState.didHtmlChange) {
                 this.didHtmlChange = editorState.didHtmlChange
                 didHtmlChangeListeners.forEach { it(didHtmlChange) }
             }
+
+            htmlChangedListeners.forEach { it.invoke(html) }
 
             handleRetrievedCommandStates(editorState.commandStates)
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }

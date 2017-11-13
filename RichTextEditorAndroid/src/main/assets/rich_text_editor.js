@@ -5,8 +5,6 @@ var editor = {
 
     _htmlSetByApplication: null,
 
-    _informOfEachTextChange: true,
-
     _currentSelection: {
         "startContainer": 0,
         "startOffset": 0,
@@ -61,19 +59,6 @@ var editor = {
         }
 
         this._updateEditorState();
-
-        this._textChanged();
-    },
-
-    _textChanged: function() {
-        if(this._informOfEachTextChange) {
-            // wait some time after _updateEditorState() has changed window.location.href before _informApplicationTextChanged() also manipulates it
-            setTimeout(editor._informApplicationTextChanged, 100);
-        }
-    },
-
-    _informApplicationTextChanged: function() {
-        window.location.href = "text-changed-callback://" + editor._getEncodedHtml();
     },
 
 
@@ -114,10 +99,6 @@ var editor = {
 
         baseElement.setAttribute('href', baseUrl);
         baseElement.setAttribute('target', '_blank');
-    },
-
-    setInformOfEachTextChange: function(_informOfEachTextChange) {
-        this._informOfEachTextChange = _informOfEachTextChange
     },
     
     
@@ -248,7 +229,7 @@ var editor = {
            sel.removeAllRanges();
            sel.addRange(range);
 
-           this._textChanged();
+           this._updateEditorState();
        }
     },
 
@@ -268,7 +249,7 @@ var editor = {
 
         document.execCommand('insertHTML', false, html);
 
-        this._textChanged();
+        this._updateEditorState();
     },
     
     
@@ -360,10 +341,12 @@ var editor = {
     _updateEditorState: function() {
         var commandStates = this._determineCommandStates();
 
-        var didHtmlChange = this._htmlSetByApplication != null && this._htmlSetByApplication != this._getHtml();
+        var html = this._getHtml();
+        var didHtmlChange = this._htmlSetByApplication != null && this._htmlSetByApplication != html;
 
         var editorState = {
             'didHtmlChange': didHtmlChange,
+            'html': html,
             'commandStates': commandStates
         };
 
