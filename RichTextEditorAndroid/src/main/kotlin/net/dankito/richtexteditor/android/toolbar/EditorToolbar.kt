@@ -49,6 +49,7 @@ open class EditorToolbar : HorizontalScrollView {
 
     fun addCommand(command: ToolbarCommand) {
         val commandView = ImageButton(context)
+        commandView.tag = command.command // TODO: this is bad, actually it's only needed for UI tests (don't introduce test code in production code)
         commandView.setOnClickListener { commandInvoked(command) }
 
         linearLayout.addView(commandView)
