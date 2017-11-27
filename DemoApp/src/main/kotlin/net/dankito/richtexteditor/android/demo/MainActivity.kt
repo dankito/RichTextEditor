@@ -23,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
 
+        // a little bit experimental, uncomment these if you don't like them (and you most certainly won't)
+        editor.setEditorBackgroundColor(Color.YELLOW)
+        editor.setEditorFontColor(Color.MAGENTA)
+        editor.setEditorFontFamily("cursive")
+
         editorToolbar = findViewById(R.id.editorToolbar) as AllCommandsEditorToolbar
         editorToolbar.editor = editor
 
