@@ -21,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         editorToolbar = findViewById(R.id.editorToolbar) as AllCommandsEditorToolbar
         editorToolbar.editor = editor
+
+        editor.postDelayed({
+            editor.focusEditorAndShowKeyboard()
+        }, 250)
     }
 
 }
