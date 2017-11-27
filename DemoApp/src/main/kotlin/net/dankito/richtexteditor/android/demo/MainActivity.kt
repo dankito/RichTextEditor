@@ -1,5 +1,6 @@
 package net.dankito.richtexteditor.android.demo
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import net.dankito.richtexteditor.android.RichTextEditor
@@ -18,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         editor = findViewById(R.id.editor) as RichTextEditor
+
+        editor.setEditorFontSize(20)
+        editor.setPadding((4 * resources.displayMetrics.density).toInt())
 
         editorToolbar = findViewById(R.id.editorToolbar) as AllCommandsEditorToolbar
         editorToolbar.editor = editor
