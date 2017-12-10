@@ -6,6 +6,9 @@
     <string name="dialog_edit_image_image_url_label">Bild URL</string>
     <string name="dialog_edit_image_alternate_text_label">Alternativtext (optional)</string>
 
+    <string name="dialog_select_text_color_title">Textfarbe wählen</string>
+    <string name="dialog_select_text_background_color_title">Texthintergrundfarbe wählen</string>
+
 
 
     <!--        Text formats            -->
