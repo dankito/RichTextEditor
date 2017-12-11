@@ -20,7 +20,7 @@ class ShowHideViewAnimator {
         playAnimation(view, true, yStart, yEnd, animationDurationMillis)
     }
 
-    fun playHideAnimation(view: View, yStart: Float = view.bottom.toFloat(), yEnd: Float = view.top.toFloat(), animationDurationMillis: Long = DefaultAnimationDurationMillis) {
+    fun playHideAnimation(view: View, yStart: Float = view.top.toFloat(), yEnd: Float = -1 * view.measuredHeight.toFloat(), animationDurationMillis: Long = DefaultAnimationDurationMillis) {
         playAnimation(view, false, yStart, yEnd, animationDurationMillis) {
             view.visibility = View.GONE
         }
