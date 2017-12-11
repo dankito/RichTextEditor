@@ -1,8 +1,5 @@
 package net.dankito.richtexteditor.android.toolbar
 
-import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
@@ -10,13 +7,12 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
 import android.widget.ListView
 import android.widget.RelativeLayout
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.command.ToolbarCommand
+import net.dankito.richtexteditor.android.animation.ShowHideViewAnimator
 import net.dankito.richtexteditor.android.command.SelectValueCommand
+import net.dankito.richtexteditor.android.command.ToolbarCommand
 
 
 
@@ -27,11 +23,6 @@ class SelectValueView: ListView {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init(context, attrs) }
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { init(context, attrs) }
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { init(context, attrs) }
-
-
-    companion object {
-        private const val AnimationDurationMillis = 250L
-    }
 
 
     var values: List<CharSequence> = ArrayList()
@@ -55,6 +46,8 @@ class SelectValueView: ListView {
     private var lastEditorHeight = 0
 
     private var setMaxHeightOnNextMeasurement = false
+
+    private val animator = ShowHideViewAnimator()
 
 
     private fun init(context: Context, attrs: AttributeSet?) {
@@ -223,34 +216,8 @@ class SelectValueView: ListView {
             toolbar.y > editor.y
 
     private fun playAnimation(show: Boolean, yStart: Float, yEnd: Float, animationEndListener: (() -> Unit)? = null) {
-        val yAnimator = ObjectAnimator
-                .ofFloat(this, View.Y, yStart, yEnd)
-                .setDuration(AnimationDurationMillis)
-        yAnimator.interpolator = if(show) AccelerateInterpolator() else DecelerateInterpolator()
-
-        val alphaAnimator = ObjectAnimator
-                .ofFloat(this, View.ALPHA, if(show) 0f else 1f, if(show) 1f else 0f)
-                .setDuration(AnimationDurationMillis)
-        alphaAnimator.interpolator = if(show) AccelerateInterpolator() else DecelerateInterpolator()
-
-        val animatorSet = AnimatorSet()
-
-        yAnimator.addListener(object : Animator.AnimatorListener {
-
-            override fun onAnimationStart(animation: Animator) { }
-
-            override fun onAnimationRepeat(animation: Animator) { }
-
-            override fun onAnimationCancel(animation: Animator) { }
-
-            override fun onAnimationEnd(animation: Animator) {
-                animationEndListener?.invoke()
-            }
-
-        })
-
-        animatorSet.playTogether(yAnimator, alphaAnimator)
-        animatorSet.start()
+        println("show = $show, yStart = $yStart, yEnd = $yEnd")
+        animator.playAnimation(this, show, yStart, yEnd, animationEndListener = animationEndListener)
     }
 
     private fun removeOnGlobalLayoutListener(layoutListener: ViewTreeObserver.OnGlobalLayoutListener?) {
