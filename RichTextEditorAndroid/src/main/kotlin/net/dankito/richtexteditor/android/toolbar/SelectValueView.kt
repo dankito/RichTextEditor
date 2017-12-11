@@ -47,6 +47,8 @@ class SelectValueView: ListView {
 
     private var setMaxHeightOnNextMeasurement = false
 
+    private var hasEditorHeightChanged = true
+
     private val animator = ShowHideViewAnimator()
 
 
@@ -102,6 +104,10 @@ class SelectValueView: ListView {
         this.editor = editor
         this.values = valuesDisplayTexts
         this.itemSelectedListener = itemSelectedListener
+
+        editor.viewTreeObserver.addOnGlobalLayoutListener {
+            hasEditorHeightChanged = editor.measuredHeight != lastEditorHeight // most probably due to keyboard show/hide
+        }
 
         var parent = selectValueCommand.commandView?.parent
 
@@ -185,7 +191,7 @@ class SelectValueView: ListView {
 
 
     private fun animateShowView() {
-        if(this.measuredHeight == 0) { // in this case we have to wait till height is determined -> set OnGlobalLayoutListener
+        if(this.measuredHeight == 0 || hasEditorHeightChanged) { // in this case we have to wait till height is determined -> set OnGlobalLayoutListener
             var layoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null // have to do it that complicated otherwise in OnGlobalLayoutListener we cannot access layoutListener variable
             layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
                 removeOnGlobalLayoutListener(layoutListener)
@@ -194,10 +200,13 @@ class SelectValueView: ListView {
             }
 
             this.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
+            this.invalidate()
         }
         else {
             animateShowViewAfterMeasuringHeight()
         }
+
+        hasEditorHeightChanged = false
     }
 
     private fun animateShowViewAfterMeasuringHeight() {
@@ -216,7 +225,6 @@ class SelectValueView: ListView {
             toolbar.y > editor.y
 
     private fun playAnimation(show: Boolean, yStart: Float, yEnd: Float, animationEndListener: (() -> Unit)? = null) {
-        println("show = $show, yStart = $yStart, yEnd = $yEnd")
         animator.playAnimation(this, show, yStart, yEnd, animationEndListener = animationEndListener)
     }
 
