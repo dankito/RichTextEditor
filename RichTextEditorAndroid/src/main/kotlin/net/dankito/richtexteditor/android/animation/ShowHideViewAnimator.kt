@@ -15,6 +15,17 @@ class ShowHideViewAnimator {
     }
 
 
+    fun playShowAnimation(view: View, yStart: Float = -1 * view.measuredHeight.toFloat(), yEnd: Float =  view.top.toFloat(), animationDurationMillis: Long = DefaultAnimationDurationMillis) {
+        view.visibility = View.VISIBLE
+        playAnimation(view, true, yStart, yEnd, animationDurationMillis)
+    }
+
+    fun playHideAnimation(view: View, yStart: Float = view.bottom.toFloat(), yEnd: Float = view.top.toFloat(), animationDurationMillis: Long = DefaultAnimationDurationMillis) {
+        playAnimation(view, false, yStart, yEnd, animationDurationMillis) {
+            view.visibility = View.GONE
+        }
+    }
+
     fun playAnimation(view: View, show: Boolean, yStart: Float, yEnd: Float, animationDurationMillis: Long = DefaultAnimationDurationMillis, animationEndListener: (() -> Unit)? = null) {
         val yAnimator = ObjectAnimator
                 .ofFloat(view, View.Y, yStart, yEnd)
