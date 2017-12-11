@@ -200,7 +200,6 @@ class SelectValueView: ListView {
             }
 
             this.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
-            this.invalidate()
         }
         else {
             animateShowViewAfterMeasuringHeight()
