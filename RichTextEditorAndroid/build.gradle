@@ -1,8 +1,26 @@
+group 'net.dankito.richtexteditor'
+version '1.0'
+def mavenArtifactId = "richtexteditor-android"
+
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+    }
+}
+
+
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'maven'
+apply plugin: 'signing'
+
 apply from: '../versions.gradle' // remove when developing in library directly
+
 
 
 repositories {
@@ -22,6 +40,10 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+    }
+
+    configurations {
+        javadocDeps
     }
 
     buildTypes {
@@ -52,8 +74,87 @@ dependencies {
     compile "com.android.support:appcompat-v7:$AppCompatVersion"
     compile "com.android.support:design:$AppCompatVersion"
 
+    javadocDeps "com.android.support:support-annotations:$AppCompatVersion"
+    javadocDeps 'com.nineoldandroids:library:2.4.0'
+    javadocDeps "com.android.support:support-v4:$AppCompatVersion"
+
     testCompile "junit:junit:$JUnitVersion"
 
     androidTestCompile "com.android.support.test:runner:$AndroidTestRunnerVersion"
     androidTestCompile "com.android.support.test.espresso:espresso-core:$EspressoVersion"
+}
+
+
+
+/*          publish to maven central            */
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.javadocDeps
+    failOnError false
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name mavenArtifactId
+                artifactId = mavenArtifactId
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description "WYSIWYG editor for Android supporting all common formatting options."
+                url 'https://github.com/dankito/RichTextEditor'
+
+                scm {
+                    connection 'scm:git:git://github.com/dankito/RichTextEditor.git'
+                    developerConnection 'scm:git:git@github.com:dankito/RichTextEditor.git'
+                    url 'https://github.com/dankito/RichTextEditor'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'dankito'
+                        name 'Christian Dankl'
+                        email 'maven@dankito.net'
+                    }
+                }
+            }
+        }
+    }
 }
