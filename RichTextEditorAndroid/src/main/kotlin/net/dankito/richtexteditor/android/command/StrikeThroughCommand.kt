@@ -4,7 +4,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 
 
-class StrikeThroughCommand : ActiveStateToolbarCommand(Command.STRIKETHROUGH, R.drawable.ic_format_strikethrough_white_48dp) {
+class StrikeThroughCommand(iconResourceId: Int = R.drawable.ic_format_strikethrough_white_48dp) : ActiveStateToolbarCommand(Command.STRIKETHROUGH, iconResourceId) {
 
     override fun executeCommand(editor: RichTextEditor) {
         editor.setStrikeThrough()

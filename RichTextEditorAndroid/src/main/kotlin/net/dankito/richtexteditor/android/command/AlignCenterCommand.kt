@@ -4,7 +4,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 
 
-class AlignCenterCommand : ActiveStateToolbarCommand(Command.JUSTIFYCENTER, R.drawable.ic_format_align_center_white_48dp) {
+class AlignCenterCommand(iconResourceId: Int = R.drawable.ic_format_align_center_white_48dp) : ActiveStateToolbarCommand(Command.JUSTIFYCENTER, iconResourceId) {
 
     override fun executeCommand(editor: RichTextEditor) {
         editor.setJustifyCenter()

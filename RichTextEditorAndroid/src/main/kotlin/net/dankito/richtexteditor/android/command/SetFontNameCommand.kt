@@ -5,7 +5,7 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.util.SystemFontsParser
 
 
-class SetFontNameCommand : SelectValueCommand(Command.FONTNAME, R.drawable.ic_font_download_white_48dp) {
+class SetFontNameCommand(iconResourceId: Int = R.drawable.ic_font_download_white_48dp) : SelectValueCommand(Command.FONTNAME, iconResourceId) {
 
 
     private val fontInfos = SystemFontsParser().parseSystemFonts()

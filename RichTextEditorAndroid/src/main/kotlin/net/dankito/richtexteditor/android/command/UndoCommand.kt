@@ -4,7 +4,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 
 
-class UndoCommand : ToolbarCommand(Command.UNDO, R.drawable.ic_undo_white_48dp) {
+class UndoCommand(iconResourceId: Int = R.drawable.ic_undo_white_48dp) : ToolbarCommand(Command.UNDO, iconResourceId) {
 
     override fun executeCommand(editor: RichTextEditor) {
         editor.undo()

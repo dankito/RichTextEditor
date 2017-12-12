@@ -4,7 +4,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import java.util.*
 
-class SetFontSizeCommand : SelectValueCommand(Command.FONTSIZE, R.drawable.ic_format_size_white_48dp) {
+class SetFontSizeCommand(iconResourceId: Int = R.drawable.ic_format_size_white_48dp) : SelectValueCommand(Command.FONTSIZE, iconResourceId) {
 
 
     override fun initValuesDisplayTexts(): List<CharSequence> {
