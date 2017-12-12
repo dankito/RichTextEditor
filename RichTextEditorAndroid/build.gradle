@@ -21,6 +21,9 @@ apply plugin: 'signing'
 
 apply from: '../versions.gradle' // remove when developing in library directly
 
+// So after executing uploadArchives staged repository can be closed and released by executing RichTextEditorAndroid:closeAndReleaseRepository
+apply plugin: 'io.codearte.nexus-staging'
+
 
 
 repositories {
@@ -157,4 +160,8 @@ uploadArchives {
             }
         }
     }
+}
+
+nexusStaging {
+    packageGroup = "net.dankito"
 }
