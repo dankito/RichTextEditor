@@ -20,8 +20,6 @@ abstract class SetColorCommand(defaultColor: Int, command: Command, iconResource
 
         val colorPickerDialog = ColorPickerDialog.newBuilder()
                 .setColor(currentColorWithoutAlpha)
-                .setAllowPresets(true)
-                .setAllowCustom(true)
                 .setShowAlphaSlider(false)
 //                .setDialogType(0) // 0 = PickerView, 1 = PresetsView, default is 1
                 .create()
