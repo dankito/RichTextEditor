@@ -12,8 +12,6 @@ ext {
     Slf4jVersion = "1.7.25"
     JacksonVersion = "2.9.2"
 
-    ColorPickerVersion = "1.0.8@aar"
-
     AppCompatVersion = "25.4.0"
 
     JUnitVersion = "4.12"
