@@ -47,3 +47,14 @@ p {
     margin-bottom: 8px;
     -webkit-margin-before: 0em;
 }
+
+
+// Thanks to Jonathan B (https://stackoverflow.com/a/23501094) for figuring that out
+
+sup {
+    vertical-align: super;
+}
+
+sub {
+    vertical-align: sub;
+}
