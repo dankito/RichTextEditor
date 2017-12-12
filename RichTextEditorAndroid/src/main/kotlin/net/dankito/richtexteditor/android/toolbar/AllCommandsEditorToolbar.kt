@@ -19,6 +19,7 @@ class AllCommandsEditorToolbar : EditorToolbar {
         addCommand(ItalicCommand())
         addCommand(UnderlineCommand())
         addCommand(StrikeThroughCommand())
+        addCommand(RemoveFormatCommand())
 
         addCommand(UndoCommand())
         addCommand(RedoCommand())
@@ -31,7 +32,6 @@ class AllCommandsEditorToolbar : EditorToolbar {
         addCommand(SetTextColorCommand())
         addCommand(SwitchTextBackgroundColorOnOffCommand())
         addCommand(SetTextBackgroundColorCommand())
-        addCommand(RemoveFormatCommand())
 
         addCommand(DecreaseIndentCommand())
         addCommand(IncreaseIndentCommand())
