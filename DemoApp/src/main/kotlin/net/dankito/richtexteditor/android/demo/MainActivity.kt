@@ -24,6 +24,11 @@ class MainActivity : AppCompatActivity() {
 
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
+
+        // show keyboard right at start up
+        editor.postDelayed({
+            editor.focusEditorAndShowKeyboard()
+        }, 250)
     }
 
 }
