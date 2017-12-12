@@ -119,9 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
 For an example see [MainActivity](https://github.com/dankito/RichTextEditor/blob/master/DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt) in DemoApp project (it's written in Kotlin).
 
-[MainActivity](../blob/master/DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt)
+[MainActivity](../../blob/master/DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt)
 
-[MainActivity](blob/master/DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt)
+[MainActivity](DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt)
+
 
 
 # License
