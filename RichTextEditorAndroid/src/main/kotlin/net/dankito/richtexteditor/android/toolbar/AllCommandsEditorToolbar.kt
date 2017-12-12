@@ -32,6 +32,7 @@ class AllCommandsEditorToolbar : EditorToolbar {
         addCommand(SetTextFormatCommand())
         addCommand(SetFontNameCommand())
         addCommand(SetFontSizeCommand())
+        addCommand(SwitchTextColorOnOffCommand())
         addCommand(SetTextColorCommand())
         addCommand(SwitchTextBackgroundColorOnOffCommand())
         addCommand(SetTextBackgroundColorCommand())
