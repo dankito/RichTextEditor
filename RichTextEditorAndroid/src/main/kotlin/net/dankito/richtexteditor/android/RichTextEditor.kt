@@ -377,6 +377,15 @@ class RichTextEditor : RelativeLayout {
         webView.showKeyboard()
     }
 
+    /**
+     * At start up we have to wait some time till editor is ready to be focused
+     */
+    fun focusEditorAndShowKeyboardDelayed(delayMillis: Long = 250) {
+        postDelayed({
+            focusEditorAndShowKeyboard()
+        }, delayMillis)
+    }
+
     override fun clearFocus() {
         super.clearFocus()
 
