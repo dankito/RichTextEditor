@@ -21,6 +21,9 @@ class MainActivity : AppCompatActivity() {
 
         editorToolbar = findViewById(R.id.editorToolbar) as AllCommandsEditorToolbar
         editorToolbar.editor = editor
+
+        editor.setEditorFontSize(20)
+        editor.setPadding((4 * resources.displayMetrics.density).toInt())
     }
 
 }
