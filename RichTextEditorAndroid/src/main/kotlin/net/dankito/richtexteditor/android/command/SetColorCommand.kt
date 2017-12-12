@@ -1,6 +1,9 @@
 package net.dankito.richtexteditor.android.command
 
-import com.azeesoft.lib.colorpicker.ColorPickerDialog
+import android.app.Activity
+import android.graphics.Color
+import com.jaredrummler.android.colorpicker.ColorPickerDialog
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import net.dankito.richtexteditor.android.RichTextEditor
 
 
@@ -9,16 +12,29 @@ abstract class SetColorCommand(defaultColor: Int, command: Command, iconResource
 
 
     override fun executeCommand(editor: RichTextEditor) {
-        val colorPickerDialog = ColorPickerDialog.createColorPickerDialog(editor.context)
+        val currentColorWithoutAlpha = Color.rgb(Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor)) // remove alpha value as html doesn't support alpha
 
-        colorPickerDialog.setOnColorPickedListener { color, _ ->
-            currentColorChanged(color)
+        val colorPickerDialog = ColorPickerDialog.newBuilder()
+                .setColor(currentColorWithoutAlpha)
+                .setAllowPresets(true)
+                .setAllowCustom(true)
+                .setShowAlphaSlider(false)
+//                .setDialogType(0) // 0 = PickerView, 1 = PresetsView, default is 1
+                .create()
 
-            applySelectedColor(editor, color)
-        }
+        colorPickerDialog.setColorPickerDialogListener(object : ColorPickerDialogListener {
 
-        colorPickerDialog.setInitialColor(currentColor)
-        colorPickerDialog.show()
+            override fun onColorSelected(dialogId: Int, color: Int) {
+                currentColorChanged(color)
+
+                applySelectedColor(editor, color)
+            }
+
+            override fun onDialogDismissed(dialogId: Int) { }
+
+        })
+
+        colorPickerDialog.show((editor.context as Activity).fragmentManager, "")
     }
 
 

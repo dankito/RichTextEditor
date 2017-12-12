@@ -69,7 +69,7 @@ dependencies {
     compile "org.slf4j:slf4j-api:$Slf4jVersion"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:$JacksonVersion"
 
-    compile "com.azeesoft.lib.colorpicker:colorpicker:$ColorPickerVersion"
+    compile 'com.jaredrummler:colorpicker:1.0.1'
 
     compile "com.android.support:appcompat-v7:$AppCompatVersion"
     compile "com.android.support:design:$AppCompatVersion"
