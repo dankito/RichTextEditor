@@ -19,6 +19,8 @@ class AllCommandsEditorToolbar : EditorToolbar {
         addCommand(ItalicCommand())
         addCommand(UnderlineCommand())
         addCommand(StrikeThroughCommand())
+        addCommand(SuperscriptCommand())
+        addCommand(SubscriptCommand())
         addCommand(RemoveFormatCommand())
 
         addCommand(UndoCommand())
