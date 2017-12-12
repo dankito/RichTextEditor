@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import net.dankito.richtexteditor.android.command.Command
 import net.dankito.richtexteditor.android.command.CommandState
 import net.dankito.richtexteditor.android.extensions.showKeyboard
+import net.dankito.richtexteditor.android.util.KeyboardState
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
@@ -120,6 +121,12 @@ class RichTextEditor : RelativeLayout {
         }
 
         ta.recycle()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        KeyboardState.init(context as Activity)
     }
 
 
@@ -366,13 +373,16 @@ class RichTextEditor : RelativeLayout {
         executeJavaScript(jsCSSImport)
     }
 
-    fun focusEditor() {
+    fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
         webView.requestFocus()
-        executeEditorJavaScriptFunction("focus()")
+
+        if(alsoCallJavaScriptFocusFunction) { // Calling focus() changes editor's state, this is not desirable in all circumstances
+            executeEditorJavaScriptFunction("focus()")
+        }
     }
 
-    fun focusEditorAndShowKeyboard() {
-        focusEditor()
+    fun focusEditorAndShowKeyboard(alsoCallJavaScriptFocusFunction: Boolean = true) {
+        focusEditor(alsoCallJavaScriptFocusFunction)
 
         webView.showKeyboard()
     }
@@ -380,9 +390,9 @@ class RichTextEditor : RelativeLayout {
     /**
      * At start up we have to wait some time till editor is ready to be focused
      */
-    fun focusEditorAndShowKeyboardDelayed(delayMillis: Long = 250) {
+    fun focusEditorAndShowKeyboardDelayed(delayMillis: Long = 250, alsoCallJavaScriptFocusFunction: Boolean = true) {
         postDelayed({
-            focusEditorAndShowKeyboard()
+            focusEditorAndShowKeyboard(alsoCallJavaScriptFocusFunction)
         }, delayMillis)
     }
 

@@ -5,6 +5,8 @@ import android.graphics.Color
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.android.extensions.hideKeyboard
+import net.dankito.richtexteditor.android.util.KeyboardState
 
 
 abstract class SetColorCommand(defaultColor: Int, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
@@ -13,6 +15,8 @@ abstract class SetColorCommand(defaultColor: Int, command: Command, iconResource
 
     override fun executeCommand(editor: RichTextEditor) {
         val currentColorWithoutAlpha = Color.rgb(Color.red(currentColor), Color.green(currentColor), Color.blue(currentColor)) // remove alpha value as html doesn't support alpha
+
+        val wasKeyboardVisible = getIsKeyboardVisibleAndCloseIfSo(editor)
 
         val colorPickerDialog = ColorPickerDialog.newBuilder()
                 .setColor(currentColorWithoutAlpha)
@@ -30,11 +34,25 @@ abstract class SetColorCommand(defaultColor: Int, command: Command, iconResource
                 applySelectedColor(editor, color)
             }
 
-            override fun onDialogDismissed(dialogId: Int) { }
+            override fun onDialogDismissed(dialogId: Int) {
+                if(wasKeyboardVisible) {
+                    editor.focusEditorAndShowKeyboardDelayed(alsoCallJavaScriptFocusFunction = false) // don't call JavaScript focus() function has this would change state and just selected color would therefore get lost
+                }
+            }
 
         })
 
         colorPickerDialog.show((editor.context as Activity).fragmentManager, "")
+    }
+
+    private fun getIsKeyboardVisibleAndCloseIfSo(editor: RichTextEditor): Boolean {
+        val isVisible = KeyboardState.isKeyboardVisible
+
+        if(isVisible) {
+            editor.hideKeyboard()
+        }
+
+        return isVisible
     }
 
 
