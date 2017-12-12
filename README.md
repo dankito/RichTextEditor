@@ -21,7 +21,7 @@ And it also has ready to use UI elements implemented for these.
 - Insert Checkbox
 - Unordered List (Bullets)
 - Ordered List (Numbers)
-- For all those it has predefined commands. You can use the [standard toolbar](https://github.com/dankito/RichTextEditor/blob/master/RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/AllCommandsEditorToolbar.kt) or create your own within minutes.
+- For all those it has predefined commands. You can use the [standard toolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/AllCommandsEditorToolbar.kt) or create your own within minutes.
 - All commands have a Material Design icon. But of course you can give all of them your custom icon.
 
 
@@ -117,12 +117,7 @@ public class MainActivity extends AppCompatActivity {
 }
 ```
 
-For an example see [MainActivity](https://github.com/dankito/RichTextEditor/blob/master/DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt) in DemoApp project (it's written in Kotlin).
-
-[MainActivity](../../blob/master/DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt)
-
-[MainActivity](DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt)
-
+For an example see [MainActivity](DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt) in DemoApp project (it's written in Kotlin).
 
 
 # License
