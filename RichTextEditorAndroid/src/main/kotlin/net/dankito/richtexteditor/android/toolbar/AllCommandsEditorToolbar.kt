@@ -20,15 +20,10 @@ class AllCommandsEditorToolbar : EditorToolbar {
         addCommand(UnderlineCommand())
         addCommand(StrikeThroughCommand())
 
-        addCommand(BlockQuoteCommand())
-
         addCommand(UndoCommand())
         addCommand(RedoCommand())
 
-        addCommand(InsertLinkCommand())
-        addCommand(InsertImageCommand())
-        addCommand(InsertCheckboxCommand())
-
+        addCommand(BlockQuoteCommand())
         addCommand(SetTextFormatCommand())
         addCommand(SetFontNameCommand())
         addCommand(SetFontSizeCommand())
@@ -48,6 +43,10 @@ class AllCommandsEditorToolbar : EditorToolbar {
 
         addCommand(InsertBulletListCommand())
         addCommand(InsertNumberedListCommand())
+
+        addCommand(InsertLinkCommand())
+        addCommand(InsertImageCommand())
+        addCommand(InsertCheckboxCommand())
     }
 
 }
