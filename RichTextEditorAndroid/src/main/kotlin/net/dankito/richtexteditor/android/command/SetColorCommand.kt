@@ -9,8 +9,8 @@ import net.dankito.richtexteditor.android.extensions.hideKeyboard
 import net.dankito.richtexteditor.android.util.KeyboardState
 
 
-abstract class SetColorCommand(defaultColor: Int, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
-    : ColorCommand(defaultColor, command, iconResourceId, style, commandExecutedListener) {
+abstract class SetColorCommand(defaultColor: Int, showColorInCommandView: Boolean = true, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+    : ColorCommand(defaultColor, showColorInCommandView, command, iconResourceId, style, commandExecutedListener) {
 
 
     override fun executeCommand(editor: RichTextEditor) {

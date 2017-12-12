@@ -3,8 +3,8 @@ package net.dankito.richtexteditor.android.command
 import net.dankito.richtexteditor.android.RichTextEditor
 
 
-abstract class SwitchColorOnOffCommand(private val offColor: Int, private var onColor: Int, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(),
-                                       commandExecutedListener: (() -> Unit)? = null) : ColorCommand(offColor, command, iconResourceId, style, commandExecutedListener) {
+abstract class SwitchColorOnOffCommand(private val offColor: Int, private var onColor: Int, showColorInCommandView: Boolean = true, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(),
+                                       commandExecutedListener: (() -> Unit)? = null) : ColorCommand(offColor, showColorInCommandView, command, iconResourceId, style, commandExecutedListener) {
 
     override fun currentColorChanged(color: Int) {
         super.currentColorChanged(color)

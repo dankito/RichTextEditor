@@ -4,7 +4,8 @@ import android.graphics.Color
 import android.widget.ImageView
 import org.slf4j.LoggerFactory
 
-abstract class ColorCommand(defaultColor: Int, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class ColorCommand(defaultColor: Int, private val showColorInCommandView: Boolean = true, command: Command, iconResourceId: Int, style:
+                            ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
 
     companion object {
@@ -60,6 +61,31 @@ abstract class ColorCommand(defaultColor: Int, command: Command, iconResourceId:
 
     protected open fun currentColorChanged(color: Int) {
         this.currentColor = color
+
+        if(showColorInCommandView) {
+            setCommandViewBackgroundColor(color)
+        }
+    }
+
+    private fun setCommandViewBackgroundColor(color: Int) {
+        commandView?.let { commandView ->
+            commandView.setBackgroundColor(color)
+
+            if(isExecutable && color == Color.WHITE && style.enabledTintColor == Color.WHITE) {
+                if(style.isActivatedColor != Color.WHITE) {
+                    commandView.setColorFilter(style.isActivatedColor)
+                }
+                else {
+                    commandView.setColorFilter(Color.BLACK) // looks quite ugly to me
+                }
+            }
+            else if(isExecutable && color == Color.BLACK && style.enabledTintColor == Color.BLACK) {
+                commandView.setColorFilter(Color.WHITE)
+            }
+            else {
+                setIconTintColorToExecutableState(commandView, isExecutable)
+            }
+        }
     }
 
 }
