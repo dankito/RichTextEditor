@@ -3,15 +3,6 @@ version '1.0'
 def mavenArtifactId = "richtexteditor-android"
 
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-    }
-}
-
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
