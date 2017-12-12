@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
 
+        // some properties you also can set on editor
+//        editor.setEditorBackgroundColor(Color.YELLOW)
+//        editor.setEditorFontColor(Color.MAGENTA)
+//        editor.setEditorFontFamily("cursive")
+
         // show keyboard right at start up
         editor.focusEditorAndShowKeyboardDelayed()
     }
