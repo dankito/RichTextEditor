@@ -76,7 +76,7 @@ abstract class ColorCommand(defaultColor: Int, private val showColorInCommandVie
                     commandView.setColorFilter(style.isActivatedColor)
                 }
                 else {
-                    commandView.setColorFilter(Color.BLACK) // looks quite ugly to me
+                    commandView.setColorFilter(Color.LTGRAY) // looks quite ugly to me
                 }
             }
             else if(isExecutable && color == Color.BLACK && style.enabledTintColor == Color.BLACK) {
