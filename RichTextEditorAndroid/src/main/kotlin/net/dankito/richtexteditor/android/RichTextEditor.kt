@@ -134,6 +134,7 @@ class RichTextEditor : RelativeLayout {
         return html
     }
 
+    @JvmOverloads
     fun setHtml(html: String, baseUrl: String? = null) {
         try {
             executeEditorJavaScriptFunction("setHtml('" + URLEncoder.encode(html, "UTF-8") + "', '$baseUrl');")
@@ -373,6 +374,7 @@ class RichTextEditor : RelativeLayout {
         executeJavaScript(jsCSSImport)
     }
 
+    @JvmOverloads
     fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
         webView.requestFocus()
 
@@ -381,6 +383,7 @@ class RichTextEditor : RelativeLayout {
         }
     }
 
+    @JvmOverloads
     fun focusEditorAndShowKeyboard(alsoCallJavaScriptFocusFunction: Boolean = true) {
         focusEditor(alsoCallJavaScriptFocusFunction)
 
@@ -390,6 +393,7 @@ class RichTextEditor : RelativeLayout {
     /**
      * At start up we have to wait some time till editor is ready to be focused
      */
+    @JvmOverloads
     fun focusEditorAndShowKeyboardDelayed(delayMillis: Long = 250, alsoCallJavaScriptFocusFunction: Boolean = true) {
         postDelayed({
             focusEditorAndShowKeyboard(alsoCallJavaScriptFocusFunction)
