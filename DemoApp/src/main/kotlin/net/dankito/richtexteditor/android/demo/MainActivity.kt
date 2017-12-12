@@ -34,4 +34,11 @@ class MainActivity : AppCompatActivity() {
         editor.focusEditorAndShowKeyboardDelayed()
     }
 
+
+    override fun onBackPressed() {
+        if(editorToolbar.handlesBackButtonPress() == false) {
+            super.onBackPressed()
+        }
+    }
+
 }

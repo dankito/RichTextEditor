@@ -189,6 +189,16 @@ class SelectValueView: ListView {
         }
     }
 
+    fun handlesBackButtonPress(): Boolean {
+        if(isVisible()) {
+            hideView()
+
+            return true
+        }
+
+        return false
+    }
+
 
     private fun animateShowView() {
         if(this.measuredHeight == 0 || hasEditorHeightChanged) { // in this case we have to wait till height is determined -> set OnGlobalLayoutListener

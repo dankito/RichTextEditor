@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
 
@@ -132,6 +133,19 @@ open class EditorToolbar : HorizontalScrollView {
         else { // e.g. ViewGroup.LayoutParams.MATCH_PARENT
             return sizeInDp
         }
+    }
+
+
+    fun handlesBackButtonPress(): Boolean {
+        commands.keys.forEach { command ->
+            if(command is SelectValueCommand) {
+                if(command.handlesBackButtonPress()) {
+                    return true
+                }
+            }
+        }
+
+        return false
     }
 
 

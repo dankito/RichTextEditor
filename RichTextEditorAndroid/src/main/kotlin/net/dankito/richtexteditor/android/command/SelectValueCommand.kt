@@ -61,4 +61,13 @@ abstract class SelectValueCommand(command: Command, iconResourceId: Int, style: 
         }
     }
 
+
+    fun handlesBackButtonPress(): Boolean {
+        selectValueView?.let {
+            return it.handlesBackButtonPress()
+        }
+
+        return false
+    }
+
 }
