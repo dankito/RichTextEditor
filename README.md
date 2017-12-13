@@ -25,6 +25,10 @@ And it also has ready to use UI elements implemented for these.
 - All commands have a Material Design icon. But of course you can give all of them your custom icon.
 
 
+## Demo application
+
+You can download it from [PlayStore](https://play.google.com/store/apps/details?id=net.dankito.richtexteditor.android), can use the [precompiled .apk](res/PlayStore/releases/0001_v1.0_DemoApp-release.apk) or compile the DemoApp project yourself.
+
 
 ## Setup
 
