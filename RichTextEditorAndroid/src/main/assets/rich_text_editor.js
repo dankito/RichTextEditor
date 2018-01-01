@@ -30,11 +30,7 @@ var editor = {
         });
 
         this._textField.addEventListener("keyup", function(e) { editor._handleTextEntered(); });
-        this._textField.addEventListener("paste", function(e) {
-            setTimeout(function () { // wait for till pasted data has been inserted
-                editor._handleTextEntered();
-            }, 100);
-        });
+        this._textField.addEventListener("paste", function(e) { editor._waitTillPastedDataInserted(e); });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
         this._updateEditorState();
@@ -64,6 +60,27 @@ var editor = {
         }
 
         this._updateEditorState();
+    },
+
+    _waitTillPastedDataInserted: function(event) {
+        var previousHtml = this._getHtml();
+
+        setTimeout(function () { // on paste event inserted text is not inserted yet -> wait for till text has been inserted
+            editor._waitTillPastedTextInserted(previousHtml, 10); // max 10 tries, after that we give up to prevent endless loops
+        }, 100);
+    },
+
+    _waitTillPastedTextInserted: function(previousHtml, iteration) {
+        var hasBeenInserted = this._getHtml() != previousHtml;
+
+        if(hasBeenInserted || ! iteration) {
+            this._updateEditorState();
+        }
+        else {
+            setTimeout(function () { // wait for till pasted data has been inserted
+                editor._waitTillPastedTextInserted(pastedText, iteration - 1);
+            }, 100);
+        }
     },
 
 
