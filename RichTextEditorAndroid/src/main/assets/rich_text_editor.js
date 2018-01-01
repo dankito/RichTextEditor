@@ -30,6 +30,11 @@ var editor = {
         });
 
         this._textField.addEventListener("keyup", function(e) { editor._handleTextEntered(); });
+        this._textField.addEventListener("paste", function(e) {
+            setTimeout(function () { // wait for till pasted data has been inserted
+                editor._handleTextEntered();
+            }, 100);
+        });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
         this._updateEditorState();
