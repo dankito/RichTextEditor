@@ -159,7 +159,7 @@ class RichTextEditor : RelativeLayout {
      * See getHtml() for explanation when it's sensible to call this method.
      */
     fun retrieveCurrentHtmlAsync(callback: (String) -> Unit) {
-        executeEditorJavaScriptFunction("_getEncodedHtml()") { html ->
+        executeEditorJavaScriptFunction("getEncodedHtml()") { html ->
             var decodedHtml = URLDecoder.decode(html, "UTF-8")
             if(decodedHtml.startsWith('"') && decodedHtml.endsWith('"')) {
                 decodedHtml = decodedHtml.substring(1, decodedHtml.length - 1)

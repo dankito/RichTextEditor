@@ -88,7 +88,7 @@ var editor = {
         return this._textField.innerHTML;
     },
 
-    _getEncodedHtml: function() {
+    getEncodedHtml: function() {
         return encodeURI(this._getHtml());
     },
 
