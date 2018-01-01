@@ -16,10 +16,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.RelativeLayout
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.dankito.richtexteditor.android.command.Command
@@ -73,6 +70,8 @@ class RichTextEditor : RelativeLayout {
 
     private val htmlChangedListeners = mutableSetOf<(String) -> Unit>()
 
+    private var javaScriptResultCallback: ((String) -> Unit)? = null
+
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initEditor(context: Context, attributes: AttributeSet?) {
@@ -98,6 +97,11 @@ class RichTextEditor : RelativeLayout {
         webView.settings.setSupportZoom(true)
         webView.settings.builtInZoomControls = true
         webView.settings.displayZoomControls = false
+
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) { // on pre KitKat Androids there's no other way to get result of a JavaScript function
+            webView.addJavascriptInterface(this, "android")
+        }
 
         webView.loadUrl(EditorHtmlPath)
     }
@@ -130,6 +134,11 @@ class RichTextEditor : RelativeLayout {
     }
 
 
+    /**
+     * Returns the last cached editor's html.
+     * Usually this is the up to date html. But in case user uses swipe input, some swipe keyboards (especially Samsung's) or pasting text on Samsung devices doesn't fire text changed event,
+     * so we're not notified of last entered word. In this case use retrieveCurrentHtmlAsync() to ensure to retrieve current html.
+     */
     fun getHtml(): String {
         return html
     }
@@ -142,6 +151,21 @@ class RichTextEditor : RelativeLayout {
             this.html = html
         } catch (e: UnsupportedEncodingException) {
             // No handling
+        }
+    }
+
+    /**
+     * Queries underlying JavaScript code for latest html.
+     * See getHtml() for explanation when it's sensible to call this method.
+     */
+    fun retrieveCurrentHtmlAsync(callback: (String) -> Unit) {
+        executeEditorJavaScriptFunction("_getEncodedHtml()") { html ->
+            var decodedHtml = URLDecoder.decode(html, "UTF-8")
+            if(decodedHtml.startsWith('"') && decodedHtml.endsWith('"')) {
+                decodedHtml = decodedHtml.substring(1, decodedHtml.length - 1)
+            }
+
+            callback(decodedHtml)
         }
     }
 
@@ -419,35 +443,35 @@ class RichTextEditor : RelativeLayout {
     }
 
 
-    private fun executeEditorJavaScriptFunction(javaScript: String) {
-        executeJavaScript("editor." + javaScript)
+    private fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
+        executeJavaScript("editor." + javaScript, resultCallback)
     }
 
-    private fun executeJavaScript(javaScript: String) {
+    private fun executeJavaScript(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         addLoadedListener {
-            executeJavaScriptInLoadedEditor(javaScript)
+            executeJavaScriptInLoadedEditor(javaScript, resultCallback)
         }
     }
 
-    private fun executeJavaScriptInLoadedEditor(javaScript: String) {
+    private fun executeJavaScriptInLoadedEditor(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         if(Looper.myLooper() == Looper.getMainLooper()) {
-            executeScriptOnUiThread(javaScript)
+            executeScriptOnUiThread(javaScript, resultCallback)
         }
         else if(context is Activity) {
-            (context as? Activity)?.runOnUiThread { executeScriptOnUiThread(javaScript) }
+            (context as? Activity)?.runOnUiThread { executeScriptOnUiThread(javaScript, resultCallback) }
         }
         else {
             log.error("Trying to execute Script '$javaScript', but activity is null")
         }
     }
 
-    private fun executeScriptOnUiThread(javaScript: String) {
+    private fun executeScriptOnUiThread(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         try {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                executeScriptOnUiThreadForAndroid19AndAbove(javaScript)
+                executeScriptOnUiThreadForAndroid19AndAbove(javaScript, resultCallback)
             }
             else {
-                executeScriptOnUiThreadForAndroidPre19(javaScript)
+                executeScriptOnUiThreadForAndroidPre19(javaScript, resultCallback)
             }
         } catch (ex: Exception) {
             log.error("Could not evaluate JavaScript " + javaScript, ex)
@@ -456,17 +480,23 @@ class RichTextEditor : RelativeLayout {
     }
 
     @TargetApi(19)
-    private fun executeScriptOnUiThreadForAndroid19AndAbove(javaScript: String) {
+    private fun executeScriptOnUiThreadForAndroid19AndAbove(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         // evaluateJavascript() only works on API 19 and newer
-        webView.evaluateJavascript(javaScript, null)
+        webView.evaluateJavascript(javaScript, resultCallback)
     }
 
-    private fun executeScriptOnUiThreadForAndroidPre19(javaScript: String) {
+    private fun executeScriptOnUiThreadForAndroidPre19(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         // webView.loadUrl() hides keyboard -> so if keyboard is shown ...
         val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         val isShowingKeyboard = inputManager.isActive(webView)
 
-        webView.loadUrl("javascript:" + javaScript)
+        if(resultCallback == null) {
+            webView.loadUrl("javascript:" + javaScript)
+        }
+        else {
+            this.javaScriptResultCallback = resultCallback
+            webView.loadUrl("javascript:android.handleJsResult($javaScript)");
+        }
 
         if(isShowingKeyboard) { // .. re-display it after evaluating JavaScript
             webView.showKeyboard()
@@ -474,6 +504,13 @@ class RichTextEditor : RelativeLayout {
                 webView.showKeyboard()
             }, 100)
         }
+    }
+
+    @JavascriptInterface
+    fun handleJsResult(result: String) {
+        javaScriptResultCallback?.invoke(result)
+
+        javaScriptResultCallback = null
     }
 
 
