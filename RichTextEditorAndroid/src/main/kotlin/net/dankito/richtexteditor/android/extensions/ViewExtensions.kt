@@ -1,7 +1,6 @@
 package net.dankito.richtexteditor.android.extensions
 
 import android.content.Context
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
@@ -26,4 +25,22 @@ fun View.hideKeyboard(flags: Int = 0) {
         val keyboard = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         keyboard.hideSoftInputFromWindow(this.windowToken, flags)
     }
+}
+
+
+fun View.getPixelSizeForDisplay(deviceIndependentPixel: Int): Int {
+    return (deviceIndependentPixel * getDisplayDensity()).toInt()
+}
+
+fun View.getLayoutSize(sizeInDp: Int): Int {
+    if(sizeInDp >= 0) {
+        return getPixelSizeForDisplay(sizeInDp)
+    }
+    else { // e.g. ViewGroup.LayoutParams.MATCH_PARENT
+        return sizeInDp
+    }
+}
+
+fun View.getDisplayDensity(): Float {
+    return this.context.resources.displayMetrics.density
 }
