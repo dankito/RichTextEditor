@@ -48,7 +48,7 @@ class RichTextEditor : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { initEditor(context, attrs) }
 
 
-    private val webView = WebView(context)
+    val webView = WebView(context)
 
     private var html: String = ""
 

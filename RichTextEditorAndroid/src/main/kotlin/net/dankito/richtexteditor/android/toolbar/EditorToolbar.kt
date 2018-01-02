@@ -8,6 +8,7 @@ import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommand
@@ -39,6 +40,8 @@ open class EditorToolbar : HorizontalScrollView {
 
     private val commands = HashMap<ToolbarCommand, View>()
 
+    private val searchViews = ArrayList<SearchView>()
+
     val commandStyle = ToolbarCommandStyle()
 
 
@@ -66,22 +69,26 @@ open class EditorToolbar : HorizontalScrollView {
     }
 
     private fun applyCommandStyle(command: ToolbarCommand, commandView: ImageButton) {
-        commandView.setImageResource(command.iconResourceId)
+        applyCommandStyle(command.iconResourceId, command.style, commandView)
+    }
+
+    internal fun applyCommandStyle(iconResourceId: Int, style: ToolbarCommandStyle, commandView: ImageButton) {
+        commandView.setImageResource(iconResourceId)
         commandView.scaleType = ImageView.ScaleType.FIT_CENTER
 
-        mergeStyles(commandStyle, command.style)
+        mergeStyles(commandStyle, style)
 
-        commandView.setBackgroundColor(command.style.backgroundColor)
+        commandView.setBackgroundColor(style.backgroundColor)
 
-        val padding = getPixelSizeForDisplay(command.style.paddingDp)
+        val padding = getPixelSizeForDisplay(style.paddingDp)
         commandView.setPadding(padding, padding, padding, padding)
 
         val layoutParams = commandView.layoutParams as LinearLayout.LayoutParams
 
-        layoutParams.width = getLayoutSize(command.style.widthDp)
-        layoutParams.height = getLayoutSize(command.style.heightDp)
+        layoutParams.width = getLayoutSize(style.widthDp)
+        layoutParams.height = getLayoutSize(style.heightDp)
 
-        val rightMargin = getPixelSizeForDisplay(command.style.marginRightDp)
+        val rightMargin = getPixelSizeForDisplay(style.marginRightDp)
         layoutParams.rightMargin = rightMargin
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             layoutParams.marginEnd = rightMargin
@@ -123,6 +130,19 @@ open class EditorToolbar : HorizontalScrollView {
     }
 
 
+    fun addSearchView(style: ToolbarCommandStyle = ToolbarCommandStyle(), toggleSearchViewIconResourceId: Int = R.drawable.ic_search_white_48dp,
+                      jumpToPreviousResultIconResourceId: Int = R.drawable.ic_arrow_up, jumpToNextResultIconResourceId: Int = R.drawable.ic_arrow_down) {
+        val searchView = SearchView(context)
+
+        linearLayout.addView(searchView)
+        searchViews.add(searchView)
+
+        searchView.applyStyle(this, style, toggleSearchViewIconResourceId, jumpToPreviousResultIconResourceId, jumpToNextResultIconResourceId)
+
+        searchView.editor = editor
+    }
+
+
     fun handlesBackButtonPress(): Boolean {
         commands.keys.forEach { command ->
             if(command is SelectValueCommand) {
@@ -138,6 +158,10 @@ open class EditorToolbar : HorizontalScrollView {
 
     private fun setRichTextEditorOnCommands(editor: RichTextEditor?) {
         commands.keys.forEach {
+            it.editor = editor
+        }
+
+        searchViews.forEach {
             it.editor = editor
         }
     }
