@@ -12,6 +12,8 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
+import net.dankito.richtexteditor.android.extensions.getLayoutSize
+import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
 
 
 open class EditorToolbar : HorizontalScrollView {
@@ -71,17 +73,15 @@ open class EditorToolbar : HorizontalScrollView {
 
         commandView.setBackgroundColor(command.style.backgroundColor)
 
-        val displayDensity = context.resources.displayMetrics.density
-
-        val padding = getPixelSizeForDisplay(command.style.paddingDp, displayDensity)
+        val padding = getPixelSizeForDisplay(command.style.paddingDp)
         commandView.setPadding(padding, padding, padding, padding)
 
         val layoutParams = commandView.layoutParams as LinearLayout.LayoutParams
 
-        layoutParams.width = getLayoutSize(command.style.widthDp, displayDensity)
-        layoutParams.height = getLayoutSize(command.style.heightDp, displayDensity)
+        layoutParams.width = getLayoutSize(command.style.widthDp)
+        layoutParams.height = getLayoutSize(command.style.heightDp)
 
-        val rightMargin = getPixelSizeForDisplay(command.style.marginRightDp, displayDensity)
+        val rightMargin = getPixelSizeForDisplay(command.style.marginRightDp)
         layoutParams.rightMargin = rightMargin
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             layoutParams.marginEnd = rightMargin
@@ -119,19 +119,6 @@ open class EditorToolbar : HorizontalScrollView {
 
         if(commandStyle.isActivatedColor == ToolbarCommandStyle.DefaultIsActivatedColor) {
             commandStyle.isActivatedColor = toolbarCommandStyle.isActivatedColor
-        }
-    }
-
-    private fun getPixelSizeForDisplay(deviceIndependentPixel: Int, displayDensity: Float): Int {
-        return (deviceIndependentPixel * displayDensity).toInt()
-    }
-
-    private fun getLayoutSize(sizeInDp: Int, displayDensity: Float): Int {
-        if(sizeInDp >= 0) {
-            return getPixelSizeForDisplay(sizeInDp, displayDensity)
-        }
-        else { // e.g. ViewGroup.LayoutParams.MATCH_PARENT
-            return sizeInDp
         }
     }
 
