@@ -21,6 +21,7 @@ import net.dankito.richtexteditor.android.extensions.getLayoutSize
 import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
 import net.dankito.richtexteditor.android.extensions.hideKeyboard
 import net.dankito.richtexteditor.android.extensions.showKeyboard
+import net.dankito.richtexteditor.android.util.StyleApplier
 
 
 class SearchView : LinearLayout {
@@ -65,6 +66,9 @@ class SearchView : LinearLayout {
     private lateinit var btnJumpToPreviousResult: ImageButton
 
     private lateinit var btnJumpToNextResult: ImageButton
+
+
+    private val styleApplier = StyleApplier()
 
 
     private fun initView(context: Context) {
@@ -125,18 +129,18 @@ class SearchView : LinearLayout {
     }
 
 
-    fun applyStyle(toolbar: EditorToolbar, style: ToolbarCommandStyle, toggleSearchViewIconResourceId: Int,
-                   jumpToPreviousResultIconResourceId: Int, jumpToNextResultIconResourceId: Int) {
-        toolbar.applyCommandStyle(toggleSearchViewIconResourceId, style, btnToggleSearchControlsVisibility)
+    fun applyStyle(style: ToolbarCommandStyle = ToolbarCommandStyle(), toggleSearchViewIconResourceId: Int = R.drawable.ic_search_white_48dp,
+                   jumpToPreviousResultIconResourceId: Int = R.drawable.ic_arrow_up, jumpToNextResultIconResourceId: Int = R.drawable.ic_arrow_down) {
+        styleApplier.applyCommandStyle(toggleSearchViewIconResourceId, style, btnToggleSearchControlsVisibility)
         btnToggleSearchControlsVisibility.setColorFilter(style.enabledTintColor)
 
-        toolbar.applyCommandStyle(jumpToPreviousResultIconResourceId, style, btnJumpToPreviousResult)
+        styleApplier.applyCommandStyle(jumpToPreviousResultIconResourceId, style, btnJumpToPreviousResult)
         btnJumpToPreviousResult.setColorFilter(style.enabledTintColor)
         if(jumpToPreviousResultIconResourceId == R.drawable.ic_arrow_up) {
             btnJumpToPreviousResult.layoutParams.width = getLayoutSize(27)
         }
 
-        toolbar.applyCommandStyle(jumpToNextResultIconResourceId, style, btnJumpToNextResult)
+        styleApplier.applyCommandStyle(jumpToNextResultIconResourceId, style, btnJumpToNextResult)
         btnJumpToNextResult.setColorFilter(style.enabledTintColor)
         if(jumpToNextResultIconResourceId == R.drawable.ic_arrow_down) {
             btnJumpToNextResult.layoutParams.width = getLayoutSize(27)
