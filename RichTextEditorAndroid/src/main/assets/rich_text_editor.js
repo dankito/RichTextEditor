@@ -14,9 +14,10 @@ var editor = {
 
 
     init: function() {
-        document.addEventListener("selectionchange", function() { editor._backupRange(); });
-
-        this._textField.addEventListener("click", function() { editor._updateEditorState(); });
+        document.addEventListener("selectionchange", function() {
+            editor._backupRange();
+            editor._updateEditorState(); // in newly selected area different commands may be activated / deactivated
+        });
 
         this._textField.addEventListener("keydown", function(e) {
             var BACKSPACE = 8;
