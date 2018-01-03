@@ -16,7 +16,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
 import net.dankito.richtexteditor.android.extensions.getLayoutSize
 import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
 import net.dankito.richtexteditor.android.extensions.hideKeyboard
@@ -91,7 +90,6 @@ class SearchView : LinearLayout {
         lytSearchControls.addView(searchField, LayoutParams(getPixelSizeForDisplay(SearchFieldDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT))
 
         searchField.inputType = InputType.TYPE_CLASS_TEXT
-        searchField.textSize = 14f
         searchField.addTextChangedListener(searchFieldTextWatcher)
 
 
@@ -131,28 +129,28 @@ class SearchView : LinearLayout {
     }
 
 
-    fun applyStyle(style: ToolbarCommandStyle = ToolbarCommandStyle(), toggleSearchViewIconResourceId: Int = R.drawable.ic_search_white_48dp,
-                   jumpToPreviousResultIconResourceId: Int = R.drawable.ic_arrow_up, jumpToNextResultIconResourceId: Int = R.drawable.ic_arrow_down) {
-        styleApplier.applyCommandStyle(toggleSearchViewIconResourceId, style, btnToggleSearchControlsVisibility)
-        btnToggleSearchControlsVisibility.setColorFilter(style.enabledTintColor)
+    fun applyStyle(style: SearchViewStyle) {
+        styleApplier.applyCommandStyle(style.toggleSearchViewIconResourceId, style.commandStyle, btnToggleSearchControlsVisibility)
+        btnToggleSearchControlsVisibility.setColorFilter(style.commandStyle.enabledTintColor)
 
-        styleApplier.applyCommandStyle(jumpToPreviousResultIconResourceId, style, btnJumpToPreviousResult)
-        btnJumpToPreviousResult.setColorFilter(style.enabledTintColor)
-        if(jumpToPreviousResultIconResourceId == R.drawable.ic_arrow_up) {
+        styleApplier.applyCommandStyle(style.jumpToPreviousResultIconResourceId, style.commandStyle, btnJumpToPreviousResult)
+        btnJumpToPreviousResult.setColorFilter(style.commandStyle.enabledTintColor)
+        if(style.jumpToPreviousResultIconResourceId == R.drawable.ic_arrow_up) {
             btnJumpToPreviousResult.layoutParams.width = getLayoutSize(27)
         }
 
-        styleApplier.applyCommandStyle(jumpToNextResultIconResourceId, style, btnJumpToNextResult)
-        btnJumpToNextResult.setColorFilter(style.enabledTintColor)
-        if(jumpToNextResultIconResourceId == R.drawable.ic_arrow_down) {
+        styleApplier.applyCommandStyle(style.jumpToNextResultIconResourceId, style.commandStyle, btnJumpToNextResult)
+        btnJumpToNextResult.setColorFilter(style.commandStyle.enabledTintColor)
+        if(style.jumpToNextResultIconResourceId == R.drawable.ic_arrow_down) {
             btnJumpToNextResult.layoutParams.width = getLayoutSize(27)
         }
 
 
-        searchField.setTextColor(style.enabledTintColor)
+        searchField.textSize = style.searchFieldTextSize
+        searchField.setTextColor(style.commandStyle.enabledTintColor)
 
-        countSearchResultsLabel.setTextColor(style.enabledTintColor)
-        val marginLeftRight = getLayoutSize(style.paddingDp)
+        countSearchResultsLabel.setTextColor(style.commandStyle.enabledTintColor)
+        val marginLeftRight = getLayoutSize(style.commandStyle.paddingDp)
         (countSearchResultsLabel.layoutParams as? LinearLayout.LayoutParams)?.setMargins(marginLeftRight, 0, marginLeftRight, 0)
     }
 

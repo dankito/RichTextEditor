@@ -119,7 +119,8 @@ open class EditorToolbar : HorizontalScrollView {
         linearLayout.addView(searchView)
         searchViews.add(searchView)
 
-        searchView.applyStyle(style, toggleSearchViewIconResourceId, jumpToPreviousResultIconResourceId, jumpToNextResultIconResourceId)
+        searchView.applyStyle(SearchViewStyle(style, 14f, toggleSearchViewIconResourceId,
+                jumpToPreviousResultIconResourceId, jumpToNextResultIconResourceId))
 
         searchView.editor = editor
     }
