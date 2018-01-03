@@ -5,11 +5,13 @@ import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.TextView
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
@@ -48,6 +50,8 @@ class SearchView : LinearLayout {
 
     private lateinit var searchField: EditText
 
+    private lateinit var countSearchResultsLabel: TextView
+
     private lateinit var btnJumpToPreviousResult: ImageButton
 
     private lateinit var btnJumpToNextResult: ImageButton
@@ -61,11 +65,24 @@ class SearchView : LinearLayout {
         lytSearchControls.visibility = View.GONE
         addView(lytSearchControls)
 
+
         searchField = EditText(context)
         lytSearchControls.addView(searchField, LinearLayout.LayoutParams(getPixelSizeForDisplay(SearchFieldDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT))
 
         searchField.addTextChangedListener(searchFieldTextWatcher)
         searchField.textSize = 14f
+
+        countSearchResultsLabel = TextView(context)
+        lytSearchControls.addView(countSearchResultsLabel)
+
+        countSearchResultsLabel.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        countSearchResultsLabel.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+
+        (countSearchResultsLabel.layoutParams as? LinearLayout.LayoutParams)?.gravity = Gravity.CENTER_VERTICAL
+        countSearchResultsLabel.gravity = Gravity.CENTER_VERTICAL
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            countSearchResultsLabel.textAlignment = View.TEXT_ALIGNMENT_GRAVITY
+        }
 
 
         val buttonsLayoutParams = LinearLayout.LayoutParams(getPixelSizeForDisplay(ButtonDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT)
@@ -105,7 +122,12 @@ class SearchView : LinearLayout {
             btnJumpToNextResult.layoutParams.width = getLayoutSize(27)
         }
 
+
         searchField.setTextColor(style.enabledTintColor)
+
+        countSearchResultsLabel.setTextColor(style.enabledTintColor)
+        val marginLeftRight = getLayoutSize(style.paddingDp)
+        (countSearchResultsLabel.layoutParams as? LinearLayout.LayoutParams)?.setMargins(marginLeftRight, 0, marginLeftRight, 0)
     }
 
 
@@ -153,7 +175,10 @@ class SearchView : LinearLayout {
     }
 
     private fun onFindResultReceived(activeMatchOrdinal: Int, numberOfMatches: Int, doneCounting: Boolean) {
-
+        if(doneCounting) {
+            val currentMatch = if(numberOfMatches == 0) 0 else activeMatchOrdinal + 1
+            countSearchResultsLabel.text = countSearchResultsLabel.context.getString(R.string.count_search_results_label, currentMatch, numberOfMatches)
+        }
     }
 
 
