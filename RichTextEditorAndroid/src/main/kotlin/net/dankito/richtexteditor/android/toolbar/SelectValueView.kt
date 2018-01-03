@@ -180,9 +180,7 @@ class SelectValueView: ListView {
                 val startPosition = if(isToolbarBelowEditor) this.top else this.bottom
                 val endPosition = if(isToolbarBelowEditor) this.bottom else this.top
 
-                playAnimation(false, startPosition.toFloat(), endPosition.toFloat()) {
-                    this.visibility = View.GONE
-                }
+                playAnimation(false, startPosition.toFloat(), endPosition.toFloat())
             }
         }
     }

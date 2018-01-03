@@ -48,6 +48,10 @@ class ShowHideViewAnimator {
             override fun onAnimationCancel(animation: Animator) { }
 
             override fun onAnimationEnd(animation: Animator) {
+                if(show == false) {
+                    view.visibility = View.GONE
+                }
+
                 animationEndListener?.invoke()
             }
 
