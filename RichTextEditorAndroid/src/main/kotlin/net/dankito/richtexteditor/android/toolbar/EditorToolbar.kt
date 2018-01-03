@@ -1,6 +1,7 @@
 package net.dankito.richtexteditor.android.toolbar
 
 import android.content.Context
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.HorizontalScrollView
@@ -119,7 +120,7 @@ open class EditorToolbar : HorizontalScrollView {
         linearLayout.addView(searchView)
         searchViews.add(searchView)
 
-        searchView.applyStyle(SearchViewStyle(style, 14f, toggleSearchViewIconResourceId,
+        searchView.applyStyle(SearchViewStyle(style, Color.TRANSPARENT, 14f, toggleSearchViewIconResourceId,
                 jumpToPreviousResultIconResourceId, jumpToNextResultIconResourceId))
 
         searchView.editor = editor

@@ -130,6 +130,8 @@ class SearchView : LinearLayout {
 
 
     fun applyStyle(style: SearchViewStyle) {
+        lytSearchControls.setBackgroundColor(style.searchControlsBackgroundColor)
+
         styleApplier.applyCommandStyle(style.toggleSearchViewIconResourceId, style.commandStyle, btnToggleSearchControlsVisibility)
         btnToggleSearchControlsVisibility.setColorFilter(style.commandStyle.enabledTintColor)
 
