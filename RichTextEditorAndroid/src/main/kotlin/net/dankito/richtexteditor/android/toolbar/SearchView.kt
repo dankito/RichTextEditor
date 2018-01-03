@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
+import net.dankito.richtexteditor.android.extensions.getLayoutSize
 import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
 import net.dankito.richtexteditor.android.extensions.hideKeyboard
 import net.dankito.richtexteditor.android.extensions.showKeyboard
@@ -75,12 +77,12 @@ class SearchView : LinearLayout {
         btnJumpToPreviousResult.setOnClickListener { jumpToPreviousSearchResult() }
 
         btnJumpToNextResult = ImageButton(context)
-        lytSearchControls.addView(btnJumpToNextResult, buttonsLayoutParams)
+        lytSearchControls.addView(btnJumpToNextResult, LinearLayout.LayoutParams(buttonsLayoutParams as MarginLayoutParams))
 
         btnJumpToNextResult.setOnClickListener { jumpToNextSearchResult() }
 
         btnToggleSearchControlsVisibility = ImageButton(context)
-        addView(btnToggleSearchControlsVisibility, buttonsLayoutParams)
+        addView(btnToggleSearchControlsVisibility, LinearLayout.LayoutParams(buttonsLayoutParams as MarginLayoutParams))
 
         btnToggleSearchControlsVisibility.setOnClickListener { toggleShowSearchView() }
     }
@@ -93,9 +95,15 @@ class SearchView : LinearLayout {
 
         toolbar.applyCommandStyle(jumpToPreviousResultIconResourceId, style, btnJumpToPreviousResult)
         btnJumpToPreviousResult.setColorFilter(style.enabledTintColor)
+        if(jumpToPreviousResultIconResourceId == R.drawable.ic_arrow_up) {
+            btnJumpToPreviousResult.layoutParams.width = getLayoutSize(27)
+        }
 
         toolbar.applyCommandStyle(jumpToNextResultIconResourceId, style, btnJumpToNextResult)
         btnJumpToNextResult.setColorFilter(style.enabledTintColor)
+        if(jumpToNextResultIconResourceId == R.drawable.ic_arrow_down) {
+            btnJumpToNextResult.layoutParams.width = getLayoutSize(27)
+        }
 
         searchField.setTextColor(style.enabledTintColor)
     }
