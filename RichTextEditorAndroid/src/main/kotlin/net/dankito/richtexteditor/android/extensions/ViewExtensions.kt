@@ -1,7 +1,9 @@
 package net.dankito.richtexteditor.android.extensions
 
 import android.content.Context
+import android.os.Build
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
 
 
@@ -48,4 +50,14 @@ fun View.getDisplayDensity(): Float {
 
 fun View.setPadding(paddingTopBottomLeftRight: Int) {
     this.setPadding(paddingTopBottomLeftRight, paddingTopBottomLeftRight, paddingTopBottomLeftRight, paddingTopBottomLeftRight)
+}
+
+
+fun View.removeOnGlobalLayoutListener(layoutListener: ViewTreeObserver.OnGlobalLayoutListener?) {
+    if(Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+        this.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
+    }
+    else {
+        this.viewTreeObserver.removeGlobalOnLayoutListener(layoutListener)
+    }
 }

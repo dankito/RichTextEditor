@@ -2,7 +2,6 @@ package net.dankito.richtexteditor.android.toolbar
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +12,7 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.animation.ShowHideViewAnimator
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommand
-
-
+import net.dankito.richtexteditor.android.extensions.removeOnGlobalLayoutListener
 
 
 class SelectValueView: ListView {
@@ -235,15 +233,6 @@ class SelectValueView: ListView {
 
     private fun playAnimation(show: Boolean, yStart: Float, yEnd: Float, animationEndListener: (() -> Unit)? = null) {
         animator.playAnimation(this, show, yStart, yEnd, animationEndListener = animationEndListener)
-    }
-
-    private fun removeOnGlobalLayoutListener(layoutListener: ViewTreeObserver.OnGlobalLayoutListener?) {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
-            this.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
-        }
-        else {
-            this.viewTreeObserver.removeGlobalOnLayoutListener(layoutListener)
-        }
     }
 
 }
