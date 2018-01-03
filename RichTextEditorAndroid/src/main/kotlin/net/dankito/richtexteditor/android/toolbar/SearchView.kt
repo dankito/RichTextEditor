@@ -3,6 +3,7 @@ package net.dankito.richtexteditor.android.toolbar
 import android.content.Context
 import android.os.Build
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
@@ -69,8 +70,9 @@ class SearchView : LinearLayout {
         searchField = EditText(context)
         lytSearchControls.addView(searchField, LinearLayout.LayoutParams(getPixelSizeForDisplay(SearchFieldDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT))
 
-        searchField.addTextChangedListener(searchFieldTextWatcher)
+        searchField.inputType = InputType.TYPE_CLASS_TEXT
         searchField.textSize = 14f
+        searchField.addTextChangedListener(searchFieldTextWatcher)
 
         countSearchResultsLabel = TextView(context)
         lytSearchControls.addView(countSearchResultsLabel)
