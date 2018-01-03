@@ -185,7 +185,7 @@ class SearchView : LinearLayout {
         }
     }
 
-    private fun clearSearchResults() {
+    fun clearSearchResults() {
         webView?.clearMatches()
     }
 
