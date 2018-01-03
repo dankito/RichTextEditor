@@ -66,13 +66,19 @@ class SearchView : LinearLayout {
         lytSearchControls.visibility = View.GONE
         addView(lytSearchControls)
 
+        initSearchFieldAndLabel(context)
 
+        initButtons(context)
+    }
+
+    private fun initSearchFieldAndLabel(context: Context) {
         searchField = EditText(context)
-        lytSearchControls.addView(searchField, LinearLayout.LayoutParams(getPixelSizeForDisplay(SearchFieldDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT))
+        lytSearchControls.addView(searchField, LayoutParams(getPixelSizeForDisplay(SearchFieldDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT))
 
         searchField.inputType = InputType.TYPE_CLASS_TEXT
         searchField.textSize = 14f
         searchField.addTextChangedListener(searchFieldTextWatcher)
+
 
         countSearchResultsLabel = TextView(context)
         lytSearchControls.addView(countSearchResultsLabel)
@@ -80,14 +86,15 @@ class SearchView : LinearLayout {
         countSearchResultsLabel.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         countSearchResultsLabel.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
 
-        (countSearchResultsLabel.layoutParams as? LinearLayout.LayoutParams)?.gravity = Gravity.CENTER_VERTICAL
+        (countSearchResultsLabel.layoutParams as? LayoutParams)?.gravity = Gravity.CENTER_VERTICAL
         countSearchResultsLabel.gravity = Gravity.CENTER_VERTICAL
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             countSearchResultsLabel.textAlignment = View.TEXT_ALIGNMENT_GRAVITY
         }
+    }
 
-
-        val buttonsLayoutParams = LinearLayout.LayoutParams(getPixelSizeForDisplay(ButtonDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT)
+    private fun initButtons(context: Context) {
+        val buttonsLayoutParams = LayoutParams(getPixelSizeForDisplay(ButtonDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT)
         buttonsLayoutParams.leftMargin = getPixelSizeForDisplay(ButtonLeftMarginInDp)
 
         btnJumpToPreviousResult = ImageButton(context)
@@ -95,13 +102,15 @@ class SearchView : LinearLayout {
 
         btnJumpToPreviousResult.setOnClickListener { jumpToPreviousSearchResult() }
 
+
         btnJumpToNextResult = ImageButton(context)
-        lytSearchControls.addView(btnJumpToNextResult, LinearLayout.LayoutParams(buttonsLayoutParams as MarginLayoutParams))
+        lytSearchControls.addView(btnJumpToNextResult, LayoutParams(buttonsLayoutParams as MarginLayoutParams))
 
         btnJumpToNextResult.setOnClickListener { jumpToNextSearchResult() }
 
+
         btnToggleSearchControlsVisibility = ImageButton(context)
-        addView(btnToggleSearchControlsVisibility, LinearLayout.LayoutParams(buttonsLayoutParams as MarginLayoutParams))
+        addView(btnToggleSearchControlsVisibility, LayoutParams(buttonsLayoutParams as MarginLayoutParams))
 
         btnToggleSearchControlsVisibility.setOnClickListener { toggleShowSearchView() }
     }
