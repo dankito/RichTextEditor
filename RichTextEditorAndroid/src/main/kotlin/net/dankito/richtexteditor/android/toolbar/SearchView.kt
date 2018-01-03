@@ -153,14 +153,17 @@ class SearchView : LinearLayout {
             if(editor != null) {
                 editor?.focusEditorAndShowKeyboard()
                 editor?.focusEditorAndShowKeyboardDelayed()
+
+                lytSearchControls.postDelayed({
+                    lytSearchControls.visibility = View.GONE
+                }, 500)
             }
             else {
                 searchField.hideKeyboard()
+                lytSearchControls.visibility = View.GONE
             }
 
             clearSearchResults()
-
-            lytSearchControls.visibility = View.GONE
         }
     }
 
