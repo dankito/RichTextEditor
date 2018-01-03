@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -40,10 +41,18 @@ class SearchView : LinearLayout {
         set(value) {
             field = value
 
+            this.webView = value?.webView
+        }
+
+    var webView: WebView? = null
+        set(value) {
+            field = value
+
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                value?.webView?.setFindListener { activeMatchOrdinal, numberOfMatches, isDoneCounting -> onFindResultReceived(activeMatchOrdinal, numberOfMatches, isDoneCounting) }
+                value?.setFindListener { activeMatchOrdinal, numberOfMatches, isDoneCounting -> onFindResultReceived(activeMatchOrdinal, numberOfMatches, isDoneCounting) }
             }
         }
+
 
     private lateinit var btnToggleSearchControlsVisibility: ImageButton
 
@@ -168,24 +177,24 @@ class SearchView : LinearLayout {
     }
 
     private fun clearSearchResults() {
-        editor?.webView?.clearMatches()
+        webView?.clearMatches()
     }
 
     private fun searchInWebView(query: String) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            editor?.webView?.findAllAsync(query)
+            webView?.findAllAsync(query)
         }
         else {
-            editor?.webView?.findAll(query)
+            webView?.findAll(query)
         }
     }
 
     private fun jumpToPreviousSearchResult() {
-        editor?.webView?.findNext(false)
+        webView?.findNext(false)
     }
 
     private fun jumpToNextSearchResult() {
-        editor?.webView?.findNext(true)
+        webView?.findNext(true)
     }
 
     private fun onFindResultReceived(activeMatchOrdinal: Int, numberOfMatches: Int, doneCounting: Boolean) {
