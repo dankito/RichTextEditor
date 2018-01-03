@@ -232,7 +232,7 @@ class SelectValueView: ListView {
             toolbar.y > editor.y
 
     private fun playAnimation(show: Boolean, yStart: Float, yEnd: Float, animationEndListener: (() -> Unit)? = null) {
-        animator.playAnimation(this, show, yStart, yEnd, animationEndListener = animationEndListener)
+        animator.playVerticalAnimation(this, show, yStart, yEnd, animationEndListener = animationEndListener)
     }
 
 }
