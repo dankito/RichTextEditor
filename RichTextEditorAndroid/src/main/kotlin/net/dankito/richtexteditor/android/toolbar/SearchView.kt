@@ -163,32 +163,40 @@ class SearchView : LinearLayout {
 
     private fun toggleShowSearchView() {
         if(lytSearchControls.visibility == View.GONE) {
-            style?.let { btnToggleSearchControlsVisibility.setImageResource(it.hideSearchControlsIconResourceId) }
-            lytSearchControls.visibility = View.VISIBLE
-
-            searchViewExpandedListener?.invoke(true)
-
-            searchField.showKeyboard()
-            searchInWebView(searchField.text.toString())
+            showSearchControls()
         }
         else {
-            if(editor != null) {
-                editor?.focusEditorAndShowKeyboard()
-                editor?.focusEditorAndShowKeyboardDelayed()
-
-                lytSearchControls.postDelayed({
-                    lytSearchControls.visibility = View.GONE
-                }, 500)
-            }
-            else {
-                searchField.hideKeyboard()
-                lytSearchControls.visibility = View.GONE
-            }
-
-            style?.let { btnToggleSearchControlsVisibility.setImageResource(it.showSearchControlsIconResourceId) }
-            clearSearchResults()
-            searchViewExpandedListener?.invoke(false)
+            hideSearchControls()
         }
+    }
+
+    private fun showSearchControls() {
+        style?.let { btnToggleSearchControlsVisibility.setImageResource(it.hideSearchControlsIconResourceId) }
+        lytSearchControls.visibility = View.VISIBLE
+
+        searchViewExpandedListener?.invoke(true)
+
+        searchField.showKeyboard()
+        searchInWebView(searchField.text.toString())
+    }
+
+    private fun hideSearchControls() {
+        if(editor != null) {
+            editor?.focusEditorAndShowKeyboard()
+            editor?.focusEditorAndShowKeyboardDelayed()
+
+            lytSearchControls.postDelayed({
+                lytSearchControls.visibility = View.GONE
+            }, 500)
+        }
+        else {
+            searchField.hideKeyboard()
+            lytSearchControls.visibility = View.GONE
+        }
+
+        style?.let { btnToggleSearchControlsVisibility.setImageResource(it.showSearchControlsIconResourceId) }
+        clearSearchResults()
+        searchViewExpandedListener?.invoke(false)
     }
 
     fun clearSearchResults() {
