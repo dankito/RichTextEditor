@@ -44,3 +44,8 @@ fun View.getLayoutSize(sizeInDp: Int): Int {
 fun View.getDisplayDensity(): Float {
     return this.context.resources.displayMetrics.density
 }
+
+
+fun View.setPadding(paddingTopBottomLeftRight: Int) {
+    this.setPadding(paddingTopBottomLeftRight, paddingTopBottomLeftRight, paddingTopBottomLeftRight, paddingTopBottomLeftRight)
+}

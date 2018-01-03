@@ -15,6 +15,7 @@ import net.dankito.richtexteditor.android.command.ToolbarCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
 import net.dankito.richtexteditor.android.extensions.getLayoutSize
 import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
+import net.dankito.richtexteditor.android.extensions.setPadding
 
 
 open class EditorToolbar : HorizontalScrollView {
@@ -81,7 +82,7 @@ open class EditorToolbar : HorizontalScrollView {
         commandView.setBackgroundColor(style.backgroundColor)
 
         val padding = getPixelSizeForDisplay(style.paddingDp)
-        commandView.setPadding(padding, padding, padding, padding)
+        commandView.setPadding(padding)
 
         val layoutParams = commandView.layoutParams as LinearLayout.LayoutParams
 
