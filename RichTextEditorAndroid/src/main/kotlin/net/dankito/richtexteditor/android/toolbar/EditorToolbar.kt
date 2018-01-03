@@ -1,13 +1,11 @@
 package net.dankito.richtexteditor.android.toolbar
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommand
@@ -113,15 +111,13 @@ open class EditorToolbar : HorizontalScrollView {
     }
 
 
-    fun addSearchView(style: ToolbarCommandStyle = ToolbarCommandStyle(), toggleSearchViewIconResourceId: Int = R.drawable.ic_search_white_48dp,
-                      jumpToPreviousResultIconResourceId: Int = R.drawable.ic_arrow_up, jumpToNextResultIconResourceId: Int = R.drawable.ic_arrow_down) {
+    fun addSearchView(style: SearchViewStyle = SearchViewStyle()) {
         val searchView = SearchView(context)
 
         linearLayout.addView(searchView)
         searchViews.add(searchView)
 
-        searchView.applyStyle(SearchViewStyle(style, Color.TRANSPARENT, 14f, toggleSearchViewIconResourceId,
-                jumpToPreviousResultIconResourceId, jumpToNextResultIconResourceId))
+        searchView.applyStyle(style)
 
         searchView.editor = editor
     }

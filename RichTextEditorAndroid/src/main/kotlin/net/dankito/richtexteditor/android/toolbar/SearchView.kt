@@ -71,6 +71,8 @@ class SearchView : LinearLayout {
 
     private val styleApplier = StyleApplier()
 
+    private var style: SearchViewStyle? = null
+
 
     private fun initView(context: Context) {
         this.orientation = HORIZONTAL
@@ -130,9 +132,11 @@ class SearchView : LinearLayout {
 
 
     fun applyStyle(style: SearchViewStyle) {
+        this.style = style
+
         lytSearchControls.setBackgroundColor(style.searchControlsBackgroundColor)
 
-        styleApplier.applyCommandStyle(style.toggleSearchViewIconResourceId, style.commandStyle, btnToggleSearchControlsVisibility)
+        styleApplier.applyCommandStyle(style.showSearchControlsIconResourceId, style.commandStyle, btnToggleSearchControlsVisibility)
         btnToggleSearchControlsVisibility.setColorFilter(style.commandStyle.enabledTintColor)
 
         styleApplier.applyCommandStyle(style.jumpToPreviousResultIconResourceId, style.commandStyle, btnJumpToPreviousResult)
@@ -159,6 +163,7 @@ class SearchView : LinearLayout {
 
     private fun toggleShowSearchView() {
         if(lytSearchControls.visibility == View.GONE) {
+            style?.let { btnToggleSearchControlsVisibility.setImageResource(it.hideSearchControlsIconResourceId) }
             lytSearchControls.visibility = View.VISIBLE
 
             searchViewExpandedListener?.invoke(true)
@@ -180,6 +185,7 @@ class SearchView : LinearLayout {
                 lytSearchControls.visibility = View.GONE
             }
 
+            style?.let { btnToggleSearchControlsVisibility.setImageResource(it.showSearchControlsIconResourceId) }
             clearSearchResults()
             searchViewExpandedListener?.invoke(false)
         }
