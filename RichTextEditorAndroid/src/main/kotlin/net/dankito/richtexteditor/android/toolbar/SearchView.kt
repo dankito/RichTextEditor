@@ -153,6 +153,7 @@ class SearchView : LinearLayout {
         searchField.setTextColor(style.commandStyle.enabledTintColor)
 
         searchField.setBackgroundTintColor(style.commandStyle.enabledTintColor) // sets line color at bottom of EditText
+        searchField.clearCaretColor() // sets caret's color to text color (but caret is also smaller then)
 
 
         countSearchResultsLabel.setTextColor(style.commandStyle.enabledTintColor)
