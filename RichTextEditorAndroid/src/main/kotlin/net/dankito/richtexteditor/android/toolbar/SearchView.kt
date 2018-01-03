@@ -54,6 +54,8 @@ class SearchView : LinearLayout {
             }
         }
 
+    var searchViewExpandedListener: ((isExpanded: Boolean) -> Unit)? = null
+
 
     private lateinit var btnToggleSearchControlsVisibility: ImageButton
 
@@ -159,6 +161,8 @@ class SearchView : LinearLayout {
         if(lytSearchControls.visibility == View.GONE) {
             lytSearchControls.visibility = View.VISIBLE
 
+            searchViewExpandedListener?.invoke(true)
+
             searchField.showKeyboard()
             searchInWebView(searchField.text.toString())
         }
@@ -177,6 +181,7 @@ class SearchView : LinearLayout {
             }
 
             clearSearchResults()
+            searchViewExpandedListener?.invoke(false)
         }
     }
 
