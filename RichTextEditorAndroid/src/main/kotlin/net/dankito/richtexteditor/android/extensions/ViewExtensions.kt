@@ -1,7 +1,10 @@
 package net.dankito.richtexteditor.android.extensions
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Build
+import android.support.v4.content.ContextCompat
+import android.support.v4.view.ViewCompat
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.InputMethodManager
@@ -50,6 +53,16 @@ fun View.getDisplayDensity(): Float {
 
 fun View.setPadding(paddingTopBottomLeftRight: Int) {
     this.setPadding(paddingTopBottomLeftRight, paddingTopBottomLeftRight, paddingTopBottomLeftRight, paddingTopBottomLeftRight)
+}
+
+
+fun View.setBackgroundTintColor(color: Int) {
+    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        this.backgroundTintList = ColorStateList.valueOf(color)
+    }
+    else {
+        ViewCompat.setBackgroundTintList(this, ContextCompat.getColorStateList(this.context, color))
+    }
 }
 
 

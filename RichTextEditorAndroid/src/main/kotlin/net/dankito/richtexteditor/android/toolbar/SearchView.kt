@@ -16,10 +16,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.extensions.getLayoutSize
-import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
-import net.dankito.richtexteditor.android.extensions.hideKeyboard
-import net.dankito.richtexteditor.android.extensions.showKeyboard
+import net.dankito.richtexteditor.android.extensions.*
 import net.dankito.richtexteditor.android.util.StyleApplier
 
 
@@ -154,6 +151,9 @@ class SearchView : LinearLayout {
 
         searchField.textSize = style.searchFieldTextSize
         searchField.setTextColor(style.commandStyle.enabledTintColor)
+
+        searchField.setBackgroundTintColor(style.commandStyle.enabledTintColor) // sets line color at bottom of EditText
+
 
         countSearchResultsLabel.setTextColor(style.commandStyle.enabledTintColor)
         val marginLeftRight = getLayoutSize(style.commandStyle.paddingDp)
