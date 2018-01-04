@@ -10,8 +10,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // Nexus staging plugin has to be downgraded to 0.10.0 to be applicable to sub projects, see https://github.com/UweTrottmann/SeriesGuide/commit/ca33e8ad2fa6cc5c426450c8aef3417ba073ca7f
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.10.0"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

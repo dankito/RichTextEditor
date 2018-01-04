@@ -8,7 +8,7 @@ build/
 .gradle
 
 /local.properties
-/gradle.properties
+**/gradle.properties
 
 .DS_Store
 .externalNativeBuild
