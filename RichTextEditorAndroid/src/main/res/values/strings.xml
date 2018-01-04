@@ -84,6 +84,6 @@
 
 
 
-    <string name="count_search_results_label" formatted="false">%s of %s</string>
+    <string name="count_search_results_label" formatted="false">%d of %d</string>
 
 </resources>
