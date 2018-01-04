@@ -5,14 +5,13 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.ListView
 import android.widget.RelativeLayout
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.animation.ShowHideViewAnimator
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommand
-import net.dankito.richtexteditor.android.extensions.removeOnGlobalLayoutListener
+import net.dankito.richtexteditor.android.extensions.executeActionAfterMeasuringSize
 
 
 class SelectValueView: ListView {
@@ -197,17 +196,7 @@ class SelectValueView: ListView {
 
 
     private fun animateShowView() {
-        if(this.measuredHeight == 0 || hasEditorHeightChanged) { // in this case we have to wait till height is determined -> set OnGlobalLayoutListener
-            var layoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null // have to do it that complicated otherwise in OnGlobalLayoutListener we cannot access layoutListener variable
-            layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
-                removeOnGlobalLayoutListener(layoutListener)
-
-                animateShowViewAfterMeasuringHeight()
-            }
-
-            this.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
-        }
-        else {
+        this.executeActionAfterMeasuringSize(hasEditorHeightChanged) {
             animateShowViewAfterMeasuringHeight()
         }
 

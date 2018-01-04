@@ -66,6 +66,22 @@ fun View.setBackgroundTintColor(color: Int) {
 }
 
 
+fun View.executeActionAfterMeasuringSize(forceWaitForMeasuring: Boolean = false, action: () -> Unit) {
+    if(this.measuredHeight == 0 || forceWaitForMeasuring) { // in this case we have to wait till height is determined -> set OnGlobalLayoutListener
+        var layoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null // have to do it that complicated otherwise in OnGlobalLayoutListener we cannot access layoutListener variable
+        layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+            removeOnGlobalLayoutListener(layoutListener)
+
+            action()
+        }
+
+        this.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
+    }
+    else {
+        action()
+    }
+}
+
 fun View.removeOnGlobalLayoutListener(layoutListener: ViewTreeObserver.OnGlobalLayoutListener?) {
     if(Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
         this.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
