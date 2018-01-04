@@ -61,7 +61,8 @@ class SearchView : LinearLayout {
     lateinit var lytSearchControls: LinearLayout
         private set
 
-    private lateinit var searchField: EditText
+    lateinit var searchField: EditText
+        private set
 
     private lateinit var countSearchResultsLabel: TextView
 
