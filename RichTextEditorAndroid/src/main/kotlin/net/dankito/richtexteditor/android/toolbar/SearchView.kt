@@ -182,7 +182,7 @@ class SearchView : LinearLayout {
         searchInWebView(searchField.text.toString())
     }
 
-    private fun hideSearchControls() {
+    fun hideSearchControls() {
         if(editor != null) {
             editor?.focusEditorAndShowKeyboard()
             editor?.focusEditorAndShowKeyboardDelayed()
