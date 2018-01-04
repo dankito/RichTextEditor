@@ -23,10 +23,12 @@ import net.dankito.richtexteditor.android.util.StyleApplier
 class SearchView : LinearLayout {
 
     companion object {
-        const val SearchFieldDefaultWidthInDp = 150
+        const val SearchFieldMinWidthInDp = 100
         const val CountSearchResultsLabelMaxWidthInDp = 52
         const val ButtonDefaultWidthInDp = 40
         const val ButtonLeftMarginInDp = 4
+
+        const val SearchControlsMaxWidthInDp = 215
     }
 
 
@@ -81,6 +83,8 @@ class SearchView : LinearLayout {
         lytSearchControls.visibility = View.GONE
         addView(lytSearchControls)
 
+        lytSearchControls.layoutParams.width = getPixelSizeForDisplay(SearchControlsMaxWidthInDp)
+
         initSearchFieldAndLabel(context)
 
         initButtons(context)
@@ -88,7 +92,10 @@ class SearchView : LinearLayout {
 
     private fun initSearchFieldAndLabel(context: Context) {
         searchField = EditText(context)
-        lytSearchControls.addView(searchField, LayoutParams(getPixelSizeForDisplay(SearchFieldDefaultWidthInDp), ViewGroup.LayoutParams.MATCH_PARENT))
+        lytSearchControls.addView(searchField, LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT))
+
+        searchField.minWidth = getPixelSizeForDisplay(SearchFieldMinWidthInDp)
+        (searchField.layoutParams as LinearLayout.LayoutParams).weight = 2f
 
         searchField.inputType = InputType.TYPE_CLASS_TEXT
         searchField.addTextChangedListener(searchFieldTextWatcher)
