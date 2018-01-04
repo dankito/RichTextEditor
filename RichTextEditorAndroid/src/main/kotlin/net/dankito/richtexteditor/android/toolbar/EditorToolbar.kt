@@ -128,6 +128,9 @@ open class EditorToolbar : HorizontalScrollView {
                     smoothScrollBy(searchView.lytSearchControls.width, 0)
                 }
             }
+            else {
+                smoothScrollBy(-1 * searchView.lytSearchControls.width, 0)
+            }
         }
     }
 
