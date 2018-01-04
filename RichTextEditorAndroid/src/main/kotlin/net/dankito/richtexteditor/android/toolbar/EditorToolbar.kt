@@ -10,6 +10,7 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
+import net.dankito.richtexteditor.android.extensions.executeActionAfterMeasuringSize
 import net.dankito.richtexteditor.android.util.StyleApplier
 
 
@@ -120,6 +121,14 @@ open class EditorToolbar : HorizontalScrollView {
         searchView.applyStyle(style)
 
         searchView.editor = editor
+
+        searchView.searchViewExpandedListener = { isExpanded ->
+            if(isExpanded) { // scroll to right by lytSearchControls' width
+                searchView.lytSearchControls.executeActionAfterMeasuringSize(true) {
+                    smoothScrollBy(searchView.lytSearchControls.width, 0)
+                }
+            }
+        }
     }
 
 

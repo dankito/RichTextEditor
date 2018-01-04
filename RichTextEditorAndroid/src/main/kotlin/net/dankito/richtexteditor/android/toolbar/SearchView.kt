@@ -55,7 +55,8 @@ class SearchView : LinearLayout {
 
     private lateinit var btnToggleSearchControlsVisibility: ImageButton
 
-    private lateinit var lytSearchControls: LinearLayout
+    lateinit var lytSearchControls: LinearLayout
+        private set
 
     private lateinit var searchField: EditText
 
