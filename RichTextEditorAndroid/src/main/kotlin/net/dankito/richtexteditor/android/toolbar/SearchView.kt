@@ -24,6 +24,7 @@ class SearchView : LinearLayout {
 
     companion object {
         const val SearchFieldDefaultWidthInDp = 150
+        const val CountSearchResultsLabelMaxWidthInDp = 52
         const val ButtonDefaultWidthInDp = 40
         const val ButtonLeftMarginInDp = 4
     }
@@ -98,9 +99,10 @@ class SearchView : LinearLayout {
 
         countSearchResultsLabel.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
         countSearchResultsLabel.layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT
+        countSearchResultsLabel.maxWidth = getPixelSizeForDisplay(CountSearchResultsLabelMaxWidthInDp)
 
-        (countSearchResultsLabel.layoutParams as? LayoutParams)?.gravity = Gravity.CENTER_VERTICAL
-        countSearchResultsLabel.gravity = Gravity.CENTER_VERTICAL
+        (countSearchResultsLabel.layoutParams as? LayoutParams)?.gravity = Gravity.CENTER
+        countSearchResultsLabel.gravity = Gravity.CENTER
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             countSearchResultsLabel.textAlignment = View.TEXT_ALIGNMENT_GRAVITY
         }
