@@ -2,26 +2,23 @@ package net.dankito.richtexteditor.android.command
 
 import android.support.v4.app.FragmentActivity
 import net.dankito.richtexteditor.Icon
-import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditImageDialog
-import net.dankito.richtexteditor.command.CommandName
-import net.dankito.richtexteditor.command.ToolbarCommand
+import net.dankito.richtexteditor.command.InsertImageCommandBase
 
 
-class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : ToolbarCommand(CommandName.INSERTIMAGE, icon), ICommandRequiringEditor {
+class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : InsertImageCommandBase(icon), ICommandRequiringEditor {
 
     override var editor: RichTextEditor? = null
 
-
-    override fun executeCommand(executor: JavaScriptExecutorBase) {
+    override fun selectImageToInsert(done: (imageUrl: String, alternateText: String) -> Unit) {
         (editor?.context as? FragmentActivity)?.let { activity ->
             val dialog = EditImageDialog()
 
             dialog.show(activity.supportFragmentManager) { imageUrl, alternateText ->
-                executor.insertImage(imageUrl, alternateText)
+                done(imageUrl, alternateText)
             }
         }
     }
