@@ -1,7 +1,7 @@
 package net.dankito.richtexteditor
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.CommandState
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
@@ -23,9 +23,9 @@ abstract class JavaScriptExecutorBase {
 
     private val objectMapper = ObjectMapper()
 
-    private var commandStates: Map<Command, CommandState> = mapOf()
+    private var commandStates: Map<CommandName, CommandState> = mapOf()
 
-    private val commandStatesChangedListeners = mutableSetOf<(Map<Command, CommandState>) -> Unit>()
+    private val commandStatesChangedListeners = mutableSetOf<(Map<CommandName, CommandState>) -> Unit>()
 
     private var didHtmlChange = false
 
@@ -242,7 +242,7 @@ abstract class JavaScriptExecutorBase {
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
     }
 
-    private fun handleRetrievedCommandStates(commandStates: MutableMap<Command, CommandState>) {
+    private fun handleRetrievedCommandStates(commandStates: MutableMap<CommandName, CommandState>) {
         determineDerivedCommandStates(commandStates)
 
         this.commandStates = commandStates
@@ -250,24 +250,24 @@ abstract class JavaScriptExecutorBase {
         commandStatesChangedListeners.forEach { it.invoke(this.commandStates) }
     }
 
-    private fun determineDerivedCommandStates(commandStates: MutableMap<Command, CommandState>) {
-        commandStates[Command.FORMATBLOCK]?.let { formatCommandState ->
-            commandStates.put(Command.H1, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h1")))
-            commandStates.put(Command.H2, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h2")))
-            commandStates.put(Command.H3, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h3")))
-            commandStates.put(Command.H4, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h4")))
-            commandStates.put(Command.H5, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h5")))
-            commandStates.put(Command.H6, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h6")))
-            commandStates.put(Command.P, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "p")))
-            commandStates.put(Command.PRE, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "pre")))
-            commandStates.put(Command.BR, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "")))
-            commandStates.put(Command.BLOCKQUOTE, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "blockquote")))
+    private fun determineDerivedCommandStates(commandStates: MutableMap<CommandName, CommandState>) {
+        commandStates[CommandName.FORMATBLOCK]?.let { formatCommandState ->
+            commandStates.put(CommandName.H1, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h1")))
+            commandStates.put(CommandName.H2, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h2")))
+            commandStates.put(CommandName.H3, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h3")))
+            commandStates.put(CommandName.H4, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h4")))
+            commandStates.put(CommandName.H5, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h5")))
+            commandStates.put(CommandName.H6, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h6")))
+            commandStates.put(CommandName.P, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "p")))
+            commandStates.put(CommandName.PRE, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "pre")))
+            commandStates.put(CommandName.BR, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "")))
+            commandStates.put(CommandName.BLOCKQUOTE, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "blockquote")))
         }
 
-        commandStates[Command.INSERTHTML]?.let { insertHtmlState ->
-            commandStates.put(Command.INSERTLINK, insertHtmlState)
-            commandStates.put(Command.INSERTIMAGE, insertHtmlState)
-            commandStates.put(Command.INSERTCHECKBOX, insertHtmlState)
+        commandStates[CommandName.INSERTHTML]?.let { insertHtmlState ->
+            commandStates.put(CommandName.INSERTLINK, insertHtmlState)
+            commandStates.put(CommandName.INSERTIMAGE, insertHtmlState)
+            commandStates.put(CommandName.INSERTCHECKBOX, insertHtmlState)
         }
     }
 
@@ -275,7 +275,7 @@ abstract class JavaScriptExecutorBase {
         return (formatCommandState.value == format).toString() // rich_text_editor.js reports boolean values as string, so we also have to convert it to string
     }
 
-    fun addCommandStatesChangedListener(listener: (commandStates: Map<Command, CommandState>) -> Unit) {
+    fun addCommandStatesChangedListener(listener: (commandStates: Map<CommandName, CommandState>) -> Unit) {
         commandStatesChangedListeners.add(listener)
 
         listener.invoke(commandStates)
