@@ -1,11 +1,12 @@
 package net.dankito.richtexteditor.android.command
 
+import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.CommandView
 import net.dankito.richtexteditor.command.Command
 
 
-abstract class ActiveStateToolbarCommand(command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
-    : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
+abstract class ActiveStateToolbarCommand(command: Command, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+    : ToolbarCommand(command, icon, style, commandExecutedListener) {
 
 
     override fun commandValueChanged(commandView: CommandView, commandValue: Any) {

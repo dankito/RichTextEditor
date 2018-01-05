@@ -1,11 +1,13 @@
 package net.dankito.richtexteditor.android.command
 
+import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
+import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.Command
 import java.util.*
 
-class SetFontSizeCommand(iconResourceId: Int = R.drawable.ic_format_size_white_48dp) : SelectValueCommand(Command.FONTSIZE, iconResourceId) {
+class SetFontSizeCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_size_white_48dp)) : SelectValueCommand(Command.FONTSIZE, icon) {
 
 
     override fun initValuesDisplayTexts(): List<CharSequence> {

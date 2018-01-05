@@ -4,6 +4,8 @@ import android.os.Build
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import net.dankito.richtexteditor.Icon
+import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
 import net.dankito.richtexteditor.android.extensions.getLayoutSize
 import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
@@ -12,8 +14,8 @@ import net.dankito.richtexteditor.android.extensions.setPadding
 
 class StyleApplier {
 
-    fun applyCommandStyle(iconResourceId: Int, style: ToolbarCommandStyle, commandView: ImageButton) {
-        commandView.setImageResource(iconResourceId)
+    fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: ImageButton) {
+        (icon as? AndroidIcon)?.let { commandView.setImageResource(it.iconResourceId) }
         commandView.scaleType = ImageView.ScaleType.FIT_CENTER
 
         commandView.setBackgroundColor(style.backgroundColor.toInt())

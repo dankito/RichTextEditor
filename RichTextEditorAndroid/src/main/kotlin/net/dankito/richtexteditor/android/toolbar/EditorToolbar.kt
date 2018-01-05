@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
@@ -74,13 +75,13 @@ open class EditorToolbar : HorizontalScrollView {
     }
 
     private fun applyCommandStyle(command: ToolbarCommand, commandView: ImageButton) {
-        applyCommandStyle(command.iconResourceId, command.style, commandView)
+        applyCommandStyle(command.icon, command.style, commandView)
     }
 
-    internal fun applyCommandStyle(iconResourceId: Int, style: ToolbarCommandStyle, commandView: ImageButton) {
+    internal fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: ImageButton) {
         mergeStyles(commandStyle, style)
 
-        styleApplier.applyCommandStyle(iconResourceId, style, commandView)
+        styleApplier.applyCommandStyle(icon, style, commandView)
     }
 
     private fun mergeStyles(toolbarCommandStyle: ToolbarCommandStyle, commandStyle: ToolbarCommandStyle) {

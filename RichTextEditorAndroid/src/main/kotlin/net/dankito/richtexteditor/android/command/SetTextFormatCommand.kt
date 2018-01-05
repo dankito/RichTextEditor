@@ -1,12 +1,14 @@
 package net.dankito.richtexteditor.android.command
 
+import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
+import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.Command
 import java.util.*
 
 
-class SetTextFormatCommand(iconResourceId: Int = R.drawable.ic_text_format_white_48dp) : SelectValueCommand(Command.FORMATBLOCK, iconResourceId) {
+class SetTextFormatCommand(icon: Icon = AndroidIcon(R.drawable.ic_text_format_white_48dp)) : SelectValueCommand(Command.FORMATBLOCK, icon) {
 
 
     override fun initValuesDisplayTexts(): List<CharSequence> {

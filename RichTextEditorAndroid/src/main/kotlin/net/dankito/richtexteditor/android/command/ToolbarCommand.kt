@@ -1,5 +1,6 @@
 package net.dankito.richtexteditor.android.command
 
+import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.CommandView
 import net.dankito.richtexteditor.command.Command
@@ -7,7 +8,7 @@ import net.dankito.richtexteditor.command.CommandState
 
 
 abstract class ToolbarCommand(val command: Command,
-                              val iconResourceId: Int,
+                              val icon: Icon,
                               val style: ToolbarCommandStyle = ToolbarCommandStyle(),
                               val commandExecutedListener: (() -> Unit)? = null) {
 

@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.*
@@ -144,18 +145,18 @@ class SearchView : LinearLayout {
 
         lytSearchControls.setBackgroundColor(style.searchControlsBackgroundColor)
 
-        styleApplier.applyCommandStyle(style.showSearchControlsIconResourceId, style.commandStyle, btnToggleSearchControlsVisibility)
+        styleApplier.applyCommandStyle(style.showSearchControlsIcon, style.commandStyle, btnToggleSearchControlsVisibility)
         btnToggleSearchControlsVisibility.setColorFilter(style.commandStyle.enabledTintColor.toInt())
 
-        styleApplier.applyCommandStyle(style.jumpToPreviousResultIconResourceId, style.commandStyle, btnJumpToPreviousResult)
+        styleApplier.applyCommandStyle(style.jumpToPreviousResultIcon, style.commandStyle, btnJumpToPreviousResult)
         btnJumpToPreviousResult.setColorFilter(style.commandStyle.enabledTintColor.toInt())
-        if(style.jumpToPreviousResultIconResourceId == R.drawable.ic_arrow_up) {
+        if((style.jumpToPreviousResultIcon as? AndroidIcon)?.iconResourceId == R.drawable.ic_arrow_up) {
             btnJumpToPreviousResult.layoutParams.width = getLayoutSize(27)
         }
 
-        styleApplier.applyCommandStyle(style.jumpToNextResultIconResourceId, style.commandStyle, btnJumpToNextResult)
+        styleApplier.applyCommandStyle(style.jumpToNextResultIcon, style.commandStyle, btnJumpToNextResult)
         btnJumpToNextResult.setColorFilter(style.commandStyle.enabledTintColor.toInt())
-        if(style.jumpToNextResultIconResourceId == R.drawable.ic_arrow_down) {
+        if((style.jumpToNextResultIcon as? AndroidIcon)?.iconResourceId == R.drawable.ic_arrow_down) {
             btnJumpToNextResult.layoutParams.width = getLayoutSize(27)
         }
 
@@ -183,7 +184,7 @@ class SearchView : LinearLayout {
     }
 
     private fun showSearchControls() {
-        style?.let { btnToggleSearchControlsVisibility.setImageResource(it.hideSearchControlsIconResourceId) }
+        (style?.hideSearchControlsIcon as? AndroidIcon)?.let { btnToggleSearchControlsVisibility.setImageResource(it.iconResourceId) }
         lytSearchControls.visibility = View.VISIBLE
 
         searchViewExpandedListener?.invoke(true)
@@ -206,7 +207,7 @@ class SearchView : LinearLayout {
             lytSearchControls.visibility = View.GONE
         }
 
-        style?.let { btnToggleSearchControlsVisibility.setImageResource(it.showSearchControlsIconResourceId) }
+        (style?.showSearchControlsIcon as? AndroidIcon)?.let { btnToggleSearchControlsVisibility.setImageResource(it.iconResourceId) }
         clearSearchResults()
         searchViewExpandedListener?.invoke(false)
     }
