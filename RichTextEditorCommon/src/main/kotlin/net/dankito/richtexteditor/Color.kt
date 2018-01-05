@@ -28,8 +28,6 @@ class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
 
 
     fun toInt(): Int {
-//        (colorByteArr[0] << 24) + ((colorByteArr[1] & 0xFF) << 16) + ((colorByteArr[2] & 0xFF) << 8) + (colorByteArr[3] & 0xFF)
-
         var argb = alpha
         argb = (argb shl 8) + red
         argb = (argb shl 8) + green
