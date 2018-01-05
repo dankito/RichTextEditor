@@ -1,13 +1,12 @@
-package net.dankito.richtexteditor.android.command
+package net.dankito.richtexteditor.command
 
 import net.dankito.richtexteditor.Color
 import net.dankito.richtexteditor.CommandView
 import net.dankito.richtexteditor.Icon
-import net.dankito.richtexteditor.command.CommandName
 import org.slf4j.LoggerFactory
 
 abstract class ColorCommand(defaultColor: Color, private val showColorInCommandView: Boolean = true, command: CommandName, icon: Icon, style:
-                            ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, icon, style, commandExecutedListener) {
 
     companion object {

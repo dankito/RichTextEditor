@@ -4,7 +4,7 @@ import android.graphics.Color
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
+import net.dankito.richtexteditor.command.ToolbarCommandStyle
 
 
 data class SearchViewStyle(val commandStyle: ToolbarCommandStyle = ToolbarCommandStyle(),

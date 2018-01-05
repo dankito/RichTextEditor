@@ -7,6 +7,8 @@ import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.SelectValueView
 import net.dankito.richtexteditor.command.CommandName
+import net.dankito.richtexteditor.command.ToolbarCommand
+import net.dankito.richtexteditor.command.ToolbarCommandStyle
 
 
 abstract class SelectValueCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)

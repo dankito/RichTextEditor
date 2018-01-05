@@ -8,6 +8,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditImageDialog
 import net.dankito.richtexteditor.command.CommandName
+import net.dankito.richtexteditor.command.ToolbarCommand
 
 
 class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : ToolbarCommand(CommandName.INSERTIMAGE, icon), ICommandRequiringEditor {

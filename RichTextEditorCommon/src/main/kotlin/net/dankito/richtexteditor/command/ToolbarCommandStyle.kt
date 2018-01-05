@@ -1,6 +1,5 @@
-package net.dankito.richtexteditor.android.command
+package net.dankito.richtexteditor.command
 
-import android.view.ViewGroup
 import net.dankito.richtexteditor.Color
 
 
@@ -21,7 +20,7 @@ data class ToolbarCommandStyle(
 
         const val DefaultWidthDp = 36
 
-        const val DefaultHeightDp = ViewGroup.LayoutParams.MATCH_PARENT
+        const val DefaultHeightDp = -1 // -1 for ViewGroup.LayoutParams.MATCH_PARENT
 
         const val DefaultMarginRightDp = 1
 

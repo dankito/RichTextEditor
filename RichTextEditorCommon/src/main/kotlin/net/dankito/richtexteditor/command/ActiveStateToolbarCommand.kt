@@ -1,8 +1,7 @@
-package net.dankito.richtexteditor.android.command
+package net.dankito.richtexteditor.command
 
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.CommandView
-import net.dankito.richtexteditor.command.CommandName
 
 
 abstract class ActiveStateToolbarCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)

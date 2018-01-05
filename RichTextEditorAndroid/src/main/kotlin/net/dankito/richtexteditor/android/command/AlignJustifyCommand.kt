@@ -4,6 +4,7 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
+import net.dankito.richtexteditor.command.ActiveStateToolbarCommand
 import net.dankito.richtexteditor.command.CommandName
 
 

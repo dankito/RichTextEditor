@@ -8,6 +8,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditUrlDialog
 import net.dankito.richtexteditor.command.CommandName
+import net.dankito.richtexteditor.command.ToolbarCommand
 
 
 class InsertLinkCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_link_white_48dp)) : ToolbarCommand(CommandName.INSERTLINK, icon), ICommandRequiringEditor {

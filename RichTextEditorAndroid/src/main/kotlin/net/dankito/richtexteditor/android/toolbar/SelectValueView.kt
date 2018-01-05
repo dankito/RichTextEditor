@@ -11,7 +11,7 @@ import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.animation.ShowHideViewAnimator
 import net.dankito.richtexteditor.android.command.SelectValueCommand
-import net.dankito.richtexteditor.android.command.ToolbarCommand
+import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.android.extensions.executeActionAfterMeasuringSize
 
 

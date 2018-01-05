@@ -9,7 +9,9 @@ import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.hideKeyboard
 import net.dankito.richtexteditor.android.util.KeyboardState
+import net.dankito.richtexteditor.command.ColorCommand
 import net.dankito.richtexteditor.command.CommandName
+import net.dankito.richtexteditor.command.ToolbarCommandStyle
 
 
 abstract class SetColorCommand(defaultColor: Color, showColorInCommandView: Boolean = true, command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
