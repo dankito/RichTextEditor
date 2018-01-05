@@ -7,7 +7,7 @@ import net.dankito.richtexteditor.JavaScriptExecutorBase
 abstract class InsertImageCommandBase(icon: Icon) : ToolbarCommand(CommandName.INSERTIMAGE, icon) {
 
 
-    abstract protected fun selectImageToInsert(done: (imageUrl: String, alternateText: String) -> Unit)
+    abstract protected fun selectImageToInsert(imageSelected: (imageUrl: String, alternateText: String) -> Unit)
 
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {

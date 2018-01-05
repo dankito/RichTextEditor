@@ -13,12 +13,12 @@ class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_whi
 
     override var editor: RichTextEditor? = null
 
-    override fun selectImageToInsert(done: (imageUrl: String, alternateText: String) -> Unit) {
+    override fun selectImageToInsert(imageSelected: (imageUrl: String, alternateText: String) -> Unit) {
         (editor?.context as? FragmentActivity)?.let { activity ->
             val dialog = EditImageDialog()
 
             dialog.show(activity.supportFragmentManager) { imageUrl, alternateText ->
-                done(imageUrl, alternateText)
+                imageSelected(imageUrl, alternateText)
             }
         }
     }

@@ -14,12 +14,12 @@ class InsertLinkCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_link_white
     override var editor: RichTextEditor? = null
 
 
-    override fun selectLinkToInsert(done: (url: String, title: String) -> Unit) {
+    override fun selectLinkToInsert(linkSelected: (url: String, title: String) -> Unit) {
         (editor?.context as? FragmentActivity)?.let { activity ->
             val dialog = EditUrlDialog()
 
             dialog.show(activity.supportFragmentManager) { url, title ->
-                done(url, title)
+                linkSelected(url, title)
             }
         }
     }
