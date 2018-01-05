@@ -1,1 +1,4 @@
-include ':DemoApp', ':RichTextEditorAndroid'
+include ':DemoApp'
+include ':RichTextEditorAndroid'
+
+include ':RichTextEditorCommon'

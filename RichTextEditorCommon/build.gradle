@@ -1,0 +1,16 @@
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+apply from: '../versions.gradle' // remove when developing in library directly
+
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile "org.slf4j:slf4j-api:$Slf4jVersion"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:$JacksonVersion"
+}
