@@ -3,11 +3,11 @@ package net.dankito.richtexteditor.android.command
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.CommandView
-import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.CommandState
 
 
-abstract class ToolbarCommand(val command: Command,
+abstract class ToolbarCommand(val command: CommandName,
                               val icon: Icon,
                               val style: ToolbarCommandStyle = ToolbarCommandStyle(),
                               val commandExecutedListener: (() -> Unit)? = null) {
@@ -36,7 +36,7 @@ abstract class ToolbarCommand(val command: Command,
     abstract protected fun executeCommand(executor: JavaScriptExecutorBase)
 
 
-    private fun commandStatesUpdated(commandStates: Map<Command, CommandState>) {
+    private fun commandStatesUpdated(commandStates: Map<CommandName, CommandState>) {
         commandStates[command]?.let { commandState ->
             commandView?.let { commandView ->
                 showCommandExecutableState(commandView, commandState.executable)

@@ -4,9 +4,9 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandName
 
-class InsertCheckboxCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_checkbox)) : ToolbarCommand(Command.INSERTCHECKBOX, icon) {
+class InsertCheckboxCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_checkbox)) : ToolbarCommand(CommandName.INSERTCHECKBOX, icon) {
 
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {

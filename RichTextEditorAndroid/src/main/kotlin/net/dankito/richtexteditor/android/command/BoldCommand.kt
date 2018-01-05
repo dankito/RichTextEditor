@@ -4,10 +4,10 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandName
 
 
-class BoldCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_bold_white_48dp)) : ActiveStateToolbarCommand(Command.BOLD, icon) {
+class BoldCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_bold_white_48dp)) : ActiveStateToolbarCommand(CommandName.BOLD, icon) {
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {
         executor.setBold()

@@ -3,10 +3,10 @@ package net.dankito.richtexteditor.android.command
 import net.dankito.richtexteditor.Color
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.CommandView
-import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandName
 import org.slf4j.LoggerFactory
 
-abstract class ColorCommand(defaultColor: Color, private val showColorInCommandView: Boolean = true, command: Command, icon: Icon, style:
+abstract class ColorCommand(defaultColor: Color, private val showColorInCommandView: Boolean = true, command: CommandName, icon: Icon, style:
                             ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, icon, style, commandExecutedListener) {
 
@@ -50,10 +50,10 @@ abstract class ColorCommand(defaultColor: Color, private val showColorInCommandV
     }
 
     protected open fun getColorValueForInherit(): Color? {
-        if(command == Command.FORECOLOR) {
+        if(command == CommandName.FORECOLOR) {
             return Color.Black // TODO: is this really true?
         }
-        else if(command == Command.BACKCOLOR) {
+        else if(command == CommandName.BACKCOLOR) {
             return Color.Transparent
         }
 

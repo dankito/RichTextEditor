@@ -1,7 +1,7 @@
 package net.dankito.richtexteditor.command
 
 
-enum class Command {
+enum class CommandName {
     UNDO,
     REDO,
     FORECOLOR,

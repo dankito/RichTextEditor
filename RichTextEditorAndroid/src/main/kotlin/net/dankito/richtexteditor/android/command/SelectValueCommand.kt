@@ -6,10 +6,10 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.SelectValueView
-import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandName
 
 
-abstract class SelectValueCommand(command: Command, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class SelectValueCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, icon, style, commandExecutedListener), ICommandRequiringEditor {
 
     override var editor: RichTextEditor? = null

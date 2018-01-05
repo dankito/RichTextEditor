@@ -5,10 +5,10 @@ import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.util.SystemFontsParser
-import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandName
 
 
-class SetFontNameCommand(icon: Icon = AndroidIcon(R.drawable.ic_font_download_white_48dp)) : SelectValueCommand(Command.FONTNAME, icon) {
+class SetFontNameCommand(icon: Icon = AndroidIcon(R.drawable.ic_font_download_white_48dp)) : SelectValueCommand(CommandName.FONTNAME, icon) {
 
 
     private val fontInfos = SystemFontsParser().parseSystemFonts()

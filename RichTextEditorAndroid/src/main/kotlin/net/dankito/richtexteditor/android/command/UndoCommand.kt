@@ -4,10 +4,10 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandName
 
 
-class UndoCommand(icon: Icon = AndroidIcon(R.drawable.ic_undo_white_48dp)) : ToolbarCommand(Command.UNDO, icon) {
+class UndoCommand(icon: Icon = AndroidIcon(R.drawable.ic_undo_white_48dp)) : ToolbarCommand(CommandName.UNDO, icon) {
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {
         executor.undo()
