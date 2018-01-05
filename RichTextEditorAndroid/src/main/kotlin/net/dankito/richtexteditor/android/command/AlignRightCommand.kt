@@ -1,17 +1,9 @@
 package net.dankito.richtexteditor.android.command
 
 import net.dankito.richtexteditor.Icon
-import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.command.ActiveStateToolbarCommand
-import net.dankito.richtexteditor.command.CommandName
+import net.dankito.richtexteditor.command.AlignRightCommandBase
 
 
-class AlignRightCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_align_right_white_48dp)) : ActiveStateToolbarCommand(CommandName.JUSTIFYRIGHT, icon) {
-
-    override fun executeCommand(executor: JavaScriptExecutorBase) {
-        executor.setJustifyRight()
-    }
-
-}
+class AlignRightCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_align_right_white_48dp)) : AlignRightCommandBase(icon)
