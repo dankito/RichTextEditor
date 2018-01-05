@@ -145,29 +145,29 @@ class SearchView : LinearLayout {
         lytSearchControls.setBackgroundColor(style.searchControlsBackgroundColor)
 
         styleApplier.applyCommandStyle(style.showSearchControlsIconResourceId, style.commandStyle, btnToggleSearchControlsVisibility)
-        btnToggleSearchControlsVisibility.setColorFilter(style.commandStyle.enabledTintColor)
+        btnToggleSearchControlsVisibility.setColorFilter(style.commandStyle.enabledTintColor.toInt())
 
         styleApplier.applyCommandStyle(style.jumpToPreviousResultIconResourceId, style.commandStyle, btnJumpToPreviousResult)
-        btnJumpToPreviousResult.setColorFilter(style.commandStyle.enabledTintColor)
+        btnJumpToPreviousResult.setColorFilter(style.commandStyle.enabledTintColor.toInt())
         if(style.jumpToPreviousResultIconResourceId == R.drawable.ic_arrow_up) {
             btnJumpToPreviousResult.layoutParams.width = getLayoutSize(27)
         }
 
         styleApplier.applyCommandStyle(style.jumpToNextResultIconResourceId, style.commandStyle, btnJumpToNextResult)
-        btnJumpToNextResult.setColorFilter(style.commandStyle.enabledTintColor)
+        btnJumpToNextResult.setColorFilter(style.commandStyle.enabledTintColor.toInt())
         if(style.jumpToNextResultIconResourceId == R.drawable.ic_arrow_down) {
             btnJumpToNextResult.layoutParams.width = getLayoutSize(27)
         }
 
 
         searchField.textSize = style.searchFieldTextSize
-        searchField.setTextColor(style.commandStyle.enabledTintColor)
+        searchField.setTextColor(style.commandStyle.enabledTintColor.toInt())
 
-        searchField.setBackgroundTintColor(style.commandStyle.enabledTintColor) // sets line color at bottom of EditText
+        searchField.setBackgroundTintColor(style.commandStyle.enabledTintColor.toInt()) // sets line color at bottom of EditText
         searchField.clearCaretColor() // sets caret's color to text color (but caret is also smaller then)
 
 
-        countSearchResultsLabel.setTextColor(style.commandStyle.enabledTintColor)
+        countSearchResultsLabel.setTextColor(style.commandStyle.enabledTintColor.toInt())
         val marginLeftRight = getLayoutSize(style.commandStyle.paddingDp)
         (countSearchResultsLabel.layoutParams as? LinearLayout.LayoutParams)?.setMargins(marginLeftRight, 0, marginLeftRight, 0)
     }

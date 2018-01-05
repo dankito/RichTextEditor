@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommand
 import net.dankito.richtexteditor.android.command.ToolbarCommandStyle
@@ -61,8 +63,12 @@ open class EditorToolbar : HorizontalScrollView {
 
         commands.put(command, commandView)
 
-        command.editor = editor
-        command.commandView = commandView
+        command.executor = editor?.javaScriptExecutor
+        command.commandView = AndroidCommandView(commandView)
+
+        if(command is ICommandRequiringEditor) {
+            command.editor = editor
+        }
 
         applyCommandStyle(command, commandView)
     }
@@ -150,7 +156,11 @@ open class EditorToolbar : HorizontalScrollView {
 
     private fun setRichTextEditorOnCommands(editor: RichTextEditor?) {
         commands.keys.forEach {
-            it.editor = editor
+            it.executor = editor?.javaScriptExecutor
+
+            if(it is ICommandRequiringEditor) {
+                it.editor = editor
+            }
         }
 
         searchViews.forEach {

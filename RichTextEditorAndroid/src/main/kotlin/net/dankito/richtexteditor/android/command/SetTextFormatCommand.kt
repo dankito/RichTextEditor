@@ -1,7 +1,8 @@
 package net.dankito.richtexteditor.android.command
 
+import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.command.Command
 import java.util.*
 
 
@@ -22,17 +23,17 @@ class SetTextFormatCommand(iconResourceId: Int = R.drawable.ic_text_format_white
         )
     }
 
-    override fun valueSelected(editor: RichTextEditor, position: Int) {
+    override fun valueSelected(executor: JavaScriptExecutorBase, position: Int) {
         when(position) {
-            0 -> editor.setHeading(1)
-            1 -> editor.setHeading(2)
-            2 -> editor.setHeading(3)
-            3 -> editor.setHeading(4)
-            4 -> editor.setHeading(5)
-            5 -> editor.setHeading(6)
-            6 -> editor.setFormattingToParagraph()
-            7 -> editor.setPreformat()
-            8 -> editor.setBlockQuote()
+            0 -> executor.setHeading(1)
+            1 -> executor.setHeading(2)
+            2 -> executor.setHeading(3)
+            3 -> executor.setHeading(4)
+            4 -> executor.setHeading(5)
+            5 -> executor.setHeading(6)
+            6 -> executor.setFormattingToParagraph()
+            7 -> executor.setPreformat()
+            8 -> executor.setBlockQuote()
         }
     }
 

@@ -1,23 +1,23 @@
 package net.dankito.richtexteditor.android.command
 
-import android.graphics.Color
 import android.view.ViewGroup
+import net.dankito.richtexteditor.Color
 
 
 data class ToolbarCommandStyle(
-        var backgroundColor: Int = DefaultBackgroundColor,
+        var backgroundColor: Color = DefaultBackgroundColor,
         var widthDp: Int = DefaultWidthDp,
         var heightDp: Int = DefaultHeightDp,
         var marginRightDp: Int = DefaultMarginRightDp,
         var paddingDp: Int = DefaultPaddingDp,
-        var enabledTintColor: Int = DefaultEnabledTintColor,
-        var disabledTintColor: Int = DefaultDisabledTintColor,
-        var isActivatedColor: Int = DefaultIsActivatedColor
+        var enabledTintColor: Color = DefaultEnabledTintColor,
+        var disabledTintColor: Color = DefaultDisabledTintColor,
+        var isActivatedColor: Color = DefaultIsActivatedColor
 ) {
 
 
     companion object {
-        const val DefaultBackgroundColor = Color.TRANSPARENT
+        val DefaultBackgroundColor = Color.Transparent
 
         const val DefaultWidthDp = 36
 
@@ -27,11 +27,11 @@ data class ToolbarCommandStyle(
 
         const val DefaultPaddingDp = 4
 
-        const val DefaultEnabledTintColor = Color.WHITE
+        val DefaultEnabledTintColor = Color.White
 
-        val DefaultDisabledTintColor = Color.argb(97, 0, 0, 0) // see https://material.io/guidelines/style/color.html#color-usability: Dark text on light backgrounds
+        val DefaultDisabledTintColor = Color(0, 0, 0, 97) // see https://material.io/guidelines/style/color.html#color-usability: Dark text on light backgrounds
 
-        const val DefaultIsActivatedColor = Color.DKGRAY
+        val DefaultIsActivatedColor = Color.DarkGray
 
         const val GroupDefaultMarginRightDp = 12
     }

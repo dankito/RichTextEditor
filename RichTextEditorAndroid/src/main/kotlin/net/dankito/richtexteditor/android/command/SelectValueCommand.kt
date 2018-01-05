@@ -2,12 +2,17 @@ package net.dankito.richtexteditor.android.command
 
 import android.os.Build
 import android.text.Html
+import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.SelectValueView
+import net.dankito.richtexteditor.command.Command
 
 
 abstract class SelectValueCommand(command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
-    : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
+    : ToolbarCommand(command, iconResourceId, style, commandExecutedListener), ICommandRequiringEditor {
+
+    override var editor: RichTextEditor? = null
+
 
     private var displayTexts: List<CharSequence>? = null
 
@@ -16,19 +21,21 @@ abstract class SelectValueCommand(command: Command, iconResourceId: Int, style: 
 
     abstract fun initValuesDisplayTexts(): List<CharSequence>
 
-    abstract fun valueSelected(editor: RichTextEditor, position: Int)
+    abstract fun valueSelected(executor: JavaScriptExecutorBase, position: Int)
 
 
-    override fun executeCommand(editor: RichTextEditor) {
-        getSelectValueView(editor).toggleShowView()
+    override fun executeCommand(executor: JavaScriptExecutorBase) {
+        getSelectValueView(executor).toggleShowView()
     }
 
-    private fun getSelectValueView(editor: RichTextEditor): SelectValueView {
+    private fun getSelectValueView(executor: JavaScriptExecutorBase): SelectValueView {
         selectValueView?.let { return it }
 
-        val view = SelectValueView(editor.context)
-        view.initialize(editor, this, getValuesDisplayTexts()) { position ->
-            valueSelected(editor, position)
+        val unpackedEditor = editor!!
+
+        val view = SelectValueView(unpackedEditor.context)
+        view.initialize(unpackedEditor, this, getValuesDisplayTexts()) { position ->
+            valueSelected(executor, position)
         }
 
         this.selectValueView = view
@@ -45,7 +52,7 @@ abstract class SelectValueCommand(command: Command, iconResourceId: Int, style: 
     }
 
     protected fun getHtmlSpanned(stringResourceId: Int): CharSequence {
-        editor?.context?.getText(stringResourceId)?.toString()?.let { html ->
+        selectValueView?.context?.getText(stringResourceId)?.toString()?.let { html ->
             return getHtmlSpanned(html)
         }
 

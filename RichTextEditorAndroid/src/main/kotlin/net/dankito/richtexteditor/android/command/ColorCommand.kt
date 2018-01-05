@@ -1,10 +1,11 @@
 package net.dankito.richtexteditor.android.command
 
-import android.graphics.Color
-import android.widget.ImageView
+import net.dankito.richtexteditor.Color
+import net.dankito.richtexteditor.android.CommandView
+import net.dankito.richtexteditor.command.Command
 import org.slf4j.LoggerFactory
 
-abstract class ColorCommand(defaultColor: Int, private val showColorInCommandView: Boolean = true, command: Command, iconResourceId: Int, style:
+abstract class ColorCommand(defaultColor: Color, private val showColorInCommandView: Boolean = true, command: Command, iconResourceId: Int, style:
                             ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, iconResourceId, style, commandExecutedListener) {
 
@@ -13,10 +14,10 @@ abstract class ColorCommand(defaultColor: Int, private val showColorInCommandVie
     }
 
 
-    protected var currentColor: Int = defaultColor
+    protected var currentColor: Color = defaultColor
 
 
-    override fun commandValueChanged(commandView: ImageView, commandValue: Any) {
+    override fun commandValueChanged(commandView: CommandView, commandValue: Any) {
         super.commandValueChanged(commandView, commandValue)
 
         if(commandValue is String) {
@@ -26,17 +27,17 @@ abstract class ColorCommand(defaultColor: Int, private val showColorInCommandVie
         }
     }
 
-    private fun tryToParseColorFromString(colorString: String): Int? {
+    private fun tryToParseColorFromString(colorString: String): Color? {
         if(colorString.startsWith("rgba(") || colorString.startsWith("rgb(")) {
             try {
                 val hexColorString = colorString.replace("rgba(", "").replace("rgb(", "").replace(")", "")
                 val hexValues = hexColorString.split(',').map { it.trim() }.filter { it.isNotEmpty() }.map { it.toIntOrNull() }.filterNotNull()
 
                 if (hexValues.size == 3) {
-                    return Color.rgb(hexValues[0], hexValues[1], hexValues[2])
+                    return Color(hexValues[0], hexValues[1], hexValues[2])
                 }
                 else if (hexValues.size == 4) {
-                    return Color.argb(hexValues[3], hexValues[0], hexValues[1], hexValues[2])
+                    return Color(hexValues[0], hexValues[1], hexValues[2], hexValues[3])
                 }
             } catch(e: Exception) { log.error("Could not parse color string $colorString", e) }
         }
@@ -47,19 +48,19 @@ abstract class ColorCommand(defaultColor: Int, private val showColorInCommandVie
         return null
     }
 
-    protected open fun getColorValueForInherit(): Int? {
+    protected open fun getColorValueForInherit(): Color? {
         if(command == Command.FORECOLOR) {
-            return Color.BLACK // TODO: is this really true?
+            return Color.Black // TODO: is this really true?
         }
         else if(command == Command.BACKCOLOR) {
-            return Color.TRANSPARENT
+            return Color.Transparent
         }
 
         return null
     }
 
 
-    protected open fun currentColorChanged(color: Int) {
+    protected open fun currentColorChanged(color: Color) {
         this.currentColor = color
 
         if(showColorInCommandView) {
@@ -67,20 +68,20 @@ abstract class ColorCommand(defaultColor: Int, private val showColorInCommandVie
         }
     }
 
-    private fun setCommandViewBackgroundColor(color: Int) {
+    private fun setCommandViewBackgroundColor(color: Color) {
         commandView?.let { commandView ->
             commandView.setBackgroundColor(color)
 
-            if(isExecutable && color == Color.WHITE && style.enabledTintColor == Color.WHITE) {
-                if(style.isActivatedColor != Color.WHITE) {
-                    commandView.setColorFilter(style.isActivatedColor)
+            if(isExecutable && color == Color.White && style.enabledTintColor == Color.White) {
+                if(style.isActivatedColor != Color.White) {
+                    commandView.setTintColor(style.isActivatedColor)
                 }
                 else {
-                    commandView.setColorFilter(Color.LTGRAY) // looks quite ugly to me
+                    commandView.setTintColor(Color.LightGray) // looks quite ugly to me
                 }
             }
-            else if(isExecutable && color == Color.BLACK && style.enabledTintColor == Color.BLACK) {
-                commandView.setColorFilter(Color.WHITE)
+            else if(isExecutable && color == Color.Black && style.enabledTintColor == Color.Black) {
+                commandView.setTintColor(Color.White)
             }
             else {
                 setIconTintColorToExecutableState(commandView, isExecutable)

@@ -1,7 +1,9 @@
 package net.dankito.richtexteditor.android.command
 
-import android.widget.ImageView
-import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.JavaScriptExecutorBase
+import net.dankito.richtexteditor.android.CommandView
+import net.dankito.richtexteditor.command.Command
+import net.dankito.richtexteditor.command.CommandState
 
 
 abstract class ToolbarCommand(val command: Command,
@@ -10,27 +12,27 @@ abstract class ToolbarCommand(val command: Command,
                               val commandExecutedListener: (() -> Unit)? = null) {
 
 
-    var editor: RichTextEditor? = null
+    var executor: JavaScriptExecutorBase? = null
         set(value) {
             field = value
 
             value?.addCommandStatesChangedListener { commandStatesUpdated(it) }
         }
 
-    var commandView: ImageView? = null
+    var commandView: CommandView? = null
 
     var isExecutable: Boolean = true
 
 
     fun commandInvoked() {
-        editor?.let {
+        executor?.let {
             executeCommand(it)
         }
 
         commandExecutedListener?.invoke()
     }
 
-    abstract protected fun executeCommand(editor: RichTextEditor)
+    abstract protected fun executeCommand(executor: JavaScriptExecutorBase)
 
 
     private fun commandStatesUpdated(commandStates: Map<Command, CommandState>) {
@@ -45,23 +47,23 @@ abstract class ToolbarCommand(val command: Command,
         }
     }
 
-    private fun showCommandExecutableState(commandView: ImageView, executable: Boolean) {
+    private fun showCommandExecutableState(commandView: CommandView, executable: Boolean) {
         this.isExecutable = executable
-        commandView.isEnabled = executable
+        commandView.setIsEnabled(executable)
 
         setIconTintColorToExecutableState(commandView, executable)
     }
 
-    protected fun setIconTintColorToExecutableState(commandView: ImageView, isExecutable: Boolean) {
+    protected fun setIconTintColorToExecutableState(commandView: CommandView, isExecutable: Boolean) {
         if(isExecutable) {
-            commandView.setColorFilter(style.enabledTintColor)
+            commandView.setTintColor(style.enabledTintColor)
         }
         else {
-            commandView.setColorFilter(style.disabledTintColor)
+            commandView.setTintColor(style.disabledTintColor)
         }
     }
 
-    protected open fun commandValueChanged(commandView: ImageView, commandValue: Any) {
+    protected open fun commandValueChanged(commandView: CommandView, commandValue: Any) {
 
     }
 

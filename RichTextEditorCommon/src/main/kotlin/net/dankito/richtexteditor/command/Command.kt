@@ -1,4 +1,4 @@
-package net.dankito.richtexteditor.android.command
+package net.dankito.richtexteditor.command
 
 
 enum class Command {

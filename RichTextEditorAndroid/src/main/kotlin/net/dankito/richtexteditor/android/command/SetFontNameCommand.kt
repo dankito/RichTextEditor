@@ -1,8 +1,9 @@
 package net.dankito.richtexteditor.android.command
 
+import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.util.SystemFontsParser
+import net.dankito.richtexteditor.command.Command
 
 
 class SetFontNameCommand(iconResourceId: Int = R.drawable.ic_font_download_white_48dp) : SelectValueCommand(Command.FONTNAME, iconResourceId) {
@@ -28,8 +29,8 @@ class SetFontNameCommand(iconResourceId: Int = R.drawable.ic_font_download_white
         return displayTexts
     }
 
-    override fun valueSelected(editor: RichTextEditor, position: Int) {
-        editor.setFontName(fontInfos[position].fontFamily)
+    override fun valueSelected(executor: JavaScriptExecutorBase, position: Int) {
+        executor.setFontName(fontInfos[position].fontFamily)
     }
 
 }

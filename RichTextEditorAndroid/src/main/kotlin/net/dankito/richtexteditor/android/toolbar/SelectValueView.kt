@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.RelativeLayout
+import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.animation.ShowHideViewAnimator
 import net.dankito.richtexteditor.android.command.SelectValueCommand
@@ -106,7 +107,7 @@ class SelectValueView: ListView {
             hasEditorHeightChanged = editor.measuredHeight != lastEditorHeight // most probably due to keyboard show/hide
         }
 
-        var parent = selectValueCommand.commandView?.parent
+        var parent = (selectValueCommand.commandView as? AndroidCommandView)?.view?.parent
 
         while(parent != null) {
             if(parent is EditorToolbar) {

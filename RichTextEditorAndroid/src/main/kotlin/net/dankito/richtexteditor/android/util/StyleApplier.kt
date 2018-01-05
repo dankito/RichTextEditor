@@ -16,7 +16,7 @@ class StyleApplier {
         commandView.setImageResource(iconResourceId)
         commandView.scaleType = ImageView.ScaleType.FIT_CENTER
 
-        commandView.setBackgroundColor(style.backgroundColor)
+        commandView.setBackgroundColor(style.backgroundColor.toInt())
 
         val padding = commandView.getPixelSizeForDisplay(style.paddingDp)
         commandView.setPadding(padding)

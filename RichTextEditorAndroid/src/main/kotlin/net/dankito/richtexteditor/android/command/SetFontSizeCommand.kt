@@ -1,7 +1,8 @@
 package net.dankito.richtexteditor.android.command
 
+import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.command.Command
 import java.util.*
 
 class SetFontSizeCommand(iconResourceId: Int = R.drawable.ic_format_size_white_48dp) : SelectValueCommand(Command.FONTSIZE, iconResourceId) {
@@ -19,10 +20,10 @@ class SetFontSizeCommand(iconResourceId: Int = R.drawable.ic_format_size_white_4
         )
     }
 
-    override fun valueSelected(editor: RichTextEditor, position: Int) {
+    override fun valueSelected(executor: JavaScriptExecutorBase, position: Int) {
         val fontSize = position + 1 // position starts at 0, font sizes at 1
 
-        editor.setFontSize(fontSize)
+        executor.setFontSize(fontSize)
     }
 
 }

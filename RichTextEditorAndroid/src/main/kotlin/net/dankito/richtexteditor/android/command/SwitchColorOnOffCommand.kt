@@ -1,12 +1,14 @@
 package net.dankito.richtexteditor.android.command
 
-import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.Color
+import net.dankito.richtexteditor.JavaScriptExecutorBase
+import net.dankito.richtexteditor.command.Command
 
 
-abstract class SwitchColorOnOffCommand(private val offColor: Int, private var onColor: Int, showColorInCommandView: Boolean = true, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(),
+abstract class SwitchColorOnOffCommand(private val offColor: Color, private var onColor: Color, showColorInCommandView: Boolean = true, command: Command, iconResourceId: Int, style: ToolbarCommandStyle = ToolbarCommandStyle(),
                                        commandExecutedListener: (() -> Unit)? = null) : ColorCommand(offColor, showColorInCommandView, command, iconResourceId, style, commandExecutedListener) {
 
-    override fun currentColorChanged(color: Int) {
+    override fun currentColorChanged(color: Color) {
         super.currentColorChanged(color)
 
         if(color != offColor) {
@@ -14,16 +16,16 @@ abstract class SwitchColorOnOffCommand(private val offColor: Int, private var on
         }
     }
 
-    override fun executeCommand(editor: RichTextEditor) {
+    override fun executeCommand(executor: JavaScriptExecutorBase) {
         if(currentColor == offColor) {
-            applyColor(editor, onColor)
+            applyColor(executor, onColor)
         }
         else {
-            applyColor(editor, offColor)
+            applyColor(executor, offColor)
         }
     }
 
 
-    abstract fun applyColor(editor: RichTextEditor, color: Int)
+    abstract fun applyColor(executor: JavaScriptExecutorBase, color: Color)
 
 }
