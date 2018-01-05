@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory
 class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecutorBase() {
 
     companion object {
-        private const val EditorHtmlPath = "file:///android_asset/editor.html"
+        private const val EditorHtmlPath = "file:///android_asset/editor/editor.html"
 
         private val log = LoggerFactory.getLogger(AndroidJavaScriptExecutor::class.java)
     }

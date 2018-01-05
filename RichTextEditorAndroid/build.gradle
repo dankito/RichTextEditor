@@ -83,6 +83,18 @@ dependencies {
 }
 
 
+task copyEditorFilesToAssetsFolder(type: Copy) {
+    from project(':RichTextEditorCommon').file('./src/main/resources/editor')
+    into 'src/main/assets/editor'
+}
+
+project.afterEvaluate {
+    preBuild.dependsOn copyEditorFilesToAssetsFolder
+}
+
+clean.dependsOn copyEditorFilesToAssetsFolder
+clean.mustRunAfter copyEditorFilesToAssetsFolder
+
 
 /*          publish to maven central            */
 
