@@ -2,6 +2,7 @@ package net.dankito.richtexteditor.android
 
 import android.widget.ImageView
 import net.dankito.richtexteditor.Color
+import net.dankito.richtexteditor.CommandView
 
 
 class AndroidCommandView(val view: ImageView) : CommandView() {

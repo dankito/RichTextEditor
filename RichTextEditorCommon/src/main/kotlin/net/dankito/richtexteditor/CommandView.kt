@@ -1,6 +1,4 @@
-package net.dankito.richtexteditor.android
-
-import net.dankito.richtexteditor.Color
+package net.dankito.richtexteditor
 
 
 abstract class CommandView {

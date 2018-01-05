@@ -1,8 +1,8 @@
 package net.dankito.richtexteditor.android.command
 
 import net.dankito.richtexteditor.Color
+import net.dankito.richtexteditor.CommandView
 import net.dankito.richtexteditor.Icon
-import net.dankito.richtexteditor.android.CommandView
 import net.dankito.richtexteditor.command.CommandName
 import org.slf4j.LoggerFactory
 

@@ -1,7 +1,7 @@
 package net.dankito.richtexteditor.android.command
 
 import net.dankito.richtexteditor.Icon
-import net.dankito.richtexteditor.android.CommandView
+import net.dankito.richtexteditor.CommandView
 import net.dankito.richtexteditor.command.CommandName
 
 
