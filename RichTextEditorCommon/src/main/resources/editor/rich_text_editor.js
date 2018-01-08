@@ -16,7 +16,7 @@ var editor = {
     init: function() {
         document.addEventListener("selectionchange", function() {
             editor._backupRange();
-            editor._updateEditorState(); // in newly selected area different commands may be activated / deactivated
+            editor._handleTextEntered(); // in newly selected area different commands may be activated / deactivated
         });
 
         this._textField.addEventListener("keydown", function(e) {
@@ -30,7 +30,6 @@ var editor = {
             }
         });
 
-        this._textField.addEventListener("keyup", function(e) { editor._handleTextEntered(); });
         this._textField.addEventListener("paste", function(e) { editor._waitTillPastedDataInserted(e); });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
