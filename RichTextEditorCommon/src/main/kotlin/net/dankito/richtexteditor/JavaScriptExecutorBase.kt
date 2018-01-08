@@ -31,8 +31,6 @@ abstract class JavaScriptExecutorBase {
 
     private val didHtmlChangeListeners = mutableSetOf<(Boolean) -> Unit>()
 
-    private val htmlChangedListeners = mutableSetOf<(String) -> Unit>()
-
     private var isLoaded = false
 
     private val loadedListeners = mutableSetOf<() -> Unit>()
@@ -236,8 +234,6 @@ abstract class JavaScriptExecutorBase {
                 didHtmlChangeListeners.forEach { it(didHtmlChange) }
             }
 
-            htmlChangedListeners.forEach { it.invoke(html) }
-
             handleRetrievedCommandStates(editorState.commandStates)
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
     }
@@ -284,10 +280,6 @@ abstract class JavaScriptExecutorBase {
 
     fun addDidHtmlChangeListener(listener: (Boolean) -> Unit) {
         didHtmlChangeListeners.add(listener)
-    }
-
-    fun addHtmlChangedListener(listener: (String) -> Unit) {
-        htmlChangedListeners.add(listener)
     }
 
 
