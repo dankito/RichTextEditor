@@ -362,18 +362,23 @@ var editor = {
 
 
     _updateEditorState: function() {
-        var commandStates = this._determineCommandStates();
-
         var html = this._getHtml();
         var didHtmlChange = this._htmlSetByApplication != null && this._htmlSetByApplication != html;
 
-        var editorState = {
-            'didHtmlChange': didHtmlChange,
-            'html': html,
-            'commandStates': commandStates
-        };
+        if(typeof javafx !== 'undefined') { // in JavaFX changing window.location.href doesn't work -> JavaFX determines editor state manually
+            javafx.updateEditorState(didHtmlChange)
+        }
+        else {
+            var commandStates = this._determineCommandStates();
 
-        window.location.href = "editor-state-changed-callback://" + encodeURI(JSON.stringify(editorState));
+            var editorState = {
+                'didHtmlChange': didHtmlChange,
+                'html': html,
+                'commandStates': commandStates
+            };
+
+            window.location.href = "editor-state-changed-callback://" + encodeURI(JSON.stringify(editorState));
+        }
     },
 
     _determineCommandStates: function() {
