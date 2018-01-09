@@ -14,7 +14,8 @@ ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Uni
     }
 
 
-    protected var currentColor: Color = defaultColor
+    var currentColor: Color = defaultColor
+        private set
 
 
     override fun commandValueChanged(commandView: CommandView, commandValue: Any) {
