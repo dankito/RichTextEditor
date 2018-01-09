@@ -1,7 +1,7 @@
 package net.dankito.richtexteditor.command
 
-import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.CommandView
+import net.dankito.richtexteditor.Icon
 
 
 abstract class ActiveStateToolbarCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
@@ -17,6 +17,15 @@ abstract class ActiveStateToolbarCommand(command: CommandName, icon: Icon, style
         }
         else {
             commandView.setBackgroundColor(style.backgroundColor)
+        }
+    }
+
+    override fun setIconTintColorToExecutableState(commandView: CommandView, isExecutable: Boolean) {
+        if(isExecutable) {
+            commandView.setTintColor(style.enabledTintColor)
+        }
+        else {
+            commandView.setTintColor(style.disabledTintColor)
         }
     }
 

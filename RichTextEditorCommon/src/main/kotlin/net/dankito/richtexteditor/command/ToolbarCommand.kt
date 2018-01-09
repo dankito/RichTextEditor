@@ -1,8 +1,8 @@
 package net.dankito.richtexteditor.command
 
+import net.dankito.richtexteditor.CommandView
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
-import net.dankito.richtexteditor.CommandView
 
 
 abstract class ToolbarCommand(val command: CommandName,
@@ -53,13 +53,8 @@ abstract class ToolbarCommand(val command: CommandName,
         setIconTintColorToExecutableState(commandView, executable)
     }
 
-    protected fun setIconTintColorToExecutableState(commandView: CommandView, isExecutable: Boolean) {
-        if(isExecutable) {
-            commandView.setTintColor(style.enabledTintColor)
-        }
-        else {
-            commandView.setTintColor(style.disabledTintColor)
-        }
+    protected open fun setIconTintColorToExecutableState(commandView: CommandView, isExecutable: Boolean) {
+        // currently only ActiveStateToolbarCommand needs this feature
     }
 
     protected open fun commandValueChanged(commandView: CommandView, commandValue: Any) {
