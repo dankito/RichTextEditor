@@ -1,5 +1,11 @@
 
 ext {
+
+    appVersionName = '1.0.0'
+
+    appVersionCode = 1000000
+
+
     kotlin_version = '1.1.51'
 
     CompileSdkVersion = 26
@@ -17,4 +23,14 @@ ext {
     JUnitVersion = "4.12"
     AndroidTestRunnerVersion = "1.0.1"
     EspressoVersion = "3.0.1"
+
+
+    // JavaFX
+
+    tornadoFXVersion = '1.7.7'
+
+    tornadoFXControlsVersion = '1.0.5'
+
+
+    logbackVersion = '1.2.3'
 }

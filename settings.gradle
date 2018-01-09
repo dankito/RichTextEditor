@@ -1,4 +1,6 @@
 include ':DemoApp'
 include ':RichTextEditorAndroid'
 
+include ':RichTextEditorJavaFX'
+
 include ':RichTextEditorCommon'
