@@ -80,7 +80,9 @@ ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Uni
                     commandView.setTintColor(Color.LightGray) // looks quite ugly to me
                 }
             }
-            else if(isExecutable && color == Color.Black && style.enabledTintColor == Color.Black) {
+            else if(isExecutable && ((color == Color.Black && style.enabledTintColor == Color.Black) ||
+                    (color != Color.White && color != Color.Transparent))) { // for JavaFX to set icon tint to white as soon as background color is set
+                log.info("color = $color")
                 commandView.setTintColor(Color.White)
             }
             else {
