@@ -234,7 +234,7 @@ abstract class JavaScriptExecutorBase {
     }
 
     protected fun retrievedEditorState(didHtmlChange: Boolean, commandStates: MutableMap<CommandName, CommandState>) {
-        if (this.didHtmlChange != didHtmlChange) {
+        if(this.didHtmlChange != didHtmlChange) {
             this.didHtmlChange = didHtmlChange
             didHtmlChangeListeners.forEach { it(didHtmlChange) }
         }
