@@ -1,5 +1,7 @@
 package net.dankito.richtexteditor
 
+import org.slf4j.LoggerFactory
+
 
 class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
 
@@ -24,6 +26,8 @@ class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
 
             return Color(red, green, blue)
         }
+
+        private val log = LoggerFactory.getLogger(Color::class.java)
     }
 
 
@@ -43,6 +47,57 @@ class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
         else {
             return "rgba($red, $green, $blue, $alpha)"
         }
+    }
+
+    // copied from https://stackoverflow.com/questions/2399150/convert-rgb-value-to-hsv
+    fun toHSV(): DoubleArray {
+        val red = this.red / 255.0
+        val green = this.green / 255.0
+        val blue = this.blue / 255.0
+
+        var h: Double
+        val s: Double
+        val v: Double
+
+        val min: Double = Math.min(Math.min(red, green), blue)
+        val max: Double = Math.max(Math.max(red, green), blue)
+        val delta: Double = max - min
+
+        // V
+        v = max
+
+        // S
+        if(max != 0.0) {
+            s = delta / max
+        }
+        else {
+            s = 0.0
+            h = 0.0
+            return doubleArrayOf(h, s, v)
+        }
+
+        // H
+        if(red == max) {
+            h = (green - blue) / delta // between yellow & magenta
+        }
+        else if(green == max) {
+            h = 2 + (blue - red) / delta // between cyan & yellow
+        }
+        else {
+            h = 4 + (red - green) / delta // between magenta & cyan
+        }
+
+        if(Double.NaN.equals(h)) {
+            h = 0.0
+        }
+
+        h *= 60.0    // degrees
+
+        if(h < 0) {
+            h += 360.0
+        }
+
+        return doubleArrayOf(h, s, v)
     }
 
 
