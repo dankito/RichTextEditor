@@ -229,13 +229,17 @@ abstract class JavaScriptExecutorBase {
             val editorState = objectMapper.readValue<EditorState>(statesString, EditorState::class.java)
             this.html = editorState.html
 
-            if(this.didHtmlChange != editorState.didHtmlChange) {
-                this.didHtmlChange = editorState.didHtmlChange
-                didHtmlChangeListeners.forEach { it(didHtmlChange) }
-            }
-
-            handleRetrievedCommandStates(editorState.commandStates)
+            retrievedEditorState(editorState.didHtmlChange, editorState.commandStates)
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
+    }
+
+    protected fun retrievedEditorState(didHtmlChange: Boolean, commandStates: MutableMap<CommandName, CommandState>) {
+        if (this.didHtmlChange != didHtmlChange) {
+            this.didHtmlChange = didHtmlChange
+            didHtmlChangeListeners.forEach { it(didHtmlChange) }
+        }
+
+        handleRetrievedCommandStates(commandStates)
     }
 
     private fun handleRetrievedCommandStates(commandStates: MutableMap<CommandName, CommandState>) {
