@@ -17,7 +17,7 @@ class VerticalCommandGroup(private val groupIcon: JavaFXIcon, val items: List<Ve
     : ComboBox<VerticalCommandGroupItem>(FXCollections.observableList(items)) {
 
     companion object {
-        private const val DisplayNodeIconSize = 20.0
+        private const val DisplayNodeIconSize = 18.0
 
         private const val ItemIconSize = 24.0
     }
