@@ -43,7 +43,7 @@ class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEdi
 
 
     init {
-        // we need to extract html editor files as due to a bug in JavaFX WebView local files like images aren't displayed in html files loaded from resource
+        // we need to extract html editor files as due to a bug in JavaFX WebView local files like images aren't displayed in html files loaded from resource, see https://stackoverflow.com/a/27883471
         HtmlEditorExtractor().extractAsync(htmlEditorFolder) { extractedEditorHtmlFile ->
             extractedEditorHtmlFile?.let {
                 runLater { loadEditorHtml(it) }
@@ -87,7 +87,6 @@ class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEdi
         }
 
         try { countDownLatch.await(3, TimeUnit.SECONDS) } catch(ignored: Exception) { }
-        log.info("result = ${result.get()}")
 
         return result.get()
     }
