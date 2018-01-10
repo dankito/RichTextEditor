@@ -1,10 +1,13 @@
 package net.dankito.richtexteditor.java.fx.command.dialogs
 
+import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Insets
 import javafx.scene.layout.Priority
 import javafx.stage.StageStyle
 import tornadofx.*
+import java.io.File
+import java.net.URL
 
 
 abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String, private val stringTwoLabelText: String, private val dialogTitle: String)
@@ -25,8 +28,18 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
 
     protected val enteredStringTwo = SimpleStringProperty("")
 
+    protected val isOkButtonEnabled = SimpleBooleanProperty(true)
+
 
     abstract fun enteringStringsDone(valueOne: String, valueTwo: String)
+
+
+    init {
+        enteredStringOne.addListener { _, _, newValue -> determineIsOkButtonEnabled(newValue, enteredStringTwo.value) }
+        enteredStringTwo.addListener { _, _, newValue -> determineIsOkButtonEnabled(enteredStringOne.value, newValue) }
+
+        determineIsOkButtonEnabled(enteredStringOne.value, enteredStringTwo.value)
+    }
 
 
     override val root = vbox {
@@ -43,7 +56,7 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
             textfield(enteredStringOne) {
                 prefHeight = TextFieldsHeight
 
-                setOnAction { enteringStringsDone() }
+                action { enteringStringsDone() }
 
                 hboxConstraints {
                     hGrow = Priority.ALWAYS
@@ -61,7 +74,7 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
         textfield(enteredStringTwo) {
             prefHeight = TextFieldsHeight
 
-            setOnAction { enteringStringsDone() }
+            action { enteringStringsDone() }
         }
 
         borderpane {
@@ -76,7 +89,7 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
                     prefWidth = ButtonsWidth
                     useMaxHeight = true
 
-                    setOnAction { closeDialog() }
+                    action { closeDialog() }
                 }
             }
 
@@ -85,7 +98,9 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
                     prefWidth = ButtonsWidth
                     useMaxHeight = true
 
-                    setOnAction { enteringStringsDone() }
+                    disableProperty().bind(isOkButtonEnabled.not())
+
+                    action { enteringStringsDone() }
                 }
             }
         }
@@ -96,10 +111,31 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
         show(dialogTitle, stageStyle = StageStyle.UTILITY)
     }
 
-    private fun enteringStringsDone() {
-        enteringStringsDone(enteredStringOne.value, enteredStringTwo.value)
 
-        closeDialog()
+    private fun determineIsOkButtonEnabled(stringOne: String, stringTwo: String) {
+        isOkButtonEnabled.set(isOkButtonEnabled(stringOne, stringTwo))
+    }
+
+    protected open fun isOkButtonEnabled(stringOne: String, stringTwo: String): Boolean {
+        return true
+    }
+
+    protected fun isValidHttpUrl(string: String): Boolean {
+        try {
+            val url = URL(string)
+
+            return url.host != null && url.protocol != null && url.protocol.startsWith("http")
+        } catch(ignored: Exception) { }
+
+        return false
+    }
+
+    private fun enteringStringsDone() {
+        if(isOkButtonEnabled.value) {
+            enteringStringsDone(enteredStringOne.value, enteredStringTwo.value)
+
+            closeDialog()
+        }
     }
 
 }

@@ -24,4 +24,9 @@ class EditUrlDialog(val urlEnteredListener: (url: String, title: String) -> Unit
         urlEnteredListener.invoke(url, title)
     }
 
+
+    override fun isOkButtonEnabled(stringOne: String, stringTwo: String): Boolean {
+        return isValidHttpUrl(stringOne)
+    }
+
 }
