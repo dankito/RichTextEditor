@@ -22,6 +22,11 @@ class EditImageDialog(val imageUrlEnteredListener: (imageUrl: String, alternateT
 
     override fun enteringStringsDone(valueOne: String, valueTwo: String) {
         var imageUrl = valueOne
+        if(isExistingFile(imageUrl) && imageUrl.startsWith("file:/") == false) {
+            try {
+                imageUrl = File(imageUrl).toURI().toString() // add file:/ scheme
+            } catch(ignored: Exception) { }
+        }
 
         var alternateText = valueTwo.trim()
         if(alternateText.isBlank()) {
