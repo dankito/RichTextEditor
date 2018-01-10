@@ -7,8 +7,8 @@ import javafx.scene.layout.CornerRadii
 import javafx.scene.layout.Priority
 import javafx.scene.paint.Color
 import net.dankito.richtexteditor.java.fx.RichTextEditor
-import net.dankito.richtexteditor.java.fx.toolbar.AllCommandsEditorToolbar
 import net.dankito.richtexteditor.java.fx.toolbar.EditorToolbar
+import net.dankito.richtexteditor.java.fx.toolbar.GroupedCommandsEditorToolbar
 import tornadofx.*
 
 
@@ -23,7 +23,7 @@ class MainWindow : View() {
         prefWidth = 600.0
         prefHeight = 450.0
 
-        toolbar = AllCommandsEditorToolbar()
+        toolbar = GroupedCommandsEditorToolbar()
         toolbar.root.background = Background(BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY))
         add(toolbar)
 

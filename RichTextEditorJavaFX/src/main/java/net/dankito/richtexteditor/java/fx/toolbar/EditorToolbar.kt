@@ -1,6 +1,8 @@
 package net.dankito.richtexteditor.java.fx.toolbar
 
+import javafx.geometry.Insets
 import javafx.geometry.Pos
+import javafx.scene.control.Label
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Region
 import net.dankito.richtexteditor.Color
@@ -47,9 +49,9 @@ open class EditorToolbar : View() {
     }
 
 
-    override val root = scrollpane(fitToHeight = true) {
-        prefHeight = commandStyle.heightDp.toDouble()
-        maxHeight = commandStyle.heightDp.toDouble()
+    override val root = scrollpane() {
+        minHeight = commandStyle.heightDp.toDouble() + 8.0
+        maxHeight = minHeight
 
         contentLayout = hbox {
             alignment = Pos.CENTER_LEFT
@@ -57,7 +59,40 @@ open class EditorToolbar : View() {
     }
 
 
-    fun addCommand(command: ToolbarCommand) {
+    fun addGroup(group: CommandGroup) {
+        contentLayout.add(group.root)
+
+        group.root.minHeight = commandStyle.heightDp.toDouble()
+        group.root.maxHeight = group.root.minHeight
+//        group.root.maxHeightProperty().bind(contentLayout.heightProperty().subtract(8.0))
+        HBox.setMargin(group.root, Insets(2.0))
+    }
+
+    fun addVerticalGroup(group: VerticalCommandGroup, toGroup: CommandGroup? = null) {
+        if(toGroup == null) {
+            contentLayout.add(group)
+        }
+        else {
+            toGroup.addCommand(group)
+        }
+
+        group.minHeight = commandStyle.heightDp.toDouble()
+        group.maxHeight = group.minHeight
+        HBox.setMargin(group, Insets(2.0))
+
+
+        group.commandInvoked = { commandInvoked(it) }
+
+        group.items.forEach { item ->
+            val dummyView = Label()
+            commands.put(item.command, dummyView)
+
+            item.command.executor = editor?.javaScriptExecutor
+            item.command.commandView = JavaFXCommandView(dummyView)
+        }
+    }
+
+    fun addCommand(command: ToolbarCommand, toGroup: CommandGroup? = null) {
         val commandView: Region =
             when(command) {
                 is SelectValueCommand -> SelectValueView(command) { commandInvoked(it) }
@@ -65,7 +100,12 @@ open class EditorToolbar : View() {
                 else -> ActiveStateCommandView(command) { commandInvoked(it) }
             }
 
-        contentLayout.add(commandView)
+        if(toGroup == null) {
+            contentLayout.add(commandView)
+        }
+        else {
+            toGroup.addCommand(commandView)
+        }
 
         commands.put(command, commandView)
 
