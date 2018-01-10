@@ -49,4 +49,14 @@ class RichTextEditor : HBox() {
         }
     }
 
+
+    fun getHtml(): String {
+        return javaScriptExecutor.getHtml()
+    }
+
+    @JvmOverloads
+    fun setHtml(html: String, baseUrl: String? = null) {
+        javaScriptExecutor.setHtml(html, baseUrl)
+    }
+
 }
