@@ -7,6 +7,7 @@ import javafx.scene.web.WebView
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.CommandState
+import net.dankito.richtexteditor.java.fx.util.HtmlEditorExtractor
 import netscape.javascript.JSObject
 import org.slf4j.LoggerFactory
 import tornadofx.*
@@ -42,10 +43,15 @@ class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEdi
 
 
     init {
-        loadEditorHtml()
+        // we need to extract html editor files as due to a bug in JavaFX WebView local files like images aren't displayed in html files loaded from resource
+        HtmlEditorExtractor().extractAsync(htmlEditorFolder) { extractedEditorHtmlFile ->
+            extractedEditorHtmlFile?.let {
+                runLater { loadEditorHtml(it) }
+            }
+        }
     }
 
-    private fun loadEditorHtml() {
+    private fun loadEditorHtml(htmlEditorFile: File) {
         engine.loadWorker.stateProperty().addListener { _, _, newState ->
             if(newState === Worker.State.SUCCEEDED) {
                 editorLoaded()
@@ -64,7 +70,7 @@ class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEdi
 
         setJavaScriptMember("javafx", this)
 
-        engine.load(javaClass.classLoader.getResource(EditorHtmlResourcePath).toExternalForm())
+        engine.load(htmlEditorFile.toURI().toString())
     }
 
 
