@@ -1,5 +1,6 @@
 package net.dankito.richtexteditor.java.fx.command.dialogs
 
+import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
 
@@ -11,6 +12,11 @@ class EditImageDialog(val imageUrlEnteredListener: (imageUrl: String, alternateT
         fun show(imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
             EditImageDialog(imageUrlEnteredListener).show()
         }
+    }
+
+
+    init {
+        isSelectLocalFileButtonVisible.set(true)
     }
 
 
@@ -30,6 +36,25 @@ class EditImageDialog(val imageUrlEnteredListener: (imageUrl: String, alternateT
         } catch(ignored: Exception) { }
 
         return false
+    }
+
+
+    override fun getSelectLocalFileTitle(): String {
+        return FX.messages["dialog.edit.image.select.image.dialog.title"]
+    }
+
+    override fun getSelectLocalFileExtensionFilters(): Collection<FileChooser.ExtensionFilter> {
+        return listOf(
+                FileChooser.ExtensionFilter(FX.messages["dialog.edit.image.select.image.dialog.all.images.extension.filter"],
+                        "*.jpeg", "*.jpg", "*.JPG", "*.JPEG",
+                        "*.png, *.PNG", "*.gif", "*.GIF", "*.bmp", "*.BMP", "*.ico", "*.ICO"),
+                FileChooser.ExtensionFilter("JPG (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg"),
+                FileChooser.ExtensionFilter("PNG (*.png)", "*.png, *.PNG"),
+//                FileChooser.ExtensionFilter("TIFF (*.tiff)", "*.TIF", "*.TIFF", "*.tif", "*.tiff"),
+                FileChooser.ExtensionFilter("GIF (*.gif)", "*.gif", "*.GIF"),
+                FileChooser.ExtensionFilter("BMP (*.bmp)", "*.bmp", "*.BMP"),
+                FileChooser.ExtensionFilter("ICO (*.icon)", "*.ico", "*.ICO")
+        )
     }
 
 }

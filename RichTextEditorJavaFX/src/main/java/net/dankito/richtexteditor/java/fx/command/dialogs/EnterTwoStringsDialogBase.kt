@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Insets
 import javafx.scene.layout.Priority
+import javafx.stage.FileChooser
 import javafx.stage.StageStyle
 import tornadofx.*
 import java.io.File
@@ -29,6 +30,8 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
     protected val enteredStringTwo = SimpleStringProperty("")
 
     protected val isOkButtonEnabled = SimpleBooleanProperty(true)
+
+    protected val isSelectLocalFileButtonVisible = SimpleBooleanProperty(false)
 
 
     abstract fun enteringStringsDone(valueOne: String, valueTwo: String)
@@ -60,6 +63,20 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
 
                 hboxConstraints {
                     hGrow = Priority.ALWAYS
+                }
+            }
+
+            button("...") {
+                prefHeight = TextFieldsHeight
+                prefWidth = TextFieldsHeight
+
+                visibleProperty().bind(isSelectLocalFileButtonVisible)
+                managedProperty().bind(isSelectLocalFileButtonVisible)
+
+                action { selectLocalFile() }
+
+                hboxConstraints {
+                    marginLeft = 6.0
                 }
             }
         }
@@ -109,6 +126,29 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
 
     fun show() {
         show(dialogTitle, stageStyle = StageStyle.UTILITY)
+    }
+
+
+    private fun selectLocalFile() {
+        val fileChooser = FileChooser()
+        fileChooser.title = getSelectLocalFileTitle()
+        fileChooser.extensionFilters.addAll(getSelectLocalFileExtensionFilters())
+
+        val file = File(enteredStringOne.value)
+        val initialDirectory = if(file.isDirectory) file else if(file.parentFile?.isDirectory == true) file.parentFile else null
+        initialDirectory?.let { fileChooser.initialDirectory = it }
+
+        fileChooser.showOpenDialog(this.modalStage)?.let { selectedFile ->
+            enteredStringOne.set(selectedFile.absolutePath)
+        }
+    }
+
+    protected open fun getSelectLocalFileTitle(): String {
+        return ""
+    }
+
+    protected open fun getSelectLocalFileExtensionFilters(): Collection<FileChooser.ExtensionFilter> {
+        return emptyList()
     }
 
 
