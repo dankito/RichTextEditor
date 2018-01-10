@@ -21,7 +21,14 @@ class EditImageDialog(val imageUrlEnteredListener: (imageUrl: String, alternateT
 
 
     override fun enteringStringsDone(valueOne: String, valueTwo: String) {
-        imageUrlEnteredListener(valueOne, valueTwo)
+        var imageUrl = valueOne
+
+        var alternateText = valueTwo.trim()
+        if(alternateText.isBlank()) {
+            alternateText = imageUrl
+        }
+
+        imageUrlEnteredListener(imageUrl, alternateText)
     }
 
 
