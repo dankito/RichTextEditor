@@ -60,15 +60,17 @@ class VerticalCommandGroup(private val groupIcon: JavaFXIcon, val items: List<Ve
             }
 
             private fun setItemIcon(item: VerticalCommandGroupItem) {
-                if(graphic is ImageView) {
-                    (graphic as? ImageView)?.image = Image(item.icon.url)
-                }
-                else {
-                    val imageView = ImageView(Image(item.icon.url))
-                    imageView.fitHeight = ItemIconSize
-                    imageView.fitWidth = ItemIconSize
+                (item.command.icon as? JavaFXIcon)?.let { icon ->
+                    if(graphic is ImageView) {
+                        (graphic as? ImageView)?.image = Image(icon.url)
+                    }
+                    else {
+                        val imageView = ImageView(Image(icon.url))
+                        imageView.fitHeight = ItemIconSize
+                        imageView.fitWidth = ItemIconSize
 
-                    graphic = imageView
+                        graphic = imageView
+                    }
                 }
             }
 
