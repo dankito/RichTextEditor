@@ -8,6 +8,7 @@ import javafx.scene.layout.Priority
 import javafx.scene.paint.Color
 import net.dankito.richtexteditor.java.fx.RichTextEditor
 import net.dankito.richtexteditor.java.fx.toolbar.AllCommandsEditorToolbar
+import net.dankito.richtexteditor.java.fx.toolbar.EditorToolbar
 import tornadofx.*
 
 
@@ -15,7 +16,7 @@ class MainWindow : View() {
 
     private lateinit var editor: RichTextEditor
 
-    private lateinit var toolbar: AllCommandsEditorToolbar
+    private lateinit var toolbar: EditorToolbar
 
 
     override val root = vbox {
