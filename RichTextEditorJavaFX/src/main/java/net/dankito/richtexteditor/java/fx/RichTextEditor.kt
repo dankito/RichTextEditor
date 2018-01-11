@@ -29,6 +29,10 @@ class RichTextEditor : HBox() {
         webView.maxHeight = Double.MAX_VALUE
 
         webView.isContextMenuEnabled = false
+//        webView.onContextMenuRequested = EventHandler<ContextMenuEvent> { event ->
+//            // don't why these insets are needed, figured them out by trial an error
+//            showContextMenuAtPosition(event.x.toInt() - 14, event.y.toInt() - 12)
+//        }
 
         this.children.add(webView)
         HBox.setHgrow(webView, Priority.ALWAYS)
