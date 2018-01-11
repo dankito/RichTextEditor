@@ -16,7 +16,7 @@ class CommandGroup : View() {
         alignment = Pos.CENTER_LEFT
         padding = Insets(2.0, 4.0, 2.0, 4.0)
 
-        background = Background(BackgroundFill(Color.WHITE, CornerRadii(8.0), Insets.EMPTY))
+        background = Background(BackgroundFill(Color.WHITE, CornerRadii(4.0), Insets.EMPTY))
     }
 
     fun addCommand(commandView: Region) {
