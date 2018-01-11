@@ -145,37 +145,37 @@ open class EditorToolbar : View() {
         styleApplier.applyCommandStyle(icon, style, commandView)
     }
 
-    private fun mergeStyles(toolbarCommandStyle: ToolbarCommandStyle, commandStyle: ToolbarCommandStyle) {
-        if(commandStyle.backgroundColor == ToolbarCommandStyle.DefaultBackgroundColor) {
-            commandStyle.backgroundColor = toolbarCommandStyle.backgroundColor
+    private fun mergeStyles(commandStyle: ToolbarCommandStyle, toolbarCommandStyle: ToolbarCommandStyle) {
+        if(toolbarCommandStyle.backgroundColor == ToolbarCommandStyle.DefaultBackgroundColor) {
+            toolbarCommandStyle.backgroundColor = commandStyle.backgroundColor
         }
 
-        if(commandStyle.widthDp == ToolbarCommandStyle.DefaultWidthDp) {
-            commandStyle.widthDp = toolbarCommandStyle.widthDp
+        if(toolbarCommandStyle.widthDp == ToolbarCommandStyle.DefaultWidthDp) {
+            toolbarCommandStyle.widthDp = commandStyle.widthDp
         }
 
-        if(commandStyle.heightDp == ToolbarCommandStyle.DefaultHeightDp) {
-            commandStyle.heightDp = toolbarCommandStyle.heightDp
+        if(toolbarCommandStyle.heightDp == ToolbarCommandStyle.DefaultHeightDp) {
+            toolbarCommandStyle.heightDp = commandStyle.heightDp
         }
 
-        if(commandStyle.marginRightDp == ToolbarCommandStyle.DefaultMarginRightDp) {
-            commandStyle.marginRightDp = toolbarCommandStyle.marginRightDp
+        if(toolbarCommandStyle.marginRightDp == ToolbarCommandStyle.DefaultMarginRightDp) {
+            toolbarCommandStyle.marginRightDp = commandStyle.marginRightDp
         }
 
-        if(commandStyle.paddingDp == ToolbarCommandStyle.DefaultPaddingDp) {
-            commandStyle.paddingDp = toolbarCommandStyle.paddingDp
+        if(toolbarCommandStyle.paddingDp == ToolbarCommandStyle.DefaultPaddingDp) {
+            toolbarCommandStyle.paddingDp = commandStyle.paddingDp
         }
 
-        if(commandStyle.enabledTintColor == ToolbarCommandStyle.DefaultEnabledTintColor) {
-            commandStyle.enabledTintColor = toolbarCommandStyle.enabledTintColor
+        if(toolbarCommandStyle.enabledTintColor == ToolbarCommandStyle.DefaultEnabledTintColor) {
+            toolbarCommandStyle.enabledTintColor = commandStyle.enabledTintColor
         }
 
-        if(commandStyle.disabledTintColor == ToolbarCommandStyle.DefaultDisabledTintColor) {
-            commandStyle.disabledTintColor = toolbarCommandStyle.disabledTintColor
+        if(toolbarCommandStyle.disabledTintColor == ToolbarCommandStyle.DefaultDisabledTintColor) {
+            toolbarCommandStyle.disabledTintColor = commandStyle.disabledTintColor
         }
 
-        if(commandStyle.isActivatedColor == ToolbarCommandStyle.DefaultIsActivatedColor) {
-            commandStyle.isActivatedColor = toolbarCommandStyle.isActivatedColor
+        if(toolbarCommandStyle.isActivatedColor == ToolbarCommandStyle.DefaultIsActivatedColor) {
+            toolbarCommandStyle.isActivatedColor = commandStyle.isActivatedColor
         }
     }
 
