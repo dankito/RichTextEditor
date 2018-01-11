@@ -121,6 +121,11 @@ class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEdi
                 }
             }
         } catch (e: Exception) {
+            if(e.message == "JavaScript execution terminated.") { // sometimes JavaScript execution fails, then simply re-issue that command and then it's working
+                executeScriptOnUiThread(javaScript, resultCallback)
+                return
+            }
+
             log.error("Could not execute JavaScript $javaScript", e)
             resultCallback?.invoke("") // TODO: what to return in this case? A NullObject? How to get JavaScript 'undefined' JSObject?
         }
