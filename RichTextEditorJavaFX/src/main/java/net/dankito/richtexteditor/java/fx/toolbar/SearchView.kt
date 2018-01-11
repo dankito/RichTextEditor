@@ -6,6 +6,7 @@ import javafx.geometry.Pos
 import javafx.scene.Node
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.text.Font
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.JavaFXJavaScriptExecutor
 import tornadofx.*
@@ -30,16 +31,23 @@ class SearchView(private val searchViewStyle: SearchViewStyle) : View() {
 
 
     override val root = hbox {
-        useMaxHeight = true
         alignment = Pos.CENTER_LEFT
 
+        minHeight = searchViewStyle.toolbarCommandStyle.heightDp.toDouble()
+        maxHeight = minHeight
+
         textfield(searchText) {
-            useMaxHeight = true
+            font = Font.font(searchViewStyle.searchFieldFontSize)
+
+            minHeight = searchViewStyle.toolbarCommandStyle.heightDp.toDouble()
+            maxHeight = minHeight
             prefWidth = searchViewStyle.searchFieldWidth
         }
 
         button("", createJumpToPreviousNextResultIcon(searchViewStyle.jumpToPreviousResultIcon)) {
-            prefWidth = 25.0
+            minHeight = searchViewStyle.toolbarCommandStyle.heightDp.toDouble()
+            maxHeight = minHeight
+            prefWidth = searchViewStyle.toolbarCommandStyle.heightDp.toDouble()
 
             disableProperty().bind(enableButtonsPreviousNextSearchResult.not())
 
@@ -51,7 +59,9 @@ class SearchView(private val searchViewStyle: SearchViewStyle) : View() {
         }
 
         button("", createJumpToPreviousNextResultIcon(searchViewStyle.jumpToNextResultIcon)) {
-            prefWidth = 25.0
+            minHeight = searchViewStyle.toolbarCommandStyle.heightDp.toDouble()
+            maxHeight = minHeight
+            prefWidth = searchViewStyle.toolbarCommandStyle.heightDp.toDouble()
 
             disableProperty().bind(enableButtonsPreviousNextSearchResult.not())
 
