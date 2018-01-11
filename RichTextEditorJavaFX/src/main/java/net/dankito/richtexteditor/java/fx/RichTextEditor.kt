@@ -7,7 +7,7 @@ import javafx.scene.web.WebView
 import tornadofx.*
 
 
-class RichTextEditor : HBox() {
+open class RichTextEditor : HBox() {
 
     private var webView = WebView()
 
