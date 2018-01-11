@@ -1,5 +1,6 @@
 package net.dankito.richtexteditor.java.fx.toolbar
 
+import javafx.scene.control.ScrollPane
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.command.*
@@ -9,6 +10,8 @@ import tornadofx.*
 class GroupedCommandsEditorToolbar : EditorToolbar() {
 
     init {
+        root.hbarPolicy = ScrollPane.ScrollBarPolicy.NEVER
+
         addCommand(SetTextFormatCommand(localization))
         addCommand(SetFontNameCommand())
         addCommand(SetFontSizeCommand(localization))

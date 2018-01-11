@@ -3,6 +3,7 @@ package net.dankito.richtexteditor.java.fx.toolbar
 import javafx.geometry.Insets
 import javafx.geometry.Pos
 import javafx.scene.control.Label
+import javafx.scene.control.ScrollPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Region
 import net.dankito.richtexteditor.Color
@@ -54,6 +55,8 @@ open class EditorToolbar : View() {
     override val root = scrollpane {
         minHeight = commandStyle.heightDp.toDouble() + 8.0
         maxHeight = minHeight
+
+        vbarPolicy = ScrollPane.ScrollBarPolicy.NEVER
 
         contentLayout = hbox {
             alignment = Pos.CENTER_LEFT
