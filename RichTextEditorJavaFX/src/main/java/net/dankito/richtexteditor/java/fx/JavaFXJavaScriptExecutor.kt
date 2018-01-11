@@ -39,7 +39,8 @@ class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEdi
 
     private var engine = webView.engine
 
-    private var page: WebPage? = null
+    var page: WebPage? = null
+        private set
 
 
     init {

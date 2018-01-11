@@ -46,7 +46,7 @@ class AllCommandsEditorToolbar : EditorToolbar() {
         addCommand(InsertImageCommand())
         addCommand(InsertCheckboxCommand())
 
-//        addSearchView()
+        addSearchView()
     }
 
 }

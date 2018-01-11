@@ -57,6 +57,8 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
                 createItem(InsertCheckboxCommand(), "command.title.insert.checkbox")
         ))
         addVerticalGroup(insertVerticalGroup, insertGroup)
+
+        addSearchView()
     }
 
     private fun createItem(command: ToolbarCommand, titleResourceKey: String): VerticalCommandGroupItem {
