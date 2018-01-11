@@ -22,7 +22,10 @@ import tornadofx.*
 open class EditorToolbar : View() {
 
     companion object {
-        const val GroupAdditionalHeight = 6.0
+        const val GroupMarginTop = 4.0
+        const val GroupMarginBottom = 6.0 // i don't know why but for that bottom margin really equals top margin we have to add an additional margin of 2.0
+        const val GroupMarginLeftRight = 2.0
+        const val GroupAdditionalHeight = 6.0 + GroupMarginTop + GroupMarginBottom
     }
 
 
@@ -72,9 +75,9 @@ open class EditorToolbar : View() {
     fun addGroup(group: CommandGroup) {
         contentLayout.add(group.root)
 
-        group.root.minHeight = commandStyle.heightDp.toDouble() + GroupAdditionalHeight
+        group.root.minHeight = commandStyle.heightDp.toDouble() + GroupAdditionalHeight - GroupMarginTop - GroupMarginBottom
         group.root.maxHeight = group.root.minHeight
-        HBox.setMargin(group.root, Insets(2.0))
+        HBox.setMargin(group.root, Insets(GroupMarginTop, GroupMarginLeftRight, GroupMarginBottom, GroupMarginLeftRight))
     }
 
     fun addVerticalGroup(group: VerticalCommandGroup, toGroup: CommandGroup? = null) {
