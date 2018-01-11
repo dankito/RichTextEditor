@@ -10,6 +10,8 @@ import tornadofx.*
 class GroupedCommandsEditorToolbar : EditorToolbar() {
 
     init {
+        root.minHeight = commandStyle.heightDp + GroupAdditionalHeight // so that groups also have space for padding at top and bottom
+        root.maxHeight = root.minHeight
         root.hbarPolicy = ScrollPane.ScrollBarPolicy.NEVER
 
         addCommand(SetTextFormatCommand(localization))

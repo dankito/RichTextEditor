@@ -21,6 +21,11 @@ import tornadofx.*
 
 open class EditorToolbar : View() {
 
+    companion object {
+        const val GroupAdditionalHeight = 8.0
+    }
+
+
     var editor: RichTextEditor? = null
         set(value) {
             field = value
@@ -53,7 +58,7 @@ open class EditorToolbar : View() {
 
 
     override val root = scrollpane {
-        minHeight = commandStyle.heightDp.toDouble() + 8.0
+        minHeight = commandStyle.heightDp.toDouble()
         maxHeight = minHeight
 
         vbarPolicy = ScrollPane.ScrollBarPolicy.NEVER
@@ -67,9 +72,8 @@ open class EditorToolbar : View() {
     fun addGroup(group: CommandGroup) {
         contentLayout.add(group.root)
 
-        group.root.minHeight = commandStyle.heightDp.toDouble()
+        group.root.minHeight = commandStyle.heightDp.toDouble() + GroupAdditionalHeight
         group.root.maxHeight = group.root.minHeight
-//        group.root.maxHeightProperty().bind(contentLayout.heightProperty().subtract(8.0))
         HBox.setMargin(group.root, Insets(2.0))
     }
 
