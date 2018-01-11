@@ -27,6 +27,15 @@ class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
             return Color(red, green, blue)
         }
 
+        fun fromArgb(argb: Int): Color {
+            val alpha = argb shr 24 and 0xFF
+            val red = argb shr 16 and 0xFF
+            val green = argb shr 8 and 0xFF
+            val blue = argb and 0xFF
+
+            return Color(red, green, blue, alpha)
+        }
+
         private val log = LoggerFactory.getLogger(Color::class.java)
     }
 
