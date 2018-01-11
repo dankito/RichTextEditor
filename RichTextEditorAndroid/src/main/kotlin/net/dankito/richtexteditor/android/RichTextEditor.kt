@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.Gravity
@@ -33,8 +34,11 @@ class RichTextEditor : RelativeLayout {
 
     val webView = WebView(context)
 
-    lateinit var javaScriptExecutor: AndroidJavaScriptExecutor
-        private set
+    val javaScriptExecutor = AndroidJavaScriptExecutor(webView)
+
+    private var isLoaded = false
+
+    private var paddingToSetOnStart: Rect? = null
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -61,12 +65,8 @@ class RichTextEditor : RelativeLayout {
         webView.settings.builtInZoomControls = true
         webView.settings.displayZoomControls = false
 
-        javaScriptExecutor = AndroidJavaScriptExecutor(webView)
-
         javaScriptExecutor.addLoadedListener {
-            (context as? Activity)?.runOnUiThread {
-                setEditorFontFamily("serif")
-            }
+            editorLoaded(context)
         }
     }
 
@@ -89,6 +89,19 @@ class RichTextEditor : RelativeLayout {
         }
 
         ta.recycle()
+    }
+
+    private fun editorLoaded(context: Context) {
+        isLoaded = true
+
+        paddingToSetOnStart?.let {
+            setPadding(it.left, it.top, it.right, it.bottom)
+            paddingToSetOnStart = null
+        }
+
+        (context as? Activity)?.runOnUiThread {
+            setEditorFontFamily("serif")
+        }
     }
 
     override fun onAttachedToWindow() {
@@ -143,13 +156,17 @@ class RichTextEditor : RelativeLayout {
     }
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
-        javaScriptExecutor.addLoadedListener { // on older devices setPadding() is called in parent class' constructor -> webView is not set yet
-//            // don't know why but setPadding() is called multiple times, last times with all values set to 0 and therefore overwriting correct values
-//            if(paddingToSetOnStart == null || (paddingToSetOnStart?.left == 0 && paddingToSetOnStart?.top == 0 && paddingToSetOnStart?.right == 0 && paddingToSetOnStart?.bottom == 0)) {
-
+        if(isLoaded) {
             (context as? Activity)?.runOnUiThread {
                 webView.setPadding(left, top, right, bottom)
                 executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
+            }
+
+        }
+        else { // on older devices setPadding() is called in parent class' constructor -> webView is not set yet
+            // don't know why but setPadding() is called multiple times, last times with all values set to 0 and therefore overwriting correct values
+            if(paddingToSetOnStart == null || (paddingToSetOnStart?.left == 0 && paddingToSetOnStart?.top == 0 && paddingToSetOnStart?.right == 0 && paddingToSetOnStart?.bottom == 0)) {
+                paddingToSetOnStart = Rect(left, top, right, bottom)
             }
         }
     }
