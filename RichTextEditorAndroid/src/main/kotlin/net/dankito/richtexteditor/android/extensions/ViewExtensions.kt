@@ -3,7 +3,6 @@ package net.dankito.richtexteditor.android.extensions
 import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Build
-import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewCompat
 import android.view.View
 import android.view.ViewTreeObserver
@@ -57,11 +56,13 @@ fun View.setPadding(paddingTopBottomLeftRight: Int) {
 
 
 fun View.setBackgroundTintColor(color: Int) {
+    val colorStateList = ColorStateList.valueOf(color)
+
     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        this.backgroundTintList = ColorStateList.valueOf(color)
+        this.backgroundTintList = colorStateList
     }
     else {
-        ViewCompat.setBackgroundTintList(this, ContextCompat.getColorStateList(this.context, color))
+        ViewCompat.setBackgroundTintList(this, colorStateList)
     }
 }
 
