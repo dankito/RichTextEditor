@@ -8,8 +8,8 @@ class AllCommandsEditorToolbar : EditorToolbar() {
 
 
     init {
-        root.prefHeight = commandStyle.heightDp + 22.0 // to also have space for the scroll bar
-        root.maxHeight = root.prefHeight
+        root.minHeight = commandStyle.heightDp + 22.0 // to also have space for the scroll bar
+        root.maxHeight = root.minHeight
         root.hbarPolicy = ScrollPane.ScrollBarPolicy.ALWAYS
 
         addCommand(SetTextFormatCommand(localization))
