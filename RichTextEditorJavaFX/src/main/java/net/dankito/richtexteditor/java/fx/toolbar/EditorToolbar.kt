@@ -22,7 +22,7 @@ import tornadofx.*
 open class EditorToolbar : View() {
 
     companion object {
-        const val GroupAdditionalHeight = 8.0
+        const val GroupAdditionalHeight = 6.0
     }
 
 
