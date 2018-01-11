@@ -19,7 +19,7 @@ class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
         val Transparent = Color(0, 0, 0, 0)
 
 
-        fun fromInt(rgb: Int): Color {
+        fun fromRgb(rgb: Int): Color {
             val red = rgb shr 16 and 0xFF
             val green = rgb shr 8 and 0xFF
             val blue = rgb and 0xFF
