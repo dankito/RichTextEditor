@@ -32,7 +32,8 @@ class VerticalCommandGroup(private val groupIcon: JavaFXIcon, val items: List<Ve
 
 
     private fun setupUi() {
-        prefWidth = 40.0
+        minWidth = 45.0
+        maxWidth = minWidth
 
         setCellFactory {
             return@setCellFactory createCell()
