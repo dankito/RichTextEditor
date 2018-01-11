@@ -24,7 +24,8 @@ class StyleApplier {
             commandView.padding = Insets(style.paddingDp.toDouble())
 
             commandView.prefWidth = style.widthDp.toDouble()
-            commandView.prefHeight = style.heightDp.toDouble()
+            commandView.minHeight = style.heightDp.toDouble()
+            commandView.maxHeight = commandView.minHeight
         }
 
         HBox.setMargin(commandView, Insets(0.0, style.marginRightDp.toDouble(), 0.0, 0.0))
