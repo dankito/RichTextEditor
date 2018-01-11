@@ -101,6 +101,13 @@ open class EditorToolbar : View() {
         }
     }
 
+    fun addCommandInExtraGroup(command: ToolbarCommand) {
+        val group = CommandGroup()
+        addGroup(group)
+
+        addCommand(command, group)
+    }
+
     fun addCommand(command: ToolbarCommand, toGroup: CommandGroup? = null) {
         val commandView: Region =
             when(command) {

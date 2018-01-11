@@ -14,9 +14,10 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
         root.maxHeight = root.minHeight
         root.hbarPolicy = ScrollPane.ScrollBarPolicy.NEVER
 
-        addCommand(SetTextFormatCommand(localization))
-        addCommand(SetFontNameCommand())
-        addCommand(SetFontSizeCommand(localization))
+
+        addCommandInExtraGroup(SetTextFormatCommand(localization))
+        addCommandInExtraGroup(SetFontNameCommand())
+        addCommandInExtraGroup(SetFontSizeCommand(localization))
 
 
         val formatsGroup = CommandGroup()
