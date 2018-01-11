@@ -49,8 +49,31 @@ class RichTextEditor : HBox() {
         webView.requestFocus()
 
         if(alsoCallJavaScriptFocusFunction) { // Calling focus() changes editor's state, this is not desirable in all circumstances
-            javaScriptExecutor.executeEditorJavaScriptFunction("focus()")
+            executeEditorJavaScriptFunction("focus()")
         }
+    }
+
+
+    /*      Editor base settings        */
+
+    fun setEditorFontFamily(fontFamily: String) {
+        executeEditorJavaScriptFunction("setBaseFontFamily('$fontFamily');")
+    }
+
+    fun setEditorFontSize(px: Int) {
+        executeEditorJavaScriptFunction("setBaseFontSize('${px}px');")
+    }
+
+    fun setPadding(padding: Double) {
+        setPadding(padding, padding, padding, padding)
+    }
+
+    fun setPadding(left: Double, top: Double, right: Double, bottom: Double) {
+        executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
+    }
+
+    private fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
+        javaScriptExecutor.executeEditorJavaScriptFunction(javaScript, resultCallback)
     }
 
 
