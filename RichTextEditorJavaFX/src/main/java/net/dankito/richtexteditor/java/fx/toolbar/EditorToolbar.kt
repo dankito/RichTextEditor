@@ -180,10 +180,23 @@ open class EditorToolbar : View() {
     }
 
 
-    fun addSearchView(style: SearchViewStyle = SearchViewStyle()) {
+    fun addSearchViewInExtraGroup(style: SearchViewStyle = SearchViewStyle()) {
+        val group = CommandGroup()
+        addGroup(group)
+
+        addSearchView(style, group)
+    }
+
+    fun addSearchView(style: SearchViewStyle = SearchViewStyle(), toGroup: CommandGroup? = null) {
         val searchView = SearchView(style)
 
-        contentLayout.add(searchView.root)
+        if(toGroup == null) {
+            contentLayout.add(searchView.root)
+        }
+        else {
+            toGroup.addCommand(searchView.root)
+        }
+
         searchViews.add(searchView)
 
         searchView.executor = editor?.javaScriptExecutor

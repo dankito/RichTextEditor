@@ -64,7 +64,7 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
         ))
         addVerticalGroup(insertVerticalGroup, insertGroup)
 
-        addSearchView()
+        addSearchViewInExtraGroup()
     }
 
     private fun createItem(command: ToolbarCommand, titleResourceKey: String): VerticalCommandGroupItem {
