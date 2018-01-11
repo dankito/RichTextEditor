@@ -3,7 +3,7 @@
     <string name="dialog_edit_url_url_label">Link location</string>
     <string name="dialog_edit_url_title_label">Display text</string>
 
-    <string name="dialog_edit_image_image_url_label">Image URL</string>
+    <string name="dialog_edit_image_image_url_label">Image path or web address</string>
     <string name="dialog_edit_image_alternate_text_label">Alternate text (optional)</string>
 
     <string name="dialog_select_text_color_title">Select text color</string>
