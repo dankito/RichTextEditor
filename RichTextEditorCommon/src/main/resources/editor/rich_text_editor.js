@@ -30,6 +30,12 @@ var editor = {
             }
         });
 
+        this._textField.addEventListener("keyup", function(e) {
+            if(e.altKey || e.ctrlKey) { // some key combinations activate commands like CTRL + B setBold() -> update editor state so that UI is aware of this
+                editor._updateEditorState();
+            }
+        });
+
         this._textField.addEventListener("paste", function(e) { editor._waitTillPastedDataInserted(e); });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
