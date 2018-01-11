@@ -20,7 +20,7 @@ class MainWindow : View() {
 
 
     override val root = vbox {
-        prefWidth = 600.0
+        prefWidth = 800.0
         prefHeight = 450.0
 
         toolbar = GroupedCommandsEditorToolbar()
