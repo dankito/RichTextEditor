@@ -11,6 +11,12 @@ fun ImageView.setImageTintColor(color: Color) {
     setImageTintColor(hsv)
 }
 
+fun ImageView.setImageTintColor(color: javafx.scene.paint.Color) {
+    val hsv = doubleArrayOf(color.hue, color.saturation, color.brightness)
+
+    setImageTintColor(hsv)
+}
+
 private fun ImageView.setImageTintColor(hsv: DoubleArray) {
     val colorAdjust = ColorAdjust()
     colorAdjust.hue = hsv[0]
