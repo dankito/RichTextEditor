@@ -27,7 +27,8 @@ abstract class JavaScriptExecutorBase {
 
     private val commandStatesChangedListeners = mutableSetOf<(Map<CommandName, CommandState>) -> Unit>()
 
-    private var didHtmlChange = false
+    var didHtmlChange = false
+        private set
 
     private val didHtmlChangeListeners = mutableSetOf<(Boolean) -> Unit>()
 
