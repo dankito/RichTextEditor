@@ -22,8 +22,6 @@ class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEdi
     companion object {
         private const val EditorHtmlFilename = "editor.html"
 
-        private const val EditorHtmlResourcePath = "editor/" + EditorHtmlFilename
-
         private val commandNames = listOf(CommandName.BOLD, CommandName.ITALIC, CommandName.UNDERLINE, CommandName.STRIKETHROUGH,
                 CommandName.SUPERSCRIPT, CommandName.SUBSCRIPT, CommandName.FORMATBLOCK, CommandName.REMOVEFORMAT,
                 CommandName.UNDO, CommandName.REDO,
