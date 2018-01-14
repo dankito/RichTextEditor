@@ -7,7 +7,7 @@ import java.util.*
 class Localization {
 
     companion object {
-        private val MessagesResourceBundleName = "Messages"
+        private val MessagesResourceBundleName = "Editor_Messages"
 
         private val log = LoggerFactory.getLogger(Localization::class.java)
     }
