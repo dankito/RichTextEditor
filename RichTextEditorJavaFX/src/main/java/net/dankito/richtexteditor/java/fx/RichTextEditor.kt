@@ -1,13 +1,13 @@
 package net.dankito.richtexteditor.java.fx
 
-import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
 import javafx.scene.layout.Region
+import javafx.scene.layout.VBox
 import javafx.scene.web.WebView
 import tornadofx.*
 
 
-open class RichTextEditor : HBox() {
+open class RichTextEditor : VBox() {
 
     private var webView = WebView()
 
@@ -23,7 +23,9 @@ open class RichTextEditor : HBox() {
     private fun setupHtmlEditor() {
         minHeight = 200.0
         prefHeight = Region.USE_COMPUTED_SIZE
-        useMaxHeight = true
+        useMaxWidth = true
+        isFillWidth = true
+
         webView.minHeight = 200.0
         webView.prefHeight = Region.USE_COMPUTED_SIZE
         webView.maxHeight = Double.MAX_VALUE
@@ -35,11 +37,9 @@ open class RichTextEditor : HBox() {
 //        }
 
         this.children.add(webView)
-        HBox.setHgrow(webView, Priority.ALWAYS)
+        VBox.setVgrow(webView, Priority.ALWAYS)
         webView.prefHeightProperty().bind(this.heightProperty())
         webView.prefWidthProperty().bind(this.widthProperty())
-
-        isFillHeight = true
     }
 
 
