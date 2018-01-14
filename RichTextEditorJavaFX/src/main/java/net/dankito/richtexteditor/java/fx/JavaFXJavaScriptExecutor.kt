@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 
 
-class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEditorFolder: File = File("data", "editor")) : JavaScriptExecutorBase() {
+class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("data", "editor")) : JavaScriptExecutorBase() {
 
     companion object {
 
