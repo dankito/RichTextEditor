@@ -20,7 +20,6 @@ import java.util.concurrent.atomic.AtomicReference
 class JavaFXJavaScriptExecutor(private val webView: WebView, private val htmlEditorFolder: File = File("data", "editor")) : JavaScriptExecutorBase() {
 
     companion object {
-        private const val EditorHtmlFilename = "editor.html"
 
         private val commandNames = listOf(CommandName.BOLD, CommandName.ITALIC, CommandName.UNDERLINE, CommandName.STRIKETHROUGH,
                 CommandName.SUPERSCRIPT, CommandName.SUBSCRIPT, CommandName.FORMATBLOCK, CommandName.REMOVEFORMAT,
