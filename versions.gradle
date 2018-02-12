@@ -8,9 +8,9 @@ ext {
     richTextEditorAndroidMavenArtifactId = 'rrichtexteditor-android'
 
 
-    appVersionName = '1.1.1'
+    appVersionName = '1.1.2'
 
-    appVersionCode = 1010100
+    appVersionCode = 1010200
 
 
     kotlin_version = '1.2.21'
