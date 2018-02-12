@@ -66,6 +66,7 @@ android {
 
 dependencies {
     compile "$mavenGroup:$richTextEditorCommonMavenArtifactId:$version"
+//    compile project(":RichTextEditorCommon")
 
     compile 'com.jaredrummler:colorpicker:1.0.1'
 
