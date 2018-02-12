@@ -1,7 +1,30 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        // Nexus staging plugin has to be downgraded to 0.10.0 to be applicable to sub projects, see https://github.com/UweTrottmann/SeriesGuide/commit/ca33e8ad2fa6cc5c426450c8aef3417ba073ca7f
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.10.0"
+    }
+}
+
+
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
+apply plugin: 'maven'
+apply plugin: 'signing'
+
 apply from: '../versions.gradle' // remove when developing in library directly
+
+// So after executing uploadArchives staged repository can be closed and released by executing RichTextEditorAndroid:closeAndReleaseRepository
+apply plugin: 'io.codearte.nexus-staging'
+
+
+group mavenGroup
+version appVersionName
+def mavenArtifactId = richTextEditorCommonMavenArtifactId
 
 
 sourceCompatibility = "1.7"
@@ -13,4 +36,75 @@ dependencies {
 
     compile "org.slf4j:slf4j-api:$Slf4jVersion"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:$JacksonVersion"
+}
+
+
+/*          publish to maven central            */
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name mavenArtifactId
+                artifactId = mavenArtifactId
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description "Common base library for RichTextEditorAndroid and RichTextEditorJavaFX."
+                url 'https://github.com/dankito/RichTextEditor'
+
+                scm {
+                    connection 'scm:git:git://github.com/dankito/RichTextEditor.git'
+                    developerConnection 'scm:git:git@github.com:dankito/RichTextEditor.git'
+                    url 'https://github.com/dankito/RichTextEditor'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'dankito'
+                        name 'Christian Dankl'
+                        email 'maven@dankito.net'
+                    }
+                }
+            }
+        }
+    }
+}
+
+nexusStaging {
+    packageGroup = "net.dankito"
 }
