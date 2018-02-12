@@ -61,7 +61,7 @@ class EditImageDialog(val imageUrlEnteredListener: (imageUrl: String, alternateT
                         "*.jpeg", "*.jpg", "*.JPG", "*.JPEG",
                         "*.png, *.PNG", "*.gif", "*.GIF", "*.bmp", "*.BMP", "*.ico", "*.ICO"),
                 FileChooser.ExtensionFilter("JPG (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg"),
-                FileChooser.ExtensionFilter("PNG (*.png)", "*.png, *.PNG"),
+                FileChooser.ExtensionFilter("PNG (*.png)", "*.png", "*.PNG"),
 //                FileChooser.ExtensionFilter("TIFF (*.tiff)", "*.TIF", "*.TIFF", "*.tif", "*.tiff"),
                 FileChooser.ExtensionFilter("GIF (*.gif)", "*.gif", "*.GIF"),
                 FileChooser.ExtensionFilter("BMP (*.bmp)", "*.bmp", "*.BMP"),

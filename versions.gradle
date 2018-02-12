@@ -13,7 +13,7 @@ ext {
     appVersionCode = 1010100
 
 
-    kotlin_version = '1.1.51'
+    kotlin_version = '1.2.21'
 
     CompileSdkVersion = 26
     MinSdkVersion = 15
@@ -23,7 +23,7 @@ ext {
     AppVersionName = "1.0.1"
 
     Slf4jVersion = "1.7.25"
-    JacksonVersion = "2.9.2"
+    JacksonVersion = "2.9.4"
 
     AppCompatVersion = "25.4.0"
 
@@ -34,9 +34,9 @@ ext {
 
     // JavaFX
 
-    tornadoFXVersion = '1.7.7'
+    tornadoFXVersion = '1.7.14'
 
-    tornadoFXControlsVersion = '1.0.5'
+    tornadoFXControlsVersion = '1.0.6'
 
 
     logbackVersion = '1.2.3'

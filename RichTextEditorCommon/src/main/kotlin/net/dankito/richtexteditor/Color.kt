@@ -1,7 +1,5 @@
 package net.dankito.richtexteditor
 
-import org.slf4j.LoggerFactory
-
 
 class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
 
@@ -19,7 +17,7 @@ class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
         val Transparent = Color(0, 0, 0, 0)
 
 
-        fun fromInt(rgb: Int): Color {
+        fun fromRgb(rgb: Int): Color {
             val red = rgb shr 16 and 0xFF
             val green = rgb shr 8 and 0xFF
             val blue = rgb and 0xFF
@@ -27,7 +25,14 @@ class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255) {
             return Color(red, green, blue)
         }
 
-        private val log = LoggerFactory.getLogger(Color::class.java)
+        fun fromArgb(argb: Int): Color {
+            val alpha = argb shr 24 and 0xFF
+            val red = argb shr 16 and 0xFF
+            val green = argb shr 8 and 0xFF
+            val blue = argb and 0xFF
+
+            return Color(red, green, blue, alpha)
+        }
     }
 
 
