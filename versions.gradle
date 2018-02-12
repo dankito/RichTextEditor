@@ -5,7 +5,7 @@ ext {
 
     richTextEditorCommonMavenArtifactId = 'richtexteditor-common'
 
-    richTextEditorAndroidMavenArtifactId = 'rrichtexteditor-android'
+    richTextEditorAndroidMavenArtifactId = 'richtexteditor-android'
 
 
     appVersionName = '1.1.2'
