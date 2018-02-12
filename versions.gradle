@@ -1,6 +1,13 @@
 
 ext {
 
+    mavenGroup = 'net.dankito.richtexteditor'
+
+    richTextEditorCommonMavenArtifactId = 'richtexteditor-common'
+
+    richTextEditorAndroidMavenArtifactId = 'rrichtexteditor-android'
+
+
     appVersionName = '1.0.0'
 
     appVersionCode = 1000000

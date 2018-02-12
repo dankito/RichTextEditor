@@ -1,8 +1,3 @@
-group 'net.dankito.richtexteditor'
-version '1.1.0'
-def mavenArtifactId = "richtexteditor-android"
-
-
 buildscript {
     repositories {
         jcenter()
@@ -26,6 +21,11 @@ apply from: '../versions.gradle' // remove when developing in library directly
 
 // So after executing uploadArchives staged repository can be closed and released by executing RichTextEditorAndroid:closeAndReleaseRepository
 apply plugin: 'io.codearte.nexus-staging'
+
+
+group mavenGroup
+version appVersionName
+def mavenArtifactId = richTextEditorAndroidMavenArtifactId
 
 
 
@@ -65,7 +65,7 @@ android {
 }
 
 dependencies {
-    compile project(':RichTextEditorCommon')
+    compile "$mavenGroup:$richTextEditorCommonMavenArtifactId:$version"
 
     compile 'com.jaredrummler:colorpicker:1.0.1'
 
