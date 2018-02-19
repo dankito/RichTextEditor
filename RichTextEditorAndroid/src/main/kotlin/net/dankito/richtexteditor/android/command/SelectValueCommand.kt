@@ -55,7 +55,7 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
     }
 
     protected fun getHtmlSpanned(stringResourceId: Int): CharSequence {
-        selectValueView?.context?.getText(stringResourceId)?.toString()?.let { html ->
+        editor?.context?.getText(stringResourceId)?.toString()?.let { html ->
             return getHtmlSpanned(html)
         }
 
