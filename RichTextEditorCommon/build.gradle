@@ -27,10 +27,6 @@ version appVersionName
 def mavenArtifactId = richTextEditorCommonMavenArtifactId
 
 
-sourceCompatibility = "1.7"
-targetCompatibility = "1.7"
-
-
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
