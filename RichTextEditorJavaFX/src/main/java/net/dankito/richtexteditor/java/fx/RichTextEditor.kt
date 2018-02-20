@@ -43,6 +43,13 @@ open class RichTextEditor : VBox() {
     }
 
 
+    open fun cleanUp() {
+        webView.engine.loadWorker.cancel()
+
+        webView.engine.load("") // to stop audio / video playback etc.
+    }
+
+
 
     @JvmOverloads
     fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
