@@ -19,6 +19,8 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.*
 import net.dankito.richtexteditor.android.util.StyleApplier
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 class SearchView : LinearLayout {
@@ -65,6 +67,10 @@ class SearchView : LinearLayout {
     lateinit var searchField: EditText
         private set
 
+    var isScrollingToSearchResult = false
+        private set
+
+
     private lateinit var countSearchResultsLabel: TextView
 
     private lateinit var btnJumpToPreviousResult: ImageButton
@@ -75,6 +81,8 @@ class SearchView : LinearLayout {
     private val styleApplier = StyleApplier()
 
     private var style: SearchViewStyle? = null
+
+    private val timerResetIsScrollingDueToSearchFieldTextChange = Timer()
 
 
     private fun initView(context: Context) {
@@ -226,10 +234,14 @@ class SearchView : LinearLayout {
     }
 
     private fun jumpToPreviousSearchResult() {
+        setIsScrollingToSearchResult()
+
         webView?.findNext(false)
     }
 
     private fun jumpToNextSearchResult() {
+        setIsScrollingToSearchResult()
+
         webView?.findNext(true)
     }
 
@@ -241,9 +253,20 @@ class SearchView : LinearLayout {
     }
 
 
+    private fun setIsScrollingToSearchResult() {
+        isScrollingToSearchResult = true
+
+        timerResetIsScrollingDueToSearchFieldTextChange.schedule(350) { // reset after a while if onScrollChanged() has been called (due to search result was out of view) or not
+            isScrollingToSearchResult = false // reset
+        }
+    }
+
+
     private val searchFieldTextWatcher = object : TextWatcher {
 
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            setIsScrollingToSearchResult()
+        }
 
         override fun onTextChanged(text: CharSequence, start: Int, before: Int, count: Int) {
             searchInWebView(text.toString())
