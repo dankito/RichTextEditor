@@ -27,5 +27,7 @@ jar {
                 'Implementation-Version': appVersionName
     }
 
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE // to remove platform_style.css from RichTextEditorCommon
+
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
