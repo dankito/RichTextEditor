@@ -12,7 +12,7 @@ import net.dankito.richtexteditor.java.fx.toolbar.GroupedCommandsEditorToolbar
 import tornadofx.*
 
 
-class MainWindow : View() {
+class MainWindow : View(FX.messages["application.title"]) {
 
     private lateinit var editor: RichTextEditor
 
