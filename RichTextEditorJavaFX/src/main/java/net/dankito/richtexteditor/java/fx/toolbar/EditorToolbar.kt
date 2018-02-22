@@ -5,9 +5,11 @@ import javafx.geometry.Pos
 import javafx.scene.control.Label
 import javafx.scene.control.ScrollPane
 import javafx.scene.layout.HBox
+import javafx.scene.layout.Pane
 import javafx.scene.layout.Region
 import net.dankito.richtexteditor.Color
 import net.dankito.richtexteditor.Icon
+import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.SetColorCommand
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
@@ -135,6 +137,23 @@ open class EditorToolbar : View() {
         applyCommandStyle(command, commandView)
     }
 
+    fun addAfterCommand(command: ToolbarCommand, commandToAddAfter: ToolbarCommand) {
+        addCommand(command)
+
+        commands.get(command)?.let { commandView ->
+            commandView.removeFromParent()
+
+            commands.get(commandToAddAfter)?.let { commandViewToAddAfter ->
+                (commandViewToAddAfter.parent as? Pane)?.let { pane ->
+                    val index = pane.children.indexOf(commandViewToAddAfter)
+                    if(index >= 0) {
+                        pane.children.add(index + 1, commandView)
+                    }
+                }
+            }
+        }
+    }
+
     private fun applyCommandStyle(command: ToolbarCommand, commandView: Region) {
         applyCommandStyle(command.icon, command.style, commandView)
     }
@@ -204,6 +223,17 @@ open class EditorToolbar : View() {
         searchViews.add(searchView)
 
         searchView.executor = editor?.javaScriptExecutor
+    }
+
+
+    fun getCommand(commandName: CommandName): ToolbarCommand? {
+        commands.keys.forEach { command ->
+            if(command.command == commandName) {
+                return command
+            }
+        }
+
+        return null
     }
 
 
