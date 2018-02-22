@@ -83,7 +83,7 @@ ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Uni
                     commandView.setTintColor(Color.White)
                 }
                 else {
-                    commandView.setTintColor(commandView.appliedTintColor)
+                    commandView.setTintColor(style.enabledTintColor)
                 }
             }
             else {
