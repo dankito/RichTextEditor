@@ -75,16 +75,18 @@ ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Uni
 
             val visibleBackgroundColor = if(color != Color.Transparent) color else commandView.getParentBackgroundColor()
 
-            if(isExecutable && visibleBackgroundColor == Color.White &&
-                    (style.enabledTintColor == Color.White || commandView.appliedTintColor == Color.White)) {
-                commandView.setTintColor(Color.LightGray) // looks quite ugly to me
-            }
-            else if(isExecutable && visibleBackgroundColor == Color.Black &&
-                    (style.enabledTintColor == Color.Black || commandView.appliedTintColor == Color.Black)) {
-                commandView.setTintColor(Color.White)
-            }
-            else if(isExecutable) {
-                commandView.setTintColor(commandView.appliedTintColor)
+            if(isExecutable) {
+                if(visibleBackgroundColor == Color.White &&
+                        (style.enabledTintColor == Color.White || commandView.appliedTintColor == Color.White)) {
+                    commandView.setTintColor(Color.LightGray) // looks quite ugly to me
+                }
+                else if(visibleBackgroundColor == Color.Black &&
+                        (style.enabledTintColor == Color.Black || commandView.appliedTintColor == Color.Black)) {
+                    commandView.setTintColor(Color.White)
+                }
+                else {
+                    commandView.setTintColor(commandView.appliedTintColor)
+                }
             }
             else {
                 setIconTintColorToExecutableState(commandView, isExecutable)
