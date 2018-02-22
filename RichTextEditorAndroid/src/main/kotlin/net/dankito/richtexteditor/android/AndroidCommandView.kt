@@ -9,6 +9,9 @@ import net.dankito.richtexteditor.CommandView
 
 class AndroidCommandView(val view: ImageView) : CommandView() {
 
+    override var appliedTintColor: Color = Color.Transparent
+
+
     override fun setIsEnabled(isEnabled: Boolean) {
         view.isEnabled = isEnabled
     }
@@ -32,6 +35,8 @@ class AndroidCommandView(val view: ImageView) : CommandView() {
     }
 
     override fun setTintColor(color: Color) {
+        appliedTintColor = color
+
         view.setColorFilter(color.toInt())
     }
 

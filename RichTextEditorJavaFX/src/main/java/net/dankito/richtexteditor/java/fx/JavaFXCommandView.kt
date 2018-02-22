@@ -19,6 +19,9 @@ import net.dankito.richtexteditor.java.fx.extensions.toJavaFXColor
 
 class JavaFXCommandView(private val node: Region) : CommandView() {
 
+    override var appliedTintColor: Color = Color.Transparent
+
+
     override fun setIsEnabled(isEnabled: Boolean) {
         node.isDisable = !isEnabled
     }
@@ -50,10 +53,14 @@ class JavaFXCommandView(private val node: Region) : CommandView() {
 
     override fun setTintColor(color: Color) {
         ((node as? Button)?.graphic as? ImageView)?.let { imageView ->
+            appliedTintColor = color
+
             imageView.setImageTintColor(color)
         }
 
         (node as? ColorPicker)?.let { colorPicker ->
+            appliedTintColor = color
+
             (colorPicker.skin as? ColorPickerSkin)?.displayNode?.style = "-fx-text-fill: ${color.toHexColorString()} ;"
         }
     }
