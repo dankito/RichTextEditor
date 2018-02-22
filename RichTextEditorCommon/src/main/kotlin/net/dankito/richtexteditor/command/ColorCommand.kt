@@ -76,12 +76,10 @@ ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Uni
             val visibleBackgroundColor = if(color != Color.Transparent) color else commandView.getParentBackgroundColor()
 
             if(isExecutable) {
-                if(visibleBackgroundColor == Color.White &&
-                        (style.enabledTintColor == Color.White || commandView.appliedTintColor == Color.White)) {
+                if(doBackgroundAndTintColorEqual(Color.White, visibleBackgroundColor, commandView)) {
                     commandView.setTintColor(Color.LightGray) // looks quite ugly to me
                 }
-                else if(visibleBackgroundColor == Color.Black &&
-                        (style.enabledTintColor == Color.Black || commandView.appliedTintColor == Color.Black)) {
+                else if(doBackgroundAndTintColorEqual(Color.Black, visibleBackgroundColor, commandView)) {
                     commandView.setTintColor(Color.White)
                 }
                 else {
@@ -92,6 +90,10 @@ ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Uni
                 setIconTintColorToExecutableState(commandView, isExecutable)
             }
         }
+    }
+
+    private fun doBackgroundAndTintColorEqual(colorToTest: Color, visibleBackgroundColor: Color?, commandView: CommandView): Boolean {
+        return visibleBackgroundColor == colorToTest && (style.enabledTintColor == colorToTest || commandView.appliedTintColor == colorToTest)
     }
 
 }
