@@ -12,8 +12,8 @@ import java.io.File
 import java.net.URL
 
 
-abstract class EnterTwoStringsDialogBase(private val localization: Localization, private val stringOneLabelText: String, private val stringTwoLabelText: String,
-                                         private val dialogTitle: String) : DialogFragment() {
+abstract class EnterTwoStringsDialogBase(private val localization: Localization, private val stringOneLabelResourceKey: String, private val stringTwoLabelResourceKey: String,
+                                         private val dialogTitleResourceKey: String) : DialogFragment() {
 
     companion object {
         private const val TextFieldsHeight = 32.0
@@ -50,7 +50,7 @@ abstract class EnterTwoStringsDialogBase(private val localization: Localization,
         prefWidth = 450.0
         padding = Insets(4.0)
 
-        label(stringOneLabelText) {
+        label(localization.getLocalizedString(stringOneLabelResourceKey)) {
             vboxConstraints {
                 marginBottom = LabelTextFieldVerticalMargin
             }
@@ -82,7 +82,7 @@ abstract class EnterTwoStringsDialogBase(private val localization: Localization,
             }
         }
 
-        label(stringTwoLabelText) {
+        label(localization.getLocalizedString(stringTwoLabelResourceKey)) {
             vboxConstraints {
                 marginTop = SectionsVerticalMargin
                 marginBottom = LabelTextFieldVerticalMargin
@@ -126,7 +126,7 @@ abstract class EnterTwoStringsDialogBase(private val localization: Localization,
 
 
     fun show() {
-        show(dialogTitle, stageStyle = StageStyle.UTILITY)
+        show(localization.getLocalizedString(dialogTitleResourceKey), stageStyle = StageStyle.UTILITY)
     }
 
 

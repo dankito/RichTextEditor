@@ -6,8 +6,8 @@ import java.io.File
 
 
 class EditImageDialog(private val localization: Localization, private val imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit)
-    : EnterTwoStringsDialogBase(localization, localization.getLocalizedString("dialog.edit.image.image.url.label"),
-        localization.getLocalizedString("dialog.edit.image.alternate.text.label"), localization.getLocalizedString("dialog.edit.image.dialog.title")) {
+    : EnterTwoStringsDialogBase(localization, "dialog.edit.image.image.url.label", "dialog.edit.image.alternate.text.label",
+        "dialog.edit.image.dialog.title") {
 
     companion object {
         fun show(localization: Localization, imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {

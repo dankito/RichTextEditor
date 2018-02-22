@@ -4,8 +4,8 @@ import net.dankito.richtexteditor.java.fx.localization.Localization
 
 
 class EditUrlDialog(localization: Localization, val urlEnteredListener: (url: String, title: String) -> Unit)
-    : EnterTwoStringsDialogBase(localization, localization.getLocalizedString("dialog.edit.url.url.label"),
-        localization.getLocalizedString("dialog.edit.url.title.label"), localization.getLocalizedString("dialog.edit.url.dialog.title")) {
+    : EnterTwoStringsDialogBase(localization, "dialog.edit.url.url.label", "dialog.edit.url.title.label",
+        "dialog.edit.url.dialog.title") {
 
     companion object {
         fun show(localization: Localization, urlEnteredListener: (url: String, title: String) -> Unit) {
