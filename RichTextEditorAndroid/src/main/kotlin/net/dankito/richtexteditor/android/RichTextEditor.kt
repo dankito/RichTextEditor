@@ -21,11 +21,6 @@ import org.slf4j.LoggerFactory
 
 open class RichTextEditor : RelativeLayout {
 
-    companion object {
-        private val log = LoggerFactory.getLogger(RichTextEditor::class.java)
-    }
-
-
     constructor(context: Context) : super(context) { initEditor(context, null) }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initEditor(context, attrs) }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initEditor(context, attrs) }
