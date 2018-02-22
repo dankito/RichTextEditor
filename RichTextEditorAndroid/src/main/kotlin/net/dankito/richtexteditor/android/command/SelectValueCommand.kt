@@ -28,21 +28,23 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
 
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {
-        getSelectValueView(executor).toggleShowView()
+        getSelectValueView(executor)?.toggleShowView()
     }
 
-    private fun getSelectValueView(executor: JavaScriptExecutorBase): SelectValueView {
+    private fun getSelectValueView(executor: JavaScriptExecutorBase): SelectValueView? {
         selectValueView?.let { return it }
 
-        val unpackedEditor = editor!!
+        editor?.let { editor ->
+            val view = SelectValueView(editor.context)
+            view.initialize(editor, this, getValuesDisplayTexts()) { position ->
+                valueSelected(executor, position)
+            }
 
-        val view = SelectValueView(unpackedEditor.context)
-        view.initialize(unpackedEditor, this, getValuesDisplayTexts()) { position ->
-            valueSelected(executor, position)
+            this.selectValueView = view
+            return view
         }
 
-        this.selectValueView = view
-        return view
+        return null
     }
 
     private fun getValuesDisplayTexts(): List<CharSequence> {
