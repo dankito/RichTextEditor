@@ -57,8 +57,8 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
         val insertVerticalGroup = VerticalCommandGroup(JavaFXIcon.fromResourceName("ic_insert_photo_black_36dp.png"), listOf(
                 createItem(InsertBulletListCommand(), "command.title.insert.bullet.list"),
                 createItem(InsertNumberedListCommand(), "command.title.insert.numbered.list"),
-                createItem(InsertLinkCommand(localization), "command.title.insert.link"),
-                createItem(InsertImageCommand(localization), "command.title.insert.image"),
+                createItem(InsertLinkCommand(this, localization), "command.title.insert.link"),
+                createItem(InsertImageCommand(this, localization), "command.title.insert.image"),
                 createItem(InsertCheckboxCommand(), "command.title.insert.checkbox")
         ))
         addVerticalGroup(insertVerticalGroup, insertGroup)

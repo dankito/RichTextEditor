@@ -44,8 +44,8 @@ class AllCommandsEditorToolbar : EditorToolbar() {
         addCommand(InsertBulletListCommand())
         addCommand(InsertNumberedListCommand())
 
-        addCommand(InsertLinkCommand(localization))
-        addCommand(InsertImageCommand(localization))
+        addCommand(InsertLinkCommand(this, localization))
+        addCommand(InsertImageCommand(this, localization))
         addCommand(InsertCheckboxCommand())
 
         addSearchView()

@@ -6,6 +6,7 @@ import javafx.geometry.Insets
 import javafx.scene.layout.Priority
 import javafx.stage.FileChooser
 import javafx.stage.StageStyle
+import javafx.stage.Window
 import net.dankito.richtexteditor.java.fx.localization.Localization
 import tornadofx.*
 import java.io.File
@@ -125,8 +126,8 @@ abstract class EnterTwoStringsDialogBase(private val localization: Localization,
     }
 
 
-    fun show() {
-        show(localization.getLocalizedString(dialogTitleResourceKey), stageStyle = StageStyle.UTILITY)
+    fun show(owner: Window? = currentStage) {
+        show(localization.getLocalizedString(dialogTitleResourceKey), stageStyle = StageStyle.UTILITY, owner = owner ?: currentStage)
     }
 
 

@@ -1,5 +1,6 @@
 package net.dankito.richtexteditor.java.fx.command.dialogs
 
+import javafx.stage.Window
 import net.dankito.richtexteditor.java.fx.localization.Localization
 
 
@@ -8,8 +9,8 @@ class EditUrlDialog(localization: Localization, val urlEnteredListener: (url: St
         "dialog.edit.url.dialog.title") {
 
     companion object {
-        fun show(localization: Localization, urlEnteredListener: (url: String, title: String) -> Unit) {
-            EditUrlDialog(localization, urlEnteredListener).show()
+        fun show(localization: Localization, owner: Window? = null, urlEnteredListener: (url: String, title: String) -> Unit) {
+            EditUrlDialog(localization, urlEnteredListener).show(owner)
         }
     }
 

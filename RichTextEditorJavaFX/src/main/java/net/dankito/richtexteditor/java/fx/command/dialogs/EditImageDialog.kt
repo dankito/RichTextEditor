@@ -1,6 +1,7 @@
 package net.dankito.richtexteditor.java.fx.command.dialogs
 
 import javafx.stage.FileChooser
+import javafx.stage.Window
 import net.dankito.richtexteditor.java.fx.localization.Localization
 import java.io.File
 
@@ -10,8 +11,8 @@ class EditImageDialog(private val localization: Localization, private val imageU
         "dialog.edit.image.dialog.title") {
 
     companion object {
-        fun show(localization: Localization, imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
-            EditImageDialog(localization, imageUrlEnteredListener).show()
+        fun show(localization: Localization, owner: Window? = null, imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
+            EditImageDialog(localization, imageUrlEnteredListener).show(owner)
         }
     }
 
