@@ -19,7 +19,7 @@ import net.dankito.richtexteditor.android.util.KeyboardState
 import org.slf4j.LoggerFactory
 
 
-class RichTextEditor : RelativeLayout {
+open class RichTextEditor : RelativeLayout {
 
     companion object {
         private val log = LoggerFactory.getLogger(RichTextEditor::class.java)
