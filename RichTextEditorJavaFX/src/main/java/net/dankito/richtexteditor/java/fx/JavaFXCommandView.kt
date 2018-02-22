@@ -2,6 +2,7 @@ package net.dankito.richtexteditor.java.fx
 
 import com.sun.javafx.scene.control.skin.ColorPickerSkin
 import javafx.geometry.Insets
+import javafx.scene.Parent
 import javafx.scene.control.Button
 import javafx.scene.control.ColorPicker
 import javafx.scene.image.ImageView
@@ -11,6 +12,7 @@ import javafx.scene.layout.CornerRadii
 import javafx.scene.layout.Region
 import net.dankito.richtexteditor.Color
 import net.dankito.richtexteditor.CommandView
+import net.dankito.richtexteditor.java.fx.extensions.fromJavaFXColor
 import net.dankito.richtexteditor.java.fx.extensions.setImageTintColor
 import net.dankito.richtexteditor.java.fx.extensions.toJavaFXColor
 
@@ -23,6 +25,27 @@ class JavaFXCommandView(private val node: Region) : CommandView() {
 
     override fun setBackgroundColor(color: Color) {
         node.background = Background(BackgroundFill(color.toJavaFXColor(), CornerRadii(4.0), Insets.EMPTY))
+    }
+
+    override fun getParentBackgroundColor(): Color? {
+        var parent: Parent? = this.node.parent
+
+        while(parent != null) {
+            if(parent is Region) {
+                val background = parent.background
+                if(background.fills.isNotEmpty()) {
+                    val fill = background.fills[0].fill
+
+                    if(fill is javafx.scene.paint.Color && fill != javafx.scene.paint.Color.TRANSPARENT) {
+                        return fill.fromJavaFXColor()
+                    }
+                }
+            }
+
+            parent = parent.parent
+        }
+
+        return null
     }
 
     override fun setTintColor(color: Color) {
