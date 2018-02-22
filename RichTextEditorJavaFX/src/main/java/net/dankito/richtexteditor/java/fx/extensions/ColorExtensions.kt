@@ -11,3 +11,13 @@ fun Color.toJavaFXColor(): javafx.scene.paint.Color {
 private fun convertColorValue(intFrom0To255: Int): Double {
     return intFrom0To255 / 255.0
 }
+
+
+fun javafx.scene.paint.Color.fromJavaFXColor(): Color {
+    return Color(convertFromJavaFXColorValue(red), convertFromJavaFXColorValue(green),
+            convertFromJavaFXColorValue(blue), convertFromJavaFXColorValue(opacity))
+}
+
+private fun convertFromJavaFXColorValue(doubleFrom0To1: Double): Int {
+    return (doubleFrom0To1 * 255.0).toInt()
+}

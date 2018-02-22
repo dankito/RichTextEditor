@@ -7,6 +7,8 @@ abstract class CommandView {
 
     abstract fun setBackgroundColor(color: Color)
 
+    abstract fun getParentBackgroundColor(): Color?
+
     abstract fun setTintColor(color: Color)
 
 }
