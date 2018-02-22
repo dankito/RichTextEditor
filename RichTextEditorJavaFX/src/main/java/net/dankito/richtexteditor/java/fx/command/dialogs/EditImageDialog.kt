@@ -1,16 +1,17 @@
 package net.dankito.richtexteditor.java.fx.command.dialogs
 
 import javafx.stage.FileChooser
-import tornadofx.*
+import net.dankito.richtexteditor.java.fx.localization.Localization
 import java.io.File
 
 
-class EditImageDialog(val imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit)
-    : EnterTwoStringsDialogBase(FX.messages["dialog.edit.image.image.url.label"], FX.messages["dialog.edit.image.alternate.text.label"], FX.messages["dialog.edit.image.dialog.title"]) {
+class EditImageDialog(private val localization: Localization, private val imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit)
+    : EnterTwoStringsDialogBase(localization, localization.getLocalizedString("dialog.edit.image.image.url.label"),
+        localization.getLocalizedString("dialog.edit.image.alternate.text.label"), localization.getLocalizedString("dialog.edit.image.dialog.title")) {
 
     companion object {
-        fun show(imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
-            EditImageDialog(imageUrlEnteredListener).show()
+        fun show(localization: Localization, imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
+            EditImageDialog(localization, imageUrlEnteredListener).show()
         }
     }
 
@@ -52,12 +53,12 @@ class EditImageDialog(val imageUrlEnteredListener: (imageUrl: String, alternateT
 
 
     override fun getSelectLocalFileTitle(): String {
-        return FX.messages["dialog.edit.image.select.image.dialog.title"]
+        return localization.getLocalizedString("dialog.edit.image.select.image.dialog.title")
     }
 
     override fun getSelectLocalFileExtensionFilters(): Collection<FileChooser.ExtensionFilter> {
         return listOf(
-                FileChooser.ExtensionFilter(FX.messages["dialog.edit.image.select.image.dialog.all.images.extension.filter"],
+                FileChooser.ExtensionFilter(localization.getLocalizedString("dialog.edit.image.select.image.dialog.all.images.extension.filter"),
                         "*.jpeg", "*.jpg", "*.JPG", "*.JPEG",
                         "*.png, *.PNG", "*.gif", "*.GIF", "*.bmp", "*.BMP", "*.ico", "*.ICO"),
                 FileChooser.ExtensionFilter("JPG (*.jpg)", "*.JPG", "*.jpg", "*.JPEG", "*.jpeg"),

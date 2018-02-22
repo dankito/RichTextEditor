@@ -6,13 +6,14 @@ import javafx.geometry.Insets
 import javafx.scene.layout.Priority
 import javafx.stage.FileChooser
 import javafx.stage.StageStyle
+import net.dankito.richtexteditor.java.fx.localization.Localization
 import tornadofx.*
 import java.io.File
 import java.net.URL
 
 
-abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String, private val stringTwoLabelText: String, private val dialogTitle: String)
-    : DialogFragment() {
+abstract class EnterTwoStringsDialogBase(private val localization: Localization, private val stringOneLabelText: String, private val stringTwoLabelText: String,
+                                         private val dialogTitle: String) : DialogFragment() {
 
     companion object {
         private const val TextFieldsHeight = 32.0
@@ -102,7 +103,7 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
             }
 
             left {
-                button(messages["cancel"]) {
+                button(localization.getLocalizedString("cancel")) {
                     prefWidth = ButtonsWidth
                     useMaxHeight = true
 
@@ -111,7 +112,7 @@ abstract class EnterTwoStringsDialogBase(private val stringOneLabelText: String,
             }
 
             right {
-                button(messages["ok"]) {
+                button(localization.getLocalizedString("ok")) {
                     prefWidth = ButtonsWidth
                     useMaxHeight = true
 

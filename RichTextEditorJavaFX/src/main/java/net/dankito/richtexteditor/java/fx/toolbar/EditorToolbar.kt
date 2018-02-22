@@ -190,7 +190,7 @@ open class EditorToolbar : View() {
     fun addSearchView(style: SearchViewStyle = SearchViewStyle(), toGroup: CommandGroup? = null) {
         mergeStyles(commandStyle, style.toolbarCommandStyle)
 
-        val searchView = SearchView(style)
+        val searchView = SearchView(style, localization)
 
         HBox.setMargin(searchView.root, Insets(4.0, 0.0, 4.0, 0.0))
 

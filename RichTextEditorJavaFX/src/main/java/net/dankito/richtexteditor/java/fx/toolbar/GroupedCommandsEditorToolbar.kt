@@ -4,7 +4,6 @@ import javafx.scene.control.ScrollPane
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.command.*
-import tornadofx.*
 
 
 class GroupedCommandsEditorToolbar : EditorToolbar() {
@@ -58,8 +57,8 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
         val insertVerticalGroup = VerticalCommandGroup(JavaFXIcon.fromResourceName("ic_insert_photo_black_36dp.png"), listOf(
                 createItem(InsertBulletListCommand(), "command.title.insert.bullet.list"),
                 createItem(InsertNumberedListCommand(), "command.title.insert.numbered.list"),
-                createItem(InsertLinkCommand(), "command.title.insert.link"),
-                createItem(InsertImageCommand(), "command.title.insert.image"),
+                createItem(InsertLinkCommand(localization), "command.title.insert.link"),
+                createItem(InsertImageCommand(localization), "command.title.insert.image"),
                 createItem(InsertCheckboxCommand(), "command.title.insert.checkbox")
         ))
         addVerticalGroup(insertVerticalGroup, insertGroup)
@@ -68,7 +67,7 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
     }
 
     private fun createItem(command: ToolbarCommand, titleResourceKey: String): VerticalCommandGroupItem {
-        return VerticalCommandGroupItem(command, messages[titleResourceKey])
+        return VerticalCommandGroupItem(command, localization.getLocalizedString(titleResourceKey))
     }
 
 }

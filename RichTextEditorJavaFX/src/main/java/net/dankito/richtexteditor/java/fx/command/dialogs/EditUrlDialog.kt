@@ -1,14 +1,15 @@
 package net.dankito.richtexteditor.java.fx.command.dialogs
 
-import tornadofx.*
+import net.dankito.richtexteditor.java.fx.localization.Localization
 
 
-class EditUrlDialog(val urlEnteredListener: (url: String, title: String) -> Unit)
-    : EnterTwoStringsDialogBase(FX.messages["dialog.edit.url.url.label"], FX.messages["dialog.edit.url.title.label"], FX.messages["dialog.edit.url.dialog.title"]) {
+class EditUrlDialog(localization: Localization, val urlEnteredListener: (url: String, title: String) -> Unit)
+    : EnterTwoStringsDialogBase(localization, localization.getLocalizedString("dialog.edit.url.url.label"),
+        localization.getLocalizedString("dialog.edit.url.title.label"), localization.getLocalizedString("dialog.edit.url.dialog.title")) {
 
     companion object {
-        fun show(urlEnteredListener: (url: String, title: String) -> Unit) {
-            EditUrlDialog(urlEnteredListener).show()
+        fun show(localization: Localization, urlEnteredListener: (url: String, title: String) -> Unit) {
+            EditUrlDialog(localization, urlEnteredListener).show()
         }
     }
 
