@@ -21,8 +21,6 @@ ext {
     MinSdkVersion = 15
     TargetSdkVersion = 26
     BuildToolsVersion = '26.0.2'
-    AppVersionCode = 1
-    AppVersionName = "1.0.1"
 
     Slf4jVersion = "1.7.25"
     JacksonVersion = "2.9.4"

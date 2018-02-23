@@ -15,8 +15,8 @@ android {
         applicationId "net.dankito.richtexteditor.android"
         minSdkVersion MinSdkVersion
         targetSdkVersion TargetSdkVersion
-        versionCode AppVersionCode
-        versionName AppVersionName
+        versionCode appVersionCode
+        versionName appVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
