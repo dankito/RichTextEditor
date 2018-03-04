@@ -69,4 +69,20 @@ class SetTextFormatCommand(localization: Localization, icon: Icon = JavaFXIcon.f
         }
     }
 
+
+    override fun getItemIndexForCommandValue(commandValue: String): Int? {
+        return when(commandValue) {
+            "h1" -> return 0
+            "h2" -> return 1
+            "h3" -> return 2
+            "h4" -> return 3
+            "h5" -> return 4
+            "h6" -> return 5
+            "p" -> return 6
+            "pre" -> return 7
+            "blockquote" -> return 8
+            else -> null
+        }
+    }
+
 }

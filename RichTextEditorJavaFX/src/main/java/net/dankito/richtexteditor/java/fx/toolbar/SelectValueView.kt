@@ -1,5 +1,6 @@
 package net.dankito.richtexteditor.java.fx.toolbar
 
+import javafx.beans.value.ChangeListener
 import javafx.collections.FXCollections
 import javafx.scene.control.ComboBox
 import javafx.scene.control.ListCell
@@ -11,9 +12,15 @@ class SelectValueView(private val command: SelectValueCommand, private val comma
 
     private val values = FXCollections.observableArrayList<String>()
 
+    private val itemSelectedListener = ChangeListener<String> { _, _, newValue ->
+        itemSelected(command, newValue)
+    }
+
 
     init {
         setupUi()
+
+        command.addCommandValueChangedListener {  commandValueChanged(it) }
     }
 
 
@@ -29,7 +36,7 @@ class SelectValueView(private val command: SelectValueCommand, private val comma
 
         this.selectionModel.select(command.getDefaultItemName())
 
-        this.selectionModel.selectedItemProperty().addListener { _, _, newValue -> itemSelected(command, newValue) }
+        addItemSelectedListener()
     }
 
     private fun createCell(): ListCell<String> {
@@ -46,6 +53,15 @@ class SelectValueView(private val command: SelectValueCommand, private val comma
         }
     }
 
+
+    private fun addItemSelectedListener() {
+        this.selectionModel.selectedItemProperty().addListener(itemSelectedListener)
+    }
+
+    private fun removeItemSelectedListener() {
+        this.selectionModel.selectedItemProperty().removeListener(itemSelectedListener)
+    }
+
     private fun itemSelected(command: SelectValueCommand, newValue: String?) {
         newValue?.let {
             command.valueSelected(newValue)
@@ -53,5 +69,20 @@ class SelectValueView(private val command: SelectValueCommand, private val comma
             commandInvoked(command)
         }
     }
+
+    private fun commandValueChanged(newValue: Any) {
+        (newValue as? String)?.let {
+            command.getItemIndexForCommandValue(newValue)?.let { valueIndex ->
+                removeItemSelectedListener()
+
+                try {
+                    this.selectionModel.select(valueIndex)
+                } catch(e: Exception) { }
+
+                addItemSelectedListener()
+            }
+        }
+    }
+
 
 }

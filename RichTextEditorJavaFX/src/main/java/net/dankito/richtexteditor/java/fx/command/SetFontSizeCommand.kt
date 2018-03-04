@@ -58,4 +58,13 @@ class SetFontSizeCommand(localization: Localization, icon: Icon = JavaFXIcon.fro
         executor.setFontSize(fontSize)
     }
 
+
+    override fun getItemIndexForCommandValue(commandValue: String): Int? {
+        try {
+            return commandValue.toInt() - 1 // index starts at 0, font sizes at 1
+        } catch(ignored: Exception) { } // commandValue could not be parsed to an int, should actually never happen
+
+        return null
+    }
+
 }
