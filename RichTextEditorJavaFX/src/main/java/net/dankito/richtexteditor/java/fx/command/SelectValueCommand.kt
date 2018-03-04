@@ -11,16 +11,13 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
     : ToolbarCommand(command, icon, style, commandExecutedListener) {
 
 
-//    private var displayTexts: List<CharSequence>? = null
-//
-//    private var selectValueView: SelectValueView? = null
-
-
     abstract fun getItemNames(): List<String>
 
     abstract fun getDefaultItemName(): String
 
     abstract fun getItemStyle(itemName: String): String
+
+    abstract fun valueSelected(executor: JavaScriptExecutorBase, position: Int, itemName: String)
 
 
     fun valueSelected(itemName: String) {
@@ -31,11 +28,9 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
         }
     }
 
-    abstract fun valueSelected(executor: JavaScriptExecutorBase, position: Int, itemName: String)
-
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {
-//        getSelectValueView(executor).toggleShowView()
+
     }
 
 
@@ -48,28 +43,5 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
 
         return null
     }
-
-//    private fun getSelectValueView(executor: JavaScriptExecutorBase): SelectValueView {
-//        selectValueView?.let { return it }
-//
-//        val unpackedEditor = editor!!
-//
-//        val view = SelectValueView(unpackedEditor.context)
-//        view.initialize(unpackedEditor, this, getValuesDisplayTexts()) { position ->
-//            valueSelected(executor, position)
-//        }
-//
-//        this.selectValueView = view
-//        return view
-//    }
-//
-//    private fun getValuesDisplayTexts(): List<CharSequence> {
-//        displayTexts?.let { return it }
-//
-//        val displayTexts = initValuesDisplayTexts()
-//        this.displayTexts = displayTexts
-//
-//        return displayTexts
-//    }
 
 }
