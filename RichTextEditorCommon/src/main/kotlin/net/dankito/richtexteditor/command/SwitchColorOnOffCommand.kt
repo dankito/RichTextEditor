@@ -17,7 +17,7 @@ abstract class SwitchColorOnOffCommand(private val offColor: Color, private var 
     }
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {
-        if(currentColor == offColor) {
+        if(currentColor != onColor) {
             applyColor(executor, onColor)
         }
         else {
