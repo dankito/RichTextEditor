@@ -24,6 +24,7 @@ class MainWindow : View(FX.messages["application.title"]) {
         prefHeight = 450.0
 
         toolbar = GroupedCommandsEditorToolbar()
+//        toolbar = AllCommandsEditorToolbar()
         toolbar.root.background = Background(BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY))
         add(toolbar)
 
