@@ -35,12 +35,13 @@ class JavaFXCommandView(private val node: Region) : CommandView() {
 
         while(parent != null) {
             if(parent is Region) {
-                val background = parent.background
-                if(background.fills.isNotEmpty()) {
-                    val fill = background.fills[0].fill
+                parent.background?.let { background ->
+                    if(background.fills.isNotEmpty()) {
+                        val fill = background.fills[0].fill
 
-                    if(fill is javafx.scene.paint.Color && fill != javafx.scene.paint.Color.TRANSPARENT) {
-                        return fill.fromJavaFXColor()
+                        if(fill is javafx.scene.paint.Color && fill != javafx.scene.paint.Color.TRANSPARENT) {
+                            return fill.fromJavaFXColor()
+                        }
                     }
                 }
             }
