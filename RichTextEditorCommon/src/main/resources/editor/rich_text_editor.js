@@ -21,12 +21,19 @@ var editor = {
 
         this._textField.addEventListener("keydown", function(e) {
             var BACKSPACE = 8;
+            var M = 77;
+
             if(e.which == BACKSPACE) {
                 if(editor._textField.innerText.length == 1) { // prevent that first paragraph gets deleted
                     e.preventDefault();
 
                     return false;
                 }
+            }
+            else if(e.which == M && e.ctrlKey) { // TODO: what is Ctrl + M actually good for?
+                e.preventDefault(); // but be aware in this way also (JavaFX) application won't be able to use Ctrl + M
+
+                return false;
             }
         });
 
