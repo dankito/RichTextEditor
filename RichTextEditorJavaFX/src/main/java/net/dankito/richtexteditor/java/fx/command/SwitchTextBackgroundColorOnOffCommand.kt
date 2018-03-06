@@ -9,7 +9,8 @@ import net.dankito.richtexteditor.java.fx.JavaFXIcon
 
 
 class SwitchTextBackgroundColorOnOffCommand(offColor: Color = Color.Transparent, onColor: Color = Color.Yellow, icon: Icon = JavaFXIcon.fromResourceName("ic_format_color_fill_black_36dp.png"),
-                                            showColorInCommandView: Boolean = true) : SwitchColorOnOffCommand(offColor, onColor, showColorInCommandView, CommandName.BACKCOLOR, icon) {
+                                            showColorInCommandView: Boolean = true, setOnColorToCurrentColor: Boolean = true)
+    : SwitchColorOnOffCommand(offColor, onColor, showColorInCommandView, setOnColorToCurrentColor, CommandName.BACKCOLOR, icon) {
 
     override fun applyColor(executor: JavaScriptExecutorBase, color: Color) {
         executor.setTextBackgroundColor(color)

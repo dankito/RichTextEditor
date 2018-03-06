@@ -10,7 +10,8 @@ import net.dankito.richtexteditor.command.SwitchColorOnOffCommand
 
 
 class SwitchTextBackgroundColorOnOffCommand(offColor: Color = Color.Transparent, onColor: Color = Color.Yellow, icon: Icon = AndroidIcon(R.drawable.ic_format_color_fill_white_48dp),
-                                            showColorInCommandView: Boolean = true) : SwitchColorOnOffCommand(offColor, onColor, showColorInCommandView, CommandName.BACKCOLOR, icon) {
+                                            showColorInCommandView: Boolean = true, setOnColorToCurrentColor: Boolean = true)
+    : SwitchColorOnOffCommand(offColor, onColor, showColorInCommandView, setOnColorToCurrentColor, CommandName.BACKCOLOR, icon) {
 
     override fun applyColor(executor: JavaScriptExecutorBase, color: Color) {
         executor.setTextBackgroundColor(color)

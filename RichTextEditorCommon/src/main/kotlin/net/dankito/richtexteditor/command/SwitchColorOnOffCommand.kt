@@ -5,13 +5,14 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 
 
-abstract class SwitchColorOnOffCommand(private val offColor: Color, private var onColor: Color, showColorInCommandView: Boolean = true, command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(),
-                                       commandExecutedListener: (() -> Unit)? = null) : ColorCommand(offColor, showColorInCommandView, command, icon, style, commandExecutedListener) {
+abstract class SwitchColorOnOffCommand(private val offColor: Color, private var onColor: Color, showColorInCommandView: Boolean = true, private val setOnColorToCurrentColor: Boolean = true,
+                                       command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+    : ColorCommand(offColor, showColorInCommandView, command, icon, style, commandExecutedListener) {
 
     override fun currentColorChanged(color: Color) {
         super.currentColorChanged(color)
 
-        if(color != offColor) {
+        if(setOnColorToCurrentColor && color != offColor) {
             this.onColor = color
         }
     }
