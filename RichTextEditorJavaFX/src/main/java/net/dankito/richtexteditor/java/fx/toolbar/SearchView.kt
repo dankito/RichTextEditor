@@ -1,14 +1,20 @@
 package net.dankito.richtexteditor.java.fx.toolbar
 
+import javafx.application.Platform
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
 import javafx.scene.Node
+import javafx.scene.control.TextField
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyCodeCombination
+import javafx.scene.input.KeyCombination
 import javafx.scene.text.Font
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.JavaFXJavaScriptExecutor
+import net.dankito.richtexteditor.java.fx.RichTextEditor
 import net.dankito.richtexteditor.java.fx.localization.Localization
 import tornadofx.*
 
@@ -17,6 +23,8 @@ class SearchView(private val searchViewStyle: SearchViewStyle, private val local
 
 
     var executor: JavaFXJavaScriptExecutor? = null
+
+    var editor: RichTextEditor? = null
 
 
     private val searchText = SimpleStringProperty("")
@@ -43,6 +51,8 @@ class SearchView(private val searchViewStyle: SearchViewStyle, private val local
             minHeight = searchViewStyle.toolbarCommandStyle.heightDp.toDouble()
             maxHeight = minHeight
             prefWidth = searchViewStyle.searchFieldWidth
+
+            setTextFieldKeyboardShortcuts(this)
         }
 
         button("", createJumpToPreviousNextResultIcon(searchViewStyle.jumpToPreviousResultIcon)) {
@@ -75,6 +85,22 @@ class SearchView(private val searchViewStyle: SearchViewStyle, private val local
         }
 
         checkbox(localization.getLocalizedString("search.match.case"), matchCase)
+    }
+
+
+    private fun setTextFieldKeyboardShortcuts(textField: TextField) {
+        textField.setOnKeyReleased { event ->
+            if (event.code == KeyCode.ESCAPE) {
+                editor?.focusEditor()
+            }
+        }
+
+        Platform.runLater {
+            // on init scene is not set yet
+            FX.primaryStage.scene?.accelerators?.put(KeyCodeCombination(KeyCode.F, KeyCombination.SHORTCUT_DOWN), Runnable {
+                textField.requestFocus()
+            })
+        }
     }
 
     private fun createJumpToPreviousNextResultIcon(icon: JavaFXIcon): Node {

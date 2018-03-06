@@ -244,6 +244,7 @@ open class EditorToolbar : View() {
 
         searchViews.forEach {
             it.executor = editor?.javaScriptExecutor
+            it.editor = editor
         }
     }
 

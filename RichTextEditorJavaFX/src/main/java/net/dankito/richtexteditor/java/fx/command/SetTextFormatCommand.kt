@@ -1,9 +1,13 @@
 package net.dankito.richtexteditor.java.fx.command
 
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyCodeCombination
+import javafx.scene.input.KeyCombination
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
+import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 import net.dankito.richtexteditor.java.fx.localization.Localization
 
 
@@ -23,6 +27,12 @@ class SetTextFormatCommand(localization: Localization, icon: Icon = JavaFXIcon.f
             localization.getLocalizedString("text.format.preformat"),
             localization.getLocalizedString("text.format.block.quote")
     )
+
+
+    init {
+        setKeyboardShortcuts()
+    }
+
 
     override fun getItemNames(): List<String> {
         return textFormats
@@ -82,6 +92,37 @@ class SetTextFormatCommand(localization: Localization, icon: Icon = JavaFXIcon.f
             "pre" -> return 7
             "blockquote" -> return 8
             else -> null
+        }
+    }
+
+
+    private fun setKeyboardShortcuts() {
+        this.addKeyboardShortcut(KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.SHORTCUT_DOWN)) {
+            executor?.setHeading(1)
+        }
+
+        this.addKeyboardShortcut(KeyCodeCombination(KeyCode.DIGIT2, KeyCombination.SHORTCUT_DOWN)) {
+            executor?.setHeading(2)
+        }
+
+        this.addKeyboardShortcut(KeyCodeCombination(KeyCode.DIGIT3, KeyCombination.SHORTCUT_DOWN)) {
+            executor?.setHeading(3)
+        }
+
+        this.addKeyboardShortcut(KeyCodeCombination(KeyCode.DIGIT4, KeyCombination.SHORTCUT_DOWN)) {
+            executor?.setHeading(4)
+        }
+
+        this.addKeyboardShortcut(KeyCodeCombination(KeyCode.DIGIT5, KeyCombination.SHORTCUT_DOWN)) {
+            executor?.setHeading(5)
+        }
+
+        this.addKeyboardShortcut(KeyCodeCombination(KeyCode.DIGIT6, KeyCombination.SHORTCUT_DOWN)) {
+            executor?.setHeading(6)
+        }
+
+        this.addKeyboardShortcut(KeyCodeCombination(KeyCode.DIGIT0, KeyCombination.SHORTCUT_DOWN)) {
+            executor?.setFormattingToParagraph()
         }
     }
 
