@@ -43,7 +43,7 @@ var editor = {
             }
         });
 
-        this._textField.addEventListener("paste", function(e) { editor._waitTillPastedDataInserted(e); });
+        this._textField.addEventListener("paste", function(e) { editor._handlePaste(e); });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
         this._updateEditorState();
@@ -75,18 +75,31 @@ var editor = {
         this._updateEditorState();
     },
 
-    _waitTillPastedDataInserted: function(event) {
+    _handlePaste: function(event) {
+        var clipboardData = event.clipboardData || window.clipboardData;
+        var pastedData = clipboardData.getData('text/html') || clipboardData.getData('Text').replace("\n", "</p><p>"); // replace new lines
+
+        this._waitTillPastedDataInserted(event, pastedData);
+    },
+
+    _waitTillPastedDataInserted: function(event, pastedData) {
         var previousHtml = this._getHtml();
 
         setTimeout(function () { // on paste event inserted text is not inserted yet -> wait for till text has been inserted
-            editor._waitTillPastedTextInserted(previousHtml, 10); // max 10 tries, after that we give up to prevent endless loops
+            editor._waitTillPastedTextInserted(previousHtml, 10, pastedData); // max 10 tries, after that we give up to prevent endless loops
         }, 100);
     },
 
-    _waitTillPastedTextInserted: function(previousHtml, iteration) {
+    _waitTillPastedTextInserted: function(previousHtml, iteration, pastedData) {
         var hasBeenInserted = this._getHtml() != previousHtml;
 
         if(hasBeenInserted || ! iteration) {
+            // there seems to be a bug (on Linux only?) when pasting data e.g. from Firefox: then only '' gets inserted
+            if((this._getHtml().indexOf('​ÿþ&lt;') !== -1 || this._getHtml().indexOf('ÿþ&lt;<br>') !== -1) && previousHtml.indexOf('​​ÿþ&lt;') === -1) {
+                this._textField.innerHTML = this._getHtml().replace('​ÿþ&lt;', pastedData).replace('ÿþ&lt;<br>', pastedData);
+                // TODO: set caret to end of pasted data
+            }
+
             this._updateEditorState();
         }
         else {
