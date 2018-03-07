@@ -129,7 +129,7 @@ class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecut
             return super.shouldOverrideUrlLoading(view, request)
         }
 
-        @SuppressWarnings("deprecation")
+        @Suppress("OverridingDeprecatedMember")
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             if(shouldOverrideUrlLoading(url)) {
                 return true

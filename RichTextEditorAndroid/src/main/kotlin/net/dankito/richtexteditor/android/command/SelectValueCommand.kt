@@ -69,6 +69,7 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
             return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).trim() // Html.fromHtml() sometimes adds new lines add the end
         }
         else {
+            @Suppress("OverridingDeprecatedMember")
             return Html.fromHtml(html).trim() // Html.fromHtml() sometimes adds new lines add the end
         }
     }

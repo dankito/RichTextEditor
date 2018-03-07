@@ -11,16 +11,15 @@ import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.animation.ShowHideViewAnimator
 import net.dankito.richtexteditor.android.command.SelectValueCommand
-import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.android.extensions.executeActionAfterMeasuringSize
+import net.dankito.richtexteditor.command.ToolbarCommand
 
 
 class SelectValueView: ListView {
 
-    constructor(context: Context) : super(context) { init(context, null) }
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init(context, attrs) }
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { init(context, attrs) }
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { init(context, attrs) }
+    constructor(context: Context) : super(context) { init() }
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { init() }
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { init() }
 
 
     var values: List<CharSequence> = ArrayList()
@@ -50,7 +49,7 @@ class SelectValueView: ListView {
     private val animator = ShowHideViewAnimator()
 
 
-    private fun init(context: Context, attrs: AttributeSet?) {
+    private fun init() {
         this.visibility = View.GONE
         this.setBackgroundColor(Color.WHITE)
 

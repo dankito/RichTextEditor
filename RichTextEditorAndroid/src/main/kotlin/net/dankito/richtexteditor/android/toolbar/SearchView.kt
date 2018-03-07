@@ -229,6 +229,7 @@ class SearchView : LinearLayout {
             webView?.findAllAsync(query)
         }
         else {
+            @Suppress("OverridingDeprecatedMember")
             webView?.findAll(query)
         }
     }

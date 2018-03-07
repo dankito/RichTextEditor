@@ -88,6 +88,7 @@ fun View.removeOnGlobalLayoutListener(layoutListener: ViewTreeObserver.OnGlobalL
         this.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
     }
     else {
+        @Suppress("OverridingDeprecatedMember")
         this.viewTreeObserver.removeGlobalOnLayoutListener(layoutListener)
     }
 }
