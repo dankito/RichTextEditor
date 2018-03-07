@@ -69,7 +69,7 @@ ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Uni
         }
     }
 
-    private fun setCommandViewBackgroundColor(color: Color) {
+    protected open fun setCommandViewBackgroundColor(color: Color) {
         commandView?.let { commandView ->
             commandView.setBackgroundColor(color)
 

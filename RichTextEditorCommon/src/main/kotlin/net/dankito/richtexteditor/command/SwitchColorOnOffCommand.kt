@@ -9,6 +9,11 @@ abstract class SwitchColorOnOffCommand(private val offColor: Color, private var 
                                        command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ColorCommand(offColor, showColorInCommandView, command, icon, style, commandExecutedListener) {
 
+
+    abstract fun applyColor(executor: JavaScriptExecutorBase, color: Color)
+
+
+
     override fun currentColorChanged(color: Color) {
         super.currentColorChanged(color)
 
@@ -27,6 +32,10 @@ abstract class SwitchColorOnOffCommand(private val offColor: Color, private var 
     }
 
 
-    abstract fun applyColor(executor: JavaScriptExecutorBase, color: Color)
+    override fun setCommandViewBackgroundColor(color: Color) {
+        if(setOnColorToCurrentColor == true || color == offColor || color == onColor) { // if setOnColorToCurrentColor is set to false don't set background color to HTML's background color, only to offColor and onColor
+            super.setCommandViewBackgroundColor(color)
+        }
+    }
 
 }
