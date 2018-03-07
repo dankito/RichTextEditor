@@ -77,7 +77,7 @@ var editor = {
 
     _handlePaste: function(event) {
         var clipboardData = event.clipboardData || window.clipboardData;
-        var pastedData = clipboardData.getData('text/html') || clipboardData.getData('Text').replace("\n", "</p><p>"); // replace new lines
+        var pastedData = clipboardData.getData('text/html') || clipboardData.getData('Text').replace(/(?:\r\n|\r|\n)/g, '<br />'); // replace new lines
 
         this._waitTillPastedDataInserted(event, pastedData);
     },
