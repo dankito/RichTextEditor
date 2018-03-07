@@ -36,6 +36,9 @@ abstract class SwitchColorOnOffCommand(private val offColor: Color, private var 
         if(setOnColorToCurrentColor == true || color == offColor || color == onColor) { // if setOnColorToCurrentColor is set to false don't set background color to HTML's background color, only to offColor and onColor
             super.setCommandViewBackgroundColor(color)
         }
+        else if(setOnColorToCurrentColor == false && color != onColor) { // then set background color to offColor, not to HTML's background color
+            super.setCommandViewBackgroundColor(offColor)
+        }
     }
 
 }
