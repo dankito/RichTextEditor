@@ -8,7 +8,7 @@ class JavaFXIcon(val url: String) : Icon() {
     companion object {
 
         fun fromResourceName(iconResourceName: String): JavaFXIcon {
-            return JavaFXIcon(javaClass.classLoader.getResource("icons/" + iconResourceName).toExternalForm())
+            return JavaFXIcon(JavaFXIcon::class.java.classLoader.getResource("icons/" + iconResourceName).toExternalForm())
         }
 
     }

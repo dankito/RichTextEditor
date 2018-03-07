@@ -18,7 +18,7 @@ class SetFontNameCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_font_downl
     }
 
     override fun getItemStyle(itemName: String): String {
-        getIndexOfItem(itemName)?.let { index ->
+        getIndexOfItem(itemName)?.let {
             return "-fx-font-family: $itemName"
         }
 
