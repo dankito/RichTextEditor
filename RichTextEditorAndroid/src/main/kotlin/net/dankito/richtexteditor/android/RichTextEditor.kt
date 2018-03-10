@@ -11,17 +11,15 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebChromeClient
-import android.webkit.WebView
 import net.dankito.richtexteditor.android.extensions.showKeyboard
 import net.dankito.richtexteditor.android.util.KeyboardState
 
 
-open class RichTextEditor : WebView {
+open class RichTextEditor : FullscreenWebView {
 
     constructor(context: Context) : super(context) { initEditor(context, null) }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initEditor(context, attrs) }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initEditor(context, attrs) }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { initEditor(context, attrs) }
 
 
     val javaScriptExecutor = AndroidJavaScriptExecutor(this)
