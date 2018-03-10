@@ -44,10 +44,10 @@ class SearchView : LinearLayout {
         set(value) {
             field = value
 
-            this.webView = value?.webView
+            this.webView = value
         }
 
-    var webView: WebView? = null
+    var webView: WebView? = null // when not used in conjunction with RichTextEditor but a normal WebView
         set(value) {
             field = value
 
@@ -229,7 +229,7 @@ class SearchView : LinearLayout {
             webView?.findAllAsync(query)
         }
         else {
-            @Suppress("OverridingDeprecatedMember")
+            @Suppress("DEPRECATION")
             webView?.findAll(query)
         }
     }

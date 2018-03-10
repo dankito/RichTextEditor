@@ -10,16 +10,13 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
-import android.widget.RelativeLayout
 import net.dankito.richtexteditor.android.extensions.showKeyboard
 import net.dankito.richtexteditor.android.util.KeyboardState
-import org.slf4j.LoggerFactory
 
 
-open class RichTextEditor : RelativeLayout {
+open class RichTextEditor : WebView {
 
     constructor(context: Context) : super(context) { initEditor(context, null) }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initEditor(context, attrs) }
@@ -27,9 +24,7 @@ open class RichTextEditor : RelativeLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { initEditor(context, attrs) }
 
 
-    val webView = WebView(context)
-
-    val javaScriptExecutor = AndroidJavaScriptExecutor(webView)
+    val javaScriptExecutor = AndroidJavaScriptExecutor(this)
 
     private var isLoaded = false
 
@@ -38,27 +33,20 @@ open class RichTextEditor : RelativeLayout {
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initEditor(context: Context, attributes: AttributeSet?) {
-        val layoutParams = RelativeLayout.LayoutParams(context, attributes)
-        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
-        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
-        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-        addView(webView, layoutParams)
-
         attributes?.let { applyAttributes(context, it) }
 
-        webView.isVerticalScrollBarEnabled = false
-        webView.isHorizontalScrollBarEnabled = false
-        webView.settings.javaScriptEnabled = true
+        this.isVerticalScrollBarEnabled = false
+        this.isHorizontalScrollBarEnabled = false
+        this.settings.javaScriptEnabled = true
 
-        webView.webChromeClient = WebChromeClient()
+        this.webChromeClient = WebChromeClient()
 
-        webView.settings.defaultTextEncodingName = "UTF-8" // otherwise non ASCII text doesn't get displayed correctly
-        webView.settings.domStorageEnabled = true // otherwise images won't load
-        webView.settings.loadsImagesAutomatically = true
-        webView.settings.setSupportZoom(true)
-        webView.settings.builtInZoomControls = true
-        webView.settings.displayZoomControls = false
+        this.settings.defaultTextEncodingName = "UTF-8" // otherwise non ASCII text doesn't get displayed correctly
+        this.settings.domStorageEnabled = true // otherwise images won't load
+        this.settings.loadsImagesAutomatically = true
+        this.settings.setSupportZoom(true)
+        this.settings.builtInZoomControls = true
+        this.settings.displayZoomControls = false
 
         javaScriptExecutor.addLoadedListener {
             editorLoaded(context)
@@ -137,12 +125,12 @@ open class RichTextEditor : RelativeLayout {
     }
 
     fun setEditorFontFamily(fontFamily: String) {
-        webView.settings.standardFontFamily = fontFamily
+        this.settings.standardFontFamily = fontFamily
         executeEditorJavaScriptFunction("setBaseFontFamily('$fontFamily');")
     }
 
     fun setEditorFontSize(px: Int) {
-        webView.settings.defaultFontSize = px
+        this.settings.defaultFontSize = px
         executeEditorJavaScriptFunction("setBaseFontSize('${px}px');")
     }
 
@@ -153,7 +141,7 @@ open class RichTextEditor : RelativeLayout {
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
         if(isLoaded) {
             (context as? Activity)?.runOnUiThread {
-                webView.setPadding(left, top, right, bottom)
+                super.setPadding(left, top, right, bottom)
                 executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
             }
 
@@ -173,11 +161,6 @@ open class RichTextEditor : RelativeLayout {
 
     fun setEditorBackgroundColor(color: Int) {
         setBackgroundColor(color)
-    }
-
-    override fun setBackgroundColor(color: Int) {
-        super.setBackgroundColor(color)
-        webView.setBackgroundColor(color)
     }
 
     override fun setBackgroundResource(resid: Int) {
@@ -235,7 +218,7 @@ open class RichTextEditor : RelativeLayout {
 
     @JvmOverloads
     fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
-        webView.requestFocus()
+        this.requestFocus()
 
         if(alsoCallJavaScriptFocusFunction) { // Calling focus() changes editor's state, this is not desirable in all circumstances
             executeEditorJavaScriptFunction("focus()")
@@ -246,7 +229,7 @@ open class RichTextEditor : RelativeLayout {
     fun focusEditorAndShowKeyboard(alsoCallJavaScriptFocusFunction: Boolean = true) {
         focusEditor(alsoCallJavaScriptFocusFunction)
 
-        webView.showKeyboard()
+        this.showKeyboard()
     }
 
     /**
@@ -263,7 +246,6 @@ open class RichTextEditor : RelativeLayout {
         super.clearFocus()
 
         executeEditorJavaScriptFunction("blurFocus()")
-        webView.clearFocus()
     }
 
     private fun convertHexColorString(color: Int): String {
