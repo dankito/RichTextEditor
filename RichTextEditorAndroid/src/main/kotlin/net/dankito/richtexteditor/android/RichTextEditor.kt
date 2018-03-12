@@ -91,6 +91,12 @@ open class RichTextEditor : FullscreenWebView {
         KeyboardState.init(context as Activity)
     }
 
+    override fun onDetachedFromWindow() {
+        KeyboardState.cleanUp() // to avoid memory leaks
+
+        super.onDetachedFromWindow()
+    }
+
 
     /**
      * Returns the last cached editor's html.
