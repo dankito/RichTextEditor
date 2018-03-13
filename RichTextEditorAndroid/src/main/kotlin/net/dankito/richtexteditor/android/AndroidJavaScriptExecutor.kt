@@ -31,7 +31,7 @@ class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecut
 
     init {
         webView.postDelayed({
-            webView.webViewClient = editorWebViewClient
+            startEditing()
 
             webView.loadUrl(EditorHtmlPath)
         }, 50)
@@ -39,6 +39,13 @@ class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecut
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) { // on pre KitKat Androids there's no other way to get result of a JavaScript function
             webView.addJavascriptInterface(this, "android")
         }
+    }
+
+
+    override fun startEditing() {
+        super.startEditing()
+
+        webView.webViewClient = editorWebViewClient
     }
 
 

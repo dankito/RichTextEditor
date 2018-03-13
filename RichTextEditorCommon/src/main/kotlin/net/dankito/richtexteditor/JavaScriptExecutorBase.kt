@@ -81,6 +81,15 @@ abstract class JavaScriptExecutorBase {
     }
 
 
+    open fun startEditing() {
+        executeEditorJavaScriptFunction("setIsEditing(true)")
+    }
+
+    open fun doneEditing() {
+        executeEditorJavaScriptFunction("setIsEditing(false)")
+    }
+
+
     /*      Text Commands        */
 
     fun undo() {

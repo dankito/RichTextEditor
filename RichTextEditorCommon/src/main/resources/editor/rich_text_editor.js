@@ -5,6 +5,8 @@ var editor = {
 
     _htmlSetByApplication: null,
 
+    _isEditing: true,
+
     _currentSelection: {
         "startContainer": 0,
         "startOffset": 0,
@@ -147,6 +149,11 @@ var editor = {
 
         baseElement.setAttribute('href', baseUrl);
         baseElement.setAttribute('target', '_blank');
+    },
+
+
+    setIsEditing: function(isEditing) {
+        this._isEditing = isEditing
     },
     
     
@@ -387,6 +394,10 @@ var editor = {
 
 
     _updateEditorState: function() {
+        if(this._isEditing == false) {
+            return
+        }
+
         var html = this._getHtml();
         var didHtmlChange = this._htmlSetByApplication != null && this._htmlSetByApplication != html;
 

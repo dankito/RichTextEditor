@@ -334,7 +334,7 @@ open class FullscreenWebView : WebView {
     }
 
 
-    fun enterEditingMode() {
+    open fun enterEditingMode() {
         isInViewingMode = false
 
         this.editorToolbar?.visibility = View.VISIBLE
@@ -348,7 +348,7 @@ open class FullscreenWebView : WebView {
         changeDisplayModeListener?.invoke(DisplayMode.Editing)
     }
 
-    fun enterViewingMode() {
+    open fun enterViewingMode() {
         isInViewingMode = true
 
         this.editorToolbar?.visibility = View.GONE

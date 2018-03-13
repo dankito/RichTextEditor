@@ -98,6 +98,19 @@ open class RichTextEditor : FullscreenWebView {
     }
 
 
+    override fun enterEditingMode() {
+        super.enterEditingMode()
+
+        javaScriptExecutor.startEditing()
+    }
+
+    override fun enterViewingMode() {
+        super.enterViewingMode()
+
+        javaScriptExecutor.doneEditing()
+    }
+
+
     /**
      * Returns the last cached editor's html.
      * Usually this is the up to date html. But in case user uses swipe input, some swipe keyboards (especially Samsung's) or pasting text on Samsung devices doesn't fire text changed event,
