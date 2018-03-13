@@ -20,4 +20,7 @@
     <dimen name="list_item_select_value_height">40dp</dimen>
     <dimen name="list_item_select_value_margin_left_right">8dp</dimen>
 
+    <dimen name="fullscreen_web_view_options_bar_button_height">40dp</dimen>
+    <dimen name="fullscreen_web_view_options_bar_button_width">40dp</dimen>
+
 </resources>
