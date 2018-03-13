@@ -34,6 +34,11 @@ open class FullscreenWebView : WebView {
         Leave
     }
 
+    enum class DisplayMode {
+        Viewing,
+        Editing
+    }
+
 
     companion object {
         private const val DefaultScrollDownDifferenceYThreshold = 3
@@ -81,6 +86,8 @@ open class FullscreenWebView : WebView {
     var scrollDownDifferenceYThreshold = DefaultScrollDownDifferenceYThreshold
 
     var changeFullscreenModeListener: ((FullscreenMode) -> Unit)? = null
+
+    var changeDisplayModeListener: ((DisplayMode) -> Unit)? = null
 
     private var leftFullscreenCallback: (() -> Unit)? = null
 
@@ -337,6 +344,8 @@ open class FullscreenWebView : WebView {
         this.isFocusableInTouchMode = true
 
         this.showKeyboard()
+
+        changeDisplayModeListener?.invoke(DisplayMode.Editing)
     }
 
     fun enterViewingMode() {
@@ -349,6 +358,8 @@ open class FullscreenWebView : WebView {
 
         val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+
+        changeDisplayModeListener?.invoke(DisplayMode.Viewing)
     }
 
 
