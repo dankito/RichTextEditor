@@ -2,7 +2,7 @@
 <resources>
 
     <!-- The same as colorPrimary but with a higher transparency -->
-    <color name="richtexteditor_fullscreen_options_bar_background">#0D47A1</color>
+    <color name="richtexteditor_fullscreen_options_bar_background">#570D47A1</color>
     <color name="richtexteditor_fullscreen_options_bar_search_view_background">#0D47A1</color>
 
 </resources>
