@@ -23,7 +23,7 @@ import java.util.*
 /**
  * Actually only needed for may other app DeepThought.
  * There you can either view html in fullscreen without keyboard and basic editing function for selected text only or
- * edit it in non fullscreen with keyboard enabled and all editing functions available through toolbar.
+ * edit it in non fullscreen with keyboard enabled and all editing functions available through editorToolbar.
  *
  * On scroll down fires a listener to enter full screen mode, on scroll up fires the same listener to leave full screen mode.
  */
@@ -105,7 +105,7 @@ open class FullscreenWebView : WebView {
     private lateinit var swipeTouchListener: OnSwipeTouchListener
 
 
-    private var toolbar: View? = null
+    private var editorToolbar: View? = null
 
     private var optionsBar: View? = null
 
@@ -141,8 +141,8 @@ open class FullscreenWebView : WebView {
     }
 
 
-    fun setToolAndOptionsBar(toolbar: View, optionsBar: View? = null) {
-        this.toolbar = toolbar
+    fun setEditorToolbarAndOptionsBar(editorToolbar: View, optionsBar: View? = null) {
+        this.editorToolbar = editorToolbar
         this.optionsBar = optionsBar
         this.searchView = optionsBar?.optionsBarSearchView
 
@@ -330,7 +330,7 @@ open class FullscreenWebView : WebView {
     fun enterEditingMode() {
         isInViewingMode = false
 
-        this.toolbar?.visibility = View.VISIBLE
+        this.editorToolbar?.visibility = View.VISIBLE
         this.optionsBar?.visibility = View.GONE
 
         this.isFocusable = true
@@ -342,7 +342,7 @@ open class FullscreenWebView : WebView {
     fun enterViewingMode() {
         isInViewingMode = true
 
-        this.toolbar?.visibility = View.GONE
+        this.editorToolbar?.visibility = View.GONE
 
         this.isFocusable = false
         this.isFocusableInTouchMode = false
