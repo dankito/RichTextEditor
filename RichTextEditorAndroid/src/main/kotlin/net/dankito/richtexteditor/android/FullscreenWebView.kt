@@ -8,12 +8,14 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
+import kotlinx.android.synthetic.main.view_fullscreen_options_bar.view.*
 import net.dankito.richtexteditor.android.extensions.showKeyboard
 import net.dankito.richtexteditor.android.toolbar.SearchView
+import net.dankito.richtexteditor.android.toolbar.SearchViewStyle
 import net.dankito.richtexteditor.android.util.OnSwipeTouchListener
+import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import java.util.*
 
 
@@ -101,9 +103,12 @@ open class FullscreenWebView : WebView {
 
     private lateinit var swipeTouchListener: OnSwipeTouchListener
 
-    private var lytFullscreenWebViewOptionsBar: ViewGroup? = null
 
-    private lateinit var searchView: SearchView
+    private var toolbar: View? = null
+
+    private var optionsBar: View? = null
+
+    private var searchView: SearchView? = null
 
     private var isSearchViewVisible = false
 
@@ -128,8 +133,6 @@ open class FullscreenWebView : WebView {
     }
 
     private fun setupUI() {
-        searchView = SearchView(context)
-
         swipeTouchListener = OnSwipeTouchListener(context) { handleWebViewSwipe(it) }
 
         swipeTouchListener.singleTapListener = { handleWebViewSingleTap() }
@@ -137,29 +140,28 @@ open class FullscreenWebView : WebView {
     }
 
 
-//    fun setOptionsBar(lytFullscreenWebViewOptionsBar: ViewGroup) {
-//        this.lytFullscreenWebViewOptionsBar = lytFullscreenWebViewOptionsBar
-//
-//        lytFullscreenWebViewOptionsBar.btnLeaveFullscreen.setOnClickListener { leaveFullscreenMode() }
-//
-//        lytFullscreenWebViewOptionsBar.addView(searchView, 0)
-//
-//        val width = context.resources.getDimension(R.dimen.fullscreen_web_view_options_bar_button_width) / context.resources.displayMetrics.density
-//        val backgroundColor = context.getColorFromResourceId(R.color.colorPrimary)
-//        searchView.applyStyle(SearchViewStyle(ToolbarCommandStyle(widthDp = width.toInt()), backgroundColor, 16f))
-//        searchView.editor = this as? RichTextEditor
-//
-//        searchView.searchViewExpandedListener = { isExpanded ->
-//            if(isExpanded) {
-//                isSearchViewVisible = true
-//            }
-//            else {
-//                isSearchViewVisible = false
-//
-//                this.systemUiVisibility = FULLSCREEN_MODE_SYSTEM_UI_FLAGS
-//            }
-//        }
-//    }
+    fun setToolAndOptionsBar(toolbar: View, optionsBar: View? = null) {
+        this.toolbar = toolbar
+        this.optionsBar = optionsBar
+        this.searchView = optionsBar?.optionsBarSearchView
+
+        optionsBar?.btnLeaveFullscreen?.setOnClickListener { leaveFullscreenMode() }
+
+        searchView?.searchField?.textSize = 16f
+        searchView?.applyStyle(SearchViewStyle(ToolbarCommandStyle(), searchFieldTextSize = 16f))
+        searchView?.editor = this as? RichTextEditor
+
+        searchView?.searchViewExpandedListener = { isExpanded ->
+            if(isExpanded) {
+                isSearchViewVisible = true
+            }
+            else {
+                isSearchViewVisible = false
+
+                this.systemUiVisibility = FULLSCREEN_MODE_SYSTEM_UI_FLAGS
+            }
+        }
+    }
 
 
     override fun onWindowSystemUiVisibilityChanged(flags: Int) {
@@ -176,9 +178,9 @@ open class FullscreenWebView : WebView {
                 leftFullscreenCallback = null
             }
             else {
-                searchView.postDelayed({
+                searchView?.postDelayed({
                     if(flags == 0) { // user tapped e.g. on searchField at bottom of screen when keyboard is hidden -> go back to fullscreen
-                        searchView.searchField.showKeyboard()
+                        searchView?.searchField?.showKeyboard()
                     }
 
                     this.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -252,7 +254,7 @@ open class FullscreenWebView : WebView {
     override fun onScrollChanged(scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
         super.onScrollChanged(scrollX, scrollY, oldScrollX, oldScrollY)
 
-        if(isInViewingMode == false || searchView.isScrollingToSearchResult) { // enter fullscreen on scroll is only enabled in viewing mode; filter out non-user scrolls
+        if(isInViewingMode == false || searchView?.isScrollingToSearchResult == true) { // enter fullscreen on scroll is only enabled in viewing mode; filter out non-user scrolls
             return
         }
 
@@ -269,7 +271,7 @@ open class FullscreenWebView : WebView {
         val tolerance = computeVerticalScrollExtent() / 10
         this.hasReachedEnd = scrollY >= computeVerticalScrollRange() - computeVerticalScrollExtent() - tolerance
 
-        wasSearchFocusedFocusedBeforeScrolling = wasSearchFocusedFocusedBeforeScrolling || searchView.searchField.isFocused // wasSearchFocusedFocusedBeforeScrolling || : otherwise in scroll events short after hiding options bar wasSearchFocusedFocusedBeforeScrolling would get set from true to false
+        wasSearchFocusedFocusedBeforeScrolling = wasSearchFocusedFocusedBeforeScrolling || searchView?.searchField?.isFocused == true // wasSearchFocusedFocusedBeforeScrolling || : otherwise in scroll events short after hiding options bar wasSearchFocusedFocusedBeforeScrolling would get set from true to false
         hideOptionsBarOnUiThread()
         startCheckIfScrollingStopped()
     }
@@ -301,7 +303,7 @@ open class FullscreenWebView : WebView {
     }
 
     private fun hideOptionsBarOnUiThread() {
-        lytFullscreenWebViewOptionsBar?.visibility = View.GONE
+        optionsBar?.visibility = View.GONE
     }
 
     private fun showOptionsBar() {
@@ -313,10 +315,10 @@ open class FullscreenWebView : WebView {
     }
 
     private fun showOptionsBarOnUiThread() {
-        lytFullscreenWebViewOptionsBar?.visibility = View.VISIBLE
+        optionsBar?.visibility = View.VISIBLE
 
         if(wasSearchFocusedFocusedBeforeScrolling) {
-            searchView.requestFocus()
+            searchView?.requestFocus()
 
             wasSearchFocusedFocusedBeforeScrolling = false // reset value to not focus accidentally again
         }
@@ -326,6 +328,9 @@ open class FullscreenWebView : WebView {
     fun enterEditingMode() {
         isInViewingMode = false
 
+        this.toolbar?.visibility = View.VISIBLE
+        this.optionsBar?.visibility = View.GONE
+
         this.isFocusable = true
         this.isFocusableInTouchMode = true
 
@@ -334,6 +339,8 @@ open class FullscreenWebView : WebView {
 
     fun enterViewingMode() {
         isInViewingMode = true
+
+        this.toolbar?.visibility = View.GONE
 
         this.isFocusable = false
         this.isFocusableInTouchMode = false
@@ -365,7 +372,7 @@ open class FullscreenWebView : WebView {
         isInFullscreenMode = false
         updateLastOnScrollFullscreenModeTogglingTimestamp()
         hideOptionsBarOnUiThread()
-        searchView.hideSearchControls()
+        searchView?.hideSearchControls()
 
         changeFullscreenModeListener?.invoke(FullscreenMode.Leave)
 
