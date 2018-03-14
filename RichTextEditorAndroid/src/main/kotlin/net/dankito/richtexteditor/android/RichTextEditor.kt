@@ -33,7 +33,6 @@ open class RichTextEditor : FullscreenWebView {
     private fun initEditor(context: Context, attributes: AttributeSet?) {
         attributes?.let { applyAttributes(context, it) }
 
-        this.isVerticalScrollBarEnabled = false
         this.isHorizontalScrollBarEnabled = false
         this.settings.javaScriptEnabled = true
 
