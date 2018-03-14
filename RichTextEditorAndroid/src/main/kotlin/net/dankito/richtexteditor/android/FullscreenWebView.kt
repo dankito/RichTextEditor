@@ -210,7 +210,11 @@ open class FullscreenWebView : WebView {
             hitTestResult?.let { hitResult ->
                 val type = hitResult.type
 
-                elementClickedListener?.let { return it.invoke(type) } // this is bad: in most cases type is UNKNOWN, even though clicked on images etc. -> we cannot determine if user clicked an element or simply the background
+                elementClickedListener?.let {  // this is bad: in most cases type is UNKNOWN, even though clicked on images etc. -> we cannot determine if user clicked an element or simply the background
+                    if(it.invoke(type)) { // only abort touch handling if elementClickedListener really handled touch
+                        return true
+                    }
+                }
             }
         }
 
