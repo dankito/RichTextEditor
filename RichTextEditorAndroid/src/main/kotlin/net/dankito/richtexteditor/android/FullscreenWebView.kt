@@ -226,9 +226,6 @@ open class FullscreenWebView : WebView {
 
         // leave the functionality for clicking on links, phone numbers, geo coordinates, ... Only go to fullscreen mode when clicked somewhere else in the WebView or on an image
         if(type == null || type == WebView.HitTestResult.UNKNOWN_TYPE || type == WebView.HitTestResult.IMAGE_TYPE) {
-            if(isInViewingMode) {
-            }
-
             singleTapListener?.invoke(isInFullscreenMode)
         }
         else if(type == WebView.HitTestResult.EDIT_TEXT_TYPE && isInViewingMode && isInFullscreenMode == false) {
