@@ -13,7 +13,7 @@ import kotlin.concurrent.thread
 abstract class JavaScriptExecutorBase {
 
     companion object {
-        private const val EditorStateChangedCallbackScheme = "editor-state-changed-callback://"
+        const val EditorStateChangedCallbackScheme = "editor-state-changed-callback://"
 
         private val log = LoggerFactory.getLogger(JavaScriptExecutorBase::class.java)
     }
