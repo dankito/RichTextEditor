@@ -18,6 +18,15 @@
         />
 
     <ImageButton
+        android:id="@+id/btnMarkSelectedText"
+        android:layout_width="@dimen/fullscreen_web_view_options_bar_button_width"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_marker_white_48dp"
+        android:visibility="gone"
+    />
+
+    <ImageButton
         android:id="@+id/btnLeaveFullscreen"
         android:layout_width="@dimen/fullscreen_web_view_options_bar_button_width"
         android:layout_height="match_parent"
