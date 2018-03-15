@@ -42,9 +42,7 @@ class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecut
     }
 
 
-    override fun startEditing() {
-        super.startEditing()
-
+    fun startEditing() {
         webView.webViewClient = editorWebViewClient
     }
 

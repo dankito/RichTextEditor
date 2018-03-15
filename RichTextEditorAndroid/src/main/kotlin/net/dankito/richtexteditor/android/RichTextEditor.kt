@@ -103,12 +103,6 @@ open class RichTextEditor : FullscreenWebView {
         javaScriptExecutor.startEditing()
     }
 
-    override fun enterViewingMode() {
-        super.enterViewingMode()
-
-        javaScriptExecutor.doneEditing()
-    }
-
 
     /**
      * Returns the last cached editor's html.
