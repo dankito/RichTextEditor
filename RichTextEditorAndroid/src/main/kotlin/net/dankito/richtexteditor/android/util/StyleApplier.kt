@@ -1,15 +1,15 @@
 package net.dankito.richtexteditor.android.util
 
 import android.os.Build
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidIcon
-import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.richtexteditor.android.extensions.getLayoutSize
 import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
 import net.dankito.richtexteditor.android.extensions.setPadding
+import net.dankito.richtexteditor.command.ToolbarCommandStyle
 
 
 class StyleApplier {
@@ -23,7 +23,7 @@ class StyleApplier {
         val padding = commandView.getPixelSizeForDisplay(style.paddingDp)
         commandView.setPadding(padding)
 
-        val layoutParams = commandView.layoutParams as LinearLayout.LayoutParams
+        val layoutParams = commandView.layoutParams as ViewGroup.MarginLayoutParams
 
         layoutParams.width = commandView.getLayoutSize(style.widthDp)
         layoutParams.height = commandView.getLayoutSize(style.heightDp)
