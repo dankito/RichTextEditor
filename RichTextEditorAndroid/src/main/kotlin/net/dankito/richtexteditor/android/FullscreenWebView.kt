@@ -432,6 +432,8 @@ open class FullscreenWebView : WebView {
             scrollPositionToRestore = Point(scrollX, scrollY) // onRestoreState() sometimes simply doesn't get call, but scrollY gets nevertheless re-set to 0
         }
 
+        checkIfScrollingStoppedTimerTask?.cancel() // otherwise may causes a memory leak
+
         if(isInFullscreenMode) {
             leaveFullscreenModeAndWaitTillLeft { }
         }
