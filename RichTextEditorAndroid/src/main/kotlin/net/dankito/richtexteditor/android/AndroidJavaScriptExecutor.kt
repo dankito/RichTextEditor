@@ -30,14 +30,14 @@ class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecut
 
 
     init {
-        webView.postDelayed({
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) { // on pre KitKat Androids there's no other way to get result of a JavaScript function
+            webView.addJavascriptInterface(this, "android")
+        }
+
+        webView.post { // directly calling webView.loadUrl() results in that editor.html doesn't get loaded -> use post()
             startEditing()
 
             webView.loadUrl(EditorHtmlPath)
-        }, 50)
-
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) { // on pre KitKat Androids there's no other way to get result of a JavaScript function
-            webView.addJavascriptInterface(this, "android")
         }
     }
 
