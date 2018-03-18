@@ -29,7 +29,7 @@ class SearchView(private val searchViewStyle: SearchViewStyle, private val local
 
     private val searchText = SimpleStringProperty("")
 
-    private val matchCase = SimpleBooleanProperty(true)
+    private val matchCase = SimpleBooleanProperty(false)
 
     private val enableButtonsPreviousNextSearchResult = SimpleBooleanProperty(false)
 
