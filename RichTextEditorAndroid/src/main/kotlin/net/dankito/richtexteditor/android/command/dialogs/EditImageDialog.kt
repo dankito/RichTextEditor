@@ -7,7 +7,13 @@ import android.view.*
 import android.view.inputmethod.EditorInfo
 import kotlinx.android.synthetic.main.dialog_edit_image.*
 import kotlinx.android.synthetic.main.dialog_edit_image.view.*
+import net.dankito.filechooserdialog.FileChooserDialog
+import net.dankito.filechooserdialog.model.ExtensionsFilter
+import net.dankito.filechooserdialog.model.FileChooserDialogConfig
+import net.dankito.filechooserdialog.service.PermissionsService
+import net.dankito.filechooserdialog.ui.util.FolderUtils
 import net.dankito.richtexteditor.android.R
+import java.io.File
 
 class EditImageDialog : DialogFragment() {
 
@@ -15,6 +21,8 @@ class EditImageDialog : DialogFragment() {
         val DialogTag = EditImageDialog::class.java.name
     }
 
+
+    private lateinit var permissionsService: PermissionsService
 
     private var imageUrlEnteredListener: ((imageUrl: String, alternateText: String) -> Unit)? = null
 
@@ -27,6 +35,8 @@ class EditImageDialog : DialogFragment() {
 
             view.btnOk?.setOnClickListener { enteringImageUrlDone() }
 
+            view.btnSelectLocalFile.setOnClickListener { selectLocalImage() }
+
             view.edtxtImageUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextUrlAction(actionId, keyEvent) }
             view.edtxtImageUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {
@@ -34,6 +44,8 @@ class EditImageDialog : DialogFragment() {
                 }
             }
         }
+
+        permissionsService = PermissionsService(activity)
 
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) // so that keyboard doesn't cover OK and Cancel buttons
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -57,6 +69,30 @@ class EditImageDialog : DialogFragment() {
         }
 
         return false
+    }
+
+    private fun selectLocalImage() {
+        val config = FileChooserDialogConfig(ExtensionsFilter.WebViewSupportedImages.filter, getCurrentDirectory())
+
+        FileChooserDialog().showOpenSingleFileDialog(activity, permissionsService, config) { didUserSelectFile, selectedFile ->
+            selectedFile?.let {
+                edtxtImageUrl.setText(selectedFile.absolutePath)
+            }
+        }
+    }
+
+    private fun getCurrentDirectory(): File {
+        val folderUtils = FolderUtils(context)
+
+        var currentDirectory = folderUtils.getCameraPhotosDirectory()
+
+        if (edtxtImageUrl.text.toString().isNotBlank()) {
+            try {
+                currentDirectory = File(edtxtImageUrl.text.toString().trim()).parentFile
+            } catch (ignored: Exception) { }
+        }
+
+        return currentDirectory
     }
 
     private fun enteringImageUrlDone() {

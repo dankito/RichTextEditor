@@ -12,6 +12,8 @@
     <dimen name="dialog_edit_image_margin_left_and_right">24dp</dimen>
     <dimen name="dialog_edit_image_padding">8dp</dimen>
     <dimen name="dialog_edit_image_image_url_label_margin_top">12dp</dimen>
+    <dimen name="dialog_edit_image_btn_select_local_image_width">60dp</dimen>
+    <dimen name="dialog_edit_image_btn_select_local_image_height">50dp</dimen>
     <dimen name="dialog_edit_image_alternate_text_label_margin_top">20dp</dimen>
     <dimen name="dialog_edit_image_buttons_margin_top">12dp</dimen>
     <dimen name="dialog_edit_image_buttons_height">50dp</dimen>

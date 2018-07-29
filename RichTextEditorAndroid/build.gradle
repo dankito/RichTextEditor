@@ -73,6 +73,14 @@ dependencies {
     compile "$mavenGroup:$richTextEditorCommonMavenArtifactId:$version"
 //    compile project(":RichTextEditorCommon")
 
+    compile "net.dankito.filechooserdialog:filechooserdialog-android:1.0.2", {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jre7'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support.constraint', module: 'constraint-layout'
+        exclude module: 'recyclerview-v7'
+    }
+
     compile 'com.jaredrummler:colorpicker:1.0.1'
 
     compile "com.android.support:appcompat-v7:$AppCompatVersion"

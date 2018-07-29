@@ -4,6 +4,7 @@
     <string name="dialog_edit_url_title_label">Anzeigetext</string>
 
     <string name="dialog_edit_image_image_url_label">Pfad oder Webadresse des Bildes</string>
+    <string name="dialog_edit_image_select_local_file">…</string>
     <string name="dialog_edit_image_alternate_text_label">Alternativtext (optional)</string>
 
     <string name="dialog_select_text_color_title">Textfarbe wählen</string>
