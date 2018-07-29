@@ -13,10 +13,13 @@ android {
 
     defaultConfig {
         applicationId "net.dankito.richtexteditor.android"
+
         minSdkVersion MinSdkVersion
         targetSdkVersion TargetSdkVersion
+
         versionCode appVersionCode
         versionName appVersionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,6 +40,10 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 

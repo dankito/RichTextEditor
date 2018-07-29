@@ -62,6 +62,11 @@ android {
         exclude 'META-INF/LICENSE'
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
+
 }
 
 dependencies {
