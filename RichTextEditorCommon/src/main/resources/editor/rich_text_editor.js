@@ -282,7 +282,7 @@ var editor = {
     },
 
     insertImage: function(url, alt) {
-        var html = '<img src="' + url + '" alt="' + alt + '" />';
+        var html = '<img src="' + url + '" alt="' + alt + '" style="max-width: 100%;" />';
         this.insertHtml(html);
     },
 
