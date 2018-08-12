@@ -13,6 +13,10 @@ import net.dankito.filechooserdialog.model.FileChooserDialogConfig
 import net.dankito.filechooserdialog.service.PermissionsService
 import net.dankito.filechooserdialog.ui.util.FolderUtils
 import net.dankito.richtexteditor.android.R
+import net.dankito.richtexteditor.android.util.GenericTextWatcher
+import net.dankito.richtexteditor.model.DownloadImageUiSetting
+import net.dankito.richtexteditor.util.ImageDownloader
+import net.dankito.richtexteditor.util.UrlUtil
 import java.io.File
 
 class EditImageDialog : DialogFragment() {
@@ -22,7 +26,12 @@ class EditImageDialog : DialogFragment() {
     }
 
 
+    private val urlUtil = UrlUtil()
+
+
     private lateinit var permissionsService: PermissionsService
+
+    private lateinit var downloadImageUiSetting: DownloadImageUiSetting
 
     private var imageUrlEnteredListener: ((imageUrl: String, alternateText: String) -> Unit)? = null
 
@@ -38,6 +47,7 @@ class EditImageDialog : DialogFragment() {
             view.btnSelectLocalFile.setOnClickListener { selectLocalImage() }
 
             view.edtxtImageUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextUrlAction(actionId, keyEvent) }
+            view.edtxtImageUrl.addTextChangedListener(GenericTextWatcher { _, _, _, _ -> setDownloadOptionsState() } )
             view.edtxtImageUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {
                     dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
@@ -53,8 +63,16 @@ class EditImageDialog : DialogFragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
 
-    fun show(fragmentManager: FragmentManager, imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
+        setDownloadOptionsState()
+    }
+
+
+    fun show(fragmentManager: FragmentManager, downloadImageUiSetting: DownloadImageUiSetting,
+             imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
+        this.downloadImageUiSetting = downloadImageUiSetting
         this.imageUrlEnteredListener = imageUrlEnteredListener
 
         this.show(fragmentManager, DialogTag)
@@ -85,10 +103,11 @@ class EditImageDialog : DialogFragment() {
         val folderUtils = FolderUtils(context)
 
         var currentDirectory = folderUtils.getCameraPhotosDirectory()
+        val imageUrl = enteredImageUrl
 
-        if (edtxtImageUrl.text.toString().isNotBlank()) {
+        if (imageUrl.isNotBlank()) {
             try {
-                currentDirectory = File(edtxtImageUrl.text.toString().trim()).parentFile
+                currentDirectory = File(imageUrl).parentFile
             } catch (ignored: Exception) { }
         }
 
@@ -96,16 +115,54 @@ class EditImageDialog : DialogFragment() {
     }
 
     private fun enteringImageUrlDone() {
-        val imageUrl = edtxtImageUrl.text.toString().trim() // SwiftKey app enters ' ' at end which causes line break -> trim // TODO: is this reasonable in all cases?
+        val imageUrl = enteredImageUrl
 
+        if (chkbxDownloadImage.isChecked) {
+            downloadImageAndFireImageUrlEntered(imageUrl)
+        }
+        else {
+            fireImageUrlEnteredAndDismiss(imageUrl)
+        }
+    }
+
+    private fun downloadImageAndFireImageUrlEntered(imageUrl: String) {
+        val targetFile = File(context.filesDir, urlUtil.getFileName(imageUrl))
+        val downloader = ImageDownloader()
+
+        downloader.downloadImageAsync(imageUrl, targetFile) { isSuccessful ->
+            if (isSuccessful) {
+                fireImageUrlEnteredAndDismiss(targetFile.absolutePath)
+            }
+            else { // TODO: show error message
+                dismiss()
+            }
+        }
+    }
+
+    private fun fireImageUrlEnteredAndDismiss(imageUrl: String) {
         var alternateText = edtxtAlternateText.text.toString().trim()
-        if(alternateText.isBlank()) {
+        if (alternateText.isBlank()) {
             alternateText = imageUrl
         }
 
         imageUrlEnteredListener?.invoke(imageUrl, alternateText)
 
         dismiss()
+    }
+
+    private val enteredImageUrl: String
+        get() = edtxtImageUrl.text.toString().trim() // SwiftKey app enters ' ' at end which causes line break -> trim // TODO: is this reasonable in all cases?
+
+
+    private fun setDownloadOptionsState() {
+        if (downloadImageUiSetting == DownloadImageUiSetting.Disallow) {
+            lytDownloadImage.visibility = View.GONE
+        }
+        else {
+            lytDownloadImage.visibility = View.VISIBLE
+
+            chkbxDownloadImage.isEnabled = urlUtil.isHttpUri(enteredImageUrl)
+        }
     }
 
 }

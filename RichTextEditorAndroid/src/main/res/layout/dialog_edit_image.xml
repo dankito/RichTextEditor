@@ -65,9 +65,28 @@
     />
 
     <LinearLayout
+        android:id="@+id/lytDownloadImage"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dialog_edit_image_download_image_to_device_margin_top"
+        android:layout_below="@+id/edtxtAlternateText">
+
+        <CheckBox
+            android:id="@+id/chkbxDownloadImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:enabled="true"
+            style="@android:style/TextAppearance.Medium"
+            android:text="@string/dialog_edit_image_download_image_to_device"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_edit_image_buttons_height"
-        android:layout_below="@+id/edtxtAlternateText"
+        android:layout_below="@+id/lytDownloadImage"
         android:layout_marginTop="@dimen/dialog_edit_image_buttons_margin_top"
     >
 

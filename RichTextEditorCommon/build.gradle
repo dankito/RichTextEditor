@@ -31,6 +31,8 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version" // to overwrite version from an included library
 
+    compile "com.squareup.okhttp3:okhttp:$OkHttpVersion"
+
     compile "org.slf4j:slf4j-api:$Slf4jVersion"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:$JacksonVersion"
 }

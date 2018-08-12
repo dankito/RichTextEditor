@@ -7,6 +7,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditImageDialog
 import net.dankito.richtexteditor.command.InsertImageCommandBase
+import net.dankito.richtexteditor.model.DownloadImageUiSetting
 
 
 class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : InsertImageCommandBase(icon), ICommandRequiringEditor {
@@ -17,7 +18,7 @@ class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_whi
         (editor?.context as? FragmentActivity)?.let { activity ->
             val dialog = EditImageDialog()
 
-            dialog.show(activity.supportFragmentManager) { imageUrl, alternateText ->
+            dialog.show(activity.supportFragmentManager, DownloadImageUiSetting.AllowSelectDownloadFolderInCode) { imageUrl, alternateText ->
                 imageSelected(imageUrl, alternateText)
             }
         }

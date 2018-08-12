@@ -6,6 +6,7 @@
     <string name="dialog_edit_image_image_url_label">Pfad oder Webadresse des Bildes</string>
     <string name="dialog_edit_image_select_local_file">…</string>
     <string name="dialog_edit_image_alternate_text_label">Alternativtext (optional)</string>
+    <string name="dialog_edit_image_download_image_to_device">Herunterladen</string>
 
     <string name="dialog_select_text_color_title">Textfarbe wählen</string>
     <string name="dialog_select_text_background_color_title">Texthintergrundfarbe wählen</string>
