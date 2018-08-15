@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebChromeClient
+import net.dankito.filechooserdialog.service.PermissionsService
 import net.dankito.richtexteditor.android.extensions.showKeyboard
 import net.dankito.richtexteditor.android.util.KeyboardState
 import net.dankito.richtexteditor.model.DownloadImageConfig
@@ -24,6 +25,8 @@ open class RichTextEditor : FullscreenWebView {
 
 
     val javaScriptExecutor = AndroidJavaScriptExecutor(this)
+
+    var permissionsService: PermissionsService? = null
 
     var downloadImageConfig: DownloadImageConfig? = null
 

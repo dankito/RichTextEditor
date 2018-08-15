@@ -2,6 +2,7 @@ package net.dankito.richtexteditor.android.demo
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import net.dankito.filechooserdialog.service.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
 
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         // show keyboard right at start up
         editor.focusEditorAndShowKeyboardDelayed()
+
+        editor.permissionsService = PermissionsService(this)
     }
 
 
@@ -39,6 +42,12 @@ class MainActivity : AppCompatActivity() {
         if(editorToolbar.handlesBackButtonPress() == false) {
             super.onBackPressed()
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        editor.permissionsService?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 }

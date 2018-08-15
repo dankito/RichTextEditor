@@ -57,8 +57,6 @@ class EditImageDialog : DialogFragment() {
             }
         }
 
-        permissionsService = PermissionsService(activity)
-
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) // so that keyboard doesn't cover OK and Cancel buttons
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
 
@@ -72,8 +70,9 @@ class EditImageDialog : DialogFragment() {
     }
 
 
-    fun show(fragmentManager: FragmentManager, downloadImageConfig: DownloadImageConfig? = null,
+    fun show(fragmentManager: FragmentManager, permissionsService: PermissionsService, downloadImageConfig: DownloadImageConfig? = null,
              imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
+        this.permissionsService = permissionsService
         this.downloadImageConfig = downloadImageConfig
         this.imageUrlEnteredListener = imageUrlEnteredListener
 
