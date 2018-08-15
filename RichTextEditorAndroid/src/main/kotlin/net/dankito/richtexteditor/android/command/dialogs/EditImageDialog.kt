@@ -14,6 +14,7 @@ import net.dankito.filechooserdialog.service.PermissionsService
 import net.dankito.filechooserdialog.ui.util.FolderUtils
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.util.GenericTextWatcher
+import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import net.dankito.richtexteditor.util.ImageDownloader
 import net.dankito.richtexteditor.util.UrlUtil
@@ -31,7 +32,7 @@ class EditImageDialog : DialogFragment() {
 
     private lateinit var permissionsService: PermissionsService
 
-    private lateinit var downloadImageUiSetting: DownloadImageUiSetting
+    private var downloadImageConfig: DownloadImageConfig? = null
 
     private var imageUrlEnteredListener: ((imageUrl: String, alternateText: String) -> Unit)? = null
 
@@ -70,9 +71,9 @@ class EditImageDialog : DialogFragment() {
     }
 
 
-    fun show(fragmentManager: FragmentManager, downloadImageUiSetting: DownloadImageUiSetting,
+    fun show(fragmentManager: FragmentManager, downloadImageConfig: DownloadImageConfig? = null,
              imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
-        this.downloadImageUiSetting = downloadImageUiSetting
+        this.downloadImageConfig = downloadImageConfig
         this.imageUrlEnteredListener = imageUrlEnteredListener
 
         this.show(fragmentManager, DialogTag)
@@ -155,7 +156,7 @@ class EditImageDialog : DialogFragment() {
 
 
     private fun setDownloadOptionsState() {
-        if (downloadImageUiSetting == DownloadImageUiSetting.Disallow) {
+        if (downloadImageConfig == null || downloadImageConfig?.uiSetting == DownloadImageUiSetting.Disallow) {
             lytDownloadImage.visibility = View.GONE
         }
         else {

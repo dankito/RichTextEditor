@@ -13,6 +13,7 @@ import android.view.View
 import android.webkit.WebChromeClient
 import net.dankito.richtexteditor.android.extensions.showKeyboard
 import net.dankito.richtexteditor.android.util.KeyboardState
+import net.dankito.richtexteditor.model.DownloadImageConfig
 
 
 open class RichTextEditor : FullscreenWebView {
@@ -23,6 +24,8 @@ open class RichTextEditor : FullscreenWebView {
 
 
     val javaScriptExecutor = AndroidJavaScriptExecutor(this)
+
+    val downloadImageConfig: DownloadImageConfig? = null
 
     private var isLoaded = false
 
