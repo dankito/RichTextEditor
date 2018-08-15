@@ -1,10 +1,14 @@
 package net.dankito.richtexteditor.android.demo
 
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import net.dankito.filechooserdialog.service.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
+import net.dankito.richtexteditor.model.DownloadImageConfig
+import net.dankito.richtexteditor.model.DownloadImageUiSetting
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         editor.focusEditorAndShowKeyboardDelayed()
 
         editor.permissionsService = PermissionsService(this)
+
+        editor.downloadImageConfig = DownloadImageConfig(DownloadImageUiSetting.AllowSelectDownloadFolderInCode,
+                File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "downloaded_images"))
     }
 
 
