@@ -7,6 +7,8 @@
     <string name="dialog_edit_image_select_local_file">…</string>
     <string name="dialog_edit_image_alternate_text_label">Alternativtext (optional)</string>
     <string name="dialog_edit_image_download_image_to_device">Herunterladen</string>
+    <string name="dialog_edit_image_download_image_write_external_storage_rational">Um das Bild außerhalb des nicht öffentlich zugänglichen
+            App Ordners speichern zu dürfen, wird die Berechtigung auf den externen Speicher (SD Karte etc.) schreiben zu dürfen benötigt.</string>
 
     <string name="dialog_select_text_color_title">Textfarbe wählen</string>
     <string name="dialog_select_text_background_color_title">Texthintergrundfarbe wählen</string>

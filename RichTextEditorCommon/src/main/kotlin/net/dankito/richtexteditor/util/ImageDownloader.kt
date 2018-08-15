@@ -3,6 +3,8 @@ package net.dankito.richtexteditor.util
 import net.dankito.data_access.network.webclient.OkHttpWebClient
 import net.dankito.data_access.network.webclient.RequestParameters
 import net.dankito.data_access.network.webclient.ResponseType
+import net.dankito.richtexteditor.model.DownloadImageConfig
+import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import org.slf4j.LoggerFactory
 import java.io.BufferedOutputStream
 import java.io.File
@@ -32,6 +34,21 @@ class ImageDownloader {
 
             callback(response.isSuccessful)
         }
+    }
+
+    fun selectDownloadFolder(config: DownloadImageConfig?, fallbackDownloadFolder: File): File {
+        config?.let {
+            when (config?.uiSetting) {
+                DownloadImageUiSetting.AllowSelectDownloadFolderInCode -> {
+                    config?.downloadFolderIfUserIsNowAllowedToSelectFolder?.let {
+                        return it
+                    }
+                }
+                // TODO: implement AllowRestrictPossibleDownloadFolders and AllowLetUserSelectDownloadFolder
+                else -> return fallbackDownloadFolder
+            }
+        }
+        return fallbackDownloadFolder
     }
 
 }

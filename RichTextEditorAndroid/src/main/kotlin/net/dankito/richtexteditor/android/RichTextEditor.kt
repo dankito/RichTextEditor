@@ -25,7 +25,7 @@ open class RichTextEditor : FullscreenWebView {
 
     val javaScriptExecutor = AndroidJavaScriptExecutor(this)
 
-    val downloadImageConfig: DownloadImageConfig? = null
+    var downloadImageConfig: DownloadImageConfig? = null
 
     private var isLoaded = false
 

@@ -1,5 +1,6 @@
 package net.dankito.richtexteditor.android.command.dialogs
 
+import android.Manifest
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
@@ -127,17 +128,41 @@ class EditImageDialog : DialogFragment() {
     }
 
     private fun downloadImageAndFireImageUrlEntered(imageUrl: String) {
-        val targetFile = File(context.filesDir, urlUtil.getFileName(imageUrl))
         val downloader = ImageDownloader()
+        val targetFolder = downloader.selectDownloadFolder(downloadImageConfig, context.filesDir)
+
+        if (isInternalFile(targetFolder)) {
+            downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl, targetFolder, downloader)
+        }
+        else {
+            permissionsService.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, R.string.dialog_edit_image_download_image_write_external_storage_rational) { _, isPermitted ->
+                if (isPermitted) {
+                    downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl, targetFolder, downloader)
+                }
+                else {
+                    fireImageUrlEnteredAndDismiss(imageUrl) // user didn't allow to download file -> keep remote file and close
+                }
+            }
+        }
+    }
+
+    private fun downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl: String, targetFolder: File, downloader: ImageDownloader) {
+        targetFolder.mkdirs()
+
+        val fileName = downloadImageConfig?.fileNameSelectorCallback?.invoke(imageUrl) ?: urlUtil.getFileName(imageUrl)
+        val targetFile = File(targetFolder, fileName)
 
         downloader.downloadImageAsync(imageUrl, targetFile) { isSuccessful ->
             if (isSuccessful) {
                 fireImageUrlEnteredAndDismiss(targetFile.absolutePath)
-            }
-            else { // TODO: show error message
+            } else { // TODO: show error message
                 dismiss()
             }
         }
+    }
+
+    private fun isInternalFile(file: File): Boolean {
+        return file.startsWith(context.filesDir.absoluteFile)
     }
 
     private fun fireImageUrlEnteredAndDismiss(imageUrl: String) {
@@ -163,6 +188,8 @@ class EditImageDialog : DialogFragment() {
             lytDownloadImage.visibility = View.VISIBLE
 
             chkbxDownloadImage.isEnabled = urlUtil.isHttpUri(enteredImageUrl)
+
+            // TODO: implement AllowRestrictPossibleDownloadFolders and AllowLetUserSelectDownloadFolder
         }
     }
 
