@@ -18,7 +18,7 @@ import net.dankito.richtexteditor.android.util.GenericTextWatcher
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import net.dankito.richtexteditor.util.ImageDownloader
-import net.dankito.richtexteditor.util.UrlUtil
+import net.dankito.utils.web.UrlUtil
 import java.io.File
 
 class EditImageDialog : DialogFragment() {

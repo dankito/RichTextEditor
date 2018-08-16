@@ -1,8 +1,8 @@
 package net.dankito.richtexteditor.util
 
-import net.dankito.data_access.network.webclient.OkHttpWebClient
-import net.dankito.data_access.network.webclient.RequestParameters
-import net.dankito.data_access.network.webclient.ResponseType
+import net.dankito.utils.web.client.OkHttpWebClient
+import net.dankito.utils.web.client.RequestParameters
+import net.dankito.utils.web.client.ResponseType
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import org.slf4j.LoggerFactory

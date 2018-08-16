@@ -22,9 +22,8 @@ ext {
     TargetSdkVersion = 26
     BuildToolsVersion = '26.0.2'
 
-    OkHttpVersion = '3.11.0'
+    javaUtilsVersion = '1.0.0'
     Slf4jVersion = "1.7.25"
-    JacksonVersion = "2.9.4"
 
     AppCompatVersion = "25.4.0"
 
