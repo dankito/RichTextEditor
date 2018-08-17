@@ -1,4 +1,11 @@
 
+//TODO also edit class name in style.css when changing this.
+const resizableClass = "resizable";
+
+//TODO you may want to set another minimum size (I used the one suggested by the demo at http://interactjs.io/)
+const minWidth = 100
+const minHeight = 50
+
 var editor = {
 
     _textField: document.getElementById('editor'),
@@ -274,6 +281,7 @@ var editor = {
 
            var range = sel.getRangeAt(0).cloneRange();
            range.surroundContents(el);
+           range.surroundContents(el);
            sel.removeAllRanges();
            sel.addRange(range);
 
@@ -282,7 +290,7 @@ var editor = {
     },
 
     insertImage: function(url, alt) {
-        var html = '<img src="' + url + '" alt="' + alt + '" style="max-width: 100%;" />';
+        var html = '<img class="' + resizableClass + '" src="' + url + '" alt="' + alt + '"/>';
         this.insertHtml(html);
     },
 
@@ -479,5 +487,72 @@ var editor = {
 
 }
 
-
 editor.init();
+
+var angle = 0;
+
+interact.addDocument(window.document, {
+  events: { passive: false },
+});
+
+interact('.' + resizableClass)
+    .draggable({
+        onmove: window.dragMoveListener,
+        restrict: {
+            restriction: 'parent',
+            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+        },
+    })
+    .resizable({
+        // resize from right or bottom
+        edges: { top: true, left: true, right: true, bottom: true},
+
+       // keep the edges inside the parent
+        restrictEdges: {
+            outer: 'parent',
+            endOnly: true,
+        },
+
+        // minimum size
+        restrictSize: {
+            min: { width: minWidth, height: minHeight },
+        },
+
+        inertia: true,
+        preserveAspectRatio: true,
+    })
+    .gesturable({
+        onmove: function (event) {
+
+            var target = event.target;
+
+            angle += event.da;
+
+            if(Math.abs(90 - (angle % 360)) < 10){ angle = 90;}
+            if(Math.abs(180 - (angle % 360)) < 10){ angle = 180;}
+            if(Math.abs(270 - (angle % 360)) < 10){ angle = 270;}
+            if(Math.abs(angle % 360) < 10){ angle = 0;}
+
+            target.style.webkitTransform =
+            target.style.transform =
+            'rotate(' + angle + 'deg)';
+
+        }
+    })
+    .on('resizemove', function (event) {
+
+        var target = event.target,
+            x = (parseFloat(target.getAttribute('data-x')) || 0),
+            y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+        // update the element's style
+        target.style.width  = event.rect.width + 'px';
+        target.style.height = event.rect.height + 'px';
+
+        target.width  = event.rect.width + 'px';
+        target.height = event.rect.height + 'px';
+
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+
+    });

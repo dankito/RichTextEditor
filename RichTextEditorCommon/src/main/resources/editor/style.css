@@ -58,3 +58,23 @@ sup {
 sub {
     vertical-align: sub;
 }
+
+img {
+
+    max-width: 100%;
+    object-fit: contain;
+
+}
+
+
+/* TODO change this when changing the class name */
+.resizable {
+
+  border: 1px solid gray;
+
+  touch-action: none;
+
+  /* This makes things *much* easier */
+ /* box-sizing: border-box;*/
+
+}
