@@ -203,6 +203,8 @@ var editor = {
 
         if(html.length != 0) {
             this._textField.innerHTML = decodeURIComponent(html.replace(/\+/g, '%20'));
+
+            this._makeImagesResizeable();
         }
         else {
             this._ensureEditorInsertsParagraphWhenPressingEnter();
@@ -225,6 +227,24 @@ var editor = {
 
         baseElement.setAttribute('href', baseUrl);
         baseElement.setAttribute('target', '_blank');
+    },
+
+    _makeImagesResizeable: function() {
+        var images = document.getElementsByTagName("img");
+
+        for(var i = 0; i < images.length; i++) {
+            this._addClass(images[i], resizableImageClass);
+        }
+    },
+
+    _hasClass: function(element, className) {
+      return !!element.className.match(new RegExp('(\\s|^)' + className +'(\\s|$)'));
+    },
+
+    _addClass: function(element, className) {
+      if (this._hasClass(element, className) == false) {
+        element.className += " " + className;
+      }
     },
     
     
