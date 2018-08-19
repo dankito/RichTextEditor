@@ -2,8 +2,6 @@
 // also edit class name in style.css when changing this.
 const resizableImageClass = "resizable";
 
-const imageMinWidth = 100
-const imageMinHeight = 50
 
 var editor = {
 
@@ -17,6 +15,9 @@ var editor = {
         "endContainer": 0,
         "endOffset": 0
     },
+
+    _imageMinWidth: 100,
+    _imageMinHeight: 50,
 
 
     init: function() {
@@ -52,6 +53,7 @@ var editor = {
         this._textField.addEventListener("paste", function(e) { editor._handlePaste(e); });
 
         this._ensureEditorInsertsParagraphWhenPressingEnter();
+        this._initDragImageToResize();
         this._updateEditorState();
     },
 
@@ -70,6 +72,76 @@ var editor = {
         range.setStart(newElement.firstChild, 1);
         selection.removeAllRanges();
         selection.addRange(range);
+    },
+
+    _initDragImageToResize: function() {
+        var angle = 0;
+
+        interact.addDocument(window.document, {
+          events: { passive: false },
+        });
+
+        interact('img.' + resizableImageClass)
+        .draggable({
+            onmove: window.dragMoveListener,
+            restrict: {
+                restriction: 'parent',
+                elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+            },
+        })
+        .resizable({
+            // resize from right or bottom
+            edges: { top: true, left: true, right: true, bottom: true},
+
+           // keep the edges inside the parent
+            restrictEdges: {
+                outer: 'parent',
+                endOnly: true,
+            },
+
+            // minimum size
+            restrictSize: {
+                min: { width: this._imageMinWidth, height: this._imageMinHeight },
+            },
+
+            inertia: true,
+            preserveAspectRatio: true,
+        })
+        .gesturable({
+            onmove: function (event) {
+
+                var target = event.target;
+
+                angle += event.da;
+
+                if(Math.abs(90 - (angle % 360)) < 10){ angle = 90;}
+                if(Math.abs(180 - (angle % 360)) < 10){ angle = 180;}
+                if(Math.abs(270 - (angle % 360)) < 10){ angle = 270;}
+                if(Math.abs(angle % 360) < 10){ angle = 0;}
+
+                target.style.webkitTransform =
+                target.style.transform =
+                'rotate(' + angle + 'deg)';
+
+            }
+        })
+        .on('resizemove', function (event) {
+
+            var target = event.target,
+                x = (parseFloat(target.getAttribute('data-x')) || 0),
+                y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+            // update the element's style
+            target.style.width  = event.rect.width + 'px';
+            target.style.height = event.rect.height + 'px';
+
+            target.width  = event.rect.width + 'px';
+            target.height = event.rect.height + 'px';
+
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+
+        });
     },
 
 
@@ -485,72 +557,5 @@ var editor = {
 
 }
 
+
 editor.init();
-
-var angle = 0;
-
-interact.addDocument(window.document, {
-  events: { passive: false },
-});
-
-interact('img.' + resizableImageClass)
-    .draggable({
-        onmove: window.dragMoveListener,
-        restrict: {
-            restriction: 'parent',
-            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-        },
-    })
-    .resizable({
-        // resize from right or bottom
-        edges: { top: true, left: true, right: true, bottom: true},
-
-       // keep the edges inside the parent
-        restrictEdges: {
-            outer: 'parent',
-            endOnly: true,
-        },
-
-        // minimum size
-        restrictSize: {
-            min: { width: imageMinWidth, height: imageMinHeight },
-        },
-
-        inertia: true,
-        preserveAspectRatio: true,
-    })
-    .gesturable({
-        onmove: function (event) {
-
-            var target = event.target;
-
-            angle += event.da;
-
-            if(Math.abs(90 - (angle % 360)) < 10){ angle = 90;}
-            if(Math.abs(180 - (angle % 360)) < 10){ angle = 180;}
-            if(Math.abs(270 - (angle % 360)) < 10){ angle = 270;}
-            if(Math.abs(angle % 360) < 10){ angle = 0;}
-
-            target.style.webkitTransform =
-            target.style.transform =
-            'rotate(' + angle + 'deg)';
-
-        }
-    })
-    .on('resizemove', function (event) {
-
-        var target = event.target,
-            x = (parseFloat(target.getAttribute('data-x')) || 0),
-            y = (parseFloat(target.getAttribute('data-y')) || 0);
-
-        // update the element's style
-        target.style.width  = event.rect.width + 'px';
-        target.style.height = event.rect.height + 'px';
-
-        target.width  = event.rect.width + 'px';
-        target.height = event.rect.height + 'px';
-
-        target.setAttribute('data-x', x);
-        target.setAttribute('data-y', y);
-
-    });
