@@ -22,7 +22,7 @@ ext {
     TargetSdkVersion = 26
     BuildToolsVersion = '26.0.2'
 
-    javaUtilsVersion = '1.0.0'
+    javaUtilsVersion = '1.0.1'
     Slf4jVersion = "1.7.25"
 
     androidUtilsVersion = '1.0.0'
