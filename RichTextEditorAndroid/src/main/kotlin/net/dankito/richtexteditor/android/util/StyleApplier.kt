@@ -6,10 +6,10 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidIcon
-import net.dankito.richtexteditor.android.extensions.getLayoutSize
-import net.dankito.richtexteditor.android.extensions.getPixelSizeForDisplay
-import net.dankito.richtexteditor.android.extensions.setPadding
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
+import net.dankito.utils.extensions.getLayoutSize
+import net.dankito.utils.extensions.getPixelSizeForDisplay
+import net.dankito.utils.extensions.setPadding
 
 
 class StyleApplier {

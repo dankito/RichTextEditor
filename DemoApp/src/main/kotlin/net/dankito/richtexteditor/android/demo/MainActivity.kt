@@ -3,7 +3,7 @@ package net.dankito.richtexteditor.android.demo
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
-import net.dankito.filechooserdialog.service.PermissionsService
+import net.dankito.utils.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
 import net.dankito.richtexteditor.model.DownloadImageConfig

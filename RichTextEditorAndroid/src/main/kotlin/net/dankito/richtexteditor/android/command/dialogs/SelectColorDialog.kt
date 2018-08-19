@@ -5,8 +5,8 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import net.dankito.richtexteditor.Color
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.extensions.hideKeyboard
-import net.dankito.richtexteditor.android.util.KeyboardState
+import net.dankito.utils.KeyboardState
+import net.dankito.utils.extensions.hideKeyboard
 
 
 class SelectColorDialog {

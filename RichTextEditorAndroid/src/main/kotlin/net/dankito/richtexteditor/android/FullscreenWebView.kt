@@ -11,12 +11,12 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import kotlinx.android.synthetic.main.view_fullscreen_options_bar.view.*
-import net.dankito.richtexteditor.android.extensions.getColorFromResource
-import net.dankito.richtexteditor.android.extensions.showKeyboard
 import net.dankito.richtexteditor.android.toolbar.SearchView
 import net.dankito.richtexteditor.android.toolbar.SearchViewStyle
-import net.dankito.richtexteditor.android.util.OnSwipeTouchListener
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
+import net.dankito.utils.OnSwipeTouchListener
+import net.dankito.utils.extensions.getColorFromResource
+import net.dankito.utils.extensions.showKeyboard
 import java.util.*
 
 

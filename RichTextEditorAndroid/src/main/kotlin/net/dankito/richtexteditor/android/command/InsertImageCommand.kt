@@ -1,13 +1,13 @@
 package net.dankito.richtexteditor.android.command
 
 import android.support.v4.app.FragmentActivity
-import net.dankito.filechooserdialog.service.PermissionsService
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditImageDialog
 import net.dankito.richtexteditor.command.InsertImageCommandBase
+import net.dankito.utils.permissions.PermissionsService
 
 
 class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : InsertImageCommandBase(icon), ICommandRequiringEditor {

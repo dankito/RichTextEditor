@@ -11,13 +11,13 @@ import kotlinx.android.synthetic.main.dialog_edit_image.view.*
 import net.dankito.filechooserdialog.FileChooserDialog
 import net.dankito.filechooserdialog.model.ExtensionsFilter
 import net.dankito.filechooserdialog.model.FileChooserDialogConfig
-import net.dankito.filechooserdialog.service.PermissionsService
-import net.dankito.filechooserdialog.ui.util.FolderUtils
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.android.util.GenericTextWatcher
+import net.dankito.utils.GenericTextWatcher
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import net.dankito.richtexteditor.util.ImageDownloader
+import net.dankito.utils.permissions.PermissionsService
+import net.dankito.utils.io.AndroidFolderUtils
 import net.dankito.utils.web.UrlUtil
 import java.io.File
 
@@ -49,7 +49,7 @@ class EditImageDialog : DialogFragment() {
             view.btnSelectLocalFile.setOnClickListener { selectLocalImage() }
 
             view.edtxtImageUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextUrlAction(actionId, keyEvent) }
-            view.edtxtImageUrl.addTextChangedListener(GenericTextWatcher { _, _, _, _ -> setDownloadOptionsState() } )
+            view.edtxtImageUrl.addTextChangedListener(GenericTextWatcher(onTextChanged =  { _, _, _, _ -> setDownloadOptionsState() } ) )
             view.edtxtImageUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {
                     dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
@@ -101,7 +101,7 @@ class EditImageDialog : DialogFragment() {
     }
 
     private fun getCurrentDirectory(): File {
-        val folderUtils = FolderUtils(context)
+        val folderUtils = AndroidFolderUtils(context)
 
         var currentDirectory = folderUtils.getCameraPhotosDirectory()
         val imageUrl = enteredImageUrl

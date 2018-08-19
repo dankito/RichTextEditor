@@ -13,8 +13,8 @@ import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
-import net.dankito.richtexteditor.android.extensions.executeActionAfterMeasuringSize
 import net.dankito.richtexteditor.android.util.StyleApplier
+import net.dankito.utils.extensions.executeActionAfterMeasuringSize
 
 
 open class EditorToolbar : HorizontalScrollView {

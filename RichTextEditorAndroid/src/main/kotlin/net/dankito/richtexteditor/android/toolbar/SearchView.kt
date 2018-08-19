@@ -17,8 +17,8 @@ import android.widget.TextView
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.extensions.*
 import net.dankito.richtexteditor.android.util.StyleApplier
+import net.dankito.utils.extensions.*
 import java.util.*
 import kotlin.concurrent.schedule
 
