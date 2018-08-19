@@ -49,7 +49,7 @@ class EditImageDialog : DialogFragment() {
             view.btnSelectLocalFile.setOnClickListener { selectLocalImage() }
 
             view.edtxtImageUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextUrlAction(actionId, keyEvent) }
-            view.edtxtImageUrl.addTextChangedListener(GenericTextWatcher(onTextChanged =  { _, _, _, _ -> setDownloadOptionsState() } ) )
+            view.edtxtImageUrl.addTextChangedListener(GenericTextWatcher( { _, _, _, _ -> setDownloadOptionsState() } ) )
             view.edtxtImageUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {
                     dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
