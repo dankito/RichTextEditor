@@ -67,8 +67,8 @@ img {
 }
 
 
-/* TODO change this when changing the class name */
-.resizable {
+/* change this when changing the class name of resizableImageClass in rich_text_editor.js */
+img.resizable {
 
   border: 1px solid gray;
 

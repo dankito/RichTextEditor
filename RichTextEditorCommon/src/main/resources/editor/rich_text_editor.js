@@ -1,10 +1,9 @@
 
-//TODO also edit class name in style.css when changing this.
-const resizableClass = "resizable";
+// also edit class name in style.css when changing this.
+const resizableImageClass = "resizable";
 
-//TODO you may want to set another minimum size (I used the one suggested by the demo at http://interactjs.io/)
-const minWidth = 100
-const minHeight = 50
+const imageMinWidth = 100
+const imageMinHeight = 50
 
 var editor = {
 
@@ -281,7 +280,6 @@ var editor = {
 
            var range = sel.getRangeAt(0).cloneRange();
            range.surroundContents(el);
-           range.surroundContents(el);
            sel.removeAllRanges();
            sel.addRange(range);
 
@@ -290,7 +288,7 @@ var editor = {
     },
 
     insertImage: function(url, alt) {
-        var html = '<img class="' + resizableClass + '" src="' + url + '" alt="' + alt + '"/>';
+        var html = '<img class="' + resizableImageClass + '" src="' + url + '" alt="' + alt + '"/>';
         this.insertHtml(html);
     },
 
@@ -340,7 +338,7 @@ var editor = {
     },
     
     setWidth: function(size) {
-        this._textField.style.minWidth = size;
+        this._textField.style.minWidth = size; // TODO: why did i use minWidth here but height (not minHeight) below?
     },
     
     setHeight: function(size) {
@@ -495,7 +493,7 @@ interact.addDocument(window.document, {
   events: { passive: false },
 });
 
-interact('.' + resizableClass)
+interact('img.' + resizableImageClass)
     .draggable({
         onmove: window.dragMoveListener,
         restrict: {
@@ -515,7 +513,7 @@ interact('.' + resizableClass)
 
         // minimum size
         restrictSize: {
-            min: { width: minWidth, height: minHeight },
+            min: { width: imageMinWidth, height: imageMinHeight },
         },
 
         inertia: true,
