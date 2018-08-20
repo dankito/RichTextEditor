@@ -451,6 +451,14 @@ var editor = {
     
     setInputEnabled: function(inputEnabled) {
         this._textField.contentEditable = String(inputEnabled);
+         if(inputEnabled){
+            this._initDragImageToResize();
+        }else{
+            interact('img.' + resizableImageClass)
+                .draggable(false)
+                .resizable(false)
+                .gesturable(false);
+        }
     },
 
     focus: function() {
