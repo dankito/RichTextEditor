@@ -3,12 +3,12 @@
     <string name="dialog_edit_url_url_label">Emplacement du lien</string>
     <string name="dialog_edit_url_title_label">Texte à afficher</string>
 
-    <string name="dialog_edit_image_image_url_label">Chemin ou adresse de l'image</string>
+    <string name="dialog_edit_image_image_url_label">Chemin ou adresse de l\'image</string>
     <string name="dialog_edit_image_select_local_file">…</string>
     <string name="dialog_edit_image_alternate_text_label">Texte de remplacement (facultatif)</string>
-    <string name="dialog_edit_image_download_image_to_device">Télécharger sur l'appareil</string>
-    <string name="dialog_edit_image_download_image_write_external_storage_rational">Pour enregistrer l'image sur votre appareil,
-        vous devez autoriser l'application à accéder en écriture au stockage de l'appareil./string>
+    <string name="dialog_edit_image_download_image_to_device">Télécharger sur l\'appareil</string>
+    <string name="dialog_edit_image_download_image_write_external_storage_rational">Pour enregistrer l\'image sur votre appareil,
+        vous devez autoriser l\'application à accéder en écriture au stockage de l\'appareil./string>
 
     <string name="dialog_select_text_color_title">Choisissez la couleur du texte</string>
     <string name="dialog_select_text_background_color_title">Choisissez la couleur de surlignement du texte</string>
