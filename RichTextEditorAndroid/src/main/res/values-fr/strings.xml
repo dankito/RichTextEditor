@@ -1,0 +1,93 @@
+<resources>
+
+    <string name="dialog_edit_url_url_label">Emplacement du lien</string>
+    <string name="dialog_edit_url_title_label">Texte à afficher</string>
+
+    <string name="dialog_edit_image_image_url_label">Chemin ou adresse de l\'image</string>
+    <string name="dialog_edit_image_select_local_file">…</string>
+    <string name="dialog_edit_image_alternate_text_label">Texte de remplacement (facultatif)</string>
+    <string name="dialog_edit_image_download_image_to_device">Télécharger sur l\'appareil</string>
+    <string name="dialog_edit_image_download_image_write_external_storage_rational">Pour enregistrer l\'image sur votre appareil,
+    vous devez autoriser l\'application à accéder en écriture au stockage de l\'appareil.</string>
+
+    <string name="dialog_select_text_color_title">Choisissez la couleur du texte</string>
+    <string name="dialog_select_text_background_color_title">Choisissez la couleur de surlignement du texte</string>
+
+
+    <!--        Text formats            -->
+
+    <string name="text_format_header_1"><![CDATA[
+        <h1>Titre 1</h1>
+    ]]></string>
+
+    <string name="text_format_header_2"><![CDATA[
+        <h2>Titre 2</h2>
+    ]]></string>
+
+    <string name="text_format_header_3"><![CDATA[
+        <h3>Titre 3</h3>
+    ]]></string>
+
+    <string name="text_format_header_4"><![CDATA[
+        <h4>Titre 4</h4>
+    ]]></string>
+
+    <string name="text_format_header_5"><![CDATA[
+        <h5>Titre 5</h5>
+    ]]></string>
+
+    <string name="text_format_header_6"><![CDATA[
+        <h6>Titre 6</h6>
+    ]]></string>
+
+    <string name="text_format_paragraph"><![CDATA[
+        <p>Corps du texte</p>
+    ]]></string>
+
+    <string name="text_format_preformat"><![CDATA[
+        <pre><font face=\"courier\">Préformatage</font></pre>
+    ]]></string>
+
+    <string name="text_format_block_quote"><![CDATA[
+        <blockquote>Citation</blockquote>
+    ]]></string>
+
+
+
+    <!--        Font sizes            -->
+
+    <!-- font size is not implemented in Html.fromHtml(), so use small and big -->
+
+    <string name="font_size_very_very_small"><![CDATA[
+        <small><small><small>Minuscule</small></small></small>
+    ]]></string>
+
+    <string name="font_size_very_small"><![CDATA[
+        <small><small>Très petite</small></small>
+    ]]></string>
+
+    <string name="font_size_small"><![CDATA[
+        <small>Petite</small>
+    ]]></string>
+
+    <string name="font_size_medium"><![CDATA[
+        Moyenne
+    ]]></string>
+
+    <string name="font_size_large"><![CDATA[
+        <big>Grande</big>
+    ]]></string>
+
+    <string name="font_size_very_large"><![CDATA[
+        <big><big>Très grande</big></big>
+    ]]></string>
+
+    <string name="font_size_very_very_large"><![CDATA[
+        <big><big><big>Enorme</big></big></big>
+    ]]></string>
+
+
+
+    <string name="count_search_results_label" formatted="false">%d sur %d</string>
+
+</resources>
