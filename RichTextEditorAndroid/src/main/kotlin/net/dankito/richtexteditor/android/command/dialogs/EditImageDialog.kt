@@ -93,7 +93,7 @@ class EditImageDialog : DialogFragment() {
     private fun selectLocalImage() {
         val config = FileChooserDialogConfig(ExtensionsFilter.WebViewSupportedImages.filter, getCurrentDirectory())
 
-        FileChooserDialog().showOpenSingleFileDialog(activity, permissionsService, config) { didUserSelectFile, selectedFile ->
+        FileChooserDialog().showOpenSingleFileDialog(activity, permissionsService, config) { _, selectedFile ->
             selectedFile?.let {
                 edtxtImageUrl.setText(selectedFile.absolutePath)
             }
