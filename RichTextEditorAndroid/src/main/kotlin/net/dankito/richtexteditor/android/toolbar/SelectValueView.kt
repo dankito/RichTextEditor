@@ -9,9 +9,9 @@ import android.widget.ListView
 import android.widget.RelativeLayout
 import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.utils.animation.ShowHideViewAnimator
 import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.command.ToolbarCommand
+import net.dankito.utils.animation.ShowHideViewAnimator
 import net.dankito.utils.extensions.executeActionAfterMeasuringSize
 
 
@@ -106,24 +106,30 @@ class SelectValueView: ListView {
             hasEditorHeightChanged = editor.measuredHeight != lastEditorHeight // most probably due to keyboard show/hide
         }
 
+        findToolbar(selectValueCommand)?.let { toolbar ->
+            this.toolbar = toolbar
+            toolbar.addCommandInvokedListener { commandInvoked(it) }
+
+            addToLayout(editor, toolbar)
+        }
+    }
+
+    private fun findToolbar(selectValueCommand: SelectValueCommand): EditorToolbar? {
         var parent = (selectValueCommand.commandView as? AndroidCommandView)?.view?.parent
 
         while(parent != null) {
             if(parent is EditorToolbar) {
-                this.toolbar = parent
-                parent.addCommandInvokedListener { commandInvoked(it) }
-
-                addToLayout(editor, parent)
-
-                break
+                return parent
             }
 
             parent = parent.parent
         }
+
+        return null
     }
 
     private fun addToLayout(editor: RichTextEditor, toolbar: EditorToolbar) {
-        (editor as? ViewGroup)?.let { toolbarParent ->
+        findParentViewGroup(editor)?.let { toolbarParent ->
             toolbarParent.addView(this)
 
             (this.layoutParams as? RelativeLayout.LayoutParams)?.let { layoutParams ->
@@ -135,6 +141,20 @@ class SelectValueView: ListView {
                 }
             }
         }
+    }
+
+    private fun findParentViewGroup(view: View): ViewGroup? {
+        var parent = view.parent
+
+        while(parent != null) {
+            if(parent is ViewGroup) {
+                return parent
+            }
+
+            parent = parent.parent
+        }
+
+        return null
     }
 
     fun toggleShowView() {
