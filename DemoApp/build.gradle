@@ -8,14 +8,14 @@ apply from: '../versions.gradle' // remove when developing in library directly
 
 
 android {
-    compileSdkVersion CompileSdkVersion
-    buildToolsVersion BuildToolsVersion
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
 
     defaultConfig {
         applicationId "net.dankito.richtexteditor.android"
 
-        minSdkVersion MinSdkVersion
-        targetSdkVersion TargetSdkVersion
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
 
         versionCode appVersionCode
         versionName appVersionName
@@ -64,11 +64,11 @@ dependencies {
 
     compile "org.slf4j:slf4j-android:$Slf4jVersion"
 
-    compile "com.android.support:appcompat-v7:$AppCompatVersion"
+    compile "com.android.support:appcompat-v7:$appCompatVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    testCompile "junit:junit:$JUnitVersion"
+    testCompile "junit:junit:$junitVersion"
 
-    androidTestCompile "com.android.support.test:runner:$AndroidTestRunnerVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$EspressoVersion"
+    androidTestCompile "com.android.support.test:runner:$androidTestRunnerVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
 }

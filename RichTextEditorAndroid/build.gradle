@@ -30,12 +30,12 @@ def mavenArtifactId = richTextEditorAndroidMavenArtifactId
 
 
 android {
-    compileSdkVersion CompileSdkVersion
-    buildToolsVersion BuildToolsVersion
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion MinSdkVersion
-        targetSdkVersion TargetSdkVersion
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
         versionCode appVersionCode
         versionName appVersionName
 
@@ -83,17 +83,17 @@ dependencies {
 
     compile 'com.jaredrummler:colorpicker:1.0.1'
 
-    compile "com.android.support:appcompat-v7:$AppCompatVersion"
-    compile "com.android.support:design:$AppCompatVersion"
+    compile "com.android.support:appcompat-v7:$appCompatVersion"
+    compile "com.android.support:design:$appCompatVersion"
 
-    javadocDeps "com.android.support:support-annotations:$AppCompatVersion"
+    javadocDeps "com.android.support:support-annotations:$appCompatVersion"
     javadocDeps 'com.nineoldandroids:library:2.4.0'
-    javadocDeps "com.android.support:support-v4:$AppCompatVersion"
+    javadocDeps "com.android.support:support-v4:$appCompatVersion"
 
-    testCompile "junit:junit:$JUnitVersion"
+    testCompile "junit:junit:$junitVersion"
 
-    androidTestCompile "com.android.support.test:runner:$AndroidTestRunnerVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$EspressoVersion"
+    androidTestCompile "com.android.support.test:runner:$androidTestRunnerVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
 }
 
 

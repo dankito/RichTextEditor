@@ -17,20 +17,20 @@ ext {
 
     kotlin_version = '1.2.21'
 
-    CompileSdkVersion = 26
-    MinSdkVersion = 15
-    TargetSdkVersion = 26
-    BuildToolsVersion = '26.0.2'
+    androidCompileSdkVersion = 26
+    androidBuildToolsVersion = '26.0.2'
+    androidMinSdkVersion = 15
+    androidTargetSdkVersion = 26
 
     javaUtilsVersion = '1.0.1'
     Slf4jVersion = "1.7.25"
 
     fileChooserDialogVersion = '1.1.1'
-    AppCompatVersion = "25.4.0"
+    appCompatVersion = "25.4.0"
 
-    JUnitVersion = "4.12"
-    AndroidTestRunnerVersion = "1.0.1"
-    EspressoVersion = "3.0.1"
+    junitVersion = "4.12"
+    androidTestRunnerVersion = "1.0.1"
+    espressoVersion = "3.0.1"
 
 
     // JavaFX
