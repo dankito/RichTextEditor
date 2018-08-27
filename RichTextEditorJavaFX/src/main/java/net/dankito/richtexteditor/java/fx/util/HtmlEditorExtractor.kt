@@ -58,9 +58,8 @@ class HtmlEditorExtractor {
     }
 
     private fun copyResourceFileToDestination(destinationDirectory: File, filename: String, classLoader: ClassLoader): File? {
-        val inputStream = classLoader.getResourceAsStream(EditorResourceFolderPath + "/" + filename)
-
-        if(inputStream != null) { // TODO: what to do if resource couldn't be found?
+        // TODO: what to do if resource couldn't be found?
+        classLoader.getResourceAsStream(EditorResourceFolderPath + "/" + filename)?.let { inputStream ->
             val destination = File(destinationDirectory, filename)
 
             writeToFile(inputStream, destination)
