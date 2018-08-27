@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import kotlinx.android.synthetic.main.activity_main.*
 import net.dankito.richtexteditor.android.FullscreenWebView
 import net.dankito.utils.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
@@ -38,14 +39,21 @@ class MainActivity : AppCompatActivity() {
 //        editor.setEditorFontFamily("cursive")
 
         // show keyboard right at start up
-        editor.focusEditorAndShowKeyboardDelayed()
-
-        editor.changeFullscreenModeListener = { mode -> fullScreenModeChanged(mode) }
+//        editor.focusEditorAndShowKeyboardDelayed()
 
         editor.permissionsService = PermissionsService(this)
 
         editor.downloadImageConfig = DownloadImageConfig(DownloadImageUiSetting.AllowSelectDownloadFolderInCode,
                 File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "downloaded_images"))
+
+        // semi transparent options bar shown when entering fullscreen in viewing mode
+        fullscreenOptionsBar.showMarkSelectedTextButton(editor)
+        editor.setEditorToolbarAndOptionsBar(editorToolbar, fullscreenOptionsBar)
+        editor.changeFullscreenModeListener = { mode -> fullScreenModeChanged(mode) }
+
+        // show editor in viewing, not editing, mode. Tap on editor switches back to editing mode then.
+        // But to be able to enter fullscreen mode you need to set HTML that fills at least on display page.
+//        editor.enterViewingMode()
     }
 
 
