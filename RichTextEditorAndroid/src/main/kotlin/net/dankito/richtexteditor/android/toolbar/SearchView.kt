@@ -1,5 +1,6 @@
 package net.dankito.richtexteditor.android.toolbar
 
+import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.text.Editable
@@ -18,6 +19,7 @@ import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.util.StyleApplier
+import net.dankito.utils.KeyboardUtils
 import net.dankito.utils.extensions.*
 import java.util.*
 import kotlin.concurrent.schedule
@@ -203,8 +205,13 @@ class SearchView : LinearLayout {
 
     fun hideSearchControls() {
         if(editor != null) {
-            editor?.focusEditorAndShowKeyboard()
-            editor?.focusEditorAndShowKeyboardDelayed()
+            if(editor?.isInFullscreenMode == true) {
+                searchField.hideKeyboard()
+            }
+            else {
+                editor?.focusEditorAndShowKeyboard()
+                editor?.focusEditorAndShowKeyboardDelayed()
+            }
 
             lytSearchControls.postDelayed({
                 lytSearchControls.visibility = View.GONE
@@ -261,6 +268,28 @@ class SearchView : LinearLayout {
             isScrollingToSearchResult = false // reset
         }
     }
+
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+
+        KeyboardUtils.addKeyboardToggleListener(context as Activity, softKeyboardToggleListener)
+    }
+
+    override fun onDetachedFromWindow() {
+        KeyboardUtils.removeKeyboardToggleListener(softKeyboardToggleListener)
+
+        super.onDetachedFromWindow()
+    }
+
+    private val softKeyboardToggleListener = { isKeyboardVisible: Boolean ->
+        if(editor?.isInFullscreenMode == true) {
+            if(isKeyboardVisible == false) {
+                hideSearchControls()
+            }
+        }
+    }
+
 
 
     private val searchFieldTextWatcher = object : TextWatcher {

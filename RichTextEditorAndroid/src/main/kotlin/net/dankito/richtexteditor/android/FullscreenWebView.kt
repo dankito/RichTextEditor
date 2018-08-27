@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.view_fullscreen_options_bar.view.*
 import net.dankito.richtexteditor.android.toolbar.SearchView
 import net.dankito.richtexteditor.android.toolbar.SearchViewStyle
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
-import net.dankito.utils.KeyboardUtils
 import net.dankito.utils.OnSwipeTouchListener
 import net.dankito.utils.extensions.getColorFromResource
 import net.dankito.utils.extensions.showKeyboard
@@ -168,7 +167,9 @@ open class FullscreenWebView : WebView {
             else {
                 isSearchViewVisible = false
 
-                this.systemUiVisibility = FULLSCREEN_MODE_SYSTEM_UI_FLAGS
+                if(isInFullscreenMode) {
+                    this.systemUiVisibility = FULLSCREEN_MODE_SYSTEM_UI_FLAGS
+                }
             }
         }
     }
@@ -189,17 +190,8 @@ open class FullscreenWebView : WebView {
             }
             else {
                 searchView?.postDelayed({
-                    if(flags == 0) { // user tapped e.g. on searchField at bottom of screen when keyboard is hidden -> go back to fullscreen
-                        searchView?.searchField?.showKeyboard()
-                    }
-
                     this.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 }, 250)
-            }
-        }
-        else if(flags == FULLSCREEN_MODE_SYSTEM_UI_FLAGS) {
-            if(isSearchViewVisible == false) {
-                KeyboardUtils.forceCloseKeyboard(searchView)
             }
         }
 
