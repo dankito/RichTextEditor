@@ -3,6 +3,8 @@ package net.dankito.richtexteditor.android.demo
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import net.dankito.richtexteditor.android.FullscreenWebView
 import net.dankito.utils.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
@@ -38,6 +40,8 @@ class MainActivity : AppCompatActivity() {
         // show keyboard right at start up
         editor.focusEditorAndShowKeyboardDelayed()
 
+        editor.changeFullscreenModeListener = { mode -> fullScreenModeChanged(mode) }
+
         editor.permissionsService = PermissionsService(this)
 
         editor.downloadImageConfig = DownloadImageConfig(DownloadImageUiSetting.AllowSelectDownloadFolderInCode,
@@ -55,6 +59,14 @@ class MainActivity : AppCompatActivity() {
         editor.permissionsService?.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+
+    private fun fullScreenModeChanged(mode: FullscreenWebView.FullscreenMode) {
+        val isInFullscreen = mode == FullscreenWebView.FullscreenMode.Enter
+
+        val actionBarContainer = findViewById(R.id.action_bar_container)
+        actionBarContainer.visibility = if(isInFullscreen) View.GONE else View.VISIBLE
     }
 
 }
