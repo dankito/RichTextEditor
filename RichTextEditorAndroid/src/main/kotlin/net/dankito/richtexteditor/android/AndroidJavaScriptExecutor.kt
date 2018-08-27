@@ -140,6 +140,7 @@ class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecut
                 return true
             }
 
+            @Suppress("DEPRECATION")
             return super.shouldOverrideUrlLoading(view, url)
         }
     }
