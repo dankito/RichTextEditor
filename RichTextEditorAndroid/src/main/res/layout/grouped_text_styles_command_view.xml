@@ -12,6 +12,13 @@
     </net.dankito.richtexteditor.android.toolbar.EditorToolbar>
 
     <net.dankito.richtexteditor.android.toolbar.EditorToolbar
+        android:id="@+id/textFormatToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/editor_toolbar_default_height">
+
+    </net.dankito.richtexteditor.android.toolbar.EditorToolbar>
+
+    <net.dankito.richtexteditor.android.toolbar.EditorToolbar
         android:id="@+id/basicTextStylesToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editor_toolbar_default_height">

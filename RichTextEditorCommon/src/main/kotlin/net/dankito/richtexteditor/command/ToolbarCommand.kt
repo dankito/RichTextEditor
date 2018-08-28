@@ -11,16 +11,16 @@ abstract class ToolbarCommand(val command: CommandName,
                               val commandExecutedListener: (() -> Unit)? = null) {
 
 
-    var executor: JavaScriptExecutorBase? = null
+    open var executor: JavaScriptExecutorBase? = null
         set(value) {
             field = value
 
             value?.addCommandStatesChangedListener { commandStatesUpdated(it) }
         }
 
-    var commandView: CommandView? = null
+    open var commandView: CommandView? = null
 
-    var isExecutable: Boolean = true
+    open var isExecutable: Boolean = true
 
 
     fun commandInvoked() {

@@ -4,6 +4,8 @@
     <dimen name="editor_toolbar_default_height">36dp</dimen>
     <dimen name="editor_toolbar_default_space_width">12dp</dimen>
 
+    <dimen name="select_value_with_preview_view_margin_right">6dp</dimen>
+
     <dimen name="dialog_edit_url_margin_left_and_right">24dp</dimen>
     <dimen name="dialog_edit_url_padding">8dp</dimen>
     <dimen name="dialog_edit_url_url_label_margin_top">12dp</dimen>

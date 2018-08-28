@@ -5,9 +5,10 @@ import android.view.View
 import android.widget.ImageView
 import net.dankito.richtexteditor.Color
 import net.dankito.richtexteditor.CommandView
+import net.dankito.richtexteditor.android.toolbar.SelectValueWithPreviewView
 
 
-class AndroidCommandView(val view: ImageView) : CommandView() {
+class AndroidCommandView(val view: View) : CommandView() {
 
     override var appliedTintColor: Color = Color.Transparent
 
@@ -37,7 +38,12 @@ class AndroidCommandView(val view: ImageView) : CommandView() {
     override fun setTintColor(color: Color) {
         appliedTintColor = color
 
-        view.setColorFilter(color.toInt())
+        if(view is ImageView) {
+            view.setColorFilter(color.toInt())
+        }
+        else if(view is SelectValueWithPreviewView) {
+            view.setTintColor(color)
+        }
     }
 
 }

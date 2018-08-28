@@ -31,6 +31,30 @@ open class TextFormatUtils {
     }
 
 
+    open fun getPreviewTextForCommandValue(context: Context?, commandValue: String): CharSequence {
+        context?.let {
+            when(commandValue) {
+                "h1" -> return getPlainTextFromHtml(context, R.string.text_format_header_1)
+                "h2" -> return getPlainTextFromHtml(context, R.string.text_format_header_2)
+                "h3" -> return getPlainTextFromHtml(context, R.string.text_format_header_3)
+                "h4" -> return getPlainTextFromHtml(context, R.string.text_format_header_4)
+                "h5" -> return getPlainTextFromHtml(context, R.string.text_format_header_5)
+                "h6" -> return getPlainTextFromHtml(context, R.string.text_format_header_6)
+                "p" -> return getPlainTextFromHtml(context, R.string.text_format_paragraph)
+                "pre" -> return getPlainTextFromHtml(context, R.string.text_format_preformat)
+                "blockquote" -> return getPlainTextFromHtml(context, R.string.text_format_block_quote)
+                else -> return commandValue
+            }
+        }
+
+        return commandValue
+    }
+
+    protected open fun getPlainTextFromHtml(context: Context, stringResourceId: Int): String {
+        return HtmlExtensions.getPlainTextFromHtml(context, stringResourceId)
+    }
+
+
     open fun setTextFormat(executor: JavaScriptExecutorBase, position: Int) {
         when(position) {
             0 -> executor.setHeading(1)

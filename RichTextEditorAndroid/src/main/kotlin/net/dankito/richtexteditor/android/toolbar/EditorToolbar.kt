@@ -11,6 +11,7 @@ import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
+import net.dankito.richtexteditor.android.command.SelectValueWithPreviewCommand
 import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
@@ -59,7 +60,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
 
     fun addCommand(command: ToolbarCommand) {
-        val commandView = ImageButton(context)
+        val commandView = if(command is SelectValueWithPreviewCommand) SelectValueWithPreviewView(context) else ImageButton(context)
         commandView.tag = command.command // TODO: this is bad, actually it's only needed for UI tests (don't introduce test code in production code)
         commandView.setOnClickListener { commandInvoked(command) }
 
@@ -81,11 +82,11 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         applyCommandStyle(command, commandView)
     }
 
-    private fun applyCommandStyle(command: ToolbarCommand, commandView: ImageButton) {
+    private fun applyCommandStyle(command: ToolbarCommand, commandView: View) {
         applyCommandStyle(command.icon, command.style, commandView)
     }
 
-    internal fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: ImageButton) {
+    internal fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: View) {
         mergeStyles(commandStyle, style)
 
         styleApplier.applyCommandStyle(icon, style, commandView)
@@ -174,11 +175,11 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
     private fun setRichTextEditorOnCommands(editor: RichTextEditor?) {
         commands.keys.forEach {
-            it.executor = editor?.javaScriptExecutor
-
-            if(it is ICommandRequiringEditor) {
+            if(it is ICommandRequiringEditor) { // editor has to be set before executor
                 it.editor = editor
             }
+
+            it.executor = editor?.javaScriptExecutor
         }
 
         searchViews.forEach {
