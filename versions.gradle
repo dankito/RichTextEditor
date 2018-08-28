@@ -25,6 +25,10 @@ ext {
     javaUtilsVersion = '1.0.1'
     Slf4jVersion = "1.7.25"
 
+
+    // Android
+
+    androidUtilsVersion = '1.0.1'
     fileChooserDialogVersion = '1.1.2'
     appCompatVersion = "25.4.0"
 

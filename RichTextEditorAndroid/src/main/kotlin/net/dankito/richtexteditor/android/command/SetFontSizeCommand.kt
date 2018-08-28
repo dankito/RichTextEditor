@@ -4,28 +4,19 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
+import net.dankito.richtexteditor.android.command.util.FontSizeUtils
 import net.dankito.richtexteditor.command.CommandName
-import java.util.*
 
-class SetFontSizeCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_size_white_48dp)) : SelectValueCommand(CommandName.FONTSIZE, icon) {
+class SetFontSizeCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_size_white_48dp), protected val utils: FontSizeUtils = FontSizeUtils())
+    : SelectValueCommand(CommandName.FONTSIZE, icon) {
 
 
     override fun initValuesDisplayTexts(): List<CharSequence> {
-        return Arrays.asList(
-                getHtmlSpanned(R.string.font_size_very_very_small),
-                getHtmlSpanned(R.string.font_size_very_small),
-                getHtmlSpanned(R.string.font_size_small),
-                getHtmlSpanned(R.string.font_size_medium),
-                getHtmlSpanned(R.string.font_size_large),
-                getHtmlSpanned(R.string.font_size_very_large),
-                getHtmlSpanned(R.string.font_size_very_very_large)
-        )
+        return utils.getValuesDisplayTexts(editor?.context)
     }
 
     override fun valueSelected(executor: JavaScriptExecutorBase, position: Int) {
-        val fontSize = position + 1 // position starts at 0, font sizes at 1
-
-        executor.setFontSize(fontSize)
+        utils.setFontSize(executor, position)
     }
 
 }

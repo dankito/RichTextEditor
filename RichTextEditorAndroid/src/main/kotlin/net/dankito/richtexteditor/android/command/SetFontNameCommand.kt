@@ -4,35 +4,20 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
-import net.dankito.richtexteditor.android.util.SystemFontsParser
+import net.dankito.richtexteditor.android.command.util.FontNameUtils
 import net.dankito.richtexteditor.command.CommandName
 
 
-class SetFontNameCommand(icon: Icon = AndroidIcon(R.drawable.ic_font_download_white_48dp)) : SelectValueCommand(CommandName.FONTNAME, icon) {
-
-
-    private val fontInfos = SystemFontsParser().parseSystemFonts()
+class SetFontNameCommand(icon: Icon = AndroidIcon(R.drawable.ic_font_download_white_48dp), protected var utils: FontNameUtils = FontNameUtils())
+    : SelectValueCommand(CommandName.FONTNAME, icon) {
 
 
     override fun initValuesDisplayTexts(): List<CharSequence> {
-        val displayTexts = ArrayList<CharSequence>()
-
-        fontInfos.forEach { fontInfo ->
-            val fontFamily = fontInfo.fontFamily
-
-            var fontDisplayText = fontInfo.fontFamily
-            fontInfo.fontName?.let { fontName ->
-                fontDisplayText = "$fontFamily ($fontName)"
-            }
-
-            displayTexts.add(getHtmlSpanned("<font face=\"$fontFamily\">$fontDisplayText</font>"))
-        }
-
-        return displayTexts
+        return utils.getAvailableFontsPreviews()
     }
 
     override fun valueSelected(executor: JavaScriptExecutorBase, position: Int) {
-        executor.setFontName(fontInfos[position].fontFamily)
+        utils.setFontName(executor, position)
     }
 
 }
