@@ -37,7 +37,7 @@
     <net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
         android:id="@+id/editorToolbar"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="@dimen/editor_toolbar_default_height"
         android:background="@color/colorPrimary"
     />
 

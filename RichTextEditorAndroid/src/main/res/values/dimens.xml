@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="editor_toolbar_default_height">36dp</dimen>
+
     <dimen name="dialog_edit_url_margin_left_and_right">24dp</dimen>
     <dimen name="dialog_edit_url_padding">8dp</dimen>
     <dimen name="dialog_edit_url_url_label_margin_top">12dp</dimen>

@@ -38,5 +38,7 @@ enum class CommandName {
     INSERTHTML, // determines if the three command below are executable
     INSERTLINK, // pseudo commands, there are no corresponding values for execCommand()
     INSERTIMAGE,
-    INSERTCHECKBOX
+    INSERTCHECKBOX,
+    // pseudo commands for toggling grouped command views
+    TOOGLETEXTSTYLESGROUPEDCOMMANDSVIEW
 }
