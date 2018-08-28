@@ -6,13 +6,14 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.SelectValueView
+import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 
 
 abstract class SelectValueCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
-    : ToolbarCommand(command, icon, style, commandExecutedListener), ICommandRequiringEditor {
+    : ToolbarCommand(command, icon, style, commandExecutedListener), ICommandRequiringEditor, IHandlesBackButtonPress {
 
     override var editor: RichTextEditor? = null
 
@@ -69,13 +70,13 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
             return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).trim() // Html.fromHtml() sometimes adds new lines add the end
         }
         else {
-            @Suppress("OverridingDeprecatedMember")
+            @Suppress("DEPRECATION")
             return Html.fromHtml(html).trim() // Html.fromHtml() sometimes adds new lines add the end
         }
     }
 
 
-    fun handlesBackButtonPress(): Boolean {
+    override fun handlesBackButtonPress(): Boolean {
         selectValueView?.let {
             return it.handlesBackButtonPress()
         }

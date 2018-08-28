@@ -10,14 +10,14 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
-import net.dankito.richtexteditor.android.command.SelectValueCommand
+import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.richtexteditor.android.util.StyleApplier
 import net.dankito.utils.extensions.executeActionAfterMeasuringSize
 
 
-open class EditorToolbar : HorizontalScrollView {
+open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
 
     constructor(context: Context) : super(context) { initToolbar(context) }
@@ -39,6 +39,8 @@ open class EditorToolbar : HorizontalScrollView {
     private lateinit var linearLayout: LinearLayout
 
     private val commands = HashMap<ToolbarCommand, View>()
+
+    private val commandsHandlingBackButton = ArrayList<IHandlesBackButtonPress>()
 
     private val searchViews = ArrayList<SearchView>()
 
@@ -69,6 +71,10 @@ open class EditorToolbar : HorizontalScrollView {
 
         if(command is ICommandRequiringEditor) {
             command.editor = editor
+        }
+
+        if(command is IHandlesBackButtonPress) {
+            commandsHandlingBackButton.add(command)
         }
 
         applyCommandStyle(command, commandView)
@@ -141,13 +147,10 @@ open class EditorToolbar : HorizontalScrollView {
         }
     }
 
-
-    fun handlesBackButtonPress(): Boolean {
-        commands.keys.forEach { command ->
-            if(command is SelectValueCommand) {
-                if(command.handlesBackButtonPress()) {
-                    return true
-                }
+    override fun handlesBackButtonPress(): Boolean {
+        commandsHandlingBackButton.forEach { command ->
+            if(command.handlesBackButtonPress()) {
+                return true
             }
         }
 

@@ -4,10 +4,11 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.hideView
 import net.dankito.richtexteditor.android.extensions.isVisible
 import net.dankito.richtexteditor.android.extensions.showView
+import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
 import net.dankito.richtexteditor.command.ToolbarCommand
 
 
-interface IFloatingView {
+interface IFloatingView : IHandlesBackButtonPress {
 
     var editor: RichTextEditor?
 
@@ -31,7 +32,7 @@ interface IFloatingView {
         }
     }
 
-    fun handlesBackButtonPress(): Boolean {
+    override fun handlesBackButtonPress(): Boolean {
         if(isVisible()) {
             hideView()
 
