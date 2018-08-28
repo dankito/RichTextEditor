@@ -4,7 +4,6 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsView
-import net.dankito.richtexteditor.android.toolbar.GroupedTextStylesCommandView
 import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
@@ -19,6 +18,9 @@ abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Icon
     private var groupedCommandsView: GroupedCommandsView? = null
 
 
+    protected abstract fun createGroupedCommandsView(editor: RichTextEditor): GroupedCommandsView
+
+
     override fun executeCommand(executor: JavaScriptExecutorBase) {
         getGroupedCommandsView()?.toggleShowView()
     }
@@ -27,7 +29,7 @@ abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Icon
         groupedCommandsView?.let { return it }
 
         editor?.let { editor ->
-            val view = GroupedTextStylesCommandView(editor.context)
+            val view = createGroupedCommandsView(editor)
             view.initialize(editor, this)
 
             this.groupedCommandsView = view
