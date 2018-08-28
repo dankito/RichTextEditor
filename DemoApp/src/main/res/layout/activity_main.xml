@@ -34,11 +34,20 @@
 
     </RelativeLayout>
 
+    <net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
+        android:id="@+id/bottomGroupedCommandsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/editor_toolbar_default_height"
+        android:background="@color/colorPrimary"
+        android:visibility="visible"
+    />
+
     <net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
         android:id="@+id/editorToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editor_toolbar_default_height"
         android:background="@color/colorPrimary"
+        android:visibility="gone"
     />
 
 </LinearLayout>

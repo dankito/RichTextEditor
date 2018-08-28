@@ -9,6 +9,7 @@ import net.dankito.richtexteditor.android.FullscreenWebView
 import net.dankito.utils.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
+import net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import java.io.File
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var editorToolbar: AllCommandsEditorToolbar
 
+    private lateinit var bottomGroupedCommandsToolbar: GroupedCommandsEditorToolbar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,9 @@ class MainActivity : AppCompatActivity() {
 
         editorToolbar = findViewById(R.id.editorToolbar) as AllCommandsEditorToolbar
         editorToolbar.editor = editor
+
+        bottomGroupedCommandsToolbar = findViewById(R.id.bottomGroupedCommandsToolbar) as GroupedCommandsEditorToolbar
+        bottomGroupedCommandsToolbar.editor = editor
 
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
@@ -48,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         // semi transparent options bar shown when entering fullscreen in viewing mode
         fullscreenOptionsBar.showMarkSelectedTextButton(editor)
-        editor.setEditorToolbarAndOptionsBar(editorToolbar, fullscreenOptionsBar)
+        editor.setEditorToolbarAndOptionsBar(bottomGroupedCommandsToolbar, fullscreenOptionsBar)
         editor.changeFullscreenModeListener = { mode -> fullScreenModeChanged(mode) }
 
         editor.enterEditingMode()
@@ -59,7 +65,8 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        if(editorToolbar.handlesBackButtonPress() == false) {
+        if(editorToolbar.handlesBackButtonPress() == false &&
+                bottomGroupedCommandsToolbar.handlesBackButtonPress() == false) {
             super.onBackPressed()
         }
     }
