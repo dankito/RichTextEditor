@@ -30,14 +30,21 @@ open class FontNameUtils {
     }
 
 
-    open fun findFontNameForFontFamily(fontFamily: String): String? {
-        fontInfos.forEach { fontInfo ->
-            if(fontFamily == fontInfo.fontFamily) {
-                return fontInfo.fontName
-            }
+    open fun getPreviewTextForCommandValue(commandValue: String): CharSequence {
+        var fontFamily = commandValue
+        var fontName = findFontNameForFontFamily(fontFamily)
+
+        if(fontFamily.contains(",")) { // sometimes, e. g. when setting text format to 'Heading 1', Editor returns e. g. 'Roboto, sans-serif' as commandValue
+            val parts = fontFamily.split(",")
+            fontName = parts[0].trim()
+            fontFamily = parts[1].trim()
         }
 
-        return null
+        return getFontPreviewHtml(fontFamily, fontName, false)
+    }
+
+    open fun findFontNameForFontFamily(fontFamily: String): String? {
+        return fontInfos.firstOrNull { fontFamily == it.fontFamily }?.fontName
     }
 
 
