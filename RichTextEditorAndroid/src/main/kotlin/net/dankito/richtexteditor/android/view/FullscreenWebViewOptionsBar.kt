@@ -8,10 +8,9 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.view_fullscreen_options_bar.view.*
 import net.dankito.richtexteditor.android.AndroidCommandView
-import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.command.SwitchTextBackgroundColorOnOffCommand
+import net.dankito.richtexteditor.android.command.TextMarkerCommand
 import net.dankito.richtexteditor.android.util.StyleApplier
 
 
@@ -54,7 +53,7 @@ class FullscreenWebViewOptionsBar @JvmOverloads constructor(
     }
 
     private fun setupMarkSelectedTextCommand(editor: RichTextEditor) {
-        val command = SwitchTextBackgroundColorOnOffCommand(icon = AndroidIcon(R.drawable.ic_marker_white_48dp), setOnColorToCurrentColor = false)
+        val command = TextMarkerCommand()
         command.executor = editor.javaScriptExecutor
         command.commandView = AndroidCommandView(btnMarkSelectedText)
 
