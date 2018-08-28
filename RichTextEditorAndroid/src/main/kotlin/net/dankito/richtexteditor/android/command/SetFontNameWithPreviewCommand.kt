@@ -17,9 +17,7 @@ open class SetFontNameWithPreviewCommand(icon: Icon = AndroidIcon(R.drawable.ic_
     }
 
     override fun getPreviewTextForCommandValue(commandValue: String): CharSequence {
-        val fontFamily = commandValue
-
-        return utils.getFontPreviewHtml(fontFamily, utils.findFontNameForFontFamily(fontFamily), false)
+        return utils.getPreviewTextForCommandValue(commandValue)
     }
 
     override fun initValuesDisplayTexts(): List<CharSequence> {
