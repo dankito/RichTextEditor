@@ -20,14 +20,14 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { init() }
 
 
-    private lateinit var view: View
+    protected lateinit var view: View
 
-    private lateinit var textAlignmentToolbar: EditorToolbar
+    protected lateinit var textAlignmentToolbar: EditorToolbar
 
-    private lateinit var basicTextStylesToolbar: EditorToolbar
+    protected lateinit var basicTextStylesToolbar: EditorToolbar
 
 
-    private fun init() {
+    protected open fun init() {
         this.view = View.inflate(context, R.layout.grouped_text_styles_command_view, null)
         val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
@@ -42,7 +42,13 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         addView(view, params)
 
         textAlignmentToolbar = view.textAlignmentToolbar
+        basicTextStylesToolbar = view.basicTextStylesToolbar
 
+        setupTextAlignmentToolbar()
+        setupBasicTextStylesToolbar()
+    }
+
+    protected open fun setupTextAlignmentToolbar() {
         textAlignmentToolbar.addCommand(AlignLeftCommand())
         textAlignmentToolbar.addCommand(AlignCenterCommand())
         textAlignmentToolbar.addCommand(AlignRightCommand())
@@ -51,9 +57,9 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         textAlignmentToolbar.addSpace()
         textAlignmentToolbar.addCommand(DecreaseIndentCommand())
         textAlignmentToolbar.addCommand(IncreaseIndentCommand())
+    }
 
-        basicTextStylesToolbar = view.basicTextStylesToolbar
-
+    protected open fun setupBasicTextStylesToolbar() {
         basicTextStylesToolbar.addCommand(BoldCommand())
         basicTextStylesToolbar.addCommand(ItalicCommand())
         basicTextStylesToolbar.addCommand(UnderlineCommand())
@@ -65,6 +71,7 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         basicTextStylesToolbar.addSpace()
         basicTextStylesToolbar.addCommand(RedoCommand())
     }
+
 
     override fun initialize(editor: RichTextEditor, command: ToolbarCommand) {
         textAlignmentToolbar.editor = editor
