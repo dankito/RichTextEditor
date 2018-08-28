@@ -1,11 +1,8 @@
 package net.dankito.richtexteditor.android.toolbar
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
-import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.grouped_text_styles_command_view.view.*
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
@@ -15,34 +12,22 @@ import net.dankito.richtexteditor.command.ToolbarCommand
 
 open class GroupedTextStylesCommandView : GroupedCommandsView {
 
-    constructor(context: Context) : super(context)  { init() }
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { init() }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { init() }
+    constructor(context: Context) : super(context)  { initView() }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initView() }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initView() }
 
-
-    protected lateinit var view: View
 
     protected lateinit var textAlignmentToolbar: EditorToolbar
 
     protected lateinit var basicTextStylesToolbar: EditorToolbar
 
 
-    protected open fun init() {
-        this.view = View.inflate(context, R.layout.grouped_text_styles_command_view, null)
-        val params = RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    protected open fun initView() {
+        val contentView = View.inflate(context, R.layout.grouped_text_styles_command_view, null)
+        addContentView(contentView)
 
-        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
-        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            params.addRule(RelativeLayout.ALIGN_PARENT_START)
-            params.addRule(RelativeLayout.ALIGN_PARENT_END)
-        }
-
-        addView(view, params)
-
-        textAlignmentToolbar = view.textAlignmentToolbar
-        basicTextStylesToolbar = view.basicTextStylesToolbar
+        textAlignmentToolbar = contentView.textAlignmentToolbar
+        basicTextStylesToolbar = contentView.basicTextStylesToolbar
 
         setupTextAlignmentToolbar()
         setupBasicTextStylesToolbar()

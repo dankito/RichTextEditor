@@ -3,6 +3,7 @@ package net.dankito.richtexteditor.android.toolbar
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
@@ -36,7 +37,10 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
     override var hasEditorHeightChanged = true
 
 
-    private fun init() {
+    protected lateinit var contentView: View
+
+
+    protected open fun init() {
         this.visibility = View.GONE
         this.setBackgroundColor(Color.WHITE)
 
@@ -50,6 +54,23 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT
         }
     }
+
+    protected open fun addContentView(contentView : View) {
+        this.contentView = contentView
+
+        val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        params.addRule(ALIGN_PARENT_LEFT)
+        params.addRule(ALIGN_PARENT_RIGHT)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            params.addRule(ALIGN_PARENT_START)
+            params.addRule(ALIGN_PARENT_END)
+        }
+
+        addView(contentView, params)
+    }
+
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val adjustedHeightAndUpdatePosition = calculateOnMeasure(widthMeasureSpec, heightMeasureSpec)
