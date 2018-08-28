@@ -17,7 +17,7 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initView() }
 
 
-    protected lateinit var textAlignmentToolbar: EditorToolbar
+    protected lateinit var textColorAndAlignmentToolbar: EditorToolbar
 
     protected lateinit var basicTextStylesToolbar: EditorToolbar
 
@@ -26,7 +26,7 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         val contentView = View.inflate(context, R.layout.grouped_text_styles_command_view, null)
         addContentView(contentView)
 
-        textAlignmentToolbar = contentView.textAlignmentToolbar
+        textColorAndAlignmentToolbar = contentView.textColorAndAlignmentToolbar
         basicTextStylesToolbar = contentView.basicTextStylesToolbar
 
         setupTextAlignmentToolbar()
@@ -34,14 +34,18 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
     }
 
     protected open fun setupTextAlignmentToolbar() {
-        textAlignmentToolbar.addCommand(AlignLeftCommand())
-        textAlignmentToolbar.addCommand(AlignCenterCommand())
-        textAlignmentToolbar.addCommand(AlignRightCommand())
-        textAlignmentToolbar.addCommand(AlignJustifyCommand())
+        textColorAndAlignmentToolbar.addCommand(SetTextColorCommand())
+        textColorAndAlignmentToolbar.addCommand(SetTextBackgroundColorCommand())
+        textColorAndAlignmentToolbar.addSpace()
 
-        textAlignmentToolbar.addSpace()
-        textAlignmentToolbar.addCommand(DecreaseIndentCommand())
-        textAlignmentToolbar.addCommand(IncreaseIndentCommand())
+        textColorAndAlignmentToolbar.addCommand(AlignLeftCommand())
+        textColorAndAlignmentToolbar.addCommand(AlignCenterCommand())
+        textColorAndAlignmentToolbar.addCommand(AlignRightCommand())
+        textColorAndAlignmentToolbar.addCommand(AlignJustifyCommand())
+
+        textColorAndAlignmentToolbar.addSpace()
+        textColorAndAlignmentToolbar.addCommand(DecreaseIndentCommand())
+        textColorAndAlignmentToolbar.addCommand(IncreaseIndentCommand())
     }
 
     protected open fun setupBasicTextStylesToolbar() {
@@ -59,7 +63,7 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
 
 
     override fun initialize(editor: RichTextEditor, command: ToolbarCommand) {
-        textAlignmentToolbar.editor = editor
+        textColorAndAlignmentToolbar.editor = editor
         basicTextStylesToolbar.editor = editor
 
         super.initialize(editor, command)
