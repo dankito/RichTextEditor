@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="editor_toolbar_default_height">36dp</dimen>
+    <dimen name="editor_toolbar_default_space_width">18dp</dimen>
 
     <dimen name="dialog_edit_url_margin_left_and_right">24dp</dimen>
     <dimen name="dialog_edit_url_padding">8dp</dimen>

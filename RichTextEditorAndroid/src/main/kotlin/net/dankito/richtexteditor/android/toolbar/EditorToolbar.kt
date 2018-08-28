@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidCommandView
+import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
 import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
@@ -146,6 +147,19 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
             }
         }
     }
+
+    fun addSpace() {
+        val spaceDefaultWidth = resources.getDimensionPixelSize(R.dimen.editor_toolbar_default_space_width)
+
+        addSpace(spaceDefaultWidth)
+    }
+
+    fun addSpace(width: Int) {
+        val spaceView = View(context)
+
+        linearLayout.addView(spaceView, width, 1)
+    }
+
 
     override fun handlesBackButtonPress(): Boolean {
         commandsHandlingBackButton.forEach { command ->

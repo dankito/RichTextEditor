@@ -45,6 +45,7 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
 
         textAlignmentToolbar.addCommand(DecreaseIndentCommand())
         textAlignmentToolbar.addCommand(IncreaseIndentCommand())
+        textAlignmentToolbar.addSpace()
 
         textAlignmentToolbar.addCommand(AlignLeftCommand())
         textAlignmentToolbar.addCommand(AlignCenterCommand())
@@ -52,6 +53,7 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         textAlignmentToolbar.addCommand(AlignJustifyCommand())
 
         basicTextStylesToolbar = view.basicTextStylesToolbar
+
         basicTextStylesToolbar.addCommand(BoldCommand())
         basicTextStylesToolbar.addCommand(ItalicCommand())
         basicTextStylesToolbar.addCommand(UnderlineCommand())
