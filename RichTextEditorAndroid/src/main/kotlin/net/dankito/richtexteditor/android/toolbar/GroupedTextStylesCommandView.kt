@@ -61,6 +61,9 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         basicTextStylesToolbar.addCommand(SubscriptCommand())
         basicTextStylesToolbar.addCommand(SuperscriptCommand())
         basicTextStylesToolbar.addCommand(RemoveFormatCommand())
+
+        basicTextStylesToolbar.addSpace()
+        basicTextStylesToolbar.addCommand(RedoCommand())
     }
 
     override fun initialize(editor: RichTextEditor, command: ToolbarCommand) {
