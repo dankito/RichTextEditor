@@ -1,7 +1,5 @@
 package net.dankito.richtexteditor.android.command
 
-import android.os.Build
-import android.text.Html
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
@@ -31,24 +29,6 @@ abstract class SelectValueCommandBase(command: CommandName, icon: Icon, style: T
         this.displayTexts = displayTexts
 
         return displayTexts
-    }
-
-    protected open fun getHtmlSpanned(stringResourceId: Int): CharSequence {
-        editor?.context?.getText(stringResourceId)?.toString()?.let { html ->
-            return getHtmlSpanned(html)
-        }
-
-        return ""
-    }
-
-    protected open fun getHtmlSpanned(html: String): CharSequence {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).trim() // Html.fromHtml() sometimes adds new lines add the end
-        }
-        else {
-            @Suppress("DEPRECATION")
-            return Html.fromHtml(html).trim() // Html.fromHtml() sometimes adds new lines add the end
-        }
     }
 
 }
