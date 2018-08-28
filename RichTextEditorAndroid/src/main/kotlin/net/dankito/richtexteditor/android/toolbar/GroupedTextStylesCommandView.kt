@@ -53,6 +53,8 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         basicTextStylesToolbar.addCommand(ItalicCommand())
         basicTextStylesToolbar.addCommand(UnderlineCommand())
         basicTextStylesToolbar.addCommand(StrikeThroughCommand())
+
+        basicTextStylesToolbar.addSpace()
         basicTextStylesToolbar.addCommand(SubscriptCommand())
         basicTextStylesToolbar.addCommand(SuperscriptCommand())
         basicTextStylesToolbar.addCommand(RemoveFormatCommand())
