@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         editor.setEditorToolbarAndOptionsBar(editorToolbar, fullscreenOptionsBar)
         editor.changeFullscreenModeListener = { mode -> fullScreenModeChanged(mode) }
 
+        editor.enterEditingMode()
         // show editor in viewing, not editing, mode. Tap on editor switches back to editing mode then.
         // But to be able to enter fullscreen mode you need to set HTML that fills at least on display page.
 //        editor.enterViewingMode()
