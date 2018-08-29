@@ -1,92 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="@dimen/dialog_edit_image_margin_left_and_right"
-              android:layout_marginRight="@dimen/dialog_edit_image_margin_left_and_right"
-              android:padding="@dimen/dialog_edit_image_padding"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dialog_edit_image_margin_left_and_right"
+    android:layout_marginRight="@dimen/dialog_edit_image_margin_left_and_right"
+    android:padding="@dimen/dialog_edit_image_padding"
 >
 
-    <RelativeLayout
-        android:id="@+id/lytImageUrlLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/txtImageUrlLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_toLeftOf="@+id/btnSelectLocalFile"
-            android:layout_toStartOf="@+id/btnSelectLocalFile"
-            android:layout_marginTop="@dimen/dialog_edit_image_image_url_label_margin_top"
-            android:layout_centerVertical="true"
-            style="@android:style/TextAppearance.Medium"
-            android:text="@string/dialog_edit_image_image_url_label"
-        />
-
-        <Button
-            android:id="@+id/btnSelectLocalFile"
-            android:layout_width="@dimen/dialog_edit_image_btn_select_local_image_width"
-            android:layout_height="@dimen/dialog_edit_image_btn_select_local_image_height"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            style="@android:style/TextAppearance.Medium"
-            android:text="@string/dialog_edit_image_select_local_file"
-        />
-    </RelativeLayout>
-
-    <EditText
-        android:id="@+id/edtxtImageUrl"
+    <ScrollView
+        android:id="@+id/scrvwContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/lytImageUrlLabel"
-        android:inputType="textUri|textMultiLine"
-        android:maxLines="3"
-    />
+        android:isScrollContainer="true"
+    >
 
-    <TextView
-        android:id="@+id/txtAlternateTextLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edtxtImageUrl"
-        android:layout_marginTop="@dimen/dialog_edit_image_alternate_text_label_margin_top"
-        style="@android:style/TextAppearance.Medium"
-        android:text="@string/dialog_edit_image_alternate_text_label"
-    />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/edtxtAlternateText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtAlternateTextLabel"
-    />
+            <RelativeLayout
+                android:id="@+id/lytImageUrlLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/lytDownloadImage"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dialog_edit_image_download_image_to_device_margin_top"
-        android:layout_below="@+id/edtxtAlternateText">
+                <TextView
+                    android:id="@+id/txtImageUrlLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_toLeftOf="@+id/btnSelectLocalFile"
+                    android:layout_toStartOf="@+id/btnSelectLocalFile"
+                    android:layout_marginTop="@dimen/dialog_edit_image_image_url_label_margin_top"
+                    android:layout_centerVertical="true"
+                    style="@android:style/TextAppearance.Medium"
+                    android:text="@string/dialog_edit_image_image_url_label"
+                />
 
-        <CheckBox
-            android:id="@+id/chkbxDownloadImage"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:enabled="true"
-            style="@android:style/TextAppearance.Medium"
-            android:text="@string/dialog_edit_image_download_image_to_device"
-        />
+                <Button
+                    android:id="@+id/btnSelectLocalFile"
+                    android:layout_width="@dimen/dialog_edit_image_btn_select_local_image_width"
+                    android:layout_height="@dimen/dialog_edit_image_btn_select_local_image_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    style="@android:style/TextAppearance.Medium"
+                    android:text="@string/dialog_edit_image_select_local_file"
+                />
+            </RelativeLayout>
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/edtxtImageUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lytImageUrlLabel"
+                android:inputType="textUri|textMultiLine"
+                android:maxLines="3"
+            />
+
+            <TextView
+                android:id="@+id/txtAlternateTextLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtxtImageUrl"
+                android:layout_marginTop="@dimen/dialog_edit_image_alternate_text_label_margin_top"
+                style="@android:style/TextAppearance.Medium"
+                android:text="@string/dialog_edit_image_alternate_text_label"
+            />
+
+            <EditText
+                android:id="@+id/edtxtAlternateText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtAlternateTextLabel"
+            />
+
+            <LinearLayout
+                android:id="@+id/lytDownloadImage"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dialog_edit_image_download_image_to_device_margin_top"
+                android:layout_below="@+id/edtxtAlternateText">
+
+                <CheckBox
+                    android:id="@+id/chkbxDownloadImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:enabled="true"
+                    style="@android:style/TextAppearance.Medium"
+                    android:text="@string/dialog_edit_image_download_image_to_device"
+                />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_edit_image_buttons_height"
-        android:layout_below="@+id/lytDownloadImage"
+        android:layout_below="@+id/scrvwContent"
         android:layout_marginTop="@dimen/dialog_edit_image_buttons_margin_top"
     >
 
@@ -114,4 +132,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>
