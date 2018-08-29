@@ -48,13 +48,15 @@ class EditImageDialog : DialogFragment() {
 
             view.btnSelectLocalFile.setOnClickListener { selectLocalImage() }
 
-            view.edtxtImageUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextUrlAction(actionId, keyEvent) }
+            view.edtxtImageUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextAction(actionId, keyEvent) }
             view.edtxtImageUrl.addTextChangedListener(GenericTextWatcher( { _, _, _, _ -> setDownloadOptionsState() } ) )
             view.edtxtImageUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {
                     dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
                 }
             }
+
+            view.edtxtAlternateText.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextAction(actionId, keyEvent) }
         }
 
         dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE) // so that keyboard doesn't cover OK and Cancel buttons
@@ -82,7 +84,7 @@ class EditImageDialog : DialogFragment() {
     }
 
 
-    private fun handleEditTextUrlAction(actionId: Int, keyEvent: KeyEvent?): Boolean {
+    private fun handleEditTextAction(actionId: Int, keyEvent: KeyEvent?): Boolean {
         if(actionId == EditorInfo.IME_ACTION_DONE || (actionId == EditorInfo.IME_NULL && keyEvent?.action == KeyEvent.ACTION_DOWN)) {
             enteringImageUrlDone()
 
