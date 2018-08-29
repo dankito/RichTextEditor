@@ -15,6 +15,8 @@ abstract class JavaScriptExecutorBase {
     companion object {
         const val EditorStateChangedCallbackScheme = "editor-state-changed-callback://"
 
+        const val DefaultEncoding = "UTF-8"
+
         private val log = LoggerFactory.getLogger(JavaScriptExecutorBase::class.java)
     }
 
@@ -57,7 +59,7 @@ abstract class JavaScriptExecutorBase {
     @JvmOverloads
     fun setHtml(html: String, baseUrl: String? = null) {
         try {
-            executeEditorJavaScriptFunction("setHtml('" + URLEncoder.encode(html, "UTF-8") + "', '$baseUrl');")
+            executeEditorJavaScriptFunction("setHtml('" + encodeHtml(html) + "', '$baseUrl');")
 
             this.html = html
         } catch (e: UnsupportedEncodingException) {
@@ -71,7 +73,7 @@ abstract class JavaScriptExecutorBase {
      */
     fun retrieveCurrentHtmlAsync(callback: (String) -> Unit) {
         executeEditorJavaScriptFunction("getEncodedHtml()") { html ->
-            var decodedHtml = URLDecoder.decode(html, "UTF-8")
+            var decodedHtml = decodeHtml(html)
             if(decodedHtml.startsWith('"') && decodedHtml.endsWith('"')) {
                 decodedHtml = decodedHtml.substring(1, decodedHtml.length - 1)
             }
@@ -204,14 +206,15 @@ abstract class JavaScriptExecutorBase {
     }
 
     fun insertHtml(html: String) {
-        executeEditorJavaScriptFunction("insertHtml('$html')")
+        val encodedHtml = encodeHtml(html)
+        executeEditorJavaScriptFunction("insertHtml('$encodedHtml')")
     }
 
 
     protected fun shouldOverrideUrlLoading(url: String): Boolean {
         val decodedUrl: String
         try {
-            decodedUrl = URLDecoder.decode(url, "UTF-8")
+            decodedUrl = decodeHtml(url)
         } catch (e: UnsupportedEncodingException) {
             // No handling
             return false
@@ -280,6 +283,15 @@ abstract class JavaScriptExecutorBase {
         commandStatesChangedListeners.add(listener)
 
         listener.invoke(commandStates)
+    }
+
+
+    protected fun encodeHtml(html: String, encoding: String = DefaultEncoding): String {
+        return URLEncoder.encode(html, encoding)
+    }
+
+    protected fun decodeHtml(html: String, encoding: String = DefaultEncoding): String {
+        return URLDecoder.decode(html, encoding)
     }
 
 

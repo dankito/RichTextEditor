@@ -202,7 +202,7 @@ var editor = {
         }
 
         if(html.length != 0) {
-            this._textField.innerHTML = decodeURIComponent(html.replace(/\+/g, '%20'));
+            this._textField.innerHTML = this._decodeHtml(html);
 
             this._makeImagesResizeable();
         }
@@ -212,6 +212,10 @@ var editor = {
 
         this.didHtmlChange = false;
         this._htmlSetByApplication = this._textField.innerHTML;
+    },
+
+    _decodeHtml: function(html) {
+        return decodeURIComponent(html.replace(/\+/g, '%20'));
     },
 
     _setBaseUrl: function(baseUrl) {
@@ -363,7 +367,7 @@ var editor = {
         var sel = document.getSelection();
 
         if (sel.toString().length == 0) {
-            this.insertHtml("<a href='"+url+"'>"+title+"</a>");
+            this._insertHtml("<a href='"+url+"'>"+title+"</a>");
         }
         else if (sel.rangeCount) {
            var el = document.createElement("a");
@@ -381,15 +385,20 @@ var editor = {
 
     insertImage: function(url, alt) {
         var html = '<img class="' + resizableImageClass + '" src="' + url + '" alt="' + alt + '"/>';
-        this.insertHtml(html);
+        this._insertHtml(html);
     },
 
     insertCheckbox: function(text) {
         var html = '<input type="checkbox" name="'+ text +'" value="'+ text +'"/> &nbsp;';
-        this.insertHtml(html);
+        this._insertHtml(html);
     },
 
-    insertHtml: function(html) {
+    insertHtml: function(encodedHtml) {
+        var html = this._decodeHtml(encodedHtml);
+        this._insertHtml(html);
+    },
+
+    _insertHtml: function(html) {
         this._backupRange();
         this._restoreRange();
 

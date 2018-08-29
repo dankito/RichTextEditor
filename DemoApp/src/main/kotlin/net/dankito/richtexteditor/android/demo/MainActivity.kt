@@ -234,8 +234,8 @@ class MainActivity : AppCompatActivity() {
         val readability = Readability4JExtended(url, html)
         val article = readability.parse()
 
-        article.contentWithUtf8Encoding?.let { readableHtml ->
-            editor.setHtml(readableHtml)
+        article.content?.let { readableHtml ->
+            editor.javaScriptExecutor.insertHtml(readableHtml)
         }
     }
 
