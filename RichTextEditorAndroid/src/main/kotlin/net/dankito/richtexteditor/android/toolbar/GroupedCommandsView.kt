@@ -54,20 +54,18 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
     }
 
     protected open fun setInitialBackgroundColor() {
-        this.setBackgroundColor(Color.WHITE)
+        var backgroundColor = Color.WHITE
 
         val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
         if (primaryColorIdentifier > 0) { // returns 0 in case resource is not found
-            val primaryColor = ContextCompat.getColor(context, primaryColorIdentifier)
-
-            val backgroundColor =
-                    if (addTransparencyToBackground)
-                        Color.argb(200, Color.red(primaryColor), Color.green(primaryColor), Color.blue(primaryColor))
-                    else
-                        primaryColor
-
-            setBackgroundColor(backgroundColor)
+            backgroundColor = ContextCompat.getColor(context, primaryColorIdentifier)
         }
+
+        if(addTransparencyToBackground) {
+            backgroundColor = Color.argb(200, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor))
+        }
+
+        setBackgroundColor(backgroundColor)
     }
 
     protected open fun addContentView(contentView : View) {
