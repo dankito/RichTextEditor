@@ -152,8 +152,8 @@ fun IFloatingView.hideView() {
         editor?.let { editor ->
             toolbar?.let { toolbar ->
                 val isToolbarBelowEditor = isToolbarBelowEditor(editor, toolbar)
-                val startPosition = if(isToolbarBelowEditor) view.top else view.bottom
-                val endPosition = if(isToolbarBelowEditor) view.bottom else view.top
+                val startPosition = if(isToolbarBelowEditor) view.top else view.top
+                val endPosition = if(isToolbarBelowEditor) view.bottom else -1 * view.measuredHeight
 
                 playAnimation(view, false, startPosition.toFloat(), endPosition.toFloat())
             }
@@ -176,10 +176,19 @@ private fun IFloatingView.animateShowViewAfterMeasuringHeight(view: View) {
     editor?.let { editor ->
         toolbar?.let { toolbar ->
             val isToolbarBelowEditor = isToolbarBelowEditor(editor, toolbar)
-            val startPosition = if(isToolbarBelowEditor) toolbar.top.toFloat() else toolbar.bottom.toFloat()
-            val endPosition = if(isToolbarBelowEditor) startPosition - view.measuredHeight else startPosition + view.measuredHeight
 
-            playAnimation(view, true, startPosition, endPosition)
+            if(isToolbarBelowEditor) {
+                val startPosition = toolbar.top.toFloat()
+                val endPosition = startPosition - view.measuredHeight
+
+                playAnimation(view, true, startPosition, endPosition)
+            }
+            else {
+                val endPosition = 0f
+                val startPosition = endPosition - view.measuredHeight
+
+                playAnimation(view, true, startPosition, endPosition)
+            }
         }
     }
 }
