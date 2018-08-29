@@ -194,12 +194,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setToolbar(toolbar: EditorToolbar) {
+        currentToolbar?.handlesBackButtonPress() // to hide any floating view (SelectValueView or GroupedCommandsView)
         currentToolbar?.visibility = View.GONE
+
         toolbar.visibility = View.VISIBLE
+        currentToolbar = toolbar
 
         editor.setEditorToolbarAndOptionsBar(toolbar, fullscreenOptionsBar)
-
-        currentToolbar = toolbar
     }
 
 
