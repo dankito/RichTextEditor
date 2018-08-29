@@ -39,7 +39,7 @@ private fun IFloatingView.commandInvoked(command: ToolbarCommand) {
 
 fun IFloatingView.isVisible(): Boolean {
     (this as? View)?.let { view ->
-        return this.visibility == View.VISIBLE
+        return view.visibility == View.VISIBLE
     }
 
     return false
