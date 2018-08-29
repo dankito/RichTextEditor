@@ -3,12 +3,15 @@ package net.dankito.richtexteditor.android.demo
 import android.os.Bundle
 import android.os.Environment
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.dankito.richtexteditor.android.FullscreenWebView
 import net.dankito.utils.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
+import net.dankito.richtexteditor.android.toolbar.EditorToolbar
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
@@ -17,11 +20,33 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
+    enum class ToolbarPlacement {
+        Top,
+        Bottom
+    }
+
+    enum class ToolbarAppearance {
+        Inline,
+        Grouped
+    }
+
+
     private lateinit var editor: RichTextEditor
 
-    private lateinit var editorToolbar: AllCommandsEditorToolbar
+    private lateinit var topInlineToolbar: AllCommandsEditorToolbar
+
+    private lateinit var topGroupedCommandsToolbar: GroupedCommandsEditorToolbar
+
+    private lateinit var bottomInlineToolbar: AllCommandsEditorToolbar
 
     private lateinit var bottomGroupedCommandsToolbar: GroupedCommandsEditorToolbar
+
+    private var currentToolbar: EditorToolbar? = null
+
+
+    private var toolbarPlacement = ToolbarPlacement.Bottom
+
+    private var toolbarAppearance = ToolbarAppearance.Grouped
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +55,14 @@ class MainActivity : AppCompatActivity() {
 
         editor = findViewById(R.id.editor) as RichTextEditor
 
-        editorToolbar = findViewById(R.id.editorToolbar) as AllCommandsEditorToolbar
-        editorToolbar.editor = editor
+        topInlineToolbar = findViewById(R.id.topInlineToolbar) as AllCommandsEditorToolbar
+        topInlineToolbar.editor = editor
+
+        topGroupedCommandsToolbar = findViewById(R.id.topGroupedCommandsToolbar) as GroupedCommandsEditorToolbar
+        topGroupedCommandsToolbar.editor = editor
+
+        bottomInlineToolbar = findViewById(R.id.bottomInlineToolbar) as AllCommandsEditorToolbar
+        bottomInlineToolbar.editor = editor
 
         bottomGroupedCommandsToolbar = findViewById(R.id.bottomGroupedCommandsToolbar) as GroupedCommandsEditorToolbar
         bottomGroupedCommandsToolbar.editor = editor
@@ -54,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         // semi transparent options bar shown when entering fullscreen in viewing mode
         fullscreenOptionsBar.showMarkSelectedTextButton(editor)
-        editor.setEditorToolbarAndOptionsBar(bottomGroupedCommandsToolbar, fullscreenOptionsBar)
+        setToolbarAppearanceAndPlacement()
         editor.changeFullscreenModeListener = { mode -> fullScreenModeChanged(mode) }
 
         editor.enterEditingMode()
@@ -64,9 +95,50 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.activity_main_menu, menu)
+
+        menu.setGroupCheckable(0, true, true)
+
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val mnPlaceToolbarAtTop = menu.findItem(R.id.mnPlaceToolbarAtTop)
+        val mnPlaceToolbarAtBottom = menu.findItem(R.id.mnPlaceToolbarAtBottom)
+
+        when(toolbarPlacement) {
+            ToolbarPlacement.Top -> mnPlaceToolbarAtTop.isChecked = true
+            ToolbarPlacement.Bottom -> mnPlaceToolbarAtBottom.isChecked = true
+        }
+
+
+        val mnToolbarAppearanceInline = menu.findItem(R.id.mnToolbarAppearanceInline)
+        val mnToolbarAppearanceGrouped = menu.findItem(R.id.mnToolbarAppearanceGrouped)
+
+        when(toolbarAppearance) {
+            ToolbarAppearance.Inline -> mnToolbarAppearanceInline.isChecked = true
+            ToolbarAppearance.Grouped -> mnToolbarAppearanceGrouped.isChecked = true
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.mnPlaceToolbarAtTop -> placeToolbarAtTop()
+            R.id.mnPlaceToolbarAtBottom -> placeToolbarAtBottom()
+            R.id.mnToolbarAppearanceInline -> showToolbarInline()
+            R.id.mnToolbarAppearanceGrouped -> showToolbarGrouped()
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+
     override fun onBackPressed() {
-        if(editorToolbar.handlesBackButtonPress() == false &&
-                bottomGroupedCommandsToolbar.handlesBackButtonPress() == false) {
+        if(topInlineToolbar.handlesBackButtonPress() == false && topGroupedCommandsToolbar.handlesBackButtonPress() == false &&
+                bottomInlineToolbar.handlesBackButtonPress() == false && bottomGroupedCommandsToolbar.handlesBackButtonPress() == false) {
             super.onBackPressed()
         }
     }
@@ -75,6 +147,59 @@ class MainActivity : AppCompatActivity() {
         editor.permissionsService?.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+
+    private fun placeToolbarAtTop() {
+        toolbarPlacement = ToolbarPlacement.Top
+
+        setToolbarAppearanceAndPlacement()
+    }
+
+    private fun placeToolbarAtBottom() {
+        toolbarPlacement = ToolbarPlacement.Bottom
+
+        setToolbarAppearanceAndPlacement()
+    }
+
+    private fun showToolbarInline() {
+        toolbarAppearance = ToolbarAppearance.Inline
+
+        setToolbarAppearanceAndPlacement()
+    }
+
+    private fun showToolbarGrouped() {
+        toolbarAppearance = ToolbarAppearance.Grouped
+
+        setToolbarAppearanceAndPlacement()
+    }
+
+    private fun setToolbarAppearanceAndPlacement() {
+        when(toolbarPlacement) {
+
+            ToolbarPlacement.Top -> {
+                when(toolbarAppearance) {
+                    ToolbarAppearance.Inline -> setToolbar(topInlineToolbar)
+                    ToolbarAppearance.Grouped -> setToolbar(topGroupedCommandsToolbar)
+                }
+            }
+
+            ToolbarPlacement.Bottom -> {
+                when(toolbarAppearance) {
+                    ToolbarAppearance.Inline -> setToolbar(bottomInlineToolbar)
+                    ToolbarAppearance.Grouped -> setToolbar(bottomGroupedCommandsToolbar)
+                }
+            }
+        }
+    }
+
+    private fun setToolbar(toolbar: EditorToolbar) {
+        currentToolbar?.visibility = View.GONE
+        toolbar.visibility = View.VISIBLE
+
+        editor.setEditorToolbarAndOptionsBar(toolbar, fullscreenOptionsBar)
+
+        currentToolbar = toolbar
     }
 
 

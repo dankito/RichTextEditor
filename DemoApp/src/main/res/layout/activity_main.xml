@@ -8,6 +8,22 @@
     android:layout_height="match_parent"
     tools:context="net.dankito.richtexteditor.android.demo.MainActivity">
 
+    <net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
+        android:id="@+id/topInlineToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/editor_toolbar_default_height"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+    />
+
+    <net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
+        android:id="@+id/topGroupedCommandsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/editor_toolbar_default_height"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+    />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -43,7 +59,7 @@
     />
 
     <net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
-        android:id="@+id/editorToolbar"
+        android:id="@+id/bottomInlineToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editor_toolbar_default_height"
         android:background="@color/colorPrimary"

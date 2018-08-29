@@ -1,3 +1,10 @@
 <resources>
     <string name="editor_app_name">RichTextEditor</string>
+
+    <string name="toolbar_placement_top">Toolbar oben</string>
+    <string name="toolbar_placement_bottom">Toolbar unten</string>
+
+    <string name="toolbar_appearance_inline">Toolbar in einer Zeile</string>
+    <string name="toolbar_appearance_grouped">Toolbar gruppiert</string>
+
 </resources>
