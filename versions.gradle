@@ -23,7 +23,8 @@ ext {
     androidTargetSdkVersion = 26
 
     javaUtilsVersion = '1.0.1'
-    Slf4jVersion = "1.7.25"
+    readability4JVersion = '1.0.1'
+    slf4jVersion = "1.7.25"
 
 
     // Android

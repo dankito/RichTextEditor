@@ -62,7 +62,8 @@ dependencies {
 
     compile project(':RichTextEditorAndroid')
 
-    compile "org.slf4j:slf4j-android:$Slf4jVersion"
+    compile "net.dankito.readability4j:readability4j:$readability4JVersion"
+    compile "org.slf4j:slf4j-android:$slf4jVersion"
 
     compile "com.android.support:appcompat-v7:$appCompatVersion"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'

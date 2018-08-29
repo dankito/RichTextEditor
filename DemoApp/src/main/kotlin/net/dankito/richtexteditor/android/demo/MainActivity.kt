@@ -7,14 +7,18 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import net.dankito.readability4j.extended.Readability4JExtended
 import net.dankito.richtexteditor.android.FullscreenWebView
 import net.dankito.utils.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.android.demo.dialogs.AddHtmlFromWebPageDialog
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
 import net.dankito.richtexteditor.android.toolbar.EditorToolbar
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
+import net.dankito.utils.web.client.OkHttpWebClient
+import net.dankito.utils.web.client.RequestParameters
 import java.io.File
 
 
@@ -130,6 +134,7 @@ class MainActivity : AppCompatActivity() {
             R.id.mnPlaceToolbarAtBottom -> placeToolbarAtBottom()
             R.id.mnToolbarAppearanceInline -> showToolbarInline()
             R.id.mnToolbarAppearanceGrouped -> showToolbarGrouped()
+            R.id.mnAddHtmlFromWebPage -> addHtmlFromWebPage()
         }
 
         return super.onOptionsItemSelected(item)
@@ -209,6 +214,29 @@ class MainActivity : AppCompatActivity() {
 
         val actionBarContainer = findViewById(R.id.action_bar_container)
         actionBarContainer.visibility = if(isInFullscreen) View.GONE else View.VISIBLE
+    }
+
+    private fun addHtmlFromWebPage() {
+        AddHtmlFromWebPageDialog().show(supportFragmentManager) { url: String, _: String ->
+            OkHttpWebClient().getAsync(RequestParameters(url)) { response ->
+                response.body?.let { html ->
+                    parseAndAddWebPageHtml(url, html)
+                }
+
+                response.error?.let { error ->
+                    // TODO: show error message
+                }
+            }
+        }
+    }
+
+    private fun parseAndAddWebPageHtml(url: String, html: String) {
+        val readability = Readability4JExtended(url, html)
+        val article = readability.parse()
+
+        article.contentWithUtf8Encoding?.let { readableHtml ->
+            editor.setHtml(readableHtml)
+        }
     }
 
 }

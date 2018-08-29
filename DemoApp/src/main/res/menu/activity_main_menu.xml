@@ -1,25 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:id="@+id/toolbarPlacementGroup"
-           android:checkableBehavior="single">
+    <group
+        android:id="@+id/toolbarPlacementGroup"
+        android:checkableBehavior="single"
+    >
 
-        <item android:id="@+id/mnPlaceToolbarAtTop"
-              android:title="@string/toolbar_placement_top"/>
+        <item
+            android:id="@+id/mnPlaceToolbarAtTop"
+            android:title="@string/toolbar_placement_top"
+        />
 
-        <item android:id="@+id/mnPlaceToolbarAtBottom"
-              android:title="@string/toolbar_placement_bottom"/>
+        <item
+            android:id="@+id/mnPlaceToolbarAtBottom"
+            android:title="@string/toolbar_placement_bottom"
+        />
 
     </group>
 
-    <group android:id="@+id/toolbarAppearanceGroup"
-           android:checkableBehavior="single">
+    <group
+        android:id="@+id/toolbarAppearanceGroup"
+        android:checkableBehavior="single"
+    >
 
-        <item android:id="@+id/mnToolbarAppearanceInline"
-              android:title="@string/toolbar_appearance_inline"/>
+        <item
+            android:id="@+id/mnToolbarAppearanceInline"
+            android:title="@string/toolbar_appearance_inline"
+        />
 
-        <item android:id="@+id/mnToolbarAppearanceGrouped"
-              android:title="@string/toolbar_appearance_grouped"/>
+        <item
+            android:id="@+id/mnToolbarAppearanceGrouped"
+            android:title="@string/toolbar_appearance_grouped"
+        />
+
+    </group>
+
+
+    <group
+        android:id="@+id/additionalUtilitiesGroup"
+        android:checkableBehavior="none"
+    >
+
+        <item
+            android:id="@+id/mnAddHtmlFromWebPage"
+            android:title="@string/add_html_from_web_page"
+            android:checkable="false"
+        />
 
     </group>
 
