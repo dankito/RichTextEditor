@@ -58,6 +58,11 @@ android {
         main.java.srcDirs += [ 'src/main/kotlin' ]
     }
 
+    // to avoid "Cannot merge new index 66989 into a non-jumbo instruction!"
+    dexOptions {
+        jumboMode true
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
     }
