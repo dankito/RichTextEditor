@@ -36,22 +36,37 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
 
     override var hasEditorHeightChanged = true
 
+    var addTransparencyToBackground: Boolean = true
+
 
     protected lateinit var contentView: View
 
 
     protected open fun init() {
         this.visibility = View.GONE
-        this.setBackgroundColor(Color.WHITE)
 
-        val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
-        if(primaryColorIdentifier > 0) { // returns 0 in case resource is not found
-            setBackgroundColor(ContextCompat.getColor(context, primaryColorIdentifier))
-        }
+        setInitialBackgroundColor()
 
         layoutParams?.let { params ->
             params.width = ViewGroup.LayoutParams.MATCH_PARENT
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
+    }
+
+    protected open fun setInitialBackgroundColor() {
+        this.setBackgroundColor(Color.WHITE)
+
+        val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
+        if (primaryColorIdentifier > 0) { // returns 0 in case resource is not found
+            val primaryColor = ContextCompat.getColor(context, primaryColorIdentifier)
+
+            val backgroundColor =
+                    if (addTransparencyToBackground)
+                        Color.argb(200, Color.red(primaryColor), Color.green(primaryColor), Color.blue(primaryColor))
+                    else
+                        primaryColor
+
+            setBackgroundColor(backgroundColor)
         }
     }
 
