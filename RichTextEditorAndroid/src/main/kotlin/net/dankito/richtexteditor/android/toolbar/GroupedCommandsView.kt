@@ -54,7 +54,7 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
     }
 
     protected open fun setInitialBackgroundColor() {
-        var backgroundColor = Color.WHITE
+        var backgroundColor = Color.DKGRAY
 
         val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
         if (primaryColorIdentifier > 0) { // returns 0 in case resource is not found
