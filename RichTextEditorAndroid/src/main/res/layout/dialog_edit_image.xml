@@ -56,7 +56,6 @@
                 android:id="@+id/edtxtImageUrl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lytImageUrlLabel"
                 android:inputType="textUri|textMultiLine"
                 android:maxLines="3"
             />
@@ -65,7 +64,6 @@
                 android:id="@+id/txtAlternateTextLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edtxtImageUrl"
                 android:layout_marginTop="@dimen/dialog_edit_image_alternate_text_label_margin_top"
                 style="@android:style/TextAppearance.Medium"
                 android:text="@string/dialog_edit_image_alternate_text_label"
@@ -75,7 +73,6 @@
                 android:id="@+id/edtxtAlternateText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtAlternateTextLabel"
             />
 
             <LinearLayout
@@ -83,8 +80,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dialog_edit_image_download_image_to_device_margin_top"
-                android:layout_below="@+id/edtxtAlternateText">
+                android:layout_marginTop="@dimen/dialog_edit_image_download_image_to_device_margin_top">
 
                 <CheckBox
                     android:id="@+id/chkbxDownloadImage"
@@ -104,7 +100,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_edit_image_buttons_height"
-        android:layout_below="@+id/scrvwContent"
         android:layout_marginTop="@dimen/dialog_edit_image_buttons_margin_top"
     >
 
