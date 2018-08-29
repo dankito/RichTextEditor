@@ -16,7 +16,7 @@ import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.richtexteditor.android.util.StyleApplier
-import net.dankito.utils.extensions.executeActionAfterMeasuringSize
+import net.dankito.utils.android.extensions.executeActionAfterMeasuringSize
 
 
 open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {

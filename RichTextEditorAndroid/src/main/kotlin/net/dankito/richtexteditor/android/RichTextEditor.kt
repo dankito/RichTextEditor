@@ -12,9 +12,9 @@ import android.view.Gravity
 import android.view.View
 import android.webkit.WebChromeClient
 import net.dankito.richtexteditor.model.DownloadImageConfig
-import net.dankito.utils.KeyboardState
-import net.dankito.utils.extensions.showKeyboard
-import net.dankito.utils.permissions.PermissionsService
+import net.dankito.utils.android.KeyboardState
+import net.dankito.utils.android.extensions.showKeyboard
+import net.dankito.utils.android.permissions.PermissionsService
 
 
 open class RichTextEditor : FullscreenWebView {

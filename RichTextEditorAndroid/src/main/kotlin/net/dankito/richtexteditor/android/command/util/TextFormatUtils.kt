@@ -3,7 +3,7 @@ package net.dankito.richtexteditor.android.command.util
 import android.content.Context
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.R
-import net.dankito.utils.extensions.HtmlExtensions
+import net.dankito.utils.android.extensions.HtmlExtensions
 
 
 open class TextFormatUtils {

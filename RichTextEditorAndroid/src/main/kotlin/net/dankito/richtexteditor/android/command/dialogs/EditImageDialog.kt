@@ -12,12 +12,12 @@ import net.dankito.filechooserdialog.FileChooserDialog
 import net.dankito.filechooserdialog.model.ExtensionsFilter
 import net.dankito.filechooserdialog.model.FileChooserDialogConfig
 import net.dankito.richtexteditor.android.R
-import net.dankito.utils.GenericTextWatcher
+import net.dankito.utils.android.GenericTextWatcher
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import net.dankito.richtexteditor.util.ImageDownloader
-import net.dankito.utils.permissions.PermissionsService
-import net.dankito.utils.io.AndroidFolderUtils
+import net.dankito.utils.android.permissions.PermissionsService
+import net.dankito.utils.android.io.AndroidFolderUtils
 import net.dankito.utils.web.UrlUtil
 import java.io.File
 

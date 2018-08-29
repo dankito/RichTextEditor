@@ -8,8 +8,8 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.EditorToolbar
 import net.dankito.richtexteditor.android.toolbar.IFloatingView
 import net.dankito.richtexteditor.command.ToolbarCommand
-import net.dankito.utils.animation.ShowHideViewAnimator
-import net.dankito.utils.extensions.executeActionAfterMeasuringSize
+import net.dankito.utils.android.animation.ShowHideViewAnimator
+import net.dankito.utils.android.extensions.executeActionAfterMeasuringSize
 
 
 private val animator = ShowHideViewAnimator()

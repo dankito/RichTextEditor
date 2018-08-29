@@ -15,8 +15,8 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.SelectValueWithPreviewCommand
 import net.dankito.richtexteditor.command.ToolbarCommand
-import net.dankito.utils.extensions.getDimension
-import net.dankito.utils.extensions.setRightMargin
+import net.dankito.utils.android.extensions.getDimension
+import net.dankito.utils.android.extensions.setRightMargin
 
 
 open class SelectValueWithPreviewView : LinearLayout {

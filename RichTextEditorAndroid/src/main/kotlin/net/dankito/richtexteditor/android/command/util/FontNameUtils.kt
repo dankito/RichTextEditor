@@ -2,7 +2,7 @@ package net.dankito.richtexteditor.android.command.util
 
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.util.SystemFontsParser
-import net.dankito.utils.extensions.getSpannedFromHtml
+import net.dankito.utils.android.extensions.getSpannedFromHtml
 
 
 open class FontNameUtils {

@@ -7,10 +7,10 @@ import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.toolbar.SelectValueWithPreviewView
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
-import net.dankito.utils.extensions.getLayoutSize
-import net.dankito.utils.extensions.getPixelSizeForDisplay
-import net.dankito.utils.extensions.setPadding
-import net.dankito.utils.extensions.setRightMargin
+import net.dankito.utils.android.extensions.getLayoutSize
+import net.dankito.utils.android.extensions.getPixelSizeForDisplay
+import net.dankito.utils.android.extensions.setPadding
+import net.dankito.utils.android.extensions.setRightMargin
 
 
 class StyleApplier {

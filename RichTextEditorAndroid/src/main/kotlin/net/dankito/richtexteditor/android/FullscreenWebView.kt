@@ -14,9 +14,9 @@ import kotlinx.android.synthetic.main.view_fullscreen_options_bar.view.*
 import net.dankito.richtexteditor.android.toolbar.SearchView
 import net.dankito.richtexteditor.android.toolbar.SearchViewStyle
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
-import net.dankito.utils.OnSwipeTouchListener
-import net.dankito.utils.extensions.getColorFromResource
-import net.dankito.utils.extensions.showKeyboard
+import net.dankito.utils.android.OnSwipeTouchListener
+import net.dankito.utils.android.extensions.getColorFromResource
+import net.dankito.utils.android.extensions.showKeyboard
 import java.util.*
 
 

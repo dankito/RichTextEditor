@@ -7,7 +7,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditImageDialog
 import net.dankito.richtexteditor.command.InsertImageCommandBase
-import net.dankito.utils.permissions.PermissionsService
+import net.dankito.utils.android.permissions.PermissionsService
 
 
 class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : InsertImageCommandBase(icon), ICommandRequiringEditor {

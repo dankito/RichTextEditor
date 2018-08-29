@@ -6,7 +6,7 @@ import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.command.util.FontSizeUtils
 import net.dankito.richtexteditor.command.CommandName
-import net.dankito.utils.extensions.getPlainTextFromHtml
+import net.dankito.utils.android.extensions.getPlainTextFromHtml
 
 open class SetFontSizeWithPreviewCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_size_white_48dp), protected var utils: FontSizeUtils = FontSizeUtils())
     : SelectValueWithPreviewCommand(CommandName.FONTSIZE, icon) {

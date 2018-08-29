@@ -9,7 +9,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.dankito.readability4j.extended.Readability4JExtended
 import net.dankito.richtexteditor.android.FullscreenWebView
-import net.dankito.utils.permissions.PermissionsService
+import net.dankito.utils.android.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.demo.dialogs.AddHtmlFromWebPageDialog
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
