@@ -47,21 +47,6 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
         setBackgroundColor(Color.TRANSPARENT)
     }
 
-    protected open fun getDefaultBackgroundColor(): Int {
-        var backgroundColor = Color.DKGRAY
-
-        val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
-        if (primaryColorIdentifier > 0) { // returns 0 in case resource is not found
-            backgroundColor = ContextCompat.getColor(context, primaryColorIdentifier)
-        }
-
-        if(addTransparencyToBackground) {
-            backgroundColor = Color.argb(200, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor))
-        }
-
-        return backgroundColor
-    }
-
     protected open fun addContentView(contentView : View) {
         this.contentView = contentView
 
@@ -69,9 +54,30 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
 
         params.addRule(RelativeLayout.CENTER_HORIZONTAL)
 
-        contentView.setBackgroundColor(getDefaultBackgroundColor())
-
         addView(contentView, params)
+    }
+
+    protected open fun addContentViewAndSetBackgroundToPrimaryColor(contentView : View, addTransparencyToBackground: Boolean = false) {
+        addContentView(contentView)
+
+        getPrimaryColor(addTransparencyToBackground)?.let { backgroundColor ->
+            contentView.setBackgroundColor(backgroundColor)
+        }
+    }
+
+    protected open fun getPrimaryColor(addTransparencyToBackground: Boolean): Int? {
+        val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
+        if (primaryColorIdentifier > 0) { // returns 0 in case resource is not found
+            var backgroundColor = ContextCompat.getColor(context, primaryColorIdentifier)
+
+            if(addTransparencyToBackground) {
+                backgroundColor = Color.argb(200, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor))
+            }
+
+            return backgroundColor
+        }
+
+        return null
     }
 
 

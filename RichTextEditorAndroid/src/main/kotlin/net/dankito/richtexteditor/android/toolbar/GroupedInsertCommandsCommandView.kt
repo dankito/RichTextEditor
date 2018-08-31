@@ -23,7 +23,7 @@ open class GroupedInsertCommandsCommandView : GroupedCommandsView {
 
     protected open fun initView() {
         val contentView = View.inflate(context, R.layout.grouped_insert_commands_command_view, null)
-        addContentView(contentView)
+        addContentViewAndSetBackgroundToPrimaryColor(contentView, true)
 
         insertCommandsToolbar = contentView.insertCommandsToolbar
 

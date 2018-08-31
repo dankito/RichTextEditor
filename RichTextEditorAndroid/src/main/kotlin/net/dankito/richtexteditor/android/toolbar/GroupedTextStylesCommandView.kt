@@ -26,7 +26,7 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
 
     protected open fun initView() {
         val contentView = View.inflate(context, R.layout.grouped_text_styles_command_view, null)
-        addContentView(contentView)
+        addContentViewAndSetBackgroundToPrimaryColor(contentView, true)
 
         basicTextStylesToolbar = contentView.basicTextStylesToolbar
         textFormatToolbar = contentView.textFormatToolbar
