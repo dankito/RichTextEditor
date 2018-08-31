@@ -404,6 +404,8 @@ var editor = {
 
         document.execCommand('insertHTML', false, html);
 
+        this._makeImagesResizeable();
+
         this._updateEditorState();
     },
     
