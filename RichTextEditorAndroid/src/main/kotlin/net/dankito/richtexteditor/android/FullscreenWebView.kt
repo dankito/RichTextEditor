@@ -8,14 +8,15 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import kotlinx.android.synthetic.main.view_fullscreen_options_bar.view.*
 import net.dankito.richtexteditor.android.toolbar.SearchView
 import net.dankito.richtexteditor.android.toolbar.SearchViewStyle
+import net.dankito.richtexteditor.android.view.FullscreenWebViewOptionsBar
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.OnSwipeTouchListener
 import net.dankito.utils.android.extensions.getColorFromResource
+import net.dankito.utils.android.extensions.hideKeyboard
 import net.dankito.utils.android.extensions.showKeyboard
 import java.util.*
 
@@ -352,11 +353,16 @@ open class FullscreenWebView : WebView {
 
         this.editorToolbar?.visibility = View.GONE
 
+        // if this view is focused when entering fullscreen mode, any tap brings up keyboard again, which is really annoying
+        if(isFocused) { // the only solution i could find was giving the focus to any other view
+            (this.optionsBar as? FullscreenWebViewOptionsBar)?.requestFocusSoIGetRidOfIt()
+            this.clearFocus()
+        }
+
+        this.hideKeyboard()
+
         this.isFocusable = false
         this.isFocusableInTouchMode = false
-
-        val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 
         changeDisplayModeListener?.invoke(DisplayMode.Viewing)
     }

@@ -62,4 +62,12 @@ class FullscreenWebViewOptionsBar @JvmOverloads constructor(
         btnMarkSelectedText.setOnClickListener { command.commandInvoked() }
     }
 
+
+    /**
+     * This method is simply there so that FullscreenWebView can get rid of focus as otherwise in viewing mode keyboard would show up on each tap.
+     */
+    fun requestFocusSoIGetRidOfIt() {
+        this.optionsBarSearchView.searchField.requestFocus()
+    }
+
 }
