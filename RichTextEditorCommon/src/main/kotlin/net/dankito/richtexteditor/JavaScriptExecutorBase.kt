@@ -211,6 +211,15 @@ abstract class JavaScriptExecutorBase {
     }
 
 
+    fun makeImagesResizeable() {
+        executeEditorJavaScriptFunction("makeImagesResizeable()")
+    }
+
+    fun disableImageResizing() {
+        executeEditorJavaScriptFunction("disableImageResizing()")
+    }
+
+
     protected fun shouldOverrideUrlLoading(url: String): Boolean {
         val decodedUrl: String
         try {

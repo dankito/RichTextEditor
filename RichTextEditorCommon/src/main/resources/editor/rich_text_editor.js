@@ -204,7 +204,7 @@ var editor = {
         if(html.length != 0) {
             this._textField.innerHTML = this._decodeHtml(html);
 
-            this._makeImagesResizeable();
+            this.makeImagesResizeable();
         }
         else {
             this._ensureEditorInsertsParagraphWhenPressingEnter();
@@ -233,11 +233,19 @@ var editor = {
         baseElement.setAttribute('target', '_blank');
     },
 
-    _makeImagesResizeable: function() {
+    makeImagesResizeable: function() {
         var images = document.getElementsByTagName("img");
 
         for(var i = 0; i < images.length; i++) {
             this._addClass(images[i], resizableImageClass);
+        }
+    },
+
+    disableImageResizing: function() {
+        var images = document.getElementsByTagName("img");
+
+        for(var i = 0; i < images.length; i++) {
+            this._removeClass(images[i], resizableImageClass);
         }
     },
 
@@ -248,6 +256,13 @@ var editor = {
     _addClass: function(element, className) {
       if (this._hasClass(element, className) == false) {
         element.className += " " + className;
+      }
+    },
+
+    _removeClass: function(element, className) {
+      if (this._hasClass(element, className)) {
+        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+        element.className = element.className.replace(reg, ' ');
       }
     },
     
@@ -404,7 +419,7 @@ var editor = {
 
         document.execCommand('insertHTML', false, html);
 
-        this._makeImagesResizeable();
+        this.makeImagesResizeable();
 
         this._updateEditorState();
     },
@@ -462,13 +477,12 @@ var editor = {
     
     setInputEnabled: function(inputEnabled) {
         this._textField.contentEditable = String(inputEnabled);
-         if(inputEnabled){
-            this._initDragImageToResize();
-        }else{
-            interact('img.' + resizableImageClass)
-                .draggable(false)
-                .resizable(false)
-                .gesturable(false);
+
+        if(inputEnabled){
+            this.makeImagesResizeable();
+        }
+        else {
+            this.disableImageResizing();
         }
     },
 
