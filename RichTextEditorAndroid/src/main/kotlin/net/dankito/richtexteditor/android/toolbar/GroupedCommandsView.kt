@@ -3,7 +3,6 @@ package net.dankito.richtexteditor.android.toolbar
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
@@ -45,15 +44,10 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
     protected open fun init() {
         this.visibility = View.GONE
 
-        setInitialBackgroundColor()
-
-        layoutParams?.let { params ->
-            params.width = ViewGroup.LayoutParams.MATCH_PARENT
-            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
-        }
+        setBackgroundColor(Color.TRANSPARENT)
     }
 
-    protected open fun setInitialBackgroundColor() {
+    protected open fun getDefaultBackgroundColor(): Int {
         var backgroundColor = Color.DKGRAY
 
         val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
@@ -65,21 +59,17 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
             backgroundColor = Color.argb(200, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor))
         }
 
-        setBackgroundColor(backgroundColor)
+        return backgroundColor
     }
 
     protected open fun addContentView(contentView : View) {
         this.contentView = contentView
 
-        val params = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val params = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        params.addRule(ALIGN_PARENT_LEFT)
-        params.addRule(ALIGN_PARENT_RIGHT)
+        params.addRule(RelativeLayout.CENTER_HORIZONTAL)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            params.addRule(ALIGN_PARENT_START)
-            params.addRule(ALIGN_PARENT_END)
-        }
+        contentView.setBackgroundColor(getDefaultBackgroundColor())
 
         addView(contentView, params)
     }
@@ -100,6 +90,11 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
 
     open fun initialize(editor: RichTextEditor, command: ToolbarCommand) {
         initializeView(editor, command)
+
+        layoutParams?.let { params ->
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
     }
 
 }
