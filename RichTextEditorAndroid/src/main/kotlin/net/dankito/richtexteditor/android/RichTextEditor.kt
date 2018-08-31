@@ -107,6 +107,14 @@ open class RichTextEditor : FullscreenWebView {
         super.enterEditingMode()
 
         javaScriptExecutor.startEditing()
+
+        javaScriptExecutor.makeImagesResizeable()
+    }
+
+    override fun enterViewingMode() {
+        super.enterViewingMode()
+
+        javaScriptExecutor.disableImageResizing()
     }
 
 
