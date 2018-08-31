@@ -40,6 +40,7 @@ enum class CommandName {
     INSERTIMAGE,
     INSERTCHECKBOX,
     // pseudo commands for toggling grouped command views
+    ENTER_VIEWING_MODE,
     TOGGLE_GROUPED_TEXT_STYLES_COMMANDS_VIEW,
     TOGGLE_GROUPED_INSERT_COMMANDS_COMMANDS_VIEW
 }
