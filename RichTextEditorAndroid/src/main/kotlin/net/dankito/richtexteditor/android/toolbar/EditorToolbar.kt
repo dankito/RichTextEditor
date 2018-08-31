@@ -84,9 +84,11 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
     private fun applyCommandStyle(command: ToolbarCommand, commandView: View) {
         applyCommandStyle(command.icon, command.style, commandView)
+
+        (command.commandView as? AndroidCommandView)?.setTintColor(command.style.enabledTintColor)
     }
 
-    internal fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: View) {
+    private fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: View) {
         mergeStyles(commandStyle, style)
 
         styleApplier.applyCommandStyle(icon, style, commandView)
