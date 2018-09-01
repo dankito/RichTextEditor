@@ -2,7 +2,10 @@ package net.dankito.richtexteditor.android.toolbar
 
 import android.content.Context
 import android.util.AttributeSet
-import net.dankito.richtexteditor.android.command.*
+import net.dankito.richtexteditor.android.command.TextMarkerCommand
+import net.dankito.richtexteditor.android.command.ToggleGroupedInsertCommandsCommand
+import net.dankito.richtexteditor.android.command.ToggleGroupedTextStylesCommand
+import net.dankito.richtexteditor.android.command.UndoCommand
 
 
 class GroupedCommandsEditorToolbar : EditorToolbar {
@@ -21,8 +24,6 @@ class GroupedCommandsEditorToolbar : EditorToolbar {
         addCommand(UndoCommand())
 
         addCommand(ToggleGroupedInsertCommandsCommand())
-
-        addCommand(EnterViewingModeCommand())
 
         addSearchView()
     }
