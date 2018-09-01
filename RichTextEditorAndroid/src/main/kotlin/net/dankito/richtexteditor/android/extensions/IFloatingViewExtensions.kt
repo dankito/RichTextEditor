@@ -53,7 +53,7 @@ fun IFloatingView.updatePosition() {
             toolbar?.let { toolbar ->
                 view.y =
                         if(isToolbarBelowEditor(editor, toolbar)) {
-                            toolbar.top.toFloat() - measuredHeight
+                            getToolbarTop(toolbar) - measuredHeight
                         }
                         else {
                             toolbar.bottom.toFloat()
@@ -179,7 +179,7 @@ private fun IFloatingView.animateShowViewAfterMeasuringHeight(view: View) {
             val isToolbarBelowEditor = isToolbarBelowEditor(editor, toolbar)
 
             if(isToolbarBelowEditor) {
-                val startPosition = toolbar.top.toFloat()
+                val startPosition = getToolbarTop(toolbar)
                 val endPosition = startPosition - view.measuredHeight
 
                 playAnimation(view, true, startPosition, endPosition)
@@ -192,6 +192,20 @@ private fun IFloatingView.animateShowViewAfterMeasuringHeight(view: View) {
             }
         }
     }
+}
+
+private fun getToolbarTop(toolbar: EditorToolbar): Float {
+    var toolbarTop = toolbar.top.toFloat()
+    var parent = toolbar.parent
+
+    while(toolbarTop == 0f && parent != null) { // then toolbar is most likely embedded into another view -> get parent view's top
+        (toolbar.parent as? ViewGroup)?.top?.let { parentTop ->
+            toolbarTop = parentTop.toFloat()
+            parent = parent?.parent
+        }
+    }
+
+    return toolbarTop
 }
 
 private fun playAnimation(view: View, show: Boolean, yStart: Float, yEnd: Float, animationEndListener: (() -> Unit)? = null) {
