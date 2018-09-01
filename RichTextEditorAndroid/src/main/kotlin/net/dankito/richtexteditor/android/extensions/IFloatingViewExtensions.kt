@@ -10,6 +10,7 @@ import net.dankito.richtexteditor.android.toolbar.IFloatingView
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.utils.android.animation.ShowHideViewAnimator
 import net.dankito.utils.android.extensions.executeActionAfterMeasuringSize
+import net.dankito.utils.android.extensions.getLocationOnScreenY
 
 
 private val animator = ShowHideViewAnimator()
@@ -208,6 +209,9 @@ fun IFloatingView.isToolbarBelowEditor(): Boolean {
     return false
 }
 
-fun isToolbarBelowEditor(editor: RichTextEditor, toolbar: EditorToolbar): Boolean {
-    return toolbar.y > editor.y
+fun IFloatingView.isToolbarBelowEditor(editor: RichTextEditor, toolbar: EditorToolbar): Boolean {
+    val editorY = editor.getLocationOnScreenY()
+    val toolbarY = toolbar.getLocationOnScreenY()
+
+    return toolbarY > editorY
 }
