@@ -136,7 +136,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
-    fun addSearchView(style: SearchViewStyle = SearchViewStyle()) {
+    fun addSearchView(style: SearchViewStyle = SearchViewStyle(this.commandStyle)) {
         val searchView = SearchView(context)
 
         linearLayout.addView(searchView)
@@ -168,6 +168,17 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         val spaceView = View(context)
 
         linearLayout.addView(spaceView, width, 1)
+    }
+
+
+    fun styleChanged() {
+        commands.forEach { command, view ->
+            applyCommandStyle(command, view)
+        }
+
+        searchViews.forEach { searchView ->
+            searchView.applyStyle(SearchViewStyle(this.commandStyle))
+        }
     }
 
 
