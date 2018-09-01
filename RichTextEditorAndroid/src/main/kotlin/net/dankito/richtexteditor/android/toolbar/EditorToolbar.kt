@@ -52,6 +52,8 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
 
     private fun initToolbar(context: Context) {
+        this.isFillViewport = true
+
         linearLayout = LinearLayout(context)
         linearLayout.orientation = LinearLayout.HORIZONTAL
 
