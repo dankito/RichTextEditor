@@ -2,6 +2,7 @@ package net.dankito.richtexteditor.android.toolbar
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.Gravity
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
@@ -58,6 +59,10 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         linearLayout.orientation = LinearLayout.HORIZONTAL
 
         addView(linearLayout)
+    }
+
+    fun centerCommandsHorizontally() {
+        linearLayout.gravity = Gravity.CENTER_HORIZONTAL
     }
 
 
