@@ -13,6 +13,7 @@ import net.dankito.richtexteditor.android.extensions.calculateOnMeasure
 import net.dankito.richtexteditor.android.extensions.initializeView
 import net.dankito.richtexteditor.android.extensions.updatePosition
 import net.dankito.richtexteditor.command.ToolbarCommand
+import net.dankito.richtexteditor.command.ToolbarCommandStyle
 
 
 open class GroupedCommandsView : RelativeLayout, IFloatingView {
@@ -38,6 +39,8 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
 
 
     protected lateinit var contentView: View
+
+    protected val childToolbars = ArrayList<EditorToolbar>()
 
 
     protected open fun init() {
@@ -79,6 +82,10 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
         return null
     }
 
+    protected fun addedChildToolbar(vararg childToolbars: EditorToolbar) {
+        this.childToolbars.addAll(childToolbars)
+    }
+
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val adjustedHeightAndUpdatePosition = calculateOnMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -99,6 +106,13 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
         layoutParams?.let { params ->
             params.width = ViewGroup.LayoutParams.MATCH_PARENT
             params.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        }
+    }
+
+    fun applyStyleToGroupedCommands(style: ToolbarCommandStyle) {
+        childToolbars.forEach { toolbar ->
+            toolbar.commandStyle = style
+            toolbar.styleChanged(true)
         }
     }
 

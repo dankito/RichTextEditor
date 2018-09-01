@@ -32,6 +32,8 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         textFormatToolbar = contentView.textFormatToolbar
         textColorAndAlignmentToolbar = contentView.textColorAndAlignmentToolbar
 
+        addedChildToolbar(basicTextStylesToolbar, textFormatToolbar, textColorAndAlignmentToolbar)
+
         setupBasicTextStylesToolbar()
         setupTextFormatToolbar()
         setupTextAlignmentToolbar()

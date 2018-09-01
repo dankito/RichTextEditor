@@ -26,6 +26,7 @@ open class GroupedInsertCommandsCommandView : GroupedCommandsView {
         addContentViewAndSetBackgroundToPrimaryColor(contentView, true)
 
         insertCommandsToolbar = contentView.insertCommandsToolbar
+        addedChildToolbar(insertCommandsToolbar)
 
         setupInsertToolbar()
     }

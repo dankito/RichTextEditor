@@ -13,6 +13,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
 import net.dankito.richtexteditor.android.command.SelectValueWithPreviewCommand
+import net.dankito.richtexteditor.android.command.ToggleGroupedCommandsViewCommand
 import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
@@ -49,7 +50,8 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
     private val styleApplier = StyleApplier()
 
-    val commandStyle = ToolbarCommandStyle()
+    var commandStyle = ToolbarCommandStyle()
+        internal set
 
 
     private fun initToolbar(context: Context) {
@@ -171,9 +173,13 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         linearLayout.gravity = Gravity.CENTER_HORIZONTAL
     }
 
-    fun styleChanged() {
+    fun styleChanged(alsoApplyForGroupedCommandViews: Boolean = false) {
         commands.forEach { command, view ->
             applyCommandStyle(command, view)
+
+            if(command is ToggleGroupedCommandsViewCommand && alsoApplyForGroupedCommandViews) {
+                command.applyStyleToGroupedCommands(commandStyle)
+            }
         }
 
         searchViews.forEach { searchView ->
