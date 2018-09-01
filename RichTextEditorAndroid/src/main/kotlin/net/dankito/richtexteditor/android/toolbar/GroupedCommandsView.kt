@@ -35,7 +35,6 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
 
     override var hasEditorHeightChanged = true
 
-    var addTransparencyToBackground: Boolean = true
 
 
     protected lateinit var contentView: View
