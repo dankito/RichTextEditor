@@ -201,7 +201,7 @@ private fun playAnimation(view: View, show: Boolean, yStart: Float, yEnd: Float,
 fun IFloatingView.isToolbarBelowEditor(): Boolean {
     editor?.let { editor ->
         toolbar?.let { toolbar ->
-            return toolbar.y > editor.y
+            return isToolbarBelowEditor(editor, toolbar)
         }
     }
 
