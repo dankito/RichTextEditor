@@ -61,10 +61,6 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         addView(linearLayout)
     }
 
-    fun centerCommandsHorizontally() {
-        linearLayout.gravity = Gravity.CENTER_HORIZONTAL
-    }
-
 
     fun addCommand(command: ToolbarCommand) {
         val commandView = if(command is SelectValueWithPreviewCommand) SelectValueWithPreviewView(context) else ImageButton(context)
@@ -170,6 +166,10 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         linearLayout.addView(spaceView, width, 1)
     }
 
+
+    fun centerCommandsHorizontally() {
+        linearLayout.gravity = Gravity.CENTER_HORIZONTAL
+    }
 
     fun styleChanged() {
         commands.forEach { command, view ->
