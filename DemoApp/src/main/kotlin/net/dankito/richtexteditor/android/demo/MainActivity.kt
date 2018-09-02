@@ -99,6 +99,22 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // Important: Overwrite onBackPressed and pass it to toolbar.There's no other way that it can get informed of back button presses.
+    override fun onBackPressed() {
+        if(topInlineToolbar.handlesBackButtonPress() == false && topGroupedCommandsToolbar.handlesBackButtonPress() == false &&
+                bottomInlineToolbar.handlesBackButtonPress() == false && bottomGroupedCommandsToolbar.handlesBackButtonPress() == false) {
+
+            super.onBackPressed()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        editor.permissionsService?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_main_menu, menu)
 
@@ -138,20 +154,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
-    }
-
-
-    override fun onBackPressed() {
-        if(topInlineToolbar.handlesBackButtonPress() == false && topGroupedCommandsToolbar.handlesBackButtonPress() == false &&
-                bottomInlineToolbar.handlesBackButtonPress() == false && bottomGroupedCommandsToolbar.handlesBackButtonPress() == false) {
-            super.onBackPressed()
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        editor.permissionsService?.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
 
