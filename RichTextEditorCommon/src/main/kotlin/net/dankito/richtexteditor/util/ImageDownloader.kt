@@ -1,10 +1,10 @@
 package net.dankito.richtexteditor.util
 
+import net.dankito.richtexteditor.model.DownloadImageConfig
+import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import net.dankito.utils.web.client.OkHttpWebClient
 import net.dankito.utils.web.client.RequestParameters
 import net.dankito.utils.web.client.ResponseType
-import net.dankito.richtexteditor.model.DownloadImageConfig
-import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import org.slf4j.LoggerFactory
 import java.io.BufferedOutputStream
 import java.io.File
@@ -38,9 +38,9 @@ class ImageDownloader {
 
     fun selectDownloadFolder(config: DownloadImageConfig?, fallbackDownloadFolder: File): File {
         config?.let {
-            when (config?.uiSetting) {
+            when (config.uiSetting) {
                 DownloadImageUiSetting.AllowSelectDownloadFolderInCode -> {
-                    config?.downloadFolderIfUserIsNowAllowedToSelectFolder?.let {
+                    config.downloadFolderIfUserIsNowAllowedToSelectFolder?.let {
                         return it
                     }
                 }
