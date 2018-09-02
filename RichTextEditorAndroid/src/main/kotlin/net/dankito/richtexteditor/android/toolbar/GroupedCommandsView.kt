@@ -73,13 +73,17 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
             var backgroundColor = ContextCompat.getColor(context, primaryColorIdentifier)
 
             if(addTransparencyToBackground) {
-                backgroundColor = Color.argb(200, Color.red(backgroundColor), Color.green(backgroundColor), Color.blue(backgroundColor))
+                backgroundColor = setTransparency(backgroundColor, 200)
             }
 
             return backgroundColor
         }
 
         return null
+    }
+
+    fun setTransparency(color: Int, alpha: Int): Int {
+        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color))
     }
 
     protected fun addedChildToolbar(vararg childToolbars: EditorToolbar) {
