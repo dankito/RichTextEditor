@@ -15,7 +15,7 @@ ext {
     appVersionCode = 1030000
 
 
-    kotlin_version = '1.2.21'
+    kotlinVersion = '1.2.21'
 
     androidCompileSdkVersion = 26
     androidBuildToolsVersion = '26.0.2'
