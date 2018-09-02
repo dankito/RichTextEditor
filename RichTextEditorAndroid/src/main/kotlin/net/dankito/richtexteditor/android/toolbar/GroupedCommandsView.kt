@@ -74,7 +74,7 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
             var backgroundColor = ContextCompat.getColor(context, primaryColorIdentifier)
 
             if(addTransparencyToBackground) {
-                backgroundColor = ColorExtensions.setTransparency(backgroundColor, 200)
+                backgroundColor = ColorExtensions.setTransparency(backgroundColor, ToolbarCommandStyle.GroupedViewsDefaultBackgroundTransparency)
             }
 
             return backgroundColor

@@ -33,6 +33,8 @@ data class ToolbarCommandStyle(
         val DefaultIsActivatedColor = Color.DarkGray
 
         const val GroupDefaultMarginRightDp = 12
+
+        const val GroupedViewsDefaultBackgroundTransparency = 200
     }
 
 }
