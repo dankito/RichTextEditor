@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.webkit.WebChromeClient
+import net.dankito.richtexteditor.callback.RetrieveCurrentHtmlCallback
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.utils.KeyboardState
 import net.dankito.utils.extensions.showKeyboard
@@ -129,6 +130,20 @@ open class RichTextEditor : FullscreenWebView {
      * See getHtml() for explanation when it's sensible to call this method.
      */
     fun retrieveCurrentHtmlAsync(callback: (String) -> Unit) {
+        retrieveCurrentHtmlAsync(object : RetrieveCurrentHtmlCallback {
+
+            override fun htmlRetrieved(html: String) {
+                callback(html)
+            }
+
+        })
+    }
+
+    /**
+     * Queries underlying JavaScript code for latest html.
+     * See getHtml() for explanation when it's sensible to call this method.
+     */
+    fun retrieveCurrentHtmlAsync(callback: RetrieveCurrentHtmlCallback) {
         javaScriptExecutor.retrieveCurrentHtmlAsync(callback)
     }
 
