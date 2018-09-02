@@ -150,8 +150,13 @@ fun IFloatingView.hideView() {
         editor?.let { editor ->
             toolbar?.let { toolbar ->
                 val isToolbarBelowEditor = isToolbarBelowEditor(editor, toolbar)
-                val startPosition = view.top
-                val endPosition = if(isToolbarBelowEditor) view.bottom else -1 * view.measuredHeight
+
+                var startPosition = view.top
+                if(startPosition == 0) { // then toolbar is most likely embedded into another view -> get startPosition from location on screen
+                    startPosition = view.getLocationOnScreenY() - (view.parent as View).getLocationOnScreenY()
+                }
+
+                val endPosition = if(isToolbarBelowEditor) startPosition + view.measuredHeight else startPosition - view.measuredHeight
 
                 playAnimation(view, false, startPosition.toFloat(), endPosition.toFloat())
             }
