@@ -12,7 +12,7 @@ ext {
 
     appVersionName = '2.0.0'
 
-    appVersionCode = 1030000
+    appVersionCode = 2000000
 
 
     kotlinVersion = '1.2.61'
