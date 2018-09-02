@@ -45,8 +45,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomGroupedCommandsToolbar: GroupedCommandsEditorToolbar
 
-    private var currentToolbar: EditorToolbar? = null
-
 
     private var toolbarPlacement = ToolbarPlacement.Bottom
 
@@ -206,11 +204,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setToolbar(toolbar: EditorToolbar) {
-        currentToolbar?.handlesBackButtonPress() // to hide any floating view (SelectValueView or GroupedCommandsView)
-        currentToolbar?.visibility = View.GONE
+        (editor.editorToolbar as? EditorToolbar)?.handlesBackButtonPress() // to hide any floating view (SelectValueView or GroupedCommandsView)
+        editor.editorToolbar?.visibility = View.GONE
 
         toolbar.visibility = View.VISIBLE
-        currentToolbar = toolbar
 
         editor.setEditorToolbarAndOptionsBar(toolbar, fullscreenOptionsBar)
     }

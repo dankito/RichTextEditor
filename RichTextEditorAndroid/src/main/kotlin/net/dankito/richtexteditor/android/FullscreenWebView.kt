@@ -113,7 +113,8 @@ open class FullscreenWebView : WebView {
     private lateinit var swipeTouchListener: OnSwipeTouchListener
 
 
-    private var editorToolbar: View? = null
+    var editorToolbar: View? = null
+        protected set
 
     private var optionsBar: View? = null
 
