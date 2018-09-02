@@ -14,6 +14,7 @@ import net.dankito.richtexteditor.android.extensions.initializeView
 import net.dankito.richtexteditor.android.extensions.updatePosition
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
+import net.dankito.utils.android.extensions.ColorExtensions
 
 
 open class GroupedCommandsView : RelativeLayout, IFloatingView {
@@ -73,17 +74,13 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
             var backgroundColor = ContextCompat.getColor(context, primaryColorIdentifier)
 
             if(addTransparencyToBackground) {
-                backgroundColor = setTransparency(backgroundColor, 200)
+                backgroundColor = ColorExtensions.setTransparency(backgroundColor, 200)
             }
 
             return backgroundColor
         }
 
         return null
-    }
-
-    fun setTransparency(color: Int, alpha: Int): Int {
-        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color))
     }
 
     protected fun addedChildToolbar(vararg childToolbars: EditorToolbar) {
