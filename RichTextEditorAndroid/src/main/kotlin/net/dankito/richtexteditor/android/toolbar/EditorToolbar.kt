@@ -8,7 +8,9 @@ import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import net.dankito.richtexteditor.Icon
+import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidCommandView
+import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
@@ -17,11 +19,20 @@ import net.dankito.richtexteditor.android.command.ToggleGroupedCommandsViewComma
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.richtexteditor.android.util.StyleApplier
+import net.dankito.richtexteditor.command.CommandName
 import net.dankito.utils.android.extensions.executeActionAfterMeasuringSize
 import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
 
 
 open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
+
+    companion object {
+        val ArtificialSearchViewExpandedCommand = object : ToolbarCommand(CommandName.EXPANDING_SEARCH_VIEWING, AndroidIcon(R.drawable.ic_search_white_48dp)) {
+
+            override fun executeCommand(executor: JavaScriptExecutorBase) { }
+
+        }
+    }
 
 
     constructor(context: Context) : super(context) { initToolbar(context) }
@@ -149,6 +160,8 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
                 searchView.lytSearchControls.executeActionAfterMeasuringSize(true) {
                     smoothScrollBy(searchView.lytSearchControls.width, 0)
                 }
+
+                callCommandInvokedListeners(ArtificialSearchViewExpandedCommand) // so that GroupedCommandViews get closed / hidden when expanding a SearchView
             }
             else {
                 smoothScrollBy(-1 * searchView.lytSearchControls.width, 0)
@@ -217,9 +230,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     protected open fun commandInvoked(command: ToolbarCommand) {
         command.commandInvoked()
 
-        commandInvokedListeners.forEach {
-            it.invoke(command)
-        }
+        callCommandInvokedListeners(command)
     }
 
     open fun addCommandInvokedListener(listener: (ToolbarCommand) -> Unit) {
@@ -228,6 +239,12 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
     open fun removeCommandInvokedListener(listener: (ToolbarCommand) -> Unit) {
         commandInvokedListeners.remove(listener)
+    }
+
+    protected open fun callCommandInvokedListeners(command: ToolbarCommand) {
+        commandInvokedListeners.forEach {
+            it.invoke(command)
+        }
     }
 
 
