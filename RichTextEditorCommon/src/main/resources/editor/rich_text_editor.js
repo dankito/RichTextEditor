@@ -502,9 +502,6 @@ var editor = {
 
 
     _executeStyleCommand: function(command, parameter) {
-        this._backupRange();
-        this._restoreRange();
-
         this._executeCommand("styleWithCSS", null, true);
         this._executeCommand(command, parameter);
         this._executeCommand("styleWithCSS", null, false);
