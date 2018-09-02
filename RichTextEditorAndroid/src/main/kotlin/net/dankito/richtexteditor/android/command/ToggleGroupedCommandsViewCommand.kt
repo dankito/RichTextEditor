@@ -60,7 +60,8 @@ abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Icon
     override fun handlesTouch(event: MotionEvent): Boolean {
         getGroupedCommandsView()?.let { groupedCommandsView ->
             if(groupedCommandsView.isVisible()) {
-                if(groupedCommandsView.isTouchInsideView(event) == false) { // a touch outside visible GroupedCommandsView
+                if(groupedCommandsView.isTouchInsideView(event) == false && // a touch outside visible GroupedCommandsView
+                        editor?.editorToolbar?.isTouchInsideView(event) == false) { // but also not on (another command on) toolbar
                     groupedCommandsView.hideView() // -> close it
 
                     return true
