@@ -5,6 +5,7 @@ import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.dankito.readability4j.extended.Readability4JExtended
@@ -108,6 +109,16 @@ class MainActivity : AppCompatActivity() {
 
             super.onBackPressed()
         }
+    }
+
+    // if you are using GroupedCommandsToolbar, also overwrite this method and pass event on to handlesTouch() so that
+    // expanded GroupedCommandsView gets closed on a touch outside of its view (e. g. on editor)
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if(topGroupedCommandsToolbar.handlesTouch(event) || bottomGroupedCommandsToolbar.handlesTouch(event)) {
+            return true
+        }
+
+        return super.dispatchTouchEvent(event)
     }
 
     // only needed if you like to insert images from local device so the user gets asked for permission to access external storage if needed
