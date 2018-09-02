@@ -7,7 +7,7 @@ import javafx.scene.control.ScrollPane
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Pane
 import javafx.scene.layout.Region
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.SetColorCommand

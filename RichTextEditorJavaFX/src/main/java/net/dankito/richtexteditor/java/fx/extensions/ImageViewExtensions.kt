@@ -2,7 +2,7 @@ package net.dankito.richtexteditor.java.fx.extensions
 
 import javafx.scene.effect.ColorAdjust
 import javafx.scene.image.ImageView
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 
 
 fun ImageView.setImageTintColor(color: Color) {

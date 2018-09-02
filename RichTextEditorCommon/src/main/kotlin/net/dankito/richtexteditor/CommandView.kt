@@ -1,5 +1,7 @@
 package net.dankito.richtexteditor
 
+import net.dankito.utils.Color
+
 
 abstract class CommandView {
 

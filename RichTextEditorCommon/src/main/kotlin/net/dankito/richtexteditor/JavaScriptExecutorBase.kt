@@ -3,6 +3,7 @@ package net.dankito.richtexteditor
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.CommandState
+import net.dankito.utils.Color
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder

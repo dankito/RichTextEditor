@@ -1,7 +1,7 @@
 package net.dankito.richtexteditor.android.extensions
 
 import android.content.Context
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 import net.dankito.utils.android.extensions.getColorFromResource
 
 

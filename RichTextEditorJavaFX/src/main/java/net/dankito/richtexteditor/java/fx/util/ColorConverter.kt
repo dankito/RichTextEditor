@@ -1,6 +1,6 @@
 package net.dankito.richtexteditor.java.fx.util
 
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 
 
 class ColorConverter {

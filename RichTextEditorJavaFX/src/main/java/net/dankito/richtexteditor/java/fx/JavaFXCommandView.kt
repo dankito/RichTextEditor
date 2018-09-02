@@ -10,7 +10,7 @@ import javafx.scene.layout.Background
 import javafx.scene.layout.BackgroundFill
 import javafx.scene.layout.CornerRadii
 import javafx.scene.layout.Region
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 import net.dankito.richtexteditor.CommandView
 import net.dankito.richtexteditor.java.fx.extensions.fromJavaFXColor
 import net.dankito.richtexteditor.java.fx.extensions.setImageTintColor

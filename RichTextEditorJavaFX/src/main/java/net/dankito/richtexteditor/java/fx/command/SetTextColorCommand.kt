@@ -1,6 +1,6 @@
 package net.dankito.richtexteditor.java.fx.command
 
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.command.SetTextColorCommandBase
 import net.dankito.richtexteditor.java.fx.JavaFXIcon

@@ -1,6 +1,6 @@
 package net.dankito.richtexteditor.command
 
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 
 
 data class ToolbarCommandStyle(

@@ -3,9 +3,9 @@ package net.dankito.richtexteditor.android
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.widget.ImageView
-import net.dankito.richtexteditor.Color
 import net.dankito.richtexteditor.CommandView
 import net.dankito.richtexteditor.android.toolbar.SelectValueWithPreviewView
+import net.dankito.utils.Color
 
 
 class AndroidCommandView(val view: View) : CommandView() {

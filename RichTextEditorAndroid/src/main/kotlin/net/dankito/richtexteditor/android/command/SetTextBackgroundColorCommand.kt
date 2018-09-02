@@ -1,6 +1,6 @@
 package net.dankito.richtexteditor.android.command
 
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R

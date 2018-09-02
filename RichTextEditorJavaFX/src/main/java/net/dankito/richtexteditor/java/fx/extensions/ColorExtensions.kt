@@ -1,6 +1,6 @@
 package net.dankito.richtexteditor.java.fx.extensions
 
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 
 
 fun Color.toJavaFXColor(): javafx.scene.paint.Color {

@@ -3,7 +3,7 @@ package net.dankito.richtexteditor.android.command.dialogs
 import android.app.Activity
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
-import net.dankito.richtexteditor.Color
+import net.dankito.utils.Color
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.utils.android.KeyboardState
 import net.dankito.utils.android.extensions.hideKeyboard
