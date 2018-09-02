@@ -64,7 +64,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
-    fun addCommand(command: ToolbarCommand) {
+    open fun addCommand(command: ToolbarCommand) {
         val commandView = if(command is SelectValueWithPreviewCommand) SelectValueWithPreviewView(context) else ImageButton(context)
         commandView.tag = command.command // TODO: this is bad, actually it's only needed for UI tests (don't introduce test code in production code)
         commandView.setOnClickListener { commandInvoked(command) }
@@ -87,19 +87,19 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         applyCommandStyle(command, commandView)
     }
 
-    private fun applyCommandStyle(command: ToolbarCommand, commandView: View) {
+    protected open fun applyCommandStyle(command: ToolbarCommand, commandView: View) {
         applyCommandStyle(command.icon, command.style, commandView)
 
         (command.commandView as? AndroidCommandView)?.setTintColor(command.style.enabledTintColor)
     }
 
-    private fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: View) {
+    protected open fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: View) {
         mergeStyles(commandStyle, style)
 
         styleApplier.applyCommandStyle(icon, style, commandView)
     }
 
-    private fun mergeStyles(toolbarCommandStyle: ToolbarCommandStyle, commandStyle: ToolbarCommandStyle) {
+    protected open fun mergeStyles(toolbarCommandStyle: ToolbarCommandStyle, commandStyle: ToolbarCommandStyle) {
         if(commandStyle.backgroundColor == ToolbarCommandStyle.DefaultBackgroundColor) {
             commandStyle.backgroundColor = toolbarCommandStyle.backgroundColor
         }
@@ -134,7 +134,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
-    fun addSearchView(style: SearchViewStyle = SearchViewStyle(this.commandStyle)) {
+    open fun addSearchView(style: SearchViewStyle = SearchViewStyle(this.commandStyle)) {
         val searchView = SearchView(context)
 
         linearLayout.addView(searchView)
@@ -156,24 +156,24 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         }
     }
 
-    fun addSpace() {
+    open fun addSpace() {
         val spaceDefaultWidth = resources.getDimensionPixelSize(R.dimen.editor_toolbar_default_space_width)
 
         addSpace(spaceDefaultWidth)
     }
 
-    fun addSpace(width: Int) {
+    open fun addSpace(width: Int) {
         val spaceView = View(context)
 
         linearLayout.addView(spaceView, width, 1)
     }
 
 
-    fun centerCommandsHorizontally() {
+    open fun centerCommandsHorizontally() {
         linearLayout.gravity = Gravity.CENTER_HORIZONTAL
     }
 
-    fun styleChanged(alsoApplyForGroupedCommandViews: Boolean = false) {
+    open fun styleChanged(alsoApplyForGroupedCommandViews: Boolean = false) {
         commands.forEach { command, view ->
             applyCommandStyle(command, view)
 
@@ -199,7 +199,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
-    private fun setRichTextEditorOnCommands(editor: RichTextEditor?) {
+    protected open fun setRichTextEditorOnCommands(editor: RichTextEditor?) {
         commands.keys.forEach {
             if(it is ICommandRequiringEditor) { // editor has to be set before executor
                 it.editor = editor
@@ -214,7 +214,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
-    private fun commandInvoked(command: ToolbarCommand) {
+    protected open fun commandInvoked(command: ToolbarCommand) {
         command.commandInvoked()
 
         commandInvokedListeners.forEach {
@@ -222,11 +222,11 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         }
     }
 
-    fun addCommandInvokedListener(listener: (ToolbarCommand) -> Unit) {
+    open fun addCommandInvokedListener(listener: (ToolbarCommand) -> Unit) {
         commandInvokedListeners.add(listener)
     }
 
-    fun removeCommandInvokedListener(listener: (ToolbarCommand) -> Unit) {
+    open fun removeCommandInvokedListener(listener: (ToolbarCommand) -> Unit) {
         commandInvokedListeners.remove(listener)
     }
 
