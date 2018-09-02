@@ -75,7 +75,7 @@ class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("
     /**
      * Compared to AndroidJavaScriptExecutor html property is not always up to date with current html -> retrieve
      */
-    override fun getHtml(): String {
+    override fun getCachedHtml(): String {
         val result = AtomicReference<String>()
         val countDownLatch = CountDownLatch(1)
 

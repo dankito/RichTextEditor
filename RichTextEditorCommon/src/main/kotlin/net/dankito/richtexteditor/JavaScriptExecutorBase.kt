@@ -53,7 +53,7 @@ abstract class JavaScriptExecutorBase {
      * Usually this is the up to date html. But in case user uses swipe input, some swipe keyboards (especially Samsung's) or pasting text on Samsung devices doesn't fire text changed event,
      * so we're not notified of last entered word. In this case use retrieveCurrentHtmlAsync() to ensure to retrieve current html.
      */
-    open fun getHtml(): String {
+    open fun getCachedHtml(): String {
         return html
     }
 
@@ -70,7 +70,7 @@ abstract class JavaScriptExecutorBase {
 
     /**
      * Queries underlying JavaScript code for latest html.
-     * See getHtml() for explanation when it's sensible to call this method.
+     * See getCachedHtml() for explanation when it's sensible to call this method.
      */
     fun retrieveCurrentHtmlAsync(callback: RetrieveCurrentHtmlCallback) {
         executeEditorJavaScriptFunction("getEncodedHtml()") { html ->

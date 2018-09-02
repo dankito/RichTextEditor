@@ -116,8 +116,8 @@ open class RichTextEditor : FullscreenWebView {
      * Usually this is the up to date html. But in case user uses swipe input, some swipe keyboards (especially Samsung's) or pasting text on Samsung devices doesn't fire text changed event,
      * so we're not notified of last entered word. In this case use retrieveCurrentHtmlAsync() to ensure to retrieve current html.
      */
-    fun getHtml(): String {
-        return javaScriptExecutor.getHtml()
+    fun getCachedHtml(): String {
+        return javaScriptExecutor.getCachedHtml()
     }
 
     @JvmOverloads
@@ -127,7 +127,7 @@ open class RichTextEditor : FullscreenWebView {
 
     /**
      * Queries underlying JavaScript code for latest html.
-     * See getHtml() for explanation when it's sensible to call this method.
+     * See getCachedHtml() for explanation when it's sensible to call this method.
      */
     fun retrieveCurrentHtmlAsync(callback: (String) -> Unit) {
         retrieveCurrentHtmlAsync(object : RetrieveCurrentHtmlCallback {
@@ -141,7 +141,7 @@ open class RichTextEditor : FullscreenWebView {
 
     /**
      * Queries underlying JavaScript code for latest html.
-     * See getHtml() for explanation when it's sensible to call this method.
+     * See getCachedHtml() for explanation when it's sensible to call this method.
      */
     fun retrieveCurrentHtmlAsync(callback: RetrieveCurrentHtmlCallback) {
         javaScriptExecutor.retrieveCurrentHtmlAsync(callback)
