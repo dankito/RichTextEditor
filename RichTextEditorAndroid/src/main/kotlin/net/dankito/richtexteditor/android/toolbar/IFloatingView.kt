@@ -4,8 +4,8 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.hideView
 import net.dankito.richtexteditor.android.extensions.isVisible
 import net.dankito.richtexteditor.android.extensions.showView
-import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
 import net.dankito.richtexteditor.command.ToolbarCommand
+import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
 
 
 interface IFloatingView : IHandlesBackButtonPress {

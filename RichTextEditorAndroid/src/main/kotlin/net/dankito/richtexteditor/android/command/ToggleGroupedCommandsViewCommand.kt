@@ -7,12 +7,12 @@ import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.hideView
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsView
-import net.dankito.richtexteditor.android.util.IHandlesBackButtonPress
-import net.dankito.richtexteditor.android.util.IHandlesTouch
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.extensions.isTouchInsideView
+import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
+import net.dankito.utils.android.ui.view.IHandlesTouch
 
 
 abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)

@@ -7,8 +7,8 @@ import net.dankito.richtexteditor.android.command.TextMarkerCommand
 import net.dankito.richtexteditor.android.command.ToggleGroupedInsertCommandsCommand
 import net.dankito.richtexteditor.android.command.ToggleGroupedTextStylesCommand
 import net.dankito.richtexteditor.android.command.UndoCommand
-import net.dankito.richtexteditor.android.util.IHandlesTouch
 import net.dankito.richtexteditor.command.ToolbarCommand
+import net.dankito.utils.android.ui.view.IHandlesTouch
 
 
 open class GroupedCommandsEditorToolbar : EditorToolbar, IHandlesTouch {
