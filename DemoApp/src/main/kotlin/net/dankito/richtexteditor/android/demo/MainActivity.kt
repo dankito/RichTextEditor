@@ -52,12 +52,18 @@ class MainActivity : AppCompatActivity() {
 
     private var toolbarAppearance = ToolbarAppearance.Grouped
 
+    private val permissionsService = PermissionsService(this)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         editor = findViewById(R.id.editor) as RichTextEditor
+
+        // this is needed if you like to insert images so that the user gets asked for permission to access external storage if needed
+        // see also onRequestPermissionsResult() below
+        editor.permissionsService = permissionsService
 
         topInlineToolbar = findViewById(R.id.topInlineToolbar) as AllCommandsEditorToolbar
         topInlineToolbar.editor = editor
@@ -81,8 +87,6 @@ class MainActivity : AppCompatActivity() {
 
         // show keyboard right at start up
 //        editor.focusEditorAndShowKeyboardDelayed()
-
-        editor.permissionsService = PermissionsService(this)
 
         editor.downloadImageConfig = DownloadImageConfig(DownloadImageUiSetting.AllowSelectDownloadFolderInCode,
                 File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "downloaded_images"))
@@ -108,8 +112,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // only needed if you like to insert images from local device so the user gets asked for permission to access external storage if needed
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        editor.permissionsService?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionsService.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
