@@ -1,7 +1,6 @@
 package net.dankito.richtexteditor.android.command
 
 import android.view.MotionEvent
-import android.view.View
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
@@ -11,6 +10,7 @@ import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.extensions.isTouchInsideView
+import net.dankito.utils.android.extensions.isVisible
 import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
 import net.dankito.utils.android.ui.view.IHandlesTouch
 
@@ -59,7 +59,7 @@ abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Icon
 
     override fun handlesTouch(event: MotionEvent): Boolean {
         getGroupedCommandsView()?.let { groupedCommandsView ->
-            if(groupedCommandsView.visibility == View.VISIBLE) {
+            if(groupedCommandsView.isVisible()) {
                 if(groupedCommandsView.isTouchInsideView(event) == false) { // a touch outside visible GroupedCommandsView
                     groupedCommandsView.hideView() // -> close it
 

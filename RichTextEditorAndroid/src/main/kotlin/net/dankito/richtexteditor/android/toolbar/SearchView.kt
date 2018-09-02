@@ -185,7 +185,7 @@ class SearchView : LinearLayout {
 
 
     private fun toggleShowSearchView() {
-        if(lytSearchControls.visibility == View.GONE) {
+        if(lytSearchControls.isGone()) {
             showSearchControls()
         }
         else {

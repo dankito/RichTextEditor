@@ -11,6 +11,7 @@ import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.utils.android.animation.ShowHideViewAnimator
 import net.dankito.utils.android.extensions.executeActionAfterMeasuringSize
 import net.dankito.utils.android.extensions.getLocationOnScreenY
+import net.dankito.utils.android.extensions.isVisible
 
 
 private val animator = ShowHideViewAnimator()
@@ -39,11 +40,7 @@ private fun IFloatingView.commandInvoked(command: ToolbarCommand) {
 }
 
 fun IFloatingView.isVisible(): Boolean {
-    (this as? View)?.let { view ->
-        return view.visibility == View.VISIBLE
-    }
-
-    return false
+    return (this as? View)?.isVisible() == true
 }
 
 
