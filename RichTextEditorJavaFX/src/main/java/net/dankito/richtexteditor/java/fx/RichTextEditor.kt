@@ -85,7 +85,7 @@ open class RichTextEditor : VBox() {
 
 
     fun getHtml(): String {
-        return javaScriptExecutor.getHtml()
+        return javaScriptExecutor.getCachedHtml()
     }
 
     @JvmOverloads

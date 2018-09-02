@@ -1,6 +1,9 @@
 package net.dankito.richtexteditor
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import net.dankito.richtexteditor.callback.DidHtmlChangeListener
+import net.dankito.richtexteditor.callback.LoadedListener
+import net.dankito.richtexteditor.callback.RetrieveCurrentHtmlCallback
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.CommandState
 import net.dankito.utils.Color
@@ -33,11 +36,11 @@ abstract class JavaScriptExecutorBase {
     var didHtmlChange = false
         private set
 
-    private val didHtmlChangeListeners = mutableSetOf<(Boolean) -> Unit>()
+    private val didHtmlChangeListeners = mutableSetOf<DidHtmlChangeListener>()
 
     private var isLoaded = false
 
-    private val loadedListeners = mutableSetOf<() -> Unit>()
+    private val loadedListeners = mutableSetOf<LoadedListener>()
 
 
     abstract fun executeJavaScript(javaScript: String, resultCallback: ((String) -> Unit)? = null)
@@ -53,7 +56,7 @@ abstract class JavaScriptExecutorBase {
      * Usually this is the up to date html. But in case user uses swipe input, some swipe keyboards (especially Samsung's) or pasting text on Samsung devices doesn't fire text changed event,
      * so we're not notified of last entered word. In this case use retrieveCurrentHtmlAsync() to ensure to retrieve current html.
      */
-    open fun getHtml(): String {
+    open fun getCachedHtml(): String {
         return html
     }
 
@@ -70,16 +73,16 @@ abstract class JavaScriptExecutorBase {
 
     /**
      * Queries underlying JavaScript code for latest html.
-     * See getHtml() for explanation when it's sensible to call this method.
+     * See getCachedHtml() for explanation when it's sensible to call this method.
      */
-    fun retrieveCurrentHtmlAsync(callback: (String) -> Unit) {
+    fun retrieveCurrentHtmlAsync(callback: RetrieveCurrentHtmlCallback) {
         executeEditorJavaScriptFunction("getEncodedHtml()") { html ->
             var decodedHtml = decodeHtml(html)
             if(decodedHtml.startsWith('"') && decodedHtml.endsWith('"')) {
                 decodedHtml = decodedHtml.substring(1, decodedHtml.length - 1)
             }
 
-            callback(decodedHtml)
+            callback.htmlRetrieved(decodedHtml)
         }
     }
 
@@ -250,7 +253,7 @@ abstract class JavaScriptExecutorBase {
     protected fun retrievedEditorState(didHtmlChange: Boolean, commandStates: MutableMap<CommandName, CommandState>) {
         if(this.didHtmlChange != didHtmlChange) {
             this.didHtmlChange = didHtmlChange
-            didHtmlChangeListeners.forEach { it(didHtmlChange) }
+            didHtmlChangeListeners.forEach { it.didHtmlChange(didHtmlChange) }
         }
 
         handleRetrievedCommandStates(commandStates)
@@ -305,12 +308,38 @@ abstract class JavaScriptExecutorBase {
     }
 
 
+    /**
+     * Convenience function for Kotlin users
+     */
     fun addDidHtmlChangeListener(listener: (Boolean) -> Unit) {
+        addDidHtmlChangeListener(object : DidHtmlChangeListener {
+
+            override fun didHtmlChange(didHtmlChange: Boolean) {
+                listener(didHtmlChange)
+            }
+
+        })
+    }
+
+    fun addDidHtmlChangeListener(listener: DidHtmlChangeListener) {
         didHtmlChangeListeners.add(listener)
     }
 
 
+    /**
+     * Convenience function for Kotlin users
+     */
     fun addLoadedListener(listener: () -> Unit) {
+        addLoadedListener(object : LoadedListener {
+
+            override fun editorLoaded() {
+                listener()
+            }
+
+        })
+    }
+
+    fun addLoadedListener(listener: LoadedListener) {
         if(isLoaded) {
             callInitializationListener(listener)
         }
@@ -324,15 +353,15 @@ abstract class JavaScriptExecutorBase {
 
         isLoaded = true
 
-        for(listener in HashSet<() -> Unit>(loadedListeners)) {
+        for(listener in HashSet<LoadedListener>(loadedListeners)) {
             thread { callInitializationListener(listener) }
         }
 
         loadedListeners.clear()
     }
 
-    private fun callInitializationListener(listener: () -> Unit) {
-        listener()
+    private fun callInitializationListener(listener: LoadedListener) {
+        listener.editorLoaded()
     }
 
 }
