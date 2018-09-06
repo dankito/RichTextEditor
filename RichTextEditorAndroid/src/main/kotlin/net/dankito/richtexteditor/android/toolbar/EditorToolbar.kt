@@ -201,6 +201,17 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
+    override fun setVisibility(visibility: Int) {
+        super.setVisibility(visibility)
+
+        if (visibility != View.VISIBLE) { // Toolbar not visible anymore -> also hide all of its floating views
+            commandsHandlingBackButton.forEach { command ->
+                command.handlesBackButtonPress()
+            }
+        }
+    }
+
+
     override fun handlesBackButtonPress(): Boolean {
         commandsHandlingBackButton.forEach { command ->
             if(command.handlesBackButtonPress()) {
