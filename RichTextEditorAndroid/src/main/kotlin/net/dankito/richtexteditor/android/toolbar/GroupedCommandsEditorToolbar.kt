@@ -44,9 +44,11 @@ open class GroupedCommandsEditorToolbar : EditorToolbar, IHandlesTouch {
     }
 
     override fun handlesTouch(event: MotionEvent): Boolean {
-        commandsHandlingOutsideTouches.forEach { commandClosingOnOutsideTouch ->
-            if(commandClosingOnOutsideTouch.handlesTouch(event)) {
-                return true
+        if (event.action == MotionEvent.ACTION_UP) {
+            commandsHandlingOutsideTouches.forEach { commandClosingOnOutsideTouch ->
+                if(commandClosingOnOutsideTouch.handlesTouch(event)) {
+                    return true
+                }
             }
         }
 
