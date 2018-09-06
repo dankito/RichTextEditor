@@ -48,6 +48,8 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
             setRichTextEditorOnCommands(value)
         }
 
+    private var currentIsShown = false
+
     private val commandInvokedListeners = ArrayList<(ToolbarCommand) -> Unit>()
 
 
@@ -72,6 +74,8 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         linearLayout.orientation = LinearLayout.HORIZONTAL
 
         addView(linearLayout)
+
+        this.viewTreeObserver.addOnGlobalLayoutListener { handleGlobalLayoutChanged() }
     }
 
 
@@ -201,17 +205,6 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
-    override fun setVisibility(visibility: Int) {
-        super.setVisibility(visibility)
-
-        if (visibility != View.VISIBLE) { // Toolbar not visible anymore -> also hide all of its floating views
-            commandsHandlingBackButton.forEach { command ->
-                command.handlesBackButtonPress()
-            }
-        }
-    }
-
-
     override fun handlesBackButtonPress(): Boolean {
         commandsHandlingBackButton.forEach { command ->
             if(command.handlesBackButtonPress()) {
@@ -234,6 +227,23 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
         searchViews.forEach {
             it.editor = editor
+        }
+    }
+
+
+    protected open fun handleGlobalLayoutChanged() {
+        if (this.isShown != currentIsShown) { // then visibility changed
+            this.currentIsShown = this.isShown
+
+            if (currentIsShown == false) { // Toolbar not visible anymore -> also hide all of its floating views
+                hideAllFloatingViews()
+            }
+        }
+    }
+
+    protected open fun hideAllFloatingViews() {
+        commandsHandlingBackButton.forEach { command ->
+            command.handlesBackButtonPress()
         }
     }
 
