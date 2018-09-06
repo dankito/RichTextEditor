@@ -10,7 +10,7 @@ import net.dankito.richtexteditor.android.command.SelectValueCommand
 import net.dankito.richtexteditor.android.extensions.calculateOnMeasure
 import net.dankito.richtexteditor.android.extensions.hideView
 import net.dankito.richtexteditor.android.extensions.initializeView
-import net.dankito.richtexteditor.android.extensions.updatePosition
+import net.dankito.richtexteditor.android.extensions.richTextEditorChanged
 import net.dankito.richtexteditor.command.ToolbarCommand
 
 
@@ -34,6 +34,10 @@ class SelectValueView: ListView, IFloatingView {
     override var command: ToolbarCommand? = null
 
     override var editor: RichTextEditor? = null
+        set(value) {
+            field = value
+            richTextEditorChanged(value)
+        }
 
     override var toolbar: EditorToolbar? = null
 
@@ -56,15 +60,9 @@ class SelectValueView: ListView, IFloatingView {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val adjustedHeightAndUpdatePosition = calculateOnMeasure(widthMeasureSpec, heightMeasureSpec)
-        val adjustedHeight = adjustedHeightAndUpdatePosition.first
-        val updatePosition = adjustedHeightAndUpdatePosition.second
+        val adjustedHeight = calculateOnMeasure(heightMeasureSpec)
 
         super.onMeasure(widthMeasureSpec, adjustedHeight)
-
-        if(updatePosition) {
-            updatePosition()
-        }
     }
 
 

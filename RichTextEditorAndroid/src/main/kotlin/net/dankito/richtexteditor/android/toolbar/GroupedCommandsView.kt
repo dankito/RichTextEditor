@@ -11,7 +11,7 @@ import android.widget.RelativeLayout
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.calculateOnMeasure
 import net.dankito.richtexteditor.android.extensions.initializeView
-import net.dankito.richtexteditor.android.extensions.updatePosition
+import net.dankito.richtexteditor.android.extensions.richTextEditorChanged
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.extensions.ColorExtensions
@@ -28,6 +28,10 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
     override var command: ToolbarCommand? = null
 
     override var editor: RichTextEditor? = null
+        set(value) {
+            field = value
+            richTextEditorChanged(value)
+        }
 
     override var toolbar: EditorToolbar? = null
 
@@ -89,15 +93,9 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val adjustedHeightAndUpdatePosition = calculateOnMeasure(widthMeasureSpec, heightMeasureSpec)
-        val adjustedHeight = adjustedHeightAndUpdatePosition.first
-        val updatePosition = adjustedHeightAndUpdatePosition.second
+        val adjustedHeight = calculateOnMeasure(heightMeasureSpec)
 
         super.onMeasure(widthMeasureSpec, adjustedHeight)
-
-        if(updatePosition) {
-            updatePosition()
-        }
     }
 
 

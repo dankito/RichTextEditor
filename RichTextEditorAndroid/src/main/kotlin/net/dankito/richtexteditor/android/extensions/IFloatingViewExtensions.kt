@@ -115,15 +115,12 @@ private fun findParentViewGroup(view: View): ViewGroup? {
 }
 
 
-fun IFloatingView.calculateOnMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) : Pair<Int, Boolean> {
+fun IFloatingView.calculateOnMeasure(heightMeasureSpec: Int) : Int {
     var adjustedHeight = heightMeasureSpec
-    var updatePosition = false
 
     editor?.let { editor ->
         if(lastEditorHeight != editor.measuredHeight) {
-            lastEditorHeight = editor.measuredHeight
             adjustedHeight = View.MeasureSpec.makeMeasureSpec(editor.measuredHeight, View.MeasureSpec.AT_MOST)
-            updatePosition = true
         }
         else if(setMaxHeightOnNextMeasurement) {
             setMaxHeightOnNextMeasurement = false
@@ -131,7 +128,19 @@ fun IFloatingView.calculateOnMeasure(widthMeasureSpec: Int, heightMeasureSpec: I
         }
     }
 
-    return Pair(adjustedHeight, updatePosition)
+    return adjustedHeight
+}
+
+fun IFloatingView.richTextEditorChanged(editor: RichTextEditor?) { // TODO: remove OnGlobalLayoutListener from previous RichTextEditor (but that editor changes currently should never be the case)
+    editor?.let { editor ->
+        editor.viewTreeObserver.addOnGlobalLayoutListener {
+            if(lastEditorHeight != editor.measuredHeight) {
+                lastEditorHeight = editor.measuredHeight
+
+                updatePosition()
+            }
+        }
+    }
 }
 
 
