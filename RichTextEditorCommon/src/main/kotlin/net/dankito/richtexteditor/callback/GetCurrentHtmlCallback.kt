@@ -1,7 +1,7 @@
 package net.dankito.richtexteditor.callback
 
 
-interface RetrieveCurrentHtmlCallback {
+interface GetCurrentHtmlCallback {
 
     fun htmlRetrieved(html: String)
 
