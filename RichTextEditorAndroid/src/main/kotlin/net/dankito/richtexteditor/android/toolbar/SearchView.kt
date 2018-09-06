@@ -49,14 +49,7 @@ class SearchView : LinearLayout {
             this.webView = value
         }
 
-    var webView: WebView? = null // when not used in conjunction with RichTextEditor but a normal WebView
-        set(value) {
-            field = value
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                value?.setFindListener { activeMatchOrdinal, numberOfMatches, isDoneCounting -> onFindResultReceived(activeMatchOrdinal, numberOfMatches, isDoneCounting) }
-            }
-        }
+    var webView: WebView? = null
 
     var searchViewExpandedListener: ((isExpanded: Boolean) -> Unit)? = null
 
@@ -125,6 +118,8 @@ class SearchView : LinearLayout {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             countSearchResultsLabel.textAlignment = View.TEXT_ALIGNMENT_GRAVITY
         }
+
+        onFindResultReceived(0, 0, true) // to set initial value
     }
 
     private fun initButtons(context: Context) {
@@ -201,6 +196,10 @@ class SearchView : LinearLayout {
 
         searchField.showKeyboard()
         searchInWebView(searchField.text.toString())
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) { // if there are multiple SearchViews in layout, in this way it's ensured that last expanded SearchView sets FindListener
+            webView?.setFindListener { activeMatchOrdinal, numberOfMatches, isDoneCounting -> onFindResultReceived(activeMatchOrdinal, numberOfMatches, isDoneCounting) }
+        }
     }
 
     fun hideSearchControls() {
