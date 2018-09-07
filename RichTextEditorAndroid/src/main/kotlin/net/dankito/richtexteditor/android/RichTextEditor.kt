@@ -16,7 +16,7 @@ import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.utils.android.KeyboardState
 import net.dankito.utils.android.extensions.showKeyboard
-import net.dankito.utils.android.permissions.PermissionsService
+import net.dankito.utils.android.permissions.IPermissionsService
 
 
 open class RichTextEditor : FullscreenWebView {
@@ -28,7 +28,7 @@ open class RichTextEditor : FullscreenWebView {
 
     val javaScriptExecutor = AndroidJavaScriptExecutor(this)
 
-    var permissionsService: PermissionsService? = null
+    var permissionsService: IPermissionsService? = null
 
     var downloadImageConfig: DownloadImageConfig? = null
 

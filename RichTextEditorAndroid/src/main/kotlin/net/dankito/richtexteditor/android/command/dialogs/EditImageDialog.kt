@@ -12,12 +12,12 @@ import net.dankito.filechooserdialog.FileChooserDialog
 import net.dankito.filechooserdialog.model.ExtensionsFilter
 import net.dankito.filechooserdialog.model.FileChooserDialogConfig
 import net.dankito.richtexteditor.android.R
-import net.dankito.utils.android.GenericTextWatcher
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import net.dankito.richtexteditor.util.ImageDownloader
-import net.dankito.utils.android.permissions.PermissionsService
+import net.dankito.utils.android.GenericTextWatcher
 import net.dankito.utils.android.io.AndroidFolderUtils
+import net.dankito.utils.android.permissions.IPermissionsService
 import net.dankito.utils.web.UrlUtil
 import java.io.File
 
@@ -31,7 +31,7 @@ class EditImageDialog : DialogFragment() {
     private val urlUtil = UrlUtil()
 
 
-    private lateinit var permissionsService: PermissionsService
+    private lateinit var permissionsService: IPermissionsService
 
     private var downloadImageConfig: DownloadImageConfig? = null
 
@@ -72,7 +72,7 @@ class EditImageDialog : DialogFragment() {
     }
 
 
-    fun show(fragmentManager: FragmentManager, permissionsService: PermissionsService, downloadImageConfig: DownloadImageConfig? = null,
+    fun show(fragmentManager: FragmentManager, permissionsService: IPermissionsService, downloadImageConfig: DownloadImageConfig? = null,
              imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
         this.permissionsService = permissionsService
         this.downloadImageConfig = downloadImageConfig
