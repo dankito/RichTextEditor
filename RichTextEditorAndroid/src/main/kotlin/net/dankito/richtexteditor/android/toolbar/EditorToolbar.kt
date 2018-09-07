@@ -213,6 +213,12 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
             }
         }
 
+        searchViews.forEach { searchView ->
+            if(searchView.handlesBackButtonPress()) {
+                return true
+            }
+        }
+
         return false
     }
 

@@ -21,11 +21,12 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.util.StyleApplier
 import net.dankito.utils.android.KeyboardUtils
 import net.dankito.utils.android.extensions.*
+import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
 import java.util.*
 import kotlin.concurrent.schedule
 
 
-class SearchView : LinearLayout {
+class SearchView : LinearLayout, IHandlesBackButtonPress {
 
     companion object {
         const val SearchFieldMinWidthInDp = 100
@@ -179,12 +180,16 @@ class SearchView : LinearLayout {
     }
 
 
+    open fun isExpanded(): Boolean {
+        return lytSearchControls.isVisible()
+    }
+
     private fun toggleShowSearchView() {
-        if(lytSearchControls.isGone()) {
-            showSearchControls()
+        if(isExpanded()) {
+            hideSearchControls()
         }
         else {
-            hideSearchControls()
+            showSearchControls()
         }
     }
 
@@ -266,6 +271,17 @@ class SearchView : LinearLayout {
         timerResetIsScrollingDueToSearchFieldTextChange.schedule(350) { // reset after a while if onScrollChanged() has been called (due to search result was out of view) or not
             isScrollingToSearchResult = false // reset
         }
+    }
+
+
+    override fun handlesBackButtonPress(): Boolean {
+        if(isExpanded()) {
+            hideSearchControls()
+
+            return true
+        }
+
+        return false
     }
 
 
