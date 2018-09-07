@@ -1,22 +1,17 @@
 package net.dankito.richtexteditor.android.command
 
-import android.view.MotionEvent
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.richtexteditor.android.extensions.hideView
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsView
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
-import net.dankito.utils.android.extensions.isTouchInsideView
-import net.dankito.utils.android.extensions.isVisible
 import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
-import net.dankito.utils.android.ui.view.IHandlesTouch
 
 
 abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
-    : ToolbarCommand(command, icon, style, commandExecutedListener), ICommandRequiringEditor, IHandlesBackButtonPress, IHandlesTouch {
+    : ToolbarCommand(command, icon, style, commandExecutedListener), ICommandRequiringEditor, IHandlesBackButtonPress {
 
     override var editor: RichTextEditor? = null
 
@@ -52,21 +47,6 @@ abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Icon
     override fun handlesBackButtonPress(): Boolean {
         getGroupedCommandsView()?.let { groupedCommandsView ->
             return groupedCommandsView.handlesBackButtonPress()
-        }
-
-        return false
-    }
-
-    override fun handlesTouch(event: MotionEvent): Boolean {
-        getGroupedCommandsView()?.let { groupedCommandsView ->
-            if(groupedCommandsView.isVisible()) {
-                if(groupedCommandsView.isTouchInsideView(event) == false && // a touch outside visible GroupedCommandsView
-                        editor?.editorToolbar?.isTouchInsideView(event) == false) { // but also not on (another command on) toolbar
-                    groupedCommandsView.hideView() // -> close it
-
-                    return true
-                }
-            }
         }
 
         return false

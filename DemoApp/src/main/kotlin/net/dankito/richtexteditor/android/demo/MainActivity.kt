@@ -111,16 +111,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // if you are using GroupedCommandsToolbar, also overwrite this method and pass event on to handlesTouch() so that
-    // expanded GroupedCommandsView gets closed on a touch outside of its view (e. g. on editor)
-    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        if(topGroupedCommandsToolbar.handlesTouch(event) || bottomGroupedCommandsToolbar.handlesTouch(event)) {
-            return true
-        }
-
-        return super.dispatchTouchEvent(event)
-    }
-
     // only needed if you like to insert images from local device so the user gets asked for permission to access external storage if needed
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         permissionsService.onRequestPermissionsResult(requestCode, permissions, grantResults)

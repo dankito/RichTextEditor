@@ -3,6 +3,7 @@ package net.dankito.richtexteditor.android.toolbar
 import android.content.Context
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
@@ -45,7 +46,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         set(value) {
             field = value
 
-            setRichTextEditorOnCommands(value)
+            richTextEditorChanged(value)
         }
 
     private var currentIsShown = false
@@ -216,6 +217,16 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
+    protected open fun richTextEditorChanged(value: RichTextEditor?) {
+        setRichTextEditorOnCommands(value)
+
+        value?.addOnTouchListener { event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                hideFloatingViews()
+            }
+        }
+    }
+
     protected open fun setRichTextEditorOnCommands(editor: RichTextEditor?) {
         commands.keys.forEach {
             if(it is ICommandRequiringEditor) { // editor has to be set before executor
@@ -236,16 +247,24 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
             this.currentIsShown = this.isShown
 
             if (currentIsShown == false) { // Toolbar not visible anymore -> also hide all of its floating views
-                hideAllFloatingViewsAndCollapseSearchViews()
+                hideFloatingViewsAndCollapseSearchViews()
             }
         }
     }
 
-    protected open fun hideAllFloatingViewsAndCollapseSearchViews() {
+    protected open fun hideFloatingViewsAndCollapseSearchViews() {
+        hideFloatingViews()
+
+        collapseSearchViews()
+    }
+
+    protected open fun hideFloatingViews() {
         commandsHandlingBackButton.forEach { command ->
             command.handlesBackButtonPress()
         }
+    }
 
+    protected open fun collapseSearchViews() {
         searchViews.forEach { searchView ->
             searchView.hideSearchControls()
         }

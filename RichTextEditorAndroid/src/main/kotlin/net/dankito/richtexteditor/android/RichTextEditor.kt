@@ -9,6 +9,7 @@ import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebChromeClient
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
@@ -34,6 +35,8 @@ open class RichTextEditor : FullscreenWebView {
     private var isLoaded = false
 
     private var paddingToSetOnStart: Rect? = null
+
+    private val onTouchListeners = ArrayList<(MotionEvent) -> Unit>()
 
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -262,6 +265,25 @@ open class RichTextEditor : FullscreenWebView {
                 "}) ();"
         javaScriptExecutor.executeJavaScript(jsCSSImport)
     }
+
+
+    open fun addOnTouchListener(listener: (MotionEvent) -> Unit) {
+        onTouchListeners.add(listener)
+    }
+
+    open fun removeOnTouchListener(listener: (MotionEvent) -> Unit) {
+        onTouchListeners.remove(listener)
+    }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        val result = super.dispatchTouchEvent(event)
+
+        ArrayList(onTouchListeners).forEach { listener -> // make a copy of listeners otherwise ConcurrentModificationException will be thrown
+            listener(event) }
+
+        return result
+    }
+
 
     @JvmOverloads
     fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
