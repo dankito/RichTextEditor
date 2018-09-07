@@ -1,4 +1,6 @@
 # RichTextEditor
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.dankito.richtexteditor/richtexteditor-common/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.dankito.richtexteditor/richtexteditor-common)
+
 WYSIWYG editor for Android and JavaFX with a rich set of supported formatting options.
 
 Based on [https://github.com/wasabeef/richeditor-android](url), but with more options like setting the font and text foreground and background color.
