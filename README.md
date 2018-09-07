@@ -1,5 +1,5 @@
 # RichTextEditor
-WYSIWYG editor for Android with a rich set of supported formatting options.
+WYSIWYG editor for Android and JavaFX with a rich set of supported formatting options.
 
 Based on [https://github.com/wasabeef/richeditor-android](url), but with more options like setting the font and text foreground and background color.
 And it also has ready to use UI elements implemented for these.
@@ -7,27 +7,29 @@ And it also has ready to use UI elements implemented for these.
 
 ## Features
 
+- Bold, Italic, Underline, Strike through, Subscript, Superscript
+- Heading 1 - 6, Text body, Preformatted, Block quote
 - Font (reads all system fonts)
 - Font Size
 - Text Color
 - Text Background Color
-- Heading 1 - 6, Text body, Preformatted, Block quote
-- Bold, Italic, Underline, Strike through, Subscript, Superscript
+- Highlight text
 - Justify Left, Center, Right, Blockquote
 - Indent, Outdent
 - Undo, Redo
-- Insert Image
-- Insert Link
-- Insert Checkbox
 - Unordered List (Bullets)
 - Ordered List (Numbers)
+- Insert local or remote Image
+- Insert Link
+- Insert Checkbox
+- Search
 - For all those it has predefined commands. You can use the [standard toolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/AllCommandsEditorToolbar.kt) or create your own within minutes.
 - All commands have a Material Design icon. But of course you can give all of them your custom icon.
 
 
 ## Demo application
 
-You can download it from [PlayStore](https://play.google.com/store/apps/details?id=net.dankito.richtexteditor.android), can use the [precompiled .apk](res/PlayStore/releases/0001_v1.0_DemoApp-release.apk) or compile the DemoApp project yourself.
+You can download it from [PlayStore](https://play.google.com/store/apps/details?id=net.dankito.richtexteditor.android), can use the [precompiled .apk](res/PlayStore/releases/2000100_v2.0.1_DemoApp-release.apk) or compile the DemoApp project yourself.
 
 
 ## Setup
@@ -35,7 +37,7 @@ You can download it from [PlayStore](https://play.google.com/store/apps/details?
 Gradle:
 ```
 dependencies {
-  compile 'net.dankito.richtexteditor:richtexteditor-android:1.0'
+  compile 'net.dankito.richtexteditor:richtexteditor-android:2.0.1'
 }
 ```
 
@@ -44,7 +46,7 @@ Maven:
 <dependency>
    <groupId>net.dankito.richtexteditor</groupId>
    <artifactId>richtexteditor-android</artifactId>
-   <version>1.0</version>
+   <version>2.0.1</version>
 </dependency>
 ```
 
@@ -68,7 +70,7 @@ Layout xml
         android:layout_weight="10"
     />
 
-    <net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
+    <net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
         android:id="@+id/editorToolbar"
         android:layout_width="match_parent"
         android:layout_height="36dp"
@@ -85,37 +87,73 @@ public class MainActivity extends AppCompatActivity {
 
     private RichTextEditor editor;
 
-    private AllCommandsEditorToolbar editorToolbar;
+    private GroupedCommandsEditorToolbar bottomGroupedCommandsToolbar;
+
+    private IPermissionsService permissionsService = new PermissionsService(this);
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_main);
 
         editor = (RichTextEditor) findViewById(R.id.editor);
 
-        editorToolbar = (AllCommandsEditorToolbar) findViewById(R.id.editorToolbar);
-        editorToolbar.setEditor(editor);
+        // this is needed if you like to insert images so that the user gets asked for permission to access external storage if needed
+        // see also onRequestPermissionsResult() below
+        editor.setPermissionsService(permissionsService);
+
+        bottomGroupedCommandsToolbar = (GroupedCommandsEditorToolbar) findViewById(R.id.bottomGroupedCommandsToolbar);
+        bottomGroupedCommandsToolbar.setEditor(editor);
 
         editor.setEditorFontSize(20);
-        editor.setPadding((int) (4 * getResources().getDisplayMetrics().density));
+        editor.setPadding((4 * (int) getResources().getDisplayMetrics().density));
 
         // some properties you also can set on editor
-        // editor.setEditorBackgroundColor(Color.YELLOW);
-        // editor.setEditorFontColor(Color.MAGENTA);
-        // editor.setEditorFontFamily("cursive");
+//        editor.setEditorBackgroundColor(Color.YELLOW)
+//        editor.setEditorFontColor(Color.MAGENTA)
+//        editor.setEditorFontFamily("cursive")
 
         // show keyboard right at start up
-        editor.focusEditorAndShowKeyboardDelayed();
+//        editor.focusEditorAndShowKeyboardDelayed()
+
+        // only needed if you allow to automatically download remote images
+        editor.setDownloadImageConfig(new DownloadImageConfig(DownloadImageUiSetting.AllowSelectDownloadFolderInCode,
+            new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "downloaded_images")));
     }
 
 
+    // Important: Overwrite onBackPressed and pass it to toolbar.There's no other way that it can get informed of back button presses.
     @Override
     public void onBackPressed() {
-        if(editorToolbar.handlesBackButtonPress() == false) {
+        if(bottomGroupedCommandsToolbar.handlesBackButtonPress() == false) {
             super.onBackPressed();
         }
+    }
+
+    // only needed if you like to insert images from local device so the user gets asked for permission to access external storage if needed
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        permissionsService.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+
+    // then when you want to do something with edited html
+    private void save() {
+        editor.getCurrentHtmlAsync(new GetCurrentHtmlCallback() {
+
+            @Override
+            public void htmlRetrieved(@NotNull String html) {
+                saveHtml(html);
+            }
+        });
+    }
+
+    private void saveHtml(String html) {
+        // ...
     }
 
 }
