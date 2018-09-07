@@ -40,7 +40,7 @@ ext {
 
     // JavaFX
 
-    tornadoFXVersion = '1.7.14'
+    tornadoFXVersion = '1.7.17'
 
     tornadoFXControlsVersion = '1.0.6'
 
