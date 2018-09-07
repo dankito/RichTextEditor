@@ -236,14 +236,18 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
             this.currentIsShown = this.isShown
 
             if (currentIsShown == false) { // Toolbar not visible anymore -> also hide all of its floating views
-                hideAllFloatingViews()
+                hideAllFloatingViewsAndCollapseSearchViews()
             }
         }
     }
 
-    protected open fun hideAllFloatingViews() {
+    protected open fun hideAllFloatingViewsAndCollapseSearchViews() {
         commandsHandlingBackButton.forEach { command ->
             command.handlesBackButtonPress()
+        }
+
+        searchViews.forEach { searchView ->
+            searchView.hideSearchControls()
         }
     }
 
