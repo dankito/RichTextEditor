@@ -26,7 +26,7 @@ import java.util.*
 import kotlin.concurrent.schedule
 
 
-class SearchView : LinearLayout, IHandlesBackButtonPress {
+open class SearchView : LinearLayout, IHandlesBackButtonPress {
 
     companion object {
         const val SearchFieldMinWidthInDp = 100
@@ -146,7 +146,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
     }
 
 
-    fun applyStyle(style: SearchViewStyle) {
+    open fun applyStyle(style: SearchViewStyle) {
         this.style = style
 
         lytSearchControls.setBackgroundColor(style.searchControlsBackgroundColor)
@@ -184,7 +184,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
         return lytSearchControls.isVisible()
     }
 
-    private fun toggleShowSearchView() {
+    open fun toggleShowSearchView() {
         if(isExpanded()) {
             collapse()
         }
@@ -193,7 +193,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
         }
     }
 
-    fun expand() {
+    open fun expand() {
         (style?.hideSearchControlsIcon as? AndroidIcon)?.let { btnToggleSearchControlsVisibility.setImageResource(it.iconResourceId) }
         lytSearchControls.visibility = View.VISIBLE
 
@@ -207,7 +207,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
         }
     }
 
-    fun collapse() {
+    open fun collapse() {
         if(editor != null) {
             if(editor?.isInFullscreenMode == true) {
                 searchField.hideKeyboard()
@@ -231,11 +231,11 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
         searchViewExpandedListener?.invoke(false)
     }
 
-    fun clearSearchResults() {
+    protected fun clearSearchResults() {
         webView?.clearMatches()
     }
 
-    private fun searchInWebView(query: String) {
+    protected open fun searchInWebView(query: String) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             webView?.findAllAsync(query)
         }
@@ -245,19 +245,19 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
         }
     }
 
-    private fun jumpToPreviousSearchResult() {
+    protected open fun jumpToPreviousSearchResult() {
         setIsScrollingToSearchResult()
 
         webView?.findNext(false)
     }
 
-    private fun jumpToNextSearchResult() {
+    protected open fun jumpToNextSearchResult() {
         setIsScrollingToSearchResult()
 
         webView?.findNext(true)
     }
 
-    private fun onFindResultReceived(activeMatchOrdinal: Int, numberOfMatches: Int, doneCounting: Boolean) {
+    protected open fun onFindResultReceived(activeMatchOrdinal: Int, numberOfMatches: Int, doneCounting: Boolean) {
         if(doneCounting) {
             val currentMatch = if(numberOfMatches == 0) 0 else activeMatchOrdinal + 1
             countSearchResultsLabel.text = countSearchResultsLabel.context.getString(R.string.count_search_results_label, currentMatch, numberOfMatches)
@@ -265,7 +265,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
     }
 
 
-    private fun setIsScrollingToSearchResult() {
+    protected open fun setIsScrollingToSearchResult() {
         isScrollingToSearchResult = true
 
         timerResetIsScrollingDueToSearchFieldTextChange.schedule(350) { // reset after a while if onScrollChanged() has been called (due to search result was out of view) or not
@@ -297,7 +297,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
         super.onDetachedFromWindow()
     }
 
-    private val softKeyboardToggleListener = { isKeyboardVisible: Boolean ->
+    protected val softKeyboardToggleListener = { isKeyboardVisible: Boolean ->
         if(editor?.isInFullscreenMode == true) {
             if(isKeyboardVisible == false) {
                 collapse()
@@ -307,7 +307,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
 
 
 
-    private val searchFieldTextWatcher = object : TextWatcher {
+    protected val searchFieldTextWatcher = object : TextWatcher {
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             setIsScrollingToSearchResult()
