@@ -272,7 +272,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
     protected open fun collapseSearchViews() {
         searchViews.forEach { searchView ->
-            searchView.hideSearchControls()
+            searchView.collapse()
         }
     }
 

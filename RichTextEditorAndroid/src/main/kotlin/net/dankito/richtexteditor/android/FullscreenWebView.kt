@@ -391,7 +391,7 @@ open class FullscreenWebView : WebView {
         isInFullscreenMode = false
         updateLastOnScrollFullscreenModeTogglingTimestamp()
         hideOptionsBarOnUiThread()
-        searchView?.hideSearchControls()
+        searchView?.collapse()
 
         changeFullscreenModeListener?.invoke(FullscreenMode.Leave)
 

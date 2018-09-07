@@ -186,14 +186,14 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
 
     private fun toggleShowSearchView() {
         if(isExpanded()) {
-            hideSearchControls()
+            collapse()
         }
         else {
-            showSearchControls()
+            expand()
         }
     }
 
-    private fun showSearchControls() {
+    fun expand() {
         (style?.hideSearchControlsIcon as? AndroidIcon)?.let { btnToggleSearchControlsVisibility.setImageResource(it.iconResourceId) }
         lytSearchControls.visibility = View.VISIBLE
 
@@ -207,7 +207,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
         }
     }
 
-    fun hideSearchControls() {
+    fun collapse() {
         if(editor != null) {
             if(editor?.isInFullscreenMode == true) {
                 searchField.hideKeyboard()
@@ -276,7 +276,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
 
     override fun handlesBackButtonPress(): Boolean {
         if(isExpanded()) {
-            hideSearchControls()
+            collapse()
 
             return true
         }
@@ -300,7 +300,7 @@ class SearchView : LinearLayout, IHandlesBackButtonPress {
     private val softKeyboardToggleListener = { isKeyboardVisible: Boolean ->
         if(editor?.isInFullscreenMode == true) {
             if(isKeyboardVisible == false) {
-                hideSearchControls()
+                collapse()
             }
         }
     }
