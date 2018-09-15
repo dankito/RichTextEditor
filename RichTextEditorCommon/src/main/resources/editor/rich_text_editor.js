@@ -19,6 +19,8 @@ var editor = {
     _imageMinWidth: 100,
     _imageMinHeight: 50,
 
+    _isImageResizingEnabled: true,
+
 
     init: function() {
         document.addEventListener("selectionchange", function() {
@@ -204,7 +206,9 @@ var editor = {
         if(html.length != 0) {
             this._textField.innerHTML = this._decodeHtml(html);
 
-            this.makeImagesResizeable();
+            if(this._isImageResizingEnabled) {
+                this.makeImagesResizeable();
+            }
         }
         else {
             this._ensureEditorInsertsParagraphWhenPressingEnter();
@@ -234,6 +238,8 @@ var editor = {
     },
 
     makeImagesResizeable: function() {
+        this._isImageResizingEnabled = true;
+
         var images = document.getElementsByTagName("img");
 
         for(var i = 0; i < images.length; i++) {
@@ -242,6 +248,8 @@ var editor = {
     },
 
     disableImageResizing: function() {
+        this._isImageResizingEnabled = false;
+
         var images = document.getElementsByTagName("img");
 
         for(var i = 0; i < images.length; i++) {
@@ -419,7 +427,9 @@ var editor = {
 
         document.execCommand('insertHTML', false, html);
 
-        this.makeImagesResizeable();
+        if(this._isImageResizingEnabled) {
+            this.makeImagesResizeable();
+        }
 
         this._updateEditorState();
     },
@@ -478,7 +488,7 @@ var editor = {
     setInputEnabled: function(inputEnabled) {
         this._textField.contentEditable = String(inputEnabled);
 
-        if(inputEnabled){
+        if(inputEnabled) { // TODO: may interferes with _isImageResizingEnabled
             this.makeImagesResizeable();
         }
         else {
