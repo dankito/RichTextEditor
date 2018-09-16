@@ -27,8 +27,8 @@ version appVersionName
 def mavenArtifactId = richTextEditorJavaFXMavenArtifactId
 
 
-compileKotlin.kotlinOptions.jvmTarget = '1.8'
-compileTestKotlin.kotlinOptions.jvmTarget = '1.8'
+compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+compileTestKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 
 
 
