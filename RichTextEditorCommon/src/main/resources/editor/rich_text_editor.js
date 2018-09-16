@@ -2,6 +2,8 @@
 // also edit class name in style.css when changing this.
 const resizableImageClass = "resizable";
 
+const EditorDefaultHtml = "<p>​</p>";
+
 
 var editor = {
 
@@ -549,7 +551,8 @@ var editor = {
 
     _updateEditorState: function() {
         var html = this._getHtml();
-        var didHtmlChange = this._htmlSetByApplication != null && this._htmlSetByApplication != html;
+        var didHtmlChange = (this._htmlSetByApplication != null && this._htmlSetByApplication != html) || // html set by application changed
+                            (this._htmlSetByApplication == null && html != EditorDefaultHtml); // or if html not set by application: default html changed
 
         if(typeof javafx !== 'undefined') { // in JavaFX changing window.location.href doesn't work -> JavaFX determines editor state manually
             javafx.updateEditorState(didHtmlChange)
