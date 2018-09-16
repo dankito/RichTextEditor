@@ -194,8 +194,16 @@ var editor = {
         return this._textField.innerHTML;
     },
 
+    _getHtmlWithoutInternalModifications: function() {
+        var clonedHtml = this._textField.cloneNode(true);
+
+        this._removeResizeImageClasses(clonedHtml);
+
+        return clonedHtml.innerHTML;
+    },
+
     getEncodedHtml: function() {
-        return encodeURI(this._getHtml());
+        return encodeURI(this._getHtmlWithoutInternalModifications());
     },
 
     setHtml: function(html, baseUrl) {
@@ -250,6 +258,10 @@ var editor = {
     disableImageResizing: function() {
         this._isImageResizingEnabled = false;
 
+        this._removeResizeImageClasses(document);
+    },
+
+    _removeResizeImageClasses: function(document) {
         var images = document.getElementsByTagName("img");
 
         for(var i = 0; i < images.length; i++) {
