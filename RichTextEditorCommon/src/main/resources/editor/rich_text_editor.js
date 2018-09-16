@@ -419,7 +419,11 @@ var editor = {
     },
 
     insertImage: function(url, alt) {
-        var html = '<img class="' + resizableImageClass + '" src="' + url + '" alt="' + alt + '"/>';
+        if(!!! alt) { // if alt is not defined, set it to url
+            alt = url;
+        }
+
+        var html = '<img class="' + resizableImageClass + '" src="' + url + '" alt="' + alt + '"/>'; // TODO: only add resizableImageClass if _isImageResizingEnabled == true
         this._insertHtml(html);
     },
 
