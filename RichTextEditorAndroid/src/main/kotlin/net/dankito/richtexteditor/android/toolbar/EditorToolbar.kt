@@ -192,7 +192,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
     open fun styleChanged(alsoApplyForGroupedCommandViews: Boolean = false) {
-        commands.forEach { command, view ->
+        commands.forEach { (command, view) -> // Map.forEach { } is only available in Java 8 (>= Android 7) -> use destructure from Kotlin stdlib, see https://stackoverflow.com/a/42869245
             applyCommandStyle(command, view)
 
             if(command is ToggleGroupedCommandsViewCommand && alsoApplyForGroupedCommandViews) {
