@@ -157,7 +157,7 @@ var editor = {
 
     _handlePaste: function(event) {
         var clipboardData = event.clipboardData || window.clipboardData;
-        var pastedData = clipboardData.getData('text/html') || clipboardData.getData('Text').replace(/(?:\r\n|\r|\n)/g, '<br />'); // replace new lines
+        var pastedData = clipboardData.getData('text/html') || clipboardData.getData('text').replace(/(?:\r\n|\r|\n)/g, '<br />'); // replace new lines // TODO: may use 'text/plain' instead of 'text'
 
         this._waitTillPastedDataInserted(event, pastedData);
     },
