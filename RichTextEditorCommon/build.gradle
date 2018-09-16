@@ -27,6 +27,10 @@ version appVersionName
 def mavenArtifactId = richTextEditorCommonMavenArtifactId
 
 
+compileKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_1_6
+compileTestKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_1_6
+
+
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion" // to overwrite version from an included library
