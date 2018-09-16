@@ -32,7 +32,7 @@ compileTestKotlin.kotlinOptions.jvmTarget = JavaVersion.VERSION_1_6
 
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion" // to overwrite version from an included library
 
     compile "net.dankito.utils:java-utils:$javaUtilsVersion", {
