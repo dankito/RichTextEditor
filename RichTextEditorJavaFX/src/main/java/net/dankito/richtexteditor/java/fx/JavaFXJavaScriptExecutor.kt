@@ -21,6 +21,8 @@ class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("
 
     companion object {
 
+        private val JavaScriptMemberName = "javafx"
+
         private val commandNames = listOf(CommandName.BOLD, CommandName.ITALIC, CommandName.UNDERLINE, CommandName.STRIKETHROUGH,
                 CommandName.SUPERSCRIPT, CommandName.SUBSCRIPT, CommandName.FORMATBLOCK, CommandName.REMOVEFORMAT,
                 CommandName.UNDO, CommandName.REDO,
@@ -66,9 +68,19 @@ class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("
             this.page = pageField.get(engine) as? WebPage
         } catch(e: Exception) { log.error("Could not access page object", e) }
 
-        setJavaScriptMember("javafx", this)
+        setJavaScriptMember(JavaScriptMemberName, this)
 
         engine.load(htmlEditorFile.toURI().toString())
+    }
+
+
+    override fun editorLoaded() {
+        // JavaFX by default doesn't print console.log() messages to console / log output -> use JavaScriptMemberName's log() bridge method to do that
+        engine.executeScript("console.log = function(message) {\n" +
+                "    $JavaScriptMemberName.log(message);\n" +
+                "};")
+
+        super.editorLoaded()
     }
 
 
@@ -154,6 +166,10 @@ class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("
 
             retrievedEditorState(didHtmlChange, commandStates)
         }
+    }
+
+    fun log(logMessage: String) {
+        log.debug("JavaScript: $logMessage")
     }
 
 }

@@ -351,7 +351,7 @@ abstract class JavaScriptExecutorBase {
         }
     }
 
-    protected fun editorLoaded() {
+    protected open fun editorLoaded() {
         log.info("RichTextEditor is now loaded")
 
         isLoaded = true
