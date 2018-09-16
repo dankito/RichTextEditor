@@ -419,12 +419,19 @@ var editor = {
     },
 
     insertImage: function(url, alt) {
-        if(!!! alt) { // if alt is not defined, set it to url
-            alt = url;
+        var imageElement = document.createElement('img');
+
+        imageElement.setAttribute('src', url);
+
+        if(alt) {
+            imageElement.setAttribute('alt', alt);
         }
 
-        var html = '<img class="' + resizableImageClass + '" src="' + url + '" alt="' + alt + '"/>'; // TODO: only add resizableImageClass if _isImageResizingEnabled == true
-        this._insertHtml(html);
+        if(this._isImageResizingEnabled) {
+            imageElement.setAttribute('class', resizableImageClass);
+        }
+
+        this._insertHtml(imageElement.outerHTML);
     },
 
     insertCheckbox: function(text) {
