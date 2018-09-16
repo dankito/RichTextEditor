@@ -2,6 +2,7 @@ package net.dankito.richtexteditor.android.extensions
 
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewParent
 import android.widget.RelativeLayout
 import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
@@ -50,7 +51,7 @@ fun IFloatingView.updatePosition() {
             toolbar?.let { toolbar ->
                 view.y =
                         if(isToolbarBelowEditor(editor, toolbar)) {
-                            getToolbarTop(toolbar) - measuredHeight
+                            getToolbarTopMinusEditorTop(editor, toolbar) - measuredHeight
                         }
                         else {
                             toolbar.bottom.toFloat()
@@ -190,7 +191,7 @@ private fun IFloatingView.animateShowViewAfterMeasuringHeight(view: View) {
             val isToolbarBelowEditor = isToolbarBelowEditor(editor, toolbar)
 
             if(isToolbarBelowEditor) {
-                val startPosition = getToolbarTop(toolbar)
+                val startPosition = getToolbarTopMinusEditorTop(editor, toolbar)
                 val endPosition = startPosition - view.measuredHeight
 
                 playAnimation(view, true, startPosition, endPosition)
@@ -205,18 +206,28 @@ private fun IFloatingView.animateShowViewAfterMeasuringHeight(view: View) {
     }
 }
 
-private fun getToolbarTop(toolbar: EditorToolbar): Float {
-    var toolbarTop = toolbar.top.toFloat()
-    var parent = toolbar.parent
+private fun getToolbarTopMinusEditorTop(editor: RichTextEditor, toolbar: EditorToolbar): Float {
+    var toolbarTop = getToolbarTop(toolbar)
 
-    while(toolbarTop == 0f && parent != null) { // then toolbar is most likely embedded into another view -> get parent view's top
-        (toolbar.parent as? ViewGroup)?.top?.let { parentTop ->
-            toolbarTop = parentTop.toFloat()
-            parent = parent?.parent
-        }
+    (editor.parent as? ViewGroup)?.let { editorParent -> // adjustment needed if above editor is (are) another view(s) -> subtract that view(s)' height
+        toolbarTop -= editorParent.top
     }
 
     return toolbarTop
+}
+
+private fun getToolbarTop(toolbar: EditorToolbar): Float {
+    var toolbarTop = toolbar.top
+    var parent: ViewParent? = toolbar
+
+    while(toolbarTop == 0 && parent != null) { // then toolbar is most likely embedded into another view -> get parent view's top
+        (parent.parent as? ViewGroup)?.let { parentsParent ->
+            toolbarTop = parentsParent.top
+            parent = parentsParent
+        }
+    }
+
+    return toolbarTop.toFloat()
 }
 
 private fun playAnimation(view: View, show: Boolean, yStart: Float, yEnd: Float, animationEndListener: (() -> Unit)? = null) {
