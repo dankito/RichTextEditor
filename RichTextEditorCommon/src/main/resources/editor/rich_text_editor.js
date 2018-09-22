@@ -284,7 +284,12 @@ var editor = {
     _removeClass: function(element, className) {
       if (this._hasClass(element, className)) {
         var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-        element.className = element.className.replace(reg, ' ');
+        element.className = element.className.replace(reg, '');
+
+        var classAttributeValue = element.getAttribute('class');
+        if (!!! classAttributeValue) {
+            element.removeAttribute('class');
+        }
       }
     },
     
