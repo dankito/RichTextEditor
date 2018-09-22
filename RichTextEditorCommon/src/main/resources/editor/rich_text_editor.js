@@ -287,8 +287,7 @@ var editor = {
 
     _removeClass: function(element, className) {
       if (this._hasClass(element, className)) {
-        var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-        element.className = element.className.replace(reg, '');
+        element.classList.remove(className);
 
         var classAttributeValue = element.getAttribute('class');
         if (!!! classAttributeValue) { // remove class attribute if no class is left to restore original html
