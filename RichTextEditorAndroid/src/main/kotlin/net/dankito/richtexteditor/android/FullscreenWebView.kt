@@ -108,6 +108,8 @@ open class FullscreenWebView : WebView {
 
     private var disableScrolling = false
 
+    private var isExitingEditingMode = false
+
     private var lastOnScrollFullscreenModeTogglingTimestamp: Date? = null
 
     private lateinit var swipeTouchListener: OnSwipeTouchListener
@@ -264,7 +266,8 @@ open class FullscreenWebView : WebView {
     override fun onScrollChanged(scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
         super.onScrollChanged(scrollX, scrollY, oldScrollX, oldScrollY)
 
-        if(isInViewingMode == false || searchView?.isScrollingToSearchResult == true) { // enter fullscreen on scroll is only enabled in viewing mode; filter out non-user scrolls
+        if(isInViewingMode == false ||  // enter fullscreen on scroll is only enabled in viewing mode
+                searchView?.isScrollingToSearchResult == true || isExitingEditingMode == true) { // filter out non-user scrolls
             return
         }
 
@@ -351,6 +354,7 @@ open class FullscreenWebView : WebView {
 
     open fun enterViewingMode() {
         isInViewingMode = true
+        isExitingEditingMode = true // if editor is at the end of a larger text and keyboard is displayed, then WebView scrolls up when leaving edit mode -> avoid that fullscreen mode gets entered
 
         this.editorToolbar?.visibility = View.GONE
 
@@ -366,6 +370,10 @@ open class FullscreenWebView : WebView {
         this.isFocusableInTouchMode = false
 
         changeDisplayModeListener?.invoke(DisplayMode.Viewing)
+
+        postDelayed({
+            isExitingEditingMode = false
+        }, 500)
     }
 
 
