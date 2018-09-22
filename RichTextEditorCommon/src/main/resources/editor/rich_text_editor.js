@@ -214,7 +214,10 @@ var editor = {
         }
 
         if(html.length != 0) {
-            this._textField.innerHTML = this._decodeHtml(html);
+            var decodedHtml = this._decodeHtml(html);
+            this._textField.innerHTML = decodedHtml;
+
+            this._htmlSetByApplication = decodedHtml;
 
             if(this._isImageResizingEnabled) {
                 this.makeImagesResizeable();
@@ -222,10 +225,11 @@ var editor = {
         }
         else {
             this._ensureEditorInsertsParagraphWhenPressingEnter();
+
+            this._htmlSetByApplication = null;
         }
 
         this.didHtmlChange = false;
-        this._htmlSetByApplication = this._textField.innerHTML;
     },
 
     _decodeHtml: function(html) {
@@ -287,7 +291,7 @@ var editor = {
         element.className = element.className.replace(reg, '');
 
         var classAttributeValue = element.getAttribute('class');
-        if (!!! classAttributeValue) {
+        if (!!! classAttributeValue) { // remove class attribute if no class is left to restore original html
             element.removeAttribute('class');
         }
       }
@@ -555,7 +559,7 @@ var editor = {
 
 
     _updateEditorState: function() {
-        var html = this._getHtml();
+        var html = this._getHtmlWithoutInternalModifications();
         var didHtmlChange = (this._htmlSetByApplication != null && this._htmlSetByApplication != html) || // html set by application changed
                             (this._htmlSetByApplication == null && html != EditorDefaultHtml); // or if html not set by application: default html changed
 
@@ -567,7 +571,7 @@ var editor = {
 
             var editorState = {
                 'didHtmlChange': didHtmlChange,
-                'html': html,
+                'html': html, // TODO: remove in upcoming versions
                 'commandStates': commandStates
             };
 
