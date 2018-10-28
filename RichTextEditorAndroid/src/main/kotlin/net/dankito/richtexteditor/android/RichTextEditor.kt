@@ -215,7 +215,10 @@ open class RichTextEditor : FullscreenWebView {
 
     override fun setBackgroundResource(resid: Int) {
         val bitmap = Utils.decodeResource(context, resid)
-        setBackground(bitmap)
+
+        bitmap?.let { // Utils.decodeResource() may returns null
+            setBackground(bitmap)
+        }
     }
 
     override fun setBackground(background: Drawable) {
