@@ -35,7 +35,7 @@ ext {
     appCompatVersion = "27.1.1"
 
     junitVersion = "4.12"
-    androidTestRunnerVersion = "1.0.1"
+    androidTestRunnerVersion = "1.0.2"
     espressoVersion = "3.0.1"
 
 
