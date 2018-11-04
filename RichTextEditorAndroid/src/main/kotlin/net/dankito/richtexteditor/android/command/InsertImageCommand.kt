@@ -7,12 +7,17 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditImageDialog
 import net.dankito.richtexteditor.command.InsertImageCommandBase
+import net.dankito.utils.android.image.AndroidImageUtils
 import net.dankito.utils.android.permissions.PermissionsService
+import java.io.File
 
 
 class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : InsertImageCommandBase(icon), ICommandRequiringEditor {
 
     override var editor: RichTextEditor? = null
+
+    val imageUtils = AndroidImageUtils()
+
 
     override fun selectImageToInsert(imageSelected: (imageUrl: String, alternateText: String) -> Unit) {
         (editor?.context as? FragmentActivity)?.let { activity ->
@@ -25,6 +30,11 @@ class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_whi
                 imageSelected(imageUrl, alternateText)
             }
         }
+    }
+
+
+    override fun getImageRotation(localImage: File): Int {
+        return imageUtils.getImageOrientationInDegree(localImage.absolutePath)
     }
 
 }

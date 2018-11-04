@@ -428,7 +428,7 @@ var editor = {
        }
     },
 
-    insertImage: function(url, alt) {
+    insertImage: function(url, alt, rotation) {
         var imageElement = document.createElement('img');
 
         imageElement.setAttribute('src', url);
@@ -441,7 +441,23 @@ var editor = {
             imageElement.setAttribute('class', resizableImageClass);
         }
 
+        if(rotation)  {
+            this._setImageRotation(imageElement, rotation);
+        }
+
         this._insertHtml(imageElement.outerHTML);
+    },
+
+    _setImageRotation: function(imageElement, rotation) {
+            if(rotation == 90) {
+                this._addClass(imageElement, 'rotate90deg');
+            }
+            else if(rotation == 180) {
+                this._addClass(imageElement, 'rotate180deg');
+            }
+            else if(rotation == 270) {
+                this._addClass(imageElement, 'rotate270deg');
+            }
     },
 
     insertCheckbox: function(text) {
@@ -549,7 +565,7 @@ var editor = {
         this._executeCommand(command, parameter);
         this._executeCommand("styleWithCSS", null, false);
     },
-    
+
     _executeCommand: function(command, parameter) {
         document.execCommand(command, false, parameter);
 

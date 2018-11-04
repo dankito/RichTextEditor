@@ -204,8 +204,12 @@ abstract class JavaScriptExecutorBase {
         executeEditorJavaScriptFunction("insertLink('$url', '$title')")
     }
 
-    fun insertImage(url: String, alt: String) {
-        executeEditorJavaScriptFunction("insertImage('$url', '$alt')")
+    /**
+     * The rotation parameter is used to signal that the image is rotated and should be rotated by CSS by given value.
+     * Rotation can be one of the following values: 0, 90, 180, 270.
+     */
+    fun insertImage(url: String, alt: String, rotation: Int = 0) {
+        executeEditorJavaScriptFunction("insertImage('$url', '$alt', $rotation)")
     }
 
     fun insertCheckbox(text: String) {
