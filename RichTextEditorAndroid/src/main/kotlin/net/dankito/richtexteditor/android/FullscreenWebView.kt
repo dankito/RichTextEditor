@@ -104,6 +104,8 @@ open class FullscreenWebView : WebView {
     var elementClickedListener: ((elementType: Int) -> Boolean)? = null
 
 
+    private var isScrolling = false
+
     private var hasReachedEnd = false
 
     private var disableScrolling = false
@@ -208,7 +210,7 @@ open class FullscreenWebView : WebView {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         swipeTouchListener.onTouch(this, event)
 
-        if(event.action == MotionEvent.ACTION_UP && elementClickedListener != null) {
+        if(event.action == MotionEvent.ACTION_UP && isScrolling == false && elementClickedListener != null) {
             hitTestResult?.let { hitResult ->
                 val type = hitResult.type
 
@@ -266,6 +268,8 @@ open class FullscreenWebView : WebView {
     override fun onScrollChanged(scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int) {
         super.onScrollChanged(scrollX, scrollY, oldScrollX, oldScrollY)
 
+        isScrolling = true
+
         if(isInViewingMode == false ||  // enter fullscreen on scroll is only enabled in viewing mode
                 searchView?.isScrollingToSearchResult == true || isExitingEditingMode == true) { // filter out non-user scrolls
             return
@@ -306,6 +310,8 @@ open class FullscreenWebView : WebView {
 
         checkIfScrollingStoppedTimerTask = object: TimerTask() {
             override fun run() {
+                isScrolling = false
+
                 if(isInFullscreenMode) {
                     showOptionsBar()
                 }
