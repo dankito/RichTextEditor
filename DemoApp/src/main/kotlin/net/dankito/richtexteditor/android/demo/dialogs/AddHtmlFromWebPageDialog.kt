@@ -23,8 +23,8 @@ class AddHtmlFromWebPageDialog : DialogFragment() {
     private var urlEnteredListener: ((url: String, title: String) -> Unit)? = null
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.dialog_edit_url, container)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.dialog_edit_url, container)
 
         view?.let {
             val btnCancel = view.findViewById<Button>(R.id.btnCancel)

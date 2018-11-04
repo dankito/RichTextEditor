@@ -17,10 +17,10 @@ ext {
 
     kotlinVersion = '1.2.61'
 
-    androidCompileSdkVersion = 26
-    androidBuildToolsVersion = '26.0.2'
+    androidCompileSdkVersion = 27
+    androidBuildToolsVersion = '27.0.3'
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 26
+    androidTargetSdkVersion = 27
 
     javaUtilsVersion = '1.0.3'
     metadataExtractorVersion = '2.11.0'
@@ -32,7 +32,7 @@ ext {
 
     androidUtilsVersion = '1.0.5'
     fileChooserDialogVersion = '1.1.4'
-    appCompatVersion = "25.4.0"
+    appCompatVersion = "27.1.1"
 
     junitVersion = "4.12"
     androidTestRunnerVersion = "1.0.1"

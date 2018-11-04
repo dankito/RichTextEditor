@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
     private fun fullScreenModeChanged(mode: FullscreenWebView.FullscreenMode) {
         val isInFullscreen = mode == FullscreenWebView.FullscreenMode.Enter
 
-        val actionBarContainer = findViewById(R.id.action_bar_container)
+        val actionBarContainer = findViewById<View>(R.id.action_bar_container)
         actionBarContainer.visibility = if(isInFullscreen) View.GONE else View.VISIBLE
     }
 

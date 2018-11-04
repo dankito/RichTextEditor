@@ -38,8 +38,8 @@ class EditImageDialog : DialogFragment() {
     private var imageUrlEnteredListener: ((imageUrl: String, alternateText: String) -> Unit)? = null
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.dialog_edit_image, container)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.dialog_edit_image, container)
 
         view?.let {
             view.btnCancel.setOnClickListener { dismiss() }
@@ -95,17 +95,19 @@ class EditImageDialog : DialogFragment() {
     }
 
     private fun selectLocalImage() {
-        val config = FileChooserDialogConfig(ExtensionsFilter.WebViewSupportedImages.filter, getCurrentDirectory())
+        activity?.let { activity ->
+            val config = FileChooserDialogConfig(ExtensionsFilter.WebViewSupportedImages.filter, getCurrentDirectory())
 
-        FileChooserDialog().showOpenSingleFileDialog(activity, permissionsService, config) { _, selectedFile ->
-            selectedFile?.let {
-                edtxtImageUrl.setText(selectedFile.absolutePath)
+            FileChooserDialog().showOpenSingleFileDialog(activity, permissionsService, config) { _, selectedFile ->
+                selectedFile?.let {
+                    edtxtImageUrl.setText(selectedFile.absolutePath)
+                }
             }
         }
     }
 
     private fun getCurrentDirectory(): File {
-        val folderUtils = AndroidFolderUtils(context)
+        val folderUtils = AndroidFolderUtils(context!!)
 
         var currentDirectory = folderUtils.getCameraPhotosDirectory()
         val imageUrl = enteredImageUrl
@@ -131,19 +133,21 @@ class EditImageDialog : DialogFragment() {
     }
 
     private fun downloadImageAndFireImageUrlEntered(imageUrl: String) {
-        val downloader = ImageDownloader()
-        val targetFolder = downloader.selectDownloadFolder(downloadImageConfig, context.filesDir)
+        context?.let { context ->
+            val downloader = ImageDownloader()
+            val targetFolder = downloader.selectDownloadFolder(downloadImageConfig, context.filesDir)
 
-        if (isInternalFile(targetFolder)) {
-            downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl, targetFolder, downloader)
-        }
-        else {
-            permissionsService.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, R.string.dialog_edit_image_download_image_write_external_storage_rational) { _, isPermitted ->
-                if (isPermitted) {
-                    downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl, targetFolder, downloader)
-                }
-                else {
-                    fireImageUrlEnteredAndDismiss(imageUrl) // user didn't allow to download file -> keep remote file and close
+            if (isInternalFile(targetFolder)) {
+                downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl, targetFolder, downloader)
+            }
+            else {
+                permissionsService.checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, R.string.dialog_edit_image_download_image_write_external_storage_rational) { _, isPermitted ->
+                    if (isPermitted) {
+                        downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl, targetFolder, downloader)
+                    }
+                    else {
+                        fireImageUrlEnteredAndDismiss(imageUrl) // user didn't allow to download file -> keep remote file and close
+                    }
                 }
             }
         }
@@ -165,7 +169,7 @@ class EditImageDialog : DialogFragment() {
     }
 
     private fun isInternalFile(file: File): Boolean {
-        return file.startsWith(context.filesDir.absoluteFile)
+        return file.startsWith(context!!.filesDir.absoluteFile)
     }
 
     private fun fireImageUrlEnteredAndDismiss(imageUrl: String) {
