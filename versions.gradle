@@ -22,7 +22,8 @@ ext {
     androidMinSdkVersion = 15
     androidTargetSdkVersion = 26
 
-    javaUtilsVersion = '1.0.2'
+    javaUtilsVersion = '1.0.3'
+    metadataExtractorVersion = '2.11.0'
     readability4JVersion = '1.0.1'
     slf4jVersion = "1.7.25"
 

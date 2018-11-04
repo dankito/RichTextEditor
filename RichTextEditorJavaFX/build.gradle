@@ -42,6 +42,8 @@ dependencies {
 
     compile "no.tornado:tornadofx-controls:$tornadoFXControlsVersion"
 
+    compile "com.drewnoakes:metadata-extractor:$metadataExtractorVersion"
+
     compile "ch.qos.logback:logback-core:$logbackVersion"
     compile "ch.qos.logback:logback-classic:$logbackVersion"
 }

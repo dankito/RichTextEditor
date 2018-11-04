@@ -10,10 +10,14 @@ import net.dankito.richtexteditor.java.fx.command.dialogs.EditImageDialog
 import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 import net.dankito.richtexteditor.java.fx.localization.Localization
 import net.dankito.richtexteditor.java.fx.toolbar.EditorToolbar
+import net.dankito.utils.image.JavaImageUtils
+import java.io.File
 
 
 class InsertImageCommand(private val toolbar: EditorToolbar, private val localization: Localization, icon: Icon = JavaFXIcon.fromResourceName("ic_insert_photo_black_36dp.png"))
     : InsertImageCommandBase(icon) {
+
+    val imageUtils = JavaImageUtils()
 
 
     init {
@@ -25,6 +29,11 @@ class InsertImageCommand(private val toolbar: EditorToolbar, private val localiz
 
     override fun selectImageToInsert(imageSelected: (imageUrl: String, alternateText: String) -> Unit) {
         EditImageDialog.show(localization, toolbar.root.scene?.window, imageSelected)
+    }
+
+
+    override fun getImageRotation(localImage: File): Int {
+        return imageUtils.getImageOrientationInDegree(localImage)
     }
 
 }
