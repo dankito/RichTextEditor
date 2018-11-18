@@ -23,17 +23,11 @@ class EditImageDialog(private val localization: Localization, private val imageU
 
 
     override fun enteringStringsDone(valueOne: String, valueTwo: String) {
-        var imageUrl = valueOne
+        val imageUrl = valueOne
         var alternateText = valueTwo.trim()
 
         if(alternateText.isBlank()) {
             alternateText = imageUrl
-        }
-
-        if(isExistingFile(imageUrl) && imageUrl.startsWith("file:/") == false) {
-            try {
-                imageUrl = File(imageUrl).toURI().toString() // add file:/ scheme
-            } catch(ignored: Exception) { }
         }
 
         imageUrlEnteredListener(imageUrl, alternateText)
