@@ -5,6 +5,7 @@ import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
 import javafx.scene.web.WebView
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
+import net.dankito.richtexteditor.model.Theme
 import tornadofx.*
 
 
@@ -63,6 +64,14 @@ open class RichTextEditor : VBox() {
 
 
     /*      Editor base settings        */
+
+    fun setTheme(theme: Theme) {
+        javaScriptExecutor.setTheme(theme)
+    }
+
+    fun setTheme(themeName: String) {
+        javaScriptExecutor.setTheme(themeName)
+    }
 
     fun setEditorFontFamily(fontFamily: String) {
         executeEditorJavaScriptFunction("setBaseFontFamily('$fontFamily');")

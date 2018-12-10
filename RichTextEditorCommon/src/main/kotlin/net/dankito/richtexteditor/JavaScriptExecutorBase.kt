@@ -6,6 +6,7 @@ import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.callback.LoadedListener
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.CommandState
+import net.dankito.richtexteditor.model.Theme
 import net.dankito.utils.Color
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
@@ -228,6 +229,15 @@ abstract class JavaScriptExecutorBase {
 
     fun disableImageResizing() {
         executeEditorJavaScriptFunction("disableImageResizing()")
+    }
+
+
+    fun setTheme(theme: Theme) {
+        setTheme(theme.themeName)
+    }
+
+    fun setTheme(themeName: String) {
+        executeEditorJavaScriptFunction("setTheme('$themeName');")
     }
 
 

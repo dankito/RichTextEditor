@@ -14,9 +14,11 @@ class HtmlEditorExtractor {
         private const val EditorJavaScripFilename = "rich_text_editor.js"
         private const val StyleCssFilename = "style.css"
         private const val NormalizeCssFilename = "normalize.css"
+        private const val ThemesCssFilename = "themes.css"
         private const val PlatformStyleCssFilename = "platform_style.css"
 
-        private val EditorFilenames = listOf(EditorHtmlFilename, EditorJavaScripFilename, StyleCssFilename, NormalizeCssFilename, PlatformStyleCssFilename)
+        private val EditorFilenames = listOf(EditorHtmlFilename, EditorJavaScripFilename, StyleCssFilename,
+                NormalizeCssFilename, ThemesCssFilename, PlatformStyleCssFilename)
 
         private val log = LoggerFactory.getLogger(HtmlEditorExtractor::class.java)
     }

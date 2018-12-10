@@ -16,6 +16,7 @@ import net.dankito.richtexteditor.android.demo.dialogs.AddHtmlFromWebPageDialog
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
 import net.dankito.richtexteditor.android.toolbar.EditorToolbar
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
+import net.dankito.richtexteditor.model.Theme
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
 import net.dankito.utils.web.client.OkHttpWebClient
@@ -78,6 +79,9 @@ class MainActivity : AppCompatActivity() {
 
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
+
+        // dark mode
+//        editor.setTheme(Theme.Dark)
 
         // some properties you also can set on editor
 //        editor.setEditorBackgroundColor(Color.YELLOW)

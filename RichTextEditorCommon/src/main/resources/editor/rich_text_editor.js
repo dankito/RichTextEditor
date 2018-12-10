@@ -485,6 +485,10 @@ var editor = {
     
     
     /*      Editor default settings     */
+
+    setTheme: function(themeName) {
+        document.documentElement.setAttribute('data-theme', themeName);
+    },
     
     setBaseTextColor: function(color) {
         this._textField.style.color  = color;

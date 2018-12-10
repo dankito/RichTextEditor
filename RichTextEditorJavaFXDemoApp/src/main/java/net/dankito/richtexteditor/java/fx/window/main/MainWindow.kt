@@ -36,6 +36,9 @@ class MainWindow : View(FX.messages["application.title"]) {
         editor.vboxConstraints {
             vGrow = Priority.ALWAYS
         }
+
+        // dark mode
+//        editor.setTheme(Theme.Dark)
     }
 
 }

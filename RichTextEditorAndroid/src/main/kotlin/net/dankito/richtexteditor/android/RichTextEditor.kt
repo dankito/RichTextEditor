@@ -14,6 +14,7 @@ import android.webkit.WebChromeClient
 import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.model.DownloadImageConfig
+import net.dankito.richtexteditor.model.Theme
 import net.dankito.utils.android.KeyboardState
 import net.dankito.utils.android.extensions.showKeyboard
 import net.dankito.utils.android.permissions.IPermissionsService
@@ -170,6 +171,14 @@ open class RichTextEditor : FullscreenWebView {
 
 
     /*      Editor base settings        */
+
+    fun setTheme(theme: Theme) {
+        javaScriptExecutor.setTheme(theme)
+    }
+
+    fun setTheme(themeName: String) {
+        javaScriptExecutor.setTheme(themeName)
+    }
 
     fun setEditorFontColor(color: Int) {
         val hex = convertHexColorString(color)

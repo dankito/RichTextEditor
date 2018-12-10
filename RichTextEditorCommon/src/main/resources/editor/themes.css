@@ -1,0 +1,21 @@
+
+/*  If you like to create your own theme, set styles with attribute [data-theme='<theme_name>']
+    (see below) and then call setTheme(<theme_name>) on editor.
+    Thanks to Marcin Wichary for that hint (https://medium.com/@mwichary/dark-theme-in-a-day-3518dde2955a) */
+
+
+/*      Style for dark theme    */
+
+html[data-theme='dark'] {
+    color: rgba(255, 255, 255, 1.0);
+    background: rgb(48, 48, 48);
+}
+
+[data-theme='dark'] h1, [data-theme='dark'] h2, [data-theme='dark'] h3,
+[data-theme='dark'] h4, [data-theme='dark'] h5, [data-theme='dark'] h6 {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme='dark'] a {
+    color: rgba(255, 255, 255, 0.5);
+}
