@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebChromeClient
+import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.utils.android.KeyboardState
@@ -97,7 +98,9 @@ open class RichTextEditor : FullscreenWebView {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        KeyboardState.init(context as Activity)
+        context.asActivity()?.let { activity ->
+            KeyboardState.init(activity)
+        }
     }
 
     override fun onDetachedFromWindow() {

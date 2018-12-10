@@ -1,7 +1,6 @@
 package net.dankito.richtexteditor.android
 
 import android.annotation.TargetApi
-import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.os.Looper
@@ -11,6 +10,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import net.dankito.richtexteditor.JavaScriptExecutorBase
+import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.utils.android.extensions.showKeyboard
 import org.slf4j.LoggerFactory
 
@@ -54,14 +54,13 @@ class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecut
     }
 
     private fun executeJavaScriptInLoadedEditor(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
-        if(Looper.myLooper() == Looper.getMainLooper()) {
+        if(Looper.myLooper() == Looper.getMainLooper()) { // already on UI thread
             executeScriptOnUiThread(javaScript, resultCallback)
         }
-        else if(context is Activity) {
-            (context as? Activity)?.runOnUiThread { executeScriptOnUiThread(javaScript, resultCallback) }
-        }
         else {
-            log.error("Trying to execute Script '$javaScript', but activity is null")
+            context.asActivity()?.let { activity ->
+                activity.runOnUiThread { executeScriptOnUiThread(javaScript, resultCallback) }
+            } ?: log.error("Trying to execute Script '$javaScript', but activity is null")
         }
     }
 

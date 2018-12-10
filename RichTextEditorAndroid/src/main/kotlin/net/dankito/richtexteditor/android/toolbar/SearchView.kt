@@ -18,6 +18,7 @@ import android.widget.TextView
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
+import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.richtexteditor.android.util.StyleApplier
 import net.dankito.utils.android.KeyboardUtils
 import net.dankito.utils.android.extensions.*
@@ -288,7 +289,7 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        KeyboardUtils.addKeyboardToggleListener(context as Activity, softKeyboardToggleListener)
+        KeyboardUtils.addKeyboardToggleListener(context.asActivity(), softKeyboardToggleListener)
     }
 
     override fun onDetachedFromWindow() {
