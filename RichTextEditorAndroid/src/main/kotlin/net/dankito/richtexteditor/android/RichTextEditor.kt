@@ -1,7 +1,6 @@
 package net.dankito.richtexteditor.android
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -90,7 +89,7 @@ open class RichTextEditor : FullscreenWebView {
             paddingToSetOnStart = null
         }
 
-        (context as? Activity)?.runOnUiThread {
+        context.asActivity()?.runOnUiThread {
             setEditorFontFamily("serif")
         }
     }
@@ -193,7 +192,7 @@ open class RichTextEditor : FullscreenWebView {
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
         if(isLoaded) {
-            (context as? Activity)?.runOnUiThread {
+            context.asActivity()?.runOnUiThread {
                 super.setPadding(left, top, right, bottom)
                 executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
             }

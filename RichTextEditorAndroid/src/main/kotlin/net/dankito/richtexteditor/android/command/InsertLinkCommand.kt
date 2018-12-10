@@ -6,6 +6,7 @@ import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditUrlDialog
+import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.richtexteditor.command.InsertLinkCommandBase
 
 
@@ -15,7 +16,7 @@ class InsertLinkCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_link_white
 
 
     override fun selectLinkToInsert(linkSelected: (url: String, title: String) -> Unit) {
-        (editor?.context as? FragmentActivity)?.let { activity ->
+        (editor?.context?.asActivity() as? FragmentActivity)?.let { activity ->
             val dialog = EditUrlDialog()
 
             dialog.show(activity.supportFragmentManager) { url, title ->

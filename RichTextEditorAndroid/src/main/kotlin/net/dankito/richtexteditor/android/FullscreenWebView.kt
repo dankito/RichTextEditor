@@ -1,6 +1,5 @@
 package net.dankito.richtexteditor.android
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Point
 import android.os.Build
@@ -10,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import kotlinx.android.synthetic.main.view_fullscreen_options_bar.view.*
+import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.richtexteditor.android.toolbar.SearchView
 import net.dankito.richtexteditor.android.toolbar.SearchViewStyle
 import net.dankito.richtexteditor.android.view.FullscreenWebViewOptionsBar
@@ -326,7 +326,7 @@ open class FullscreenWebView : WebView {
     }
 
     private fun showOptionsBar() {
-        (context as? Activity)?.let { activity ->
+        context.asActivity()?.let { activity ->
             activity.runOnUiThread {
                 showOptionsBarOnUiThread()
             }
