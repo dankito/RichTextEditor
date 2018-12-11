@@ -9,6 +9,8 @@
 
     <string name="add_html_from_web_page">HTML von einer Webseite hinzufügen</string>
 
+    <string name="dark_theme">Nachtmodus</string>
+
     <string name="dialog_add_html_from_web_page_url_label">Webadresse</string>
     <string name="dialog_add_html_from_web_page_url_hint">http://</string>
 

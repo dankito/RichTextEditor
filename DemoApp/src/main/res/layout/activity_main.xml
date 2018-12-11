@@ -12,7 +12,7 @@
         android:id="@+id/topInlineToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editor_toolbar_default_height"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimary"
         android:visibility="gone"
     />
 
@@ -20,7 +20,7 @@
         android:id="@+id/topGroupedCommandsToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editor_toolbar_default_height"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimary"
         android:visibility="gone"
     />
 
@@ -54,7 +54,7 @@
         android:id="@+id/bottomGroupedCommandsToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editor_toolbar_default_height"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimary"
         android:visibility="visible"
     />
 
@@ -62,7 +62,7 @@
         android:id="@+id/bottomInlineToolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/editor_toolbar_default_height"
-        android:background="@color/colorPrimary"
+        android:background="?attr/colorPrimary"
         android:visibility="gone"
     />
 

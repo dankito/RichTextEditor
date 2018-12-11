@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary_Light</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_Light</item>
+        <item name="colorAccent">@color/colorAccent_Light</item>
+
+        <item name="primaryTextColor">@color/primaryText_Light</item>
+
+        <item name="windowBackground">@color/backgroundColor_Light</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary_Dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_Dark</item>
+        <item name="colorAccent">@color/colorAccent_Dark</item>
+
+        <item name="primaryTextColor">@color/primaryText_Dark</item>
+
+        <item name="windowBackground">@color/backgroundColor_Dark</item>
+    </style>
+
+</resources>

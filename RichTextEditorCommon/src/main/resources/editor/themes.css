@@ -7,15 +7,15 @@
 /*      Style for dark theme    */
 
 html[data-theme='dark'] {
-    color: rgba(255, 255, 255, 1.0);
-    background: rgb(48, 48, 48);
+    color: #bababa;
+    background: #303030; /* dark grey, see Material Design background color for colorPrimary Grey_900 (#212121) */
 }
 
 [data-theme='dark'] h1, [data-theme='dark'] h2, [data-theme='dark'] h3,
 [data-theme='dark'] h4, [data-theme='dark'] h5, [data-theme='dark'] h6 {
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 145, 0, 1.0); /* orange without transparency */
 }
 
 [data-theme='dark'] a {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 145, 0, 0.75); /* orange with transparency */
 }

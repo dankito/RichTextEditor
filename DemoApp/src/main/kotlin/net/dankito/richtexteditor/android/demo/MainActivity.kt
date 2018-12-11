@@ -5,7 +5,6 @@ import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.dankito.readability4j.extended.Readability4JExtended
@@ -25,6 +24,12 @@ import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+
+        var darkTheme = false // TODO: find a better way to store current set theme
+
+    }
 
     enum class ToolbarPlacement {
         Top,
@@ -56,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme( if(darkTheme) R.style.AppTheme_Dark else R.style.AppTheme_Light )
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -80,8 +86,7 @@ class MainActivity : AppCompatActivity() {
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
 
-        // dark mode
-//        editor.setTheme(Theme.Dark)
+        editor.setTheme( if(darkTheme) Theme.Dark else Theme.Light )
 
         // some properties you also can set on editor
 //        editor.setEditorBackgroundColor(Color.YELLOW)
@@ -149,6 +154,10 @@ class MainActivity : AppCompatActivity() {
             ToolbarAppearance.Grouped -> mnToolbarAppearanceGrouped.isChecked = true
         }
 
+
+        val mnDarkTheme = menu.findItem(R.id.mnDarkTheme)
+        mnDarkTheme.isChecked = darkTheme
+
         return true
     }
 
@@ -158,6 +167,7 @@ class MainActivity : AppCompatActivity() {
             R.id.mnPlaceToolbarAtBottom -> placeToolbarAtBottom()
             R.id.mnToolbarAppearanceInline -> showToolbarInline()
             R.id.mnToolbarAppearanceGrouped -> showToolbarGrouped()
+            R.id.mnDarkTheme -> changeTheme(! darkTheme)
             R.id.mnAddHtmlFromWebPage -> addHtmlFromWebPage()
         }
 
@@ -222,6 +232,12 @@ class MainActivity : AppCompatActivity() {
 
         val actionBarContainer = findViewById<View>(R.id.action_bar_container)
         actionBarContainer.visibility = if(isInFullscreen) View.GONE else View.VISIBLE
+    }
+
+    private fun changeTheme(useDarkTheme: Boolean) {
+        darkTheme = useDarkTheme
+
+        recreate()
     }
 
     private fun addHtmlFromWebPage() {

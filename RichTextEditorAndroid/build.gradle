@@ -75,8 +75,8 @@ android {
 }
 
 dependencies {
-    implementation "$mavenGroup:$richTextEditorCommonMavenArtifactId:$version"
-//    implementation project(":RichTextEditorCommon")
+//    implementation "$mavenGroup:$richTextEditorCommonMavenArtifactId:$version"
+    implementation project(":RichTextEditorCommon")
 
     implementation "net.dankito.utils:android-utils:$androidUtilsVersion", {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk7'
@@ -166,15 +166,15 @@ uploadArchives {
             repository url: repositories.mavenLocal().url
 
             // set ossrhUsername and ossrhPassword in your gradle.properties (in ~/.gradle/gradle.properties or project's gradle.properties)
-            if (areOssrhPropertiesSet) {
-                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-
-                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                    authentication(userName: ossrhUsername, password: ossrhPassword)
-                }
-            }
+//            if (areOssrhPropertiesSet) {
+//                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+//                    authentication(userName: ossrhUsername, password: ossrhPassword)
+//                }
+//
+//                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+//                    authentication(userName: ossrhUsername, password: ossrhPassword)
+//                }
+//            }
 
             pom.project {
                 name mavenArtifactId

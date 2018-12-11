@@ -37,6 +37,20 @@
 
 
     <group
+        android:id="@+id/themeGroup"
+        android:checkableBehavior="all"
+    >
+
+        <item
+            android:id="@+id/mnDarkTheme"
+            android:title="@string/dark_theme"
+            android:checkable="true"
+        />
+
+    </group>
+
+
+    <group
         android:id="@+id/additionalUtilitiesGroup"
         android:checkableBehavior="none"
     >

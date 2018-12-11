@@ -9,6 +9,8 @@
 
     <string name="add_html_from_web_page">Add HTML from web page</string>
 
+    <string name="dark_theme">Dark theme</string>
+
     <string name="dialog_add_html_from_web_page_url_label">Web site address</string>
     <string name="dialog_add_html_from_web_page_url_hint">http://</string>
 

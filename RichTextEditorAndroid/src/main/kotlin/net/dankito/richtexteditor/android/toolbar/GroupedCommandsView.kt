@@ -1,20 +1,18 @@
 package net.dankito.richtexteditor.android.toolbar
 
-import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.calculateOnMeasure
 import net.dankito.richtexteditor.android.extensions.initializeView
 import net.dankito.richtexteditor.android.extensions.richTextEditorChanged
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
-import net.dankito.utils.android.extensions.ColorExtensions
 
 
 open class GroupedCommandsView : RelativeLayout, IFloatingView {
@@ -73,18 +71,15 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
     }
 
     protected open fun getPrimaryColor(addTransparencyToBackground: Boolean): Int? {
-        val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
-        if (primaryColorIdentifier > 0) { // returns 0 in case resource is not found
-            var backgroundColor = ContextCompat.getColor(context, primaryColorIdentifier)
+        val colorPrimaryAttr = intArrayOf(R.attr.colorPrimary)
+        val indexOfAttrColorPrimary = 0
+        val defaultValue = Int.MAX_VALUE
 
-            if(addTransparencyToBackground) {
-                backgroundColor = ColorExtensions.setTransparency(backgroundColor, ToolbarCommandStyle.GroupedViewsDefaultBackgroundTransparency)
-            }
+        val typedArray = context.obtainStyledAttributes(colorPrimaryAttr)
+        val primaryColor = typedArray.getColor(indexOfAttrColorPrimary, defaultValue)
+        typedArray.recycle()
 
-            return backgroundColor
-        }
-
-        return null
+        return if (primaryColor == defaultValue) null else primaryColor
     }
 
     protected fun addedChildToolbar(vararg childToolbars: EditorToolbar) {

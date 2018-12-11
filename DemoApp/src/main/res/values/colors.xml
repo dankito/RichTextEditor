@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0D47A1</color> <!-- Material Design Color Code: Blue 900 -->
-    <color name="colorPrimaryDark">#1A237E</color> <!-- Material Design Color Code: Indigo 900 -->
-    <color name="colorAccent">#FF9100</color> <!-- Material Design Color Code: Orange A400 -->
+
 </resources>
