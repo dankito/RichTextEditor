@@ -6,8 +6,8 @@ import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.EditImageDialog
-import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.richtexteditor.command.InsertImageCommandBase
+import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.image.AndroidImageUtils
 import net.dankito.utils.android.permissions.PermissionsService
 import java.io.File

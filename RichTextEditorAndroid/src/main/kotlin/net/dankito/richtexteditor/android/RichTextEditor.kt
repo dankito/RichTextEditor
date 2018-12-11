@@ -11,11 +11,11 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebChromeClient
-import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.Theme
 import net.dankito.utils.android.KeyboardState
+import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.showKeyboard
 import net.dankito.utils.android.permissions.IPermissionsService
 

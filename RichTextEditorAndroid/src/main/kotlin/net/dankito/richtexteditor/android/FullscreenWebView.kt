@@ -9,12 +9,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import kotlinx.android.synthetic.main.view_fullscreen_options_bar.view.*
-import net.dankito.richtexteditor.android.extensions.asActivity
 import net.dankito.richtexteditor.android.toolbar.SearchView
 import net.dankito.richtexteditor.android.toolbar.SearchViewStyle
 import net.dankito.richtexteditor.android.view.FullscreenWebViewOptionsBar
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.OnSwipeTouchListener
+import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.getColorFromResource
 import net.dankito.utils.android.extensions.hideKeyboard
 import net.dankito.utils.android.extensions.showKeyboard

@@ -10,7 +10,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import net.dankito.richtexteditor.JavaScriptExecutorBase
-import net.dankito.richtexteditor.android.extensions.asActivity
+import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.showKeyboard
 import org.slf4j.LoggerFactory
 
