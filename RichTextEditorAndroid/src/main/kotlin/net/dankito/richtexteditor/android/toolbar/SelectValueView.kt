@@ -1,7 +1,6 @@
 package net.dankito.richtexteditor.android.toolbar
 
 import android.content.Context
-import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ListView
@@ -52,7 +51,6 @@ class SelectValueView: ListView, IFloatingView {
 
     private fun init() {
         this.visibility = View.GONE
-        this.setBackgroundColor(Color.WHITE)
 
         this.adapter = valuesAdapter
 
