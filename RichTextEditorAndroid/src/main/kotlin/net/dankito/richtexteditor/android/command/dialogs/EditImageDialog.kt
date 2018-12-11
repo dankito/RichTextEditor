@@ -78,8 +78,6 @@ class EditImageDialog : DialogFragment() {
         this.downloadImageConfig = downloadImageConfig
         this.imageUrlEnteredListener = imageUrlEnteredListener
 
-        this.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog)
-
         this.show(fragmentManager, DialogTag)
     }
 
