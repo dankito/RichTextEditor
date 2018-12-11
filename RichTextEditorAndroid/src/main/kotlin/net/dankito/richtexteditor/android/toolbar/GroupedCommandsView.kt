@@ -13,6 +13,7 @@ import net.dankito.richtexteditor.android.extensions.initializeView
 import net.dankito.richtexteditor.android.extensions.richTextEditorChanged
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
+import net.dankito.utils.android.extensions.getColorForAttributeId
 
 
 open class GroupedCommandsView : RelativeLayout, IFloatingView {
@@ -71,15 +72,7 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
     }
 
     protected open fun getPrimaryColor(addTransparencyToBackground: Boolean): Int? {
-        val colorPrimaryAttr = intArrayOf(R.attr.colorPrimary)
-        val indexOfAttrColorPrimary = 0
-        val defaultValue = Int.MAX_VALUE
-
-        val typedArray = context.obtainStyledAttributes(colorPrimaryAttr)
-        val primaryColor = typedArray.getColor(indexOfAttrColorPrimary, defaultValue)
-        typedArray.recycle()
-
-        return if (primaryColor == defaultValue) null else primaryColor
+        return context.getColorForAttributeId(R.attr.colorPrimary)
     }
 
     protected fun addedChildToolbar(vararg childToolbars: EditorToolbar) {
