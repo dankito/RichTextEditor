@@ -163,7 +163,8 @@ open class FullscreenWebView : WebView {
         optionsBar?.btnLeaveFullscreen?.setOnClickListener { leaveFullscreenMode() }
 
         searchView?.searchField?.textSize = 16f
-        val searchControlsBackground = context.getColorForAttributeId(R.attr.richTextEditorFullscreenOptionsBarSearchViewBackground, R.color.colorPrimary)
+        val searchControlsBackground = context.getColorForAttributeId(R.attr.richTextEditorFullscreenOptionsBarSearchViewBackground) ?:
+                context.getColorFromResource(R.color.colorPrimary)
         searchView?.applyStyle(SearchViewStyle(ToolbarCommandStyle(), searchControlsBackground, 16f))
         searchView?.editor = this as? RichTextEditor
 
