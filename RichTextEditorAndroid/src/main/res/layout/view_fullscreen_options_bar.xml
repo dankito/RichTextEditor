@@ -8,7 +8,7 @@
     android:layout_alignParentRight="true"
     android:layout_alignParentEnd="true"
     android:layout_alignParentBottom="true"
-    android:background="@color/richtexteditor_fullscreen_options_bar_background"
+    android:background="?attr/richTextEditorFullscreenOptionsBarBackground"
     >
 
     <net.dankito.richtexteditor.android.toolbar.SearchView

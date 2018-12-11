@@ -5,6 +5,9 @@
         <attr name="primaryTextColor" format="reference"/>
 
         <attr name="windowBackground" format="reference"/>
+
+        <attr name="richTextEditorFullscreenOptionsBarBackground" format="reference" />
+        <attr name="richTextEditorFullscreenOptionsBarSearchViewBackground" format="reference" />
     </declare-styleable>
 
 </resources>

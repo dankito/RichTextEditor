@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- The same as colorPrimary but with a higher transparency -->
-    <color name="richtexteditor_fullscreen_options_bar_background">#570D47A1</color>
-    <color name="richtexteditor_fullscreen_options_bar_search_view_background">@color/colorPrimary</color>
-
-
     <!-- light theme -->
 
     <color name="colorPrimary_Light">#0D47A1</color>
+    <color name="colorPrimaryWithTransparency_Light">#570D47A1</color>
     <color name="colorPrimaryDark_Light">#1A237E</color>
     <color name="colorAccent_Light">#FF9100</color>
 
@@ -20,6 +16,7 @@
     <!-- dark theme -->
 
     <color name="colorPrimary_Dark">#212121</color>
+    <color name="colorPrimaryWithTransparency_Dark">#57212121</color>
     <color name="colorPrimaryDark_Dark">#000000</color>
     <color name="colorAccent_Dark">#FF9100</color>
 

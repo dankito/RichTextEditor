@@ -15,6 +15,7 @@ import net.dankito.richtexteditor.android.view.FullscreenWebViewOptionsBar
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.OnSwipeTouchListener
 import net.dankito.utils.android.extensions.asActivity
+import net.dankito.utils.android.extensions.getColorForAttributeId
 import net.dankito.utils.android.extensions.getColorFromResource
 import net.dankito.utils.android.extensions.hideKeyboard
 import net.dankito.utils.android.extensions.showKeyboard
@@ -162,7 +163,7 @@ open class FullscreenWebView : WebView {
         optionsBar?.btnLeaveFullscreen?.setOnClickListener { leaveFullscreenMode() }
 
         searchView?.searchField?.textSize = 16f
-        val searchControlsBackground = context.getColorFromResource(R.color.richtexteditor_fullscreen_options_bar_search_view_background)
+        val searchControlsBackground = context.getColorForAttributeId(R.attr.richTextEditorFullscreenOptionsBarSearchViewBackground, R.color.colorPrimary)
         searchView?.applyStyle(SearchViewStyle(ToolbarCommandStyle(), searchControlsBackground, 16f))
         searchView?.editor = this as? RichTextEditor
 

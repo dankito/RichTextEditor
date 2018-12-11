@@ -9,6 +9,9 @@
         <item name="primaryTextColor">@color/primaryText_Light</item>
 
         <item name="windowBackground">@color/backgroundColor_Light</item>
+
+        <item name="richTextEditorFullscreenOptionsBarBackground">@color/colorPrimaryWithTransparency_Light</item>
+        <item name="richTextEditorFullscreenOptionsBarSearchViewBackground">@color/colorPrimary_Light</item>
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat">
@@ -19,6 +22,9 @@
         <item name="primaryTextColor">@color/primaryText_Dark</item>
 
         <item name="windowBackground">@color/backgroundColor_Dark</item>
+
+        <item name="richTextEditorFullscreenOptionsBarBackground">@color/colorPrimaryWithTransparency_Dark</item>
+        <item name="richTextEditorFullscreenOptionsBarSearchViewBackground">@color/colorPrimary_Dark</item>
     </style>
 
 </resources>
