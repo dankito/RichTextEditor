@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="themes">
-        <attr name="primaryTextColor" format="reference"/>
-
-        <attr name="windowBackground" format="reference"/>
+    <declare-styleable name="theme">
 
         <attr name="richTextEditorFullscreenOptionsBarBackground" format="reference" />
         <attr name="richTextEditorFullscreenOptionsBarSearchViewBackground" format="reference" />
+
     </declare-styleable>
 
 </resources>

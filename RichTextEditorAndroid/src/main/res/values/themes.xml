@@ -1,33 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary_Light</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark_Light</item>
-        <item name="colorAccent">@color/colorAccent_Light</item>
-
-        <item name="primaryTextColor">@color/primaryText_Light</item>
-
-        <item name="windowBackground">@color/backgroundColor_Light</item>
+    <style name="RichTextEditorAppThemeLight" parent="FileChooserDialogAppThemeLight">
 
         <item name="richTextEditorFullscreenOptionsBarBackground">@color/colorPrimaryWithTransparency_Light</item>
         <item name="richTextEditorFullscreenOptionsBarSearchViewBackground">@color/colorPrimary_Light</item>
+
     </style>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/colorPrimary_Dark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark_Dark</item>
-        <item name="colorAccent">@color/colorAccent_Dark</item>
-
-        <item name="primaryTextColor">@color/primaryText_Dark</item>
-
-        <item name="windowBackground">@color/backgroundColor_Dark</item>
+    <style name="RichTextEditorAppThemeDark" parent="FileChooserDialogAppThemeDark">
 
         <item name="richTextEditorFullscreenOptionsBarBackground">@color/colorPrimaryWithTransparency_Dark</item>
         <item name="richTextEditorFullscreenOptionsBarSearchViewBackground">@color/colorPrimary_Dark</item>
+
     </style>
 
-    <style name="AppTheme" parent="AppTheme.Light">
+
+    <style name="AppTheme" parent="RichTextEditorAppThemeLight">
 
     </style>
 

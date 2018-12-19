@@ -8,7 +8,7 @@
     <color name="colorPrimaryDark_Light">#1A237E</color>
     <color name="colorAccent_Light">#FF9100</color>
 
-    <color name="primaryText_Light">#000000</color>
+    <color name="primaryTextColor_Light">#000000</color>
 
     <color name="backgroundColor_Light">#969696</color>
 
@@ -20,7 +20,7 @@
     <color name="colorPrimaryDark_Dark">#000000</color>
     <color name="colorAccent_Dark">#FF9100</color>
 
-    <color name="primaryText_Dark">#bababa</color>
+    <color name="primaryTextColor_Dark">#bababa</color>
 
     <color name="backgroundColor_Dark">#303030</color>
 
