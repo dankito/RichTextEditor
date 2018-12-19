@@ -27,4 +27,8 @@
         <item name="richTextEditorFullscreenOptionsBarSearchViewBackground">@color/colorPrimary_Dark</item>
     </style>
 
+    <style name="AppTheme" parent="AppTheme.Light">
+
+    </style>
+
 </resources>
