@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="theme">
+    <declare-styleable name="Theme">
 
         <attr name="richTextEditorFullscreenOptionsBarBackground" format="reference" />
         <attr name="richTextEditorFullscreenOptionsBarSearchViewBackground" format="reference" />
