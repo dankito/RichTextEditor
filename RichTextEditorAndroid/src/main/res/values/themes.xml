@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- the theme name used throughout the app so you can easily switch between AppThemeLightBase and AppThemeDarkBase here -->
+    <style name="AppTheme" parent="RichTextEditorAppThemeLight">
+
+    </style>
+
+
     <style name="RichTextEditorAppThemeLight" parent="FileChooserDialogAppThemeLight">
 
         <item name="richTextEditorFullscreenOptionsBarBackground">@color/colorPrimaryWithTransparency_Light</item>
@@ -12,11 +18,6 @@
 
         <item name="richTextEditorFullscreenOptionsBarBackground">@color/colorPrimaryWithTransparency_Dark</item>
         <item name="richTextEditorFullscreenOptionsBarSearchViewBackground">@color/colorPrimary_Dark</item>
-
-    </style>
-
-
-    <style name="AppTheme" parent="RichTextEditorAppThemeLight">
 
     </style>
 
