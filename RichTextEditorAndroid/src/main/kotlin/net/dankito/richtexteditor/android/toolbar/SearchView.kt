@@ -77,6 +77,8 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
 
     private var style: SearchViewStyle? = null
 
+    private val keyboardUtils = KeyboardUtils()
+
     private val timerResetIsScrollingDueToSearchFieldTextChange = Timer()
 
 
@@ -287,11 +289,11 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        KeyboardUtils.addKeyboardToggleListener(context.asActivity(), softKeyboardToggleListener)
+        keyboardUtils.addKeyboardToggleListener(context.asActivity(), softKeyboardToggleListener)
     }
 
     override fun onDetachedFromWindow() {
-        KeyboardUtils.removeKeyboardToggleListener(softKeyboardToggleListener)
+        keyboardUtils.removeKeyboardToggleListener(softKeyboardToggleListener)
 
         super.onDetachedFromWindow()
     }
