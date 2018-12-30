@@ -14,7 +14,7 @@ import android.webkit.WebChromeClient
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.Theme
-import net.dankito.utils.android.KeyboardState
+import net.dankito.utils.android.keyboard.KeyboardState
 import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.showKeyboard
 import net.dankito.utils.android.permissions.IPermissionsService
@@ -36,6 +36,8 @@ open class RichTextEditor : FullscreenWebView {
     private var isLoaded = false
 
     private var paddingToSetOnStart: Rect? = null
+
+    private val keyboardState = KeyboardState()
 
     private val onTouchListeners = ArrayList<(MotionEvent) -> Unit>()
 
@@ -99,12 +101,12 @@ open class RichTextEditor : FullscreenWebView {
         super.onAttachedToWindow()
 
         context.asActivity()?.let { activity ->
-            KeyboardState.init(activity)
+            keyboardState.init(activity)
         }
     }
 
     override fun onDetachedFromWindow() {
-        KeyboardState.cleanUp() // to avoid memory leaks
+        keyboardState.cleanUp() // to avoid memory leaks
 
         super.onDetachedFromWindow()
     }

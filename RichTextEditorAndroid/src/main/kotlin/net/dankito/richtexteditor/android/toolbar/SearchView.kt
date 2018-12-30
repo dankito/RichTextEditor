@@ -18,7 +18,8 @@ import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.util.StyleApplier
-import net.dankito.utils.android.KeyboardUtils
+import net.dankito.utils.android.keyboard.KeyboardUtils
+import net.dankito.utils.android.keyboard.SoftKeyboardToggleListener
 import net.dankito.utils.android.extensions.*
 import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
 import java.util.*
@@ -289,7 +290,9 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        keyboardUtils.addKeyboardToggleListener(context.asActivity(), softKeyboardToggleListener)
+        context.asActivity()?.let { activity ->
+            keyboardUtils.addKeyboardToggleListener(activity, softKeyboardToggleListener)
+        }
     }
 
     override fun onDetachedFromWindow() {
@@ -298,12 +301,16 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
         super.onDetachedFromWindow()
     }
 
-    protected val softKeyboardToggleListener = { isKeyboardVisible: Boolean ->
-        if(editor?.isInFullscreenMode == true) {
-            if(isKeyboardVisible == false) {
-                collapse()
+    protected val softKeyboardToggleListener = object : SoftKeyboardToggleListener {
+
+        override fun onToggleSoftKeyboard(isKeyboardVisible: Boolean) {
+            if(editor?.isInFullscreenMode == true) {
+                if(isKeyboardVisible == false) {
+                    collapse()
+                }
             }
         }
+
     }
 
 
