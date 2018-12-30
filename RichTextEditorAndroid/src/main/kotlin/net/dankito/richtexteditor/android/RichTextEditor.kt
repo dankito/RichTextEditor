@@ -111,6 +111,9 @@ open class RichTextEditor : FullscreenWebView {
         super.onDetachedFromWindow()
     }
 
+    val isKeyboardVisible: Boolean
+        get() = keyboardState.isKeyboardVisible
+
 
     override fun enterEditingMode() {
         super.enterEditingMode()
