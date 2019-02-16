@@ -65,6 +65,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setSupportActionBar(toolbar)
+
         editor = findViewById(R.id.editor) as RichTextEditor
 
         // this is needed if you like to insert images so that the user gets asked for permission to access external storage if needed
