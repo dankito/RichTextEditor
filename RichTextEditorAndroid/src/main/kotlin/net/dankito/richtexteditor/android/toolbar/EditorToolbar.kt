@@ -150,6 +150,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
+    @JvmOverloads
     open fun addSearchView(style: SearchViewStyle = SearchViewStyle(this.commandStyle)) {
         val searchView = SearchView(context)
 
@@ -191,6 +192,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         linearLayout.gravity = Gravity.CENTER_HORIZONTAL
     }
 
+    @JvmOverloads
     open fun styleChanged(alsoApplyForGroupedCommandViews: Boolean = false) {
         commands.forEach { (command, view) -> // Map.forEach { } is only available in Java 8 (>= Android 7) -> use destructure from Kotlin stdlib, see https://stackoverflow.com/a/42869245
             applyCommandStyle(command, view)
