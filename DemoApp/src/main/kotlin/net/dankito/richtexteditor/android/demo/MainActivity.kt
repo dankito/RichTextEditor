@@ -2,34 +2,36 @@ package net.dankito.richtexteditor.android.demo
 
 import android.os.Bundle
 import android.os.Environment
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.dankito.readability4j.extended.Readability4JExtended
 import net.dankito.richtexteditor.android.FullscreenWebView
-import net.dankito.utils.android.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.demo.dialogs.AddHtmlFromWebPageDialog
+import net.dankito.richtexteditor.android.theme.ActivityThemes
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
 import net.dankito.richtexteditor.android.toolbar.EditorToolbar
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
-import net.dankito.richtexteditor.model.Theme
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
+import net.dankito.utils.android.permissions.PermissionsService
+import net.dankito.utils.android.ui.activities.ThemeableActivity
+import net.dankito.utils.android.ui.theme.Theme
 import net.dankito.utils.web.client.OkHttpWebClient
 import net.dankito.utils.web.client.RequestParameters
 import java.io.File
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ThemeableActivity() {
 
     companion object {
 
-        var darkTheme = false // TODO: find a better way to store current set theme
+        private var currentTheme = ActivityThemes.Light // TODO: find a better way to store current set theme
 
     }
+
 
     enum class ToolbarPlacement {
         Top,
@@ -60,8 +62,11 @@ class MainActivity : AppCompatActivity() {
     private val permissionsService = PermissionsService(this)
 
 
+    override fun getSelectedTheme(): Theme {
+        return currentTheme
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme( if(darkTheme) R.style.AppTheme_Dark else R.style.AppTheme_Light )
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -87,8 +92,6 @@ class MainActivity : AppCompatActivity() {
 
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
-
-        editor.setTheme( if(darkTheme) Theme.Dark else Theme.Light )
 
         // some properties you also can set on editor
 //        editor.setEditorBackgroundColor(Color.YELLOW)
@@ -158,7 +161,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val mnDarkTheme = menu.findItem(R.id.mnDarkTheme)
-        mnDarkTheme.isChecked = darkTheme
+        mnDarkTheme.isChecked = currentTheme == ActivityThemes.Dark
 
         return true
     }
@@ -169,7 +172,8 @@ class MainActivity : AppCompatActivity() {
             R.id.mnPlaceToolbarAtBottom -> placeToolbarAtBottom()
             R.id.mnToolbarAppearanceInline -> showToolbarInline()
             R.id.mnToolbarAppearanceGrouped -> showToolbarGrouped()
-            R.id.mnDarkTheme -> changeTheme(! darkTheme)
+            // inverted logic here: if MenuItem is not check an gets click then dark theme should get activated (= then MenuItem is checked)
+            R.id.mnDarkTheme -> changeTheme(!!! item.isChecked)
             R.id.mnAddHtmlFromWebPage -> addHtmlFromWebPage()
         }
 
@@ -233,13 +237,13 @@ class MainActivity : AppCompatActivity() {
         val isInFullscreen = mode == FullscreenWebView.FullscreenMode.Enter
 
         val actionBarContainer = findViewById<View>(R.id.action_bar_container)
-        actionBarContainer.visibility = if(isInFullscreen) View.GONE else View.VISIBLE
+        actionBarContainer?.visibility = if(isInFullscreen) View.GONE else View.VISIBLE
     }
 
     private fun changeTheme(useDarkTheme: Boolean) {
-        darkTheme = useDarkTheme
+        currentTheme = if (useDarkTheme) ActivityThemes.Dark else ActivityThemes.Light
 
-        recreate()
+        themeChanged()
     }
 
     private fun addHtmlFromWebPage() {
