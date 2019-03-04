@@ -25,7 +25,7 @@ And it also has ready to use UI elements implemented for these.
 - Insert Link
 - Insert Checkbox
 - Search
-- For all those exist predefined commands. You can use the [standard toolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/AllCommandsEditorToolbar.kt) or create your own within minutes.
+- For all those exist predefined commands. You can use one of the standard toolbars ([GroupedCommandsEditorToolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/GroupedCommandsEditorToolbar.kt) or [AllCommandsEditorToolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/AllCommandsEditorToolbar.kt)) or create your own within minutes, see [Create custom editor toolbar](#customtoolbar).
 - All commands have a Material Design icon. But of course you can give all of them your custom icon.
 - Themeable
 
@@ -164,6 +164,61 @@ public class MainActivity extends AppCompatActivity {
 
 For an example see [MainActivity](DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt) in DemoApp project (it's written in Kotlin).
 
+
+<h2 id="customtoolbar">Create custom editor toolbar</h2>
+
+As an example how to define your own editor toolbar you can see [GroupedCommandsEditorToolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/GroupedCommandsEditorToolbar.kt) or [AllCommandsEditorToolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/AllCommandsEditorToolbar.kt).
+
+Let's say you like to have on your toolbar the grouped style command, the undo command and a search bar:
+
+```java
+import android.content.Context;
+import android.util.AttributeSet;
+
+import net.dankito.richtexteditor.android.command.ToggleGroupedTextStylesCommand;
+import net.dankito.richtexteditor.android.command.UndoCommand;
+
+public class ExampleToolbar extends EditorToolbar {
+
+    public ExampleToolbar(Context context) {
+        super(context);
+
+        initToolbar();
+    }
+
+    public ExampleToolbar(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        initToolbar();
+    }
+
+    public ExampleToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
+        initToolbar();
+    }
+
+    public ExampleToolbar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+
+        initToolbar();
+    }
+
+
+    private void initToolbar() {
+        addCommand(new ToggleGroupedTextStylesCommand());
+
+        addCommand(new UndoCommand());
+
+        addSearchView();
+    }
+
+}
+```
+
+See package [net.dankito.richtexteditor.android.command](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/command) for all predefined commands.
+
+
 ## Themes
 
 To theme the editor add a custom themes.css to assets folder and define styles with data-theme attribute set to theme_name, e. g.
@@ -181,7 +236,7 @@ RichTextEditor editor = ...;
 editor.setTheme("green")
 ```
 
-As an example see [theme.css](RichTextEditorCommon/src/main/resources/themes.css) in RichTextEditorCommon which defines a dark theme.
+As an example see [theme.css](RichTextEditorCommon/src/main/resources/editor/themes.css) in RichTextEditorCommon which defines a dark theme.
 
 There's also some magic for setting editor to dark theme:
 
