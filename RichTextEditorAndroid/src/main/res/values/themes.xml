@@ -9,12 +9,16 @@
 
     <style name="RichTextEditorAppThemeLight" parent="FileChooserDialogAppThemeLight">
 
+        <item name="themeName">RichTextEditorAppThemeLight</item>
+
         <item name="richTextEditorFullscreenOptionsBarBackground">@color/colorPrimaryWithTransparency_Light</item>
         <item name="richTextEditorFullscreenOptionsBarSearchViewBackground">@color/colorPrimary_Light</item>
 
     </style>
 
     <style name="RichTextEditorAppThemeDark" parent="FileChooserDialogAppThemeDark">
+
+        <item name="themeName">RichTextEditorAppThemeDark</item>
 
         <item name="richTextEditorFullscreenOptionsBarBackground">@color/colorPrimaryWithTransparency_Dark</item>
         <item name="richTextEditorFullscreenOptionsBarSearchViewBackground">@color/colorPrimary_Dark</item>
