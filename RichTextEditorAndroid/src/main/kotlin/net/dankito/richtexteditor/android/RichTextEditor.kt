@@ -11,12 +11,13 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebChromeClient
+import net.dankito.richtexteditor.android.extensions.hasDarkRichTextEditorTheme
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.Theme
-import net.dankito.utils.android.keyboard.KeyboardState
 import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.showKeyboard
+import net.dankito.utils.android.keyboard.KeyboardState
 import net.dankito.utils.android.permissions.IPermissionsService
 
 
@@ -92,8 +93,14 @@ open class RichTextEditor : FullscreenWebView {
             paddingToSetOnStart = null
         }
 
-        context.asActivity()?.runOnUiThread {
-            setEditorFontFamily("serif")
+        context.asActivity()?.let { activity ->
+            if (activity.hasDarkRichTextEditorTheme) {
+                setTheme(Theme.Dark)
+            }
+
+            activity.runOnUiThread {
+                setEditorFontFamily("serif")
+            }
         }
     }
 
