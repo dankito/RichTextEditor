@@ -25,8 +25,9 @@ And it also has ready to use UI elements implemented for these.
 - Insert Link
 - Insert Checkbox
 - Search
-- For all those it has predefined commands. You can use the [standard toolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/AllCommandsEditorToolbar.kt) or create your own within minutes.
+- For all those exist predefined commands. You can use the [standard toolbar](RichTextEditorAndroid/src/main/kotlin/net/dankito/richtexteditor/android/toolbar/AllCommandsEditorToolbar.kt) or create your own within minutes.
 - All commands have a Material Design icon. But of course you can give all of them your custom icon.
+- Themeable
 
 
 ## Demo application
@@ -163,6 +164,28 @@ public class MainActivity extends AppCompatActivity {
 
 For an example see [MainActivity](DemoApp/src/main/kotlin/net/dankito/richtexteditor/android/demo/MainActivity.kt) in DemoApp project (it's written in Kotlin).
 
+## Themes
+
+To theme the editor add a custom themes.css to assets folder and define styles with data-theme attribute set to theme_name, e. g.
+
+```css
+html[data-theme='green'] {
+    color: #00FF00;
+}
+```
+
+and then call RichTextEditor.setTheme('<theme_name>'), in this case with <theme_name>="green" as defined above:
+
+```java
+RichTextEditor editor = ...;
+editor.setTheme("green")
+```
+
+As an example see [theme.css](RichTextEditorCommon/src/main/resources/themes.css) in RichTextEditorCommon which defines a dark theme.
+
+There's also some magic for setting editor to dark theme:
+
+If you use `net.dankito.richtexteditor.android.R.style.RichTextEditorAppThemeDark` as your activity theme or derive your activity theme from `net.dankito.richtexteditor.android.R.style.RichTextEditorAppThemeDark` without overwriting `themeName` attribute, then editor's theme automatically gets set to dark theme.
 
 # License
 
