@@ -26,13 +26,6 @@ import java.io.File
 
 class MainActivity : ThemeableActivity() {
 
-    companion object {
-
-        private var currentTheme = ActivityThemes.Light // TODO: find a better way to store current set theme
-
-    }
-
-
     enum class ToolbarPlacement {
         Top,
         Bottom
@@ -61,10 +54,6 @@ class MainActivity : ThemeableActivity() {
 
     private val permissionsService = PermissionsService(this)
 
-
-    override fun getSelectedTheme(): Theme {
-        return currentTheme
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -161,7 +150,7 @@ class MainActivity : ThemeableActivity() {
 
 
         val mnDarkTheme = menu.findItem(R.id.mnDarkTheme)
-        mnDarkTheme.isChecked = currentTheme == ActivityThemes.Dark
+        mnDarkTheme.isChecked = getSelectedTheme() == ActivityThemes.Dark
 
         return true
     }
@@ -240,10 +229,17 @@ class MainActivity : ThemeableActivity() {
         actionBarContainer?.visibility = if(isInFullscreen) View.GONE else View.VISIBLE
     }
 
-    private fun changeTheme(useDarkTheme: Boolean) {
-        currentTheme = if (useDarkTheme) ActivityThemes.Dark else ActivityThemes.Light
 
-        themeChanged()
+    override fun getThemeForName(themeName: String): Theme? {
+        if (ActivityThemes.Dark.name == themeName) {
+            return ActivityThemes.Dark
+        }
+
+        return ActivityThemes.Light
+    }
+
+    private fun changeTheme(useDarkTheme: Boolean) {
+        setTheme( if (useDarkTheme) ActivityThemes.Dark else ActivityThemes.Light )
     }
 
     private fun addHtmlFromWebPage() {
