@@ -26,6 +26,14 @@ import java.io.File
 
 class MainActivity : ThemeableActivity() {
 
+    companion object {
+
+        private const val PlaceToolbarAtTopPreferenceKeySuffix = "place_toolbar_at_top"
+
+        private const val ShowToolbarInlinePreferenceKeySuffix = "show_toolbar_inline"
+
+    }
+
     enum class ToolbarPlacement {
         Top,
         Bottom
@@ -102,6 +110,14 @@ class MainActivity : ThemeableActivity() {
         // show editor in viewing, not editing, mode. Tap on editor switches back to editing mode then.
         // But to be able to enter fullscreen mode you need to set HTML that fills at least on display page.
 //        editor.enterViewingMode()
+
+        if (getBooleanPreferenceValue(getPlaceToolbarAtTopPreferenceKey(), false)) {
+            placeToolbarAtTop()
+        }
+
+        if (getBooleanPreferenceValue(getShowToolbarInlinePreferenceKey(), false)) {
+            showToolbarInline()
+        }
     }
 
 
@@ -173,17 +189,31 @@ class MainActivity : ThemeableActivity() {
     private fun placeToolbarAtTop() {
         toolbarPlacement = ToolbarPlacement.Top
 
+        savePlaceToolbarAtTopPreference(true)
+
         setToolbarAppearanceAndPlacement()
     }
 
     private fun placeToolbarAtBottom() {
         toolbarPlacement = ToolbarPlacement.Bottom
 
+        savePlaceToolbarAtTopPreference(false)
+
         setToolbarAppearanceAndPlacement()
+    }
+
+    private fun savePlaceToolbarAtTopPreference(placeToolbarAtTop: Boolean){
+        writeBooleanPreferenceValue(getPlaceToolbarAtTopPreferenceKey(), placeToolbarAtTop)
+    }
+
+    private fun getPlaceToolbarAtTopPreferenceKey(): String {
+        return getPreferenceKeyWithPackageNamePrefix(PlaceToolbarAtTopPreferenceKeySuffix)
     }
 
     private fun showToolbarInline() {
         toolbarAppearance = ToolbarAppearance.Inline
+
+        saveShowToolbarInlinePreference(true)
 
         setToolbarAppearanceAndPlacement()
     }
@@ -191,7 +221,17 @@ class MainActivity : ThemeableActivity() {
     private fun showToolbarGrouped() {
         toolbarAppearance = ToolbarAppearance.Grouped
 
+        saveShowToolbarInlinePreference(false)
+
         setToolbarAppearanceAndPlacement()
+    }
+
+    private fun saveShowToolbarInlinePreference(showToolbarInline: Boolean){
+        writeBooleanPreferenceValue(getShowToolbarInlinePreferenceKey(), showToolbarInline)
+    }
+
+    private fun getShowToolbarInlinePreferenceKey(): String {
+        return getPreferenceKeyWithPackageNamePrefix(ShowToolbarInlinePreferenceKeySuffix)
     }
 
     private fun setToolbarAppearanceAndPlacement() {
