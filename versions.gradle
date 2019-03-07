@@ -24,7 +24,7 @@ ext {
 
     javaUtilsVersion = '1.0.3'
     metadataExtractorVersion = '2.11.0'
-    readability4JVersion = '1.0.1'
+    readability4JVersion = '1.0.3'
     slf4jVersion = "1.7.25"
 
 
