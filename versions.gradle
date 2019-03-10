@@ -31,7 +31,7 @@ ext {
     // Android
 
     androidUtilsVersion = '1.1.0'
-    fileChooserDialogVersion = '1.2.0-SNAPSHOT'
+    fileChooserDialogVersion = '1.2.0'
     appCompatVersion = "27.1.1"
 
     junitVersion = "4.12"
