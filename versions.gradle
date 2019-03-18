@@ -22,7 +22,7 @@ ext {
     androidMinSdkVersion = 15
     androidTargetSdkVersion = 27
 
-    javaUtilsVersion = '1.0.4'
+    javaUtilsVersion = '2.0.0-SNAPSHOT'
     metadataExtractorVersion = '2.11.0'
     readability4JVersion = '1.0.3'
     slf4jVersion = "1.7.26"
@@ -30,7 +30,7 @@ ext {
 
     // Android
 
-    androidUtilsVersion = '1.1.0'
+    androidUtilsVersion = '2.0.0-SNAPSHOT'
     fileChooserDialogVersion = '1.2.0'
     appCompatVersion = "27.1.1"
 
@@ -41,9 +41,7 @@ ext {
 
     // JavaFX
 
-    tornadoFXVersion = '1.7.17'
-
-    tornadoFXControlsVersion = '1.0.6'
+    javaFXUtilsVersion = '2.0.0-SNAPSHOT'
 
 
     logbackVersion = '1.2.3'

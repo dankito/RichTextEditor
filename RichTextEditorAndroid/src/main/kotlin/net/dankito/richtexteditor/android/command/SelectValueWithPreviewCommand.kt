@@ -1,7 +1,7 @@
 package net.dankito.richtexteditor.android.command
 
 import net.dankito.richtexteditor.CommandView
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidCommandView
 import net.dankito.richtexteditor.android.RichTextEditor
@@ -10,7 +10,7 @@ import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 
 
-abstract class SelectValueWithPreviewCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class SelectValueWithPreviewCommand(command: CommandName, icon: ImageReference, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : SelectValueCommandBase(command, icon, style, commandExecutedListener) {
 
     override var editor: RichTextEditor? = null

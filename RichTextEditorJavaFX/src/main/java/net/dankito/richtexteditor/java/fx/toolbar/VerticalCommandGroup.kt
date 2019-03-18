@@ -9,11 +9,11 @@ import javafx.scene.control.ListCell
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import net.dankito.richtexteditor.command.ToolbarCommand
-import net.dankito.richtexteditor.java.fx.JavaFXIcon
+import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 import tornadofx.*
 
 
-class VerticalCommandGroup(private val groupIcon: JavaFXIcon, val items: List<VerticalCommandGroupItem>)
+class VerticalCommandGroup(private val groupIcon: JavaFXImageReference, val items: List<VerticalCommandGroupItem>)
     : ComboBox<VerticalCommandGroupItem>(FXCollections.observableList(items)) {
 
     companion object {
@@ -61,12 +61,12 @@ class VerticalCommandGroup(private val groupIcon: JavaFXIcon, val items: List<Ve
             }
 
             private fun setItemIcon(item: VerticalCommandGroupItem) {
-                (item.command.icon as? JavaFXIcon)?.let { icon ->
+                (item.command.icon as? JavaFXImageReference)?.let { icon ->
                     if(graphic is ImageView) {
-                        (graphic as? ImageView)?.image = Image(icon.url)
+                        (graphic as? ImageView)?.image = Image(icon.imageUrl)
                     }
                     else {
-                        val imageView = ImageView(Image(icon.url))
+                        val imageView = ImageView(Image(icon.imageUrl))
                         imageView.fitHeight = ItemIconSize
                         imageView.fitWidth = ItemIconSize
 
@@ -96,7 +96,7 @@ class VerticalCommandGroup(private val groupIcon: JavaFXIcon, val items: List<Ve
         ((skin as? ComboBoxBaseSkin<*>)?.displayNode as? Labeled)?.let { displayNode ->
             displayNode.contentDisplay = ContentDisplay.GRAPHIC_ONLY
 
-            val imageView = ImageView(Image(groupIcon.url))
+            val imageView = ImageView(Image(groupIcon.imageUrl))
             imageView.fitHeight = DisplayNodeIconSize
             imageView.isPreserveRatio = true
 

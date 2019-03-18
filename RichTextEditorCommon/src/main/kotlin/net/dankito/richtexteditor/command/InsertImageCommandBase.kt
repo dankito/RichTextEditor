@@ -1,11 +1,11 @@
 package net.dankito.richtexteditor.command
 
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import java.io.File
 
 
-abstract class InsertImageCommandBase(icon: Icon) : ToolbarCommand(CommandName.INSERTIMAGE, icon) {
+abstract class InsertImageCommandBase(icon: ImageReference) : ToolbarCommand(CommandName.INSERTIMAGE, icon) {
 
 
     abstract protected fun selectImageToInsert(imageSelected: (imageUrl: String, alternateText: String) -> Unit)

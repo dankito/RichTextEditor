@@ -1,14 +1,14 @@
 package net.dankito.richtexteditor.android.command
 
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
-import net.dankito.richtexteditor.android.AndroidIcon
+import net.dankito.utils.android.image.AndroidImageReference
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.command.util.FontSizeUtils
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.utils.android.extensions.getPlainTextFromHtml
 
-open class SetFontSizeWithPreviewCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_size_white_48dp), protected var utils: FontSizeUtils = FontSizeUtils())
+open class SetFontSizeWithPreviewCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_size_white_48dp), protected var utils: FontSizeUtils = FontSizeUtils())
     : SelectValueWithPreviewCommand(CommandName.FONTSIZE, icon) {
 
 

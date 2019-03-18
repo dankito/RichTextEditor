@@ -1,14 +1,14 @@
 package net.dankito.richtexteditor.java.fx.command
 
 import net.dankito.richtexteditor.CommandView
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 
 
-abstract class SelectValueCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class SelectValueCommand(command: CommandName, icon: ImageReference, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, icon, style, commandExecutedListener) {
 
     private val commandValueChangedListeners = HashSet<(newValue: Any) -> Unit>()

@@ -1,13 +1,13 @@
 package net.dankito.richtexteditor.java.fx.command
 
-import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.command.CommandName
-import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.localization.Localization
+import net.dankito.utils.image.ImageReference
+import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class SetFontSizeCommand(localization: Localization, icon: Icon = JavaFXIcon.fromResourceName("ic_format_size_black_36dp.png"))
+class SetFontSizeCommand(localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_size_black_36dp.png"))
     : SelectValueCommand(CommandName.FONTSIZE, icon) {
 
     private val defaultFontSizeName = localization.getLocalizedString("font.size.medium")

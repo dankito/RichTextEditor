@@ -1,12 +1,12 @@
 package net.dankito.richtexteditor.command
 
 import net.dankito.richtexteditor.CommandView
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 
 
 abstract class ToolbarCommand(val command: CommandName,
-                              val icon: Icon,
+                              val icon: ImageReference,
                               val style: ToolbarCommandStyle = ToolbarCommandStyle(),
                               val commandExecutedListener: (() -> Unit)? = null) {
 

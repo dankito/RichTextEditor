@@ -8,10 +8,10 @@ import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.AndroidCommandView
-import net.dankito.richtexteditor.android.AndroidIcon
+import net.dankito.utils.android.image.AndroidImageReference
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.ICommandRequiringEditor
@@ -28,7 +28,7 @@ import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
 open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
 
     companion object {
-        val ArtificialSearchViewExpandedCommand = object : ToolbarCommand(CommandName.EXPANDING_SEARCH_VIEWING, AndroidIcon(R.drawable.ic_search_white_48dp)) {
+        val ArtificialSearchViewExpandedCommand = object : ToolbarCommand(CommandName.EXPANDING_SEARCH_VIEWING, AndroidImageReference(R.drawable.ic_search_white_48dp)) {
 
             override fun executeCommand(executor: JavaScriptExecutorBase) { }
 
@@ -109,7 +109,7 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
         (command.commandView as? AndroidCommandView)?.setTintColor(command.style.enabledTintColor)
     }
 
-    protected open fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: View) {
+    protected open fun applyCommandStyle(icon: ImageReference, style: ToolbarCommandStyle, commandView: View) {
         mergeStyles(commandStyle, style)
 
         styleApplier.applyCommandStyle(icon, style, commandView)

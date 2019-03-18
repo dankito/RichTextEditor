@@ -1,16 +1,14 @@
 package net.dankito.richtexteditor.android.command
 
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
-import net.dankito.richtexteditor.android.AndroidIcon
+import net.dankito.utils.android.image.AndroidImageReference
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.command.util.TextFormatUtils
 import net.dankito.richtexteditor.command.CommandName
 
 
-
-
-class SetTextFormatWithPreviewCommand(icon: Icon = AndroidIcon(R.drawable.ic_text_format_white_48dp), protected var utils: TextFormatUtils = TextFormatUtils())
+class SetTextFormatWithPreviewCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_text_format_white_48dp), protected var utils: TextFormatUtils = TextFormatUtils())
     : SelectValueWithPreviewCommand(CommandName.FORMATBLOCK, icon) {
 
     override fun getDefaultPreview(): CharSequence {

@@ -12,10 +12,10 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCodeCombination
 import javafx.scene.input.KeyCombination
 import javafx.scene.text.Font
-import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.JavaFXJavaScriptExecutor
 import net.dankito.richtexteditor.java.fx.RichTextEditor
 import net.dankito.richtexteditor.java.fx.localization.Localization
+import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 import tornadofx.*
 
 
@@ -103,8 +103,8 @@ class SearchView(private val searchViewStyle: SearchViewStyle, private val local
         }
     }
 
-    private fun createJumpToPreviousNextResultIcon(icon: JavaFXIcon): Node {
-        return ImageView(Image(icon.url, searchViewStyle.jumpToPreviousNextResultIconWidth, searchViewStyle.jumpToPreviousNextResultIconWidth, true, true))
+    private fun createJumpToPreviousNextResultIcon(icon: JavaFXImageReference): Node {
+        return ImageView(Image(icon.imageUrl, searchViewStyle.jumpToPreviousNextResultIconWidth, searchViewStyle.jumpToPreviousNextResultIconWidth, true, true))
     }
 
 

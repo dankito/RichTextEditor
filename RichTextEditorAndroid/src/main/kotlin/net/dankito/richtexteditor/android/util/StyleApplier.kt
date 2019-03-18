@@ -3,26 +3,26 @@ package net.dankito.richtexteditor.android.util
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import net.dankito.richtexteditor.Icon
-import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.toolbar.SelectValueWithPreviewView
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.extensions.getLayoutSize
 import net.dankito.utils.android.extensions.getPixelSizeForDisplay
 import net.dankito.utils.android.extensions.setPadding
 import net.dankito.utils.android.extensions.setRightMargin
+import net.dankito.utils.android.image.AndroidImageReference
+import net.dankito.utils.image.ImageReference
 
 
 class StyleApplier {
 
-    fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: View) {
-        (icon as? AndroidIcon)?.let {
+    fun applyCommandStyle(icon: ImageReference, style: ToolbarCommandStyle, commandView: View) {
+        (icon as? AndroidImageReference)?.let {
             if(commandView is ImageView) {
-                commandView.setImageResource(it.iconResourceId)
+                commandView.setImageResource(it.imageResourceId)
                 commandView.scaleType = ImageView.ScaleType.FIT_CENTER
             }
             else if(commandView is SelectValueWithPreviewView) {
-                commandView.icon.setImageResource(it.iconResourceId)
+                commandView.icon.setImageResource(it.imageResourceId)
                 commandView.icon.scaleType = ImageView.ScaleType.FIT_CENTER
             }
         }

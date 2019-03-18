@@ -1,12 +1,12 @@
 package net.dankito.richtexteditor.command
 
 import net.dankito.utils.Color
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 
 
 abstract class SwitchColorOnOffCommand(private val offColor: Color, private var onColor: Color, showColorInCommandView: Boolean = true, private val setOnColorToCurrentColor: Boolean = true,
-                                       command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+                                       command: CommandName, icon: ImageReference, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ColorCommand(offColor, showColorInCommandView, command, icon, style, commandExecutedListener) {
 
 

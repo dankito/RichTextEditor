@@ -1,9 +1,9 @@
 package net.dankito.richtexteditor.android.command
 
-import net.dankito.richtexteditor.Icon
-import net.dankito.richtexteditor.android.AndroidIcon
+import net.dankito.utils.image.ImageReference
+import net.dankito.utils.android.image.AndroidImageReference
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.UnderlineCommandBase
 
 
-class UnderlineCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_underlined_white_48dp)) : UnderlineCommandBase(icon)
+class UnderlineCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_underlined_white_48dp)) : UnderlineCommandBase(icon)

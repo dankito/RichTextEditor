@@ -1,10 +1,10 @@
 package net.dankito.richtexteditor.command
 
 import net.dankito.richtexteditor.CommandView
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 
 
-abstract class ActiveStateToolbarCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class ActiveStateToolbarCommand(command: CommandName, icon: ImageReference, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, icon, style, commandExecutedListener) {
 
 

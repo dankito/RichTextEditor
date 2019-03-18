@@ -1,8 +1,8 @@
 package net.dankito.richtexteditor.java.fx.command
 
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.command.ItalicCommandBase
-import net.dankito.richtexteditor.java.fx.JavaFXIcon
+import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class ItalicCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_italic_black_36dp.png")) : ItalicCommandBase(icon)
+class ItalicCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_italic_black_36dp.png")) : ItalicCommandBase(icon)

@@ -1,14 +1,14 @@
 package net.dankito.richtexteditor.android.command
 
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
-import net.dankito.richtexteditor.android.AndroidIcon
+import net.dankito.utils.android.image.AndroidImageReference
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.command.util.FontNameUtils
 import net.dankito.richtexteditor.command.CommandName
 
 
-class SetFontNameCommand(icon: Icon = AndroidIcon(R.drawable.ic_font_download_white_48dp), protected var utils: FontNameUtils = FontNameUtils())
+class SetFontNameCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_font_download_white_48dp), protected var utils: FontNameUtils = FontNameUtils())
     : SelectValueCommand(CommandName.FONTNAME, icon) {
 
 

@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox
 import javafx.scene.layout.Pane
 import javafx.scene.layout.Region
 import net.dankito.utils.Color
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.SetColorCommand
 import net.dankito.richtexteditor.command.ToolbarCommand
@@ -158,7 +158,7 @@ open class EditorToolbar : View() {
         applyCommandStyle(command.icon, command.style, commandView)
     }
 
-    internal fun applyCommandStyle(icon: Icon, style: ToolbarCommandStyle, commandView: Region) {
+    internal fun applyCommandStyle(icon: ImageReference, style: ToolbarCommandStyle, commandView: Region) {
         mergeStyles(commandStyle, style)
 
         styleApplier.applyCommandStyle(icon, style, commandView)

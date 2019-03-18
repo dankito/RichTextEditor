@@ -2,7 +2,7 @@ package net.dankito.richtexteditor.java.fx.toolbar
 
 import javafx.scene.control.ScrollPane
 import net.dankito.richtexteditor.command.ToolbarCommand
-import net.dankito.richtexteditor.java.fx.JavaFXIcon
+import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 import net.dankito.richtexteditor.java.fx.command.*
 
 
@@ -26,7 +26,7 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
         addCommand(ItalicCommand(), formatsGroup)
         addCommand(UnderlineCommand(), formatsGroup)
 
-        val additionalFormatsVerticalGroup = VerticalCommandGroup(JavaFXIcon.fromResourceName("ic_format_superscript_black_36dp.png"), listOf(
+        val additionalFormatsVerticalGroup = VerticalCommandGroup(JavaFXImageReference.fromIconsResourceName("ic_format_superscript_black_36dp.png"), listOf(
                 createItem(StrikeThroughCommand(), "command.title.strike.through"),
                 createItem(SuperscriptCommand(), "command.title.superscript"),
                 createItem(SubscriptCommand(), "command.title.subscript"),
@@ -46,7 +46,7 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
         val insertGroup = CommandGroup()
         addGroup(insertGroup)
 
-        val alignmentVerticalGroup = VerticalCommandGroup(JavaFXIcon.fromResourceName("ic_format_align_left_black_36dp.png"), listOf(
+        val alignmentVerticalGroup = VerticalCommandGroup(JavaFXImageReference.fromIconsResourceName("ic_format_align_left_black_36dp.png"), listOf(
                 createItem(AlignLeftCommand(), "command.title.align.left"),
                 createItem(AlignCenterCommand(), "command.title.align.center"),
                 createItem(AlignRightCommand(), "command.title.align.right"),
@@ -54,7 +54,7 @@ class GroupedCommandsEditorToolbar : EditorToolbar() {
         ))
         addVerticalGroup(alignmentVerticalGroup, insertGroup)
 
-        val insertVerticalGroup = VerticalCommandGroup(JavaFXIcon.fromResourceName("ic_insert_photo_black_36dp.png"), listOf(
+        val insertVerticalGroup = VerticalCommandGroup(JavaFXImageReference.fromIconsResourceName("ic_insert_photo_black_36dp.png"), listOf(
                 createItem(InsertBulletListCommand(), "command.title.insert.bullet.list"),
                 createItem(InsertNumberedListCommand(), "command.title.insert.numbered.list"),
                 createItem(InsertLinkCommand(this, localization), "command.title.insert.link"),

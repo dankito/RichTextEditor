@@ -36,11 +36,7 @@ dependencies {
 //    compile "$mavenGroup:$richTextEditorCommonMavenArtifactId:$version"
     compile project(':RichTextEditorCommon')
 
-    compile("no.tornado:tornadofx:$tornadoFXVersion", {
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-    })
-
-    compile "no.tornado:tornadofx-controls:$tornadoFXControlsVersion"
+    compile "net.dankito.utils:java-fx-utils:$javaFXUtilsVersion"
 
     compile "com.drewnoakes:metadata-extractor:$metadataExtractorVersion"
 }

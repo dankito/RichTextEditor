@@ -1,8 +1,8 @@
 package net.dankito.richtexteditor.java.fx.command
 
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.command.BoldCommandBase
-import net.dankito.richtexteditor.java.fx.JavaFXIcon
+import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class BoldCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_bold_black_36dp.png")) : BoldCommandBase(icon)
+class BoldCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_bold_black_36dp.png")) : BoldCommandBase(icon)

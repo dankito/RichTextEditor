@@ -1,8 +1,8 @@
 package net.dankito.richtexteditor.java.fx.command
 
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.command.StrikeThroughCommandBase
-import net.dankito.richtexteditor.java.fx.JavaFXIcon
+import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class StrikeThroughCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_strikethrough_black_36dp.png")) : StrikeThroughCommandBase(icon)
+class StrikeThroughCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_strikethrough_black_36dp.png")) : StrikeThroughCommandBase(icon)

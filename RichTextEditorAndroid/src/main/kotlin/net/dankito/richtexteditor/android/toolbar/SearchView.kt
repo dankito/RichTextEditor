@@ -14,13 +14,13 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.util.StyleApplier
+import net.dankito.utils.android.extensions.*
+import net.dankito.utils.android.image.AndroidImageReference
 import net.dankito.utils.android.keyboard.KeyboardUtils
 import net.dankito.utils.android.keyboard.SoftKeyboardToggleListener
-import net.dankito.utils.android.extensions.*
 import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
 import java.util.*
 import kotlin.concurrent.schedule
@@ -158,13 +158,13 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
 
         styleApplier.applyCommandStyle(style.jumpToPreviousResultIcon, style.commandStyle, btnJumpToPreviousResult)
         btnJumpToPreviousResult.setColorFilter(style.commandStyle.enabledTintColor.toInt())
-        if((style.jumpToPreviousResultIcon as? AndroidIcon)?.iconResourceId == R.drawable.ic_arrow_up) {
+        if((style.jumpToPreviousResultIcon as? AndroidImageReference)?.imageResourceId == R.drawable.ic_arrow_up) {
             btnJumpToPreviousResult.layoutParams.width = getLayoutSize(27)
         }
 
         styleApplier.applyCommandStyle(style.jumpToNextResultIcon, style.commandStyle, btnJumpToNextResult)
         btnJumpToNextResult.setColorFilter(style.commandStyle.enabledTintColor.toInt())
-        if((style.jumpToNextResultIcon as? AndroidIcon)?.iconResourceId == R.drawable.ic_arrow_down) {
+        if((style.jumpToNextResultIcon as? AndroidImageReference)?.imageResourceId == R.drawable.ic_arrow_down) {
             btnJumpToNextResult.layoutParams.width = getLayoutSize(27)
         }
 
@@ -196,7 +196,7 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
     }
 
     open fun expand() {
-        (style?.hideSearchControlsIcon as? AndroidIcon)?.let { btnToggleSearchControlsVisibility.setImageResource(it.iconResourceId) }
+        (style?.hideSearchControlsIcon as? AndroidImageReference)?.let { btnToggleSearchControlsVisibility.setImageResource(it.imageResourceId) }
         lytSearchControls.visibility = View.VISIBLE
 
         searchViewExpandedListener?.invoke(true)
@@ -228,7 +228,7 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
             lytSearchControls.visibility = View.GONE
         }
 
-        (style?.showSearchControlsIcon as? AndroidIcon)?.let { btnToggleSearchControlsVisibility.setImageResource(it.iconResourceId) }
+        (style?.showSearchControlsIcon as? AndroidImageReference)?.let { btnToggleSearchControlsVisibility.setImageResource(it.imageResourceId) }
         clearSearchResults()
         searchViewExpandedListener?.invoke(false)
     }

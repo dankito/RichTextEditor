@@ -1,6 +1,6 @@
 package net.dankito.richtexteditor.android.command
 
-import net.dankito.richtexteditor.Icon
+import net.dankito.utils.image.ImageReference
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsView
@@ -10,7 +10,7 @@ import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.ui.view.IHandlesBackButtonPress
 
 
-abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Icon, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
+abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: ImageReference, style: ToolbarCommandStyle = ToolbarCommandStyle(), commandExecutedListener: (() -> Unit)? = null)
     : ToolbarCommand(command, icon, style, commandExecutedListener), ICommandRequiringEditor, IHandlesBackButtonPress {
 
     override var editor: RichTextEditor? = null
