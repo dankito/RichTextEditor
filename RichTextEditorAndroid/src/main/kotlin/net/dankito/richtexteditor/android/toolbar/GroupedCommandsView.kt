@@ -12,6 +12,7 @@ import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.extensions.calculateOnMeasure
 import net.dankito.richtexteditor.android.extensions.initializeView
 import net.dankito.richtexteditor.android.extensions.richTextEditorChanged
+import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.extensions.ColorExtensions
@@ -113,6 +114,11 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
             toolbar.commandStyle = style
             toolbar.styleChanged(true)
         }
+    }
+
+
+    open fun removeCommand(command: CommandName): Boolean {
+        return toolbar?.removeCommand(command) == true
     }
 
 }

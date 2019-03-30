@@ -5,12 +5,10 @@ import android.os.Environment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.dankito.readability4j.extended.Readability4JExtended
 import net.dankito.richtexteditor.android.FullscreenWebView
-import net.dankito.utils.android.permissions.PermissionsService
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.demo.dialogs.AddHtmlFromWebPageDialog
 import net.dankito.richtexteditor.android.toolbar.AllCommandsEditorToolbar
@@ -18,6 +16,7 @@ import net.dankito.richtexteditor.android.toolbar.EditorToolbar
 import net.dankito.richtexteditor.android.toolbar.GroupedCommandsEditorToolbar
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.richtexteditor.model.DownloadImageUiSetting
+import net.dankito.utils.android.permissions.PermissionsService
 import net.dankito.utils.web.client.OkHttpWebClient
 import net.dankito.utils.web.client.RequestParameters
 import java.io.File
@@ -75,6 +74,13 @@ class MainActivity : AppCompatActivity() {
 
         bottomGroupedCommandsToolbar = findViewById(R.id.bottomGroupedCommandsToolbar) as GroupedCommandsEditorToolbar
         bottomGroupedCommandsToolbar.editor = editor
+
+        // you can adjust predefined toolbars by removing single commands
+//        bottomInlineToolbar.removeCommand(CommandName.BOLD)
+//        bottomGroupedCommandsToolbar.removeCommandFromGroupedCommandsView(CommandName.TOGGLE_GROUPED_TEXT_STYLES_COMMANDS_VIEW, CommandName.BOLD)
+//        bottomInlineToolbar.removeSearchView()
+//        bottomGroupedCommandsToolbar.removeSearchView()
+
 
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())

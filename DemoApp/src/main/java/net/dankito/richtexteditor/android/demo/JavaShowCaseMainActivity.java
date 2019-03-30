@@ -44,6 +44,11 @@ public class JavaShowCaseMainActivity extends AppCompatActivity {
         bottomGroupedCommandsToolbar = (GroupedCommandsEditorToolbar) findViewById(R.id.bottomGroupedCommandsToolbar);
         bottomGroupedCommandsToolbar.setEditor(editor);
 
+        // you can adjust predefined toolbars by removing single commands
+//        bottomGroupedCommandsToolbar.removeCommandFromGroupedCommandsView(CommandName.TOGGLE_GROUPED_TEXT_STYLES_COMMANDS_VIEW, CommandName.BOLD);
+//        bottomGroupedCommandsToolbar.removeSearchView();
+
+
         editor.setEditorFontSize(20);
         editor.setPadding((4 * (int) getResources().getDisplayMetrics().density));
 
