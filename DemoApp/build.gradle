@@ -53,6 +53,14 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+
+        pickFirst 'editor/normalize.css'
+        pickFirst 'editor/style.css'
+        pickFirst 'editor/editor.html'
+        pickFirst 'editor/interact.min.js'
+        pickFirst 'editor/platform_style.css'
+        pickFirst 'editor/rich_text_editor.js'
+        pickFirst 'META-INF/RichTextEditorCommon.kotlin_module'
     }
 
     lintOptions {
