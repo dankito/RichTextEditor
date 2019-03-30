@@ -122,7 +122,9 @@ clean.mustRunAfter copyEditorFilesToAssetsFolder
 /*          publish to maven central            */
 
 def isReleaseVersion = !version.endsWith("SNAPSHOT")
+// to sign archives set signing.secretKeyRingFile, signing.keyId and signing.password in your gradle.properties (in ~/.gradle/gradle.properties or project's gradle.properties)
 def areSigningPropertiesSet = isPropertySet('signing.secretKeyRingFile') && isPropertySet('signing.keyId') && isPropertySet('signing.password')
+// to upload archives to Maven Central set ossrhUsername and ossrhPassword in your gradle.properties (in ~/.gradle/gradle.properties or project's gradle.properties)
 def areOssrhPropertiesSet = isPropertySet('ossrhUsername') && isPropertySet('ossrhPassword')
 
 def isPropertySet(propertyName) {
@@ -158,48 +160,57 @@ signing {
 
 uploadArchives {
     repositories {
+
         mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
             repository url: repositories.mavenLocal().url
-
-            // set ossrhUsername and ossrhPassword in your gradle.properties (in ~/.gradle/gradle.properties or project's gradle.properties)
-//            if (areOssrhPropertiesSet) {
-//                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-//                    authentication(userName: ossrhUsername, password: ossrhPassword)
-//                }
-//
-//                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-//                    authentication(userName: ossrhUsername, password: ossrhPassword)
-//                }
-//            }
 
             pom.project {
                 name mavenArtifactId
                 artifactId = mavenArtifactId
                 packaging 'jar'
-                // optionally artifactId can be defined here
-                description "WYSIWYG editor for Android supporting all common formatting options."
-                url 'https://github.com/dankito/RichTextEditor'
+            }
+        }
 
-                scm {
-                    connection 'scm:git:git://github.com/dankito/RichTextEditor.git'
-                    developerConnection 'scm:git:git@github.com:dankito/RichTextEditor.git'
+
+        if (areOssrhPropertiesSet) {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                    authentication(userName: ossrhUsername, password: ossrhPassword)
+                }
+
+                pom.project {
+                    name mavenArtifactId
+                    artifactId = mavenArtifactId
+                    packaging 'jar'
+                    // optionally artifactId can be defined here
+                    description "WYSIWYG editor for Android supporting all common formatting options."
                     url 'https://github.com/dankito/RichTextEditor'
-                }
 
-                licenses {
-                    license {
-                        name 'The Apache License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    scm {
+                        connection 'scm:git:git://github.com/dankito/RichTextEditor.git'
+                        developerConnection 'scm:git:git@github.com:dankito/RichTextEditor.git'
+                        url 'https://github.com/dankito/RichTextEditor'
                     }
-                }
 
-                developers {
-                    developer {
-                        id 'dankito'
-                        name 'Christian Dankl'
-                        email 'maven@dankito.net'
+                    licenses {
+                        license {
+                            name 'The Apache License, Version 2.0'
+                            url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id 'dankito'
+                            name 'Christian Dankl'
+                            email 'maven@dankito.net'
+                        }
                     }
                 }
             }
