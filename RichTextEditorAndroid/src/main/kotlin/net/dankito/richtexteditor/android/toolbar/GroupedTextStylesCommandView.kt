@@ -7,6 +7,7 @@ import kotlinx.android.synthetic.main.grouped_text_styles_command_view.view.*
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.*
+import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 
 
@@ -84,6 +85,13 @@ open class GroupedTextStylesCommandView : GroupedCommandsView {
         textColorAndAlignmentToolbar.editor = editor
 
         super.initialize(editor, command)
+    }
+
+
+    override fun removeCommand(command: CommandName): Boolean {
+        return basicTextStylesToolbar.removeCommand(command) ||
+                textFormatToolbar.removeCommand(command) ||
+                textColorAndAlignmentToolbar.removeCommand(command)
     }
 
 }

@@ -87,6 +87,13 @@ class MainActivity : ThemeableActivity() {
         bottomGroupedCommandsToolbar = findViewById(R.id.bottomGroupedCommandsToolbar) as GroupedCommandsEditorToolbar
         bottomGroupedCommandsToolbar.editor = editor
 
+        // you can adjust predefined toolbars by removing single commands
+//        bottomInlineToolbar.removeCommand(CommandName.BOLD)
+//        bottomGroupedCommandsToolbar.removeCommandFromGroupedCommandsView(CommandName.TOGGLE_GROUPED_TEXT_STYLES_COMMANDS_VIEW, CommandName.BOLD)
+//        bottomInlineToolbar.removeSearchView()
+//        bottomGroupedCommandsToolbar.removeSearchView()
+
+
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
 

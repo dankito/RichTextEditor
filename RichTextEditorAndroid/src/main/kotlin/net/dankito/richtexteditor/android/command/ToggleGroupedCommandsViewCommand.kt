@@ -25,11 +25,11 @@ abstract class ToggleGroupedCommandsViewCommand(command: CommandName, icon: Imag
         getGroupedCommandsView()?.toggleShowView()
     }
 
-    fun applyStyleToGroupedCommands(style: ToolbarCommandStyle) {
+    open fun applyStyleToGroupedCommands(style: ToolbarCommandStyle) {
         getGroupedCommandsView()?.applyStyleToGroupedCommands(style)
     }
 
-    private fun getGroupedCommandsView(): GroupedCommandsView? {
+    open fun getGroupedCommandsView(): GroupedCommandsView? {
         groupedCommandsView?.let { return it }
 
         editor?.let { editor ->
