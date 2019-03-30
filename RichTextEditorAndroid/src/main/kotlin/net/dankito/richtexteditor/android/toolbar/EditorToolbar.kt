@@ -36,42 +36,41 @@ open class EditorToolbar : HorizontalScrollView, IHandlesBackButtonPress {
     }
 
 
-    constructor(context: Context) : super(context) { initToolbar(context) }
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initToolbar(context) }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initToolbar(context) }
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { initToolbar(context) }
+    constructor(context: Context) : super(context) { initToolbar() }
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initToolbar() }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initToolbar() }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) { initToolbar() }
 
 
-    var editor: RichTextEditor? = null
+    open var editor: RichTextEditor? = null
         set(value) {
             field = value
 
             richTextEditorChanged(value)
         }
 
-    private var currentIsShown = false
+    protected var currentIsShown = false
 
-    private val commandInvokedListeners = ArrayList<(ToolbarCommand) -> Unit>()
+    protected val commandInvokedListeners = ArrayList<(ToolbarCommand) -> Unit>()
 
 
-    private lateinit var linearLayout: LinearLayout
+    protected val linearLayout = LinearLayout(context)
 
-    private val commands = HashMap<ToolbarCommand, View>()
+    protected val commands = HashMap<ToolbarCommand, View>()
 
-    private val commandsHandlingBackButton = ArrayList<IHandlesBackButtonPress>()
+    protected val commandsHandlingBackButton = ArrayList<IHandlesBackButtonPress>()
 
-    private val searchViews = ArrayList<SearchView>()
+    protected val searchViews = ArrayList<SearchView>()
 
-    private val styleApplier = StyleApplier()
+    protected val styleApplier = StyleApplier()
 
-    var commandStyle = ToolbarCommandStyle()
+    open var commandStyle = ToolbarCommandStyle()
         internal set
 
 
-    private fun initToolbar(context: Context) {
+    private fun initToolbar() {
         this.isFillViewport = true
 
-        linearLayout = LinearLayout(context)
         linearLayout.orientation = LinearLayout.HORIZONTAL
 
         addView(linearLayout)
