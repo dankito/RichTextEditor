@@ -117,14 +117,8 @@ open class RichTextEditor : VBox() {
      *
      * Convenience method for Kotlin users.
      */
-    fun getCurrentHtmlAsync(callback: (String) -> Unit) {
-        getCurrentHtmlAsync(object : GetCurrentHtmlCallback {
-
-            override fun htmlRetrieved(html: String) {
-                callback(html)
-            }
-
-        })
+    open fun getCurrentHtmlAsync(callback: (String) -> Unit) {
+        javaScriptExecutor.getCurrentHtmlAsync(callback)
     }
 
     /**
@@ -134,7 +128,7 @@ open class RichTextEditor : VBox() {
      *
      * See getCachedHtml() for explanation why it's sensible to use this method.
      */
-    fun getCurrentHtmlAsync(callback: GetCurrentHtmlCallback) {
+    open fun getCurrentHtmlAsync(callback: GetCurrentHtmlCallback) {
         javaScriptExecutor.getCurrentHtmlAsync(callback)
     }
 

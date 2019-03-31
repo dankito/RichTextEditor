@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.net.URLEncoder
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicReference
 import kotlin.concurrent.thread
 
 
@@ -78,8 +81,27 @@ abstract class JavaScriptExecutorBase {
      * Due to the nature of underlying JavaScript implementation this method has to be asynchronous.
      *
      * See getCachedHtml() for explanation why it's sensible to use this method.
+     *
+     * Convenience method for Kotlin users.
      */
-    fun getCurrentHtmlAsync(callback: GetCurrentHtmlCallback) {
+    open fun getCurrentHtmlAsync(callback: (String) -> Unit) {
+        getCurrentHtmlAsync(object : GetCurrentHtmlCallback {
+
+            override fun htmlRetrieved(html: String) {
+                callback(html)
+            }
+
+        })
+    }
+
+    /**
+     * This is in most cases the method you want.
+     * Queries underlying JavaScript code for real current html (not cached one as getCachedHtml()).
+     * Due to the nature of underlying JavaScript implementation this method has to be asynchronous.
+     *
+     * See getCachedHtml() for explanation why it's sensible to use this method.
+     */
+    open fun getCurrentHtmlAsync(callback: GetCurrentHtmlCallback) {
         executeEditorJavaScriptFunction("getEncodedHtml()") { html ->
             var decodedHtml = decodeHtml(html)
             if(decodedHtml.startsWith('"') && decodedHtml.endsWith('"')) {

@@ -12,9 +12,6 @@ import netscape.javascript.JSObject
 import org.slf4j.LoggerFactory
 import tornadofx.*
 import java.io.File
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicReference
 
 
 class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("data", "editor")) : JavaScriptExecutorBase() {
@@ -81,24 +78,6 @@ class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("
                 "};")
 
         super.editorLoaded()
-    }
-
-
-    /**
-     * Compared to AndroidJavaScriptExecutor html property is not always up to date with current html -> retrieve
-     */
-    override fun getCachedHtml(): String {
-        val result = AtomicReference<String>()
-        val countDownLatch = CountDownLatch(1)
-
-        executeEditorJavaScriptFunction("_getHtml()") {
-            result.set(it)
-            countDownLatch.countDown()
-        }
-
-        try { countDownLatch.await(3, TimeUnit.SECONDS) } catch(ignored: Exception) { }
-
-        return result.get()
     }
 
 
