@@ -175,6 +175,13 @@ open class RichTextEditor : FullscreenWebView {
         javaScriptExecutor.getCurrentHtmlAsync(callback)
     }
 
+    /**
+     * Blocks while doing async getCurrentHtmlAsync() call. You shouldn't call this on UI thread.
+     */
+    open fun getCurrentHtmlBlocking(): String {
+        return javaScriptExecutor.getCurrentHtmlBlocking()
+    }
+
 
     /*      Editor base settings        */
 

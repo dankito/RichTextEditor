@@ -112,6 +112,23 @@ abstract class JavaScriptExecutorBase {
         }
     }
 
+    /**
+     * Blocks while doing async getCurrentHtmlAsync() call. You shouldn't call this on UI thread.
+     */
+    open fun getCurrentHtmlBlocking(): String {
+        val result = AtomicReference<String>()
+        val countDownLatch = CountDownLatch(1)
+
+        getCurrentHtmlAsync {
+            result.set(it)
+            countDownLatch.countDown()
+        }
+
+        try { countDownLatch.await(3, TimeUnit.SECONDS) } catch(ignored: Exception) { }
+
+        return result.get()
+    }
+
 
     /*      Text Commands        */
 
