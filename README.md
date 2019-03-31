@@ -40,7 +40,7 @@ You can download it from [PlayStore](https://play.google.com/store/apps/details?
 Gradle:
 ```
 dependencies {
-  compile 'net.dankito.richtexteditor:richtexteditor-android:2.0.1'
+  implementation 'net.dankito.richtexteditor:richtexteditor-android:2.0.8'
 }
 ```
 
@@ -49,7 +49,7 @@ Maven:
 <dependency>
    <groupId>net.dankito.richtexteditor</groupId>
    <artifactId>richtexteditor-android</artifactId>
-   <version>2.0.1</version>
+   <version>2.0.8</version>
 </dependency>
 ```
 
