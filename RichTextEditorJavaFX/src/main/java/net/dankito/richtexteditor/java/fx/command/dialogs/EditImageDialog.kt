@@ -3,10 +3,10 @@ package net.dankito.richtexteditor.java.fx.command.dialogs
 import javafx.stage.FileChooser
 import javafx.stage.Window
 import net.dankito.richtexteditor.java.fx.localization.Localization
-import java.io.File
+import net.dankito.utils.io.FileUtils
 
 
-class EditImageDialog(private val localization: Localization, private val imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit)
+open class EditImageDialog(private val localization: Localization, private val imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit)
     : EnterTwoStringsDialogBase(localization, "dialog.edit.image.image.url.label", "dialog.edit.image.alternate.text.label",
         "dialog.edit.image.dialog.title") {
 
@@ -15,6 +15,9 @@ class EditImageDialog(private val localization: Localization, private val imageU
             EditImageDialog(localization, imageUrlEnteredListener).show(owner)
         }
     }
+
+
+    protected val fileUtils = FileUtils()
 
 
     init {
@@ -35,16 +38,7 @@ class EditImageDialog(private val localization: Localization, private val imageU
 
 
     override fun isOkButtonEnabled(stringOne: String, stringTwo: String): Boolean {
-        return isValidHttpUrl(stringOne) || isExistingFile(stringOne)
-    }
-
-    private fun isExistingFile(string: String): Boolean {
-        try {
-            val file = File(string)
-            return file.exists() && file.isFile
-        } catch(ignored: Exception) { }
-
-        return false
+        return isValidHttpUrl(stringOne) || fileUtils.isExistingFile(stringOne)
     }
 
 
