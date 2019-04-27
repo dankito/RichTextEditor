@@ -126,12 +126,12 @@ abstract class EnterTwoStringsDialogBase(private val localization: Localization,
     }
 
 
-    fun show(owner: Window? = currentStage) {
+    open fun show(owner: Window? = currentStage) {
         show(localization.getLocalizedString(dialogTitleResourceKey), stageStyle = StageStyle.UTILITY, owner = owner ?: currentStage)
     }
 
 
-    private fun selectLocalFile() {
+    protected open fun selectLocalFile() {
         val fileChooser = FileChooser()
         fileChooser.title = getSelectLocalFileTitle()
         fileChooser.extensionFilters.addAll(getSelectLocalFileExtensionFilters())
@@ -154,7 +154,7 @@ abstract class EnterTwoStringsDialogBase(private val localization: Localization,
     }
 
 
-    private fun determineIsOkButtonEnabled(stringOne: String, stringTwo: String) {
+    protected open fun determineIsOkButtonEnabled(stringOne: String, stringTwo: String) {
         isOkButtonEnabled.set(isOkButtonEnabled(stringOne, stringTwo))
     }
 
@@ -162,7 +162,7 @@ abstract class EnterTwoStringsDialogBase(private val localization: Localization,
         return true
     }
 
-    protected fun isValidHttpUrl(string: String): Boolean {
+    protected open fun isValidHttpUrl(string: String): Boolean {
         try {
             val url = URL(string)
 
@@ -172,7 +172,7 @@ abstract class EnterTwoStringsDialogBase(private val localization: Localization,
         return false
     }
 
-    private fun enteringStringsDone() {
+    protected open fun enteringStringsDone() {
         if(isOkButtonEnabled.value) {
             enteringStringsDone(enteredStringOne.value, enteredStringTwo.value)
 

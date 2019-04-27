@@ -6,7 +6,7 @@ import net.dankito.richtexteditor.java.fx.localization.Localization
 import java.io.File
 
 
-class EditImageDialog(private val localization: Localization, private val imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit)
+open class EditImageDialog(private val localization: Localization, private val imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit)
     : EnterTwoStringsDialogBase(localization, "dialog.edit.image.image.url.label", "dialog.edit.image.alternate.text.label",
         "dialog.edit.image.dialog.title") {
 
@@ -38,7 +38,7 @@ class EditImageDialog(private val localization: Localization, private val imageU
         return isValidHttpUrl(stringOne) || isExistingFile(stringOne)
     }
 
-    private fun isExistingFile(string: String): Boolean {
+    protected open fun isExistingFile(string: String): Boolean {
         try {
             val file = File(string)
             return file.exists() && file.isFile

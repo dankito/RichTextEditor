@@ -10,14 +10,14 @@ import kotlinx.android.synthetic.main.dialog_edit_url.view.*
 import net.dankito.richtexteditor.android.R
 
 
-class EditUrlDialog : DialogFragment() {
+open class EditUrlDialog : DialogFragment() {
 
     companion object {
         val DialogTag = EditUrlDialog::class.java.name
     }
 
 
-    private var urlEnteredListener: ((url: String, title: String) -> Unit)? = null
+    protected var urlEnteredListener: ((url: String, title: String) -> Unit)? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -43,14 +43,14 @@ class EditUrlDialog : DialogFragment() {
     }
 
 
-    fun show(fragmentManager: FragmentManager, urlEnteredListener: (url: String, title: String) -> Unit) {
+    open fun show(fragmentManager: FragmentManager, urlEnteredListener: (url: String, title: String) -> Unit) {
         this.urlEnteredListener = urlEnteredListener
 
         this.show(fragmentManager, DialogTag)
     }
 
 
-    private fun handleEditTextUrlAction(actionId: Int, keyEvent: KeyEvent?): Boolean {
+    protected open fun handleEditTextUrlAction(actionId: Int, keyEvent: KeyEvent?): Boolean {
         if(actionId == EditorInfo.IME_ACTION_DONE || (actionId == EditorInfo.IME_NULL && keyEvent?.action == KeyEvent.ACTION_DOWN)) {
             enteringUrlDone()
 
@@ -60,7 +60,7 @@ class EditUrlDialog : DialogFragment() {
         return false
     }
 
-    private fun enteringUrlDone() {
+    protected open fun enteringUrlDone() {
         val url = edtxtUrl.text.toString().trim() // SwiftKey app enters ' ' at end which causes line break -> trim // TODO: is this reasonable in all cases?
 
         var title = edtxtTitle.text.toString().trim()

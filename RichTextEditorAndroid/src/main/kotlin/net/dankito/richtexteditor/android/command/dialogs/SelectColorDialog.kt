@@ -9,9 +9,9 @@ import net.dankito.utils.android.KeyboardState
 import net.dankito.utils.android.extensions.hideKeyboard
 
 
-class SelectColorDialog {
+open class SelectColorDialog {
 
-    fun select(currentColor: Color, editor: RichTextEditor, colorSelected: (Color) -> Unit) {
+    open fun select(currentColor: Color, editor: RichTextEditor, colorSelected: (Color) -> Unit) {
         val currentColorWithoutAlpha = Color(currentColor.red, currentColor.green, currentColor.blue) // remove alpha value as html doesn't support alpha
 
         val wasKeyboardVisible = getIsKeyboardVisibleAndCloseIfSo(editor)
@@ -40,7 +40,7 @@ class SelectColorDialog {
         colorPickerDialog.show((editor.context as Activity).fragmentManager, "")
     }
 
-    private fun getIsKeyboardVisibleAndCloseIfSo(editor: RichTextEditor): Boolean {
+    protected open fun getIsKeyboardVisibleAndCloseIfSo(editor: RichTextEditor): Boolean {
         val isVisible = KeyboardState.isKeyboardVisible
 
         if(isVisible) {

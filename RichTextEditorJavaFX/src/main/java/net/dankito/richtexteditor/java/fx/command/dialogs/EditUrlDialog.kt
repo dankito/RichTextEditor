@@ -4,7 +4,7 @@ import javafx.stage.Window
 import net.dankito.richtexteditor.java.fx.localization.Localization
 
 
-class EditUrlDialog(localization: Localization, val urlEnteredListener: (url: String, title: String) -> Unit)
+open class EditUrlDialog(localization: Localization, val urlEnteredListener: (url: String, title: String) -> Unit)
     : EnterTwoStringsDialogBase(localization, "dialog.edit.url.url.label", "dialog.edit.url.title.label",
         "dialog.edit.url.dialog.title") {
 
