@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.ItalicCommandBase
 
 
-class ItalicCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_italic_white_48dp)) : ItalicCommandBase(icon)
+open class ItalicCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_italic_white_48dp)) : ItalicCommandBase(icon)

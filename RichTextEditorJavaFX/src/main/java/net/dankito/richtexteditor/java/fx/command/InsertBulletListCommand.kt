@@ -9,7 +9,7 @@ import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 
 
-class InsertBulletListCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_list_bulleted_black_36dp.png")) : InsertBulletListCommandBase(icon) {
+open class InsertBulletListCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_list_bulleted_black_36dp.png")) : InsertBulletListCommandBase(icon) {
 
 
     init {

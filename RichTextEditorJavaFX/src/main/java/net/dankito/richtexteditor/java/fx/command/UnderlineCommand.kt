@@ -5,4 +5,4 @@ import net.dankito.richtexteditor.command.UnderlineCommandBase
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 
 
-class UnderlineCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_underlined_black_36dp.png")) : UnderlineCommandBase(icon)
+open class UnderlineCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_underlined_black_36dp.png")) : UnderlineCommandBase(icon)

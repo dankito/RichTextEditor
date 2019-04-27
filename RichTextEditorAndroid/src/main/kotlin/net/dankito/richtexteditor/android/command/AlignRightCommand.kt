@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.AlignRightCommandBase
 
 
-class AlignRightCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_align_right_white_48dp)) : AlignRightCommandBase(icon)
+open class AlignRightCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_align_right_white_48dp)) : AlignRightCommandBase(icon)

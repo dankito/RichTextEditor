@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.SuperscriptCommandBase
 
 
-class SuperscriptCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_superscript)) : SuperscriptCommandBase(icon)
+open class SuperscriptCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_superscript)) : SuperscriptCommandBase(icon)

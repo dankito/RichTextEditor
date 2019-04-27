@@ -7,7 +7,7 @@ import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 
 
-class SetFontNameCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_font_download_black_36dp.png")) : SelectValueCommand(CommandName.FONTNAME, icon) {
+open class SetFontNameCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_font_download_black_36dp.png")) : SelectValueCommand(CommandName.FONTNAME, icon) {
 
     override fun getItemNames(): List<String> {
         return Font.getFamilies()

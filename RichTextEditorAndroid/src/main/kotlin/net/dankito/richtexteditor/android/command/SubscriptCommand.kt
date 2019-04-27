@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.SubscriptCommandBase
 
 
-class SubscriptCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_subscript)) : SubscriptCommandBase(icon)
+open class SubscriptCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_subscript)) : SubscriptCommandBase(icon)

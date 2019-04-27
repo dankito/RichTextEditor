@@ -5,4 +5,4 @@ import net.dankito.richtexteditor.command.IncreaseIndentCommandBase
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 
 
-class IncreaseIndentCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_indent_increase_black_36dp.png")) : IncreaseIndentCommandBase(icon)
+open class IncreaseIndentCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_indent_increase_black_36dp.png")) : IncreaseIndentCommandBase(icon)

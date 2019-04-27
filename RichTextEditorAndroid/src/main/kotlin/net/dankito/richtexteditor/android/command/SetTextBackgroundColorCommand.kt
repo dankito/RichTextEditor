@@ -1,15 +1,16 @@
 package net.dankito.richtexteditor.android.command
 
-import net.dankito.utils.Color
 import net.dankito.richtexteditor.Icon
 import net.dankito.richtexteditor.android.AndroidIcon
 import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.dialogs.SelectColorDialog
 import net.dankito.richtexteditor.command.SetTextBackgroundColorCommandBase
+import net.dankito.utils.Color
 
 
-class SetTextBackgroundColorCommand(defaultColor: Color = Color.Transparent, icon: Icon = AndroidIcon(R.drawable.ic_format_color_fill_white_48dp), showColorInCommandView: Boolean = true)
+open class SetTextBackgroundColorCommand(defaultColor: Color = Color.Transparent, icon: Icon = AndroidIcon(R.drawable.ic_format_color_fill_white_48dp), showColorInCommandView:
+Boolean = true)
     : SetTextBackgroundColorCommandBase(icon, defaultColor, showColorInCommandView), ICommandRequiringEditor {
 
     override var editor: RichTextEditor? = null

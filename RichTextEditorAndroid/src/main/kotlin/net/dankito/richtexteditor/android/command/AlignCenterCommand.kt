@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.AlignCenterCommandBase
 
 
-class AlignCenterCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_align_center_white_48dp)) : AlignCenterCommandBase(icon)
+open class AlignCenterCommand(icon: Icon = AndroidIcon(R.drawable.ic_format_align_center_white_48dp)) : AlignCenterCommandBase(icon)

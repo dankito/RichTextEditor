@@ -5,4 +5,4 @@ import net.dankito.richtexteditor.command.BlockQuoteCommandBase
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 
 
-class BlockQuoteCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_quote_black_36dp.png")) : BlockQuoteCommandBase(icon)
+open class BlockQuoteCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_quote_black_36dp.png")) : BlockQuoteCommandBase(icon)

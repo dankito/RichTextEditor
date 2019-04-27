@@ -12,7 +12,7 @@ import net.dankito.utils.android.permissions.PermissionsService
 import java.io.File
 
 
-class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : InsertImageCommandBase(icon), ICommandRequiringEditor {
+open class InsertImageCommand(icon: Icon = AndroidIcon(R.drawable.ic_insert_photo_white_48dp)) : InsertImageCommandBase(icon), ICommandRequiringEditor {
 
     override var editor: RichTextEditor? = null
 

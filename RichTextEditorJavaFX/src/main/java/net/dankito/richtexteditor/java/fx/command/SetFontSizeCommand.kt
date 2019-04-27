@@ -7,12 +7,12 @@ import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.localization.Localization
 
 
-class SetFontSizeCommand(localization: Localization, icon: Icon = JavaFXIcon.fromResourceName("ic_format_size_black_36dp.png"))
+open class SetFontSizeCommand(localization: Localization, icon: Icon = JavaFXIcon.fromResourceName("ic_format_size_black_36dp.png"))
     : SelectValueCommand(CommandName.FONTSIZE, icon) {
 
-    private val defaultFontSizeName = localization.getLocalizedString("font.size.medium")
+    protected val defaultFontSizeName = localization.getLocalizedString("font.size.medium")
 
-    private val fontSizeNames = listOf(
+    protected val fontSizeNames = listOf(
             localization.getLocalizedString("font.size.very.very.small"),
             localization.getLocalizedString("font.size.very.small"),
             localization.getLocalizedString("font.size.small"),
@@ -38,7 +38,7 @@ class SetFontSizeCommand(localization: Localization, icon: Icon = JavaFXIcon.fro
         return ""
     }
 
-    private fun getItemSize(index: Int): String {
+    protected open fun getItemSize(index: Int): String {
         // see https://stackoverflow.com/a/5912671
         return when(index) {
             0 -> "9px"

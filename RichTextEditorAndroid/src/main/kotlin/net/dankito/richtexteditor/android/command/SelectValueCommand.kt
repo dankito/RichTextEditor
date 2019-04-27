@@ -12,14 +12,14 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
     : SelectValueCommandBase(command, icon, style, commandExecutedListener), IHandlesBackButtonPress {
 
 
-    private var selectValueView: SelectValueView? = null
+    protected var selectValueView: SelectValueView? = null
 
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {
         getSelectValueView(executor)?.toggleShowView()
     }
 
-    private fun getSelectValueView(executor: JavaScriptExecutorBase): SelectValueView? {
+    protected open fun getSelectValueView(executor: JavaScriptExecutorBase): SelectValueView? {
         selectValueView?.let { return it }
 
         editor?.let { editor ->

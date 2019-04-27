@@ -9,7 +9,7 @@ import net.dankito.richtexteditor.java.fx.JavaFXIcon
 import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 
 
-class AlignJustifyCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_align_justify_black_36dp.png")) : AlignJustifyCommandBase(icon) {
+open class AlignJustifyCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_align_justify_black_36dp.png")) : AlignJustifyCommandBase(icon) {
 
 
     init {

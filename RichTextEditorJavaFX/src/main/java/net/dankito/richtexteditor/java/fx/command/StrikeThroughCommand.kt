@@ -5,4 +5,4 @@ import net.dankito.richtexteditor.command.StrikeThroughCommandBase
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 
 
-class StrikeThroughCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_strikethrough_black_36dp.png")) : StrikeThroughCommandBase(icon)
+open class StrikeThroughCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_format_strikethrough_black_36dp.png")) : StrikeThroughCommandBase(icon)

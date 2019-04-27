@@ -5,4 +5,4 @@ import net.dankito.richtexteditor.command.RedoCommandBase
 import net.dankito.richtexteditor.java.fx.JavaFXIcon
 
 
-class RedoCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_redo_black_36dp.png")) : RedoCommandBase(icon)
+open class RedoCommand(icon: Icon = JavaFXIcon.fromResourceName("ic_redo_black_36dp.png")) : RedoCommandBase(icon)

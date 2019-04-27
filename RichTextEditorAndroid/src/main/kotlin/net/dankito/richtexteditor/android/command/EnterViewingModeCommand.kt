@@ -8,7 +8,7 @@ import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 
 
-class EnterViewingModeCommand : ToolbarCommand(CommandName.ENTER_VIEWING_MODE, AndroidIcon(R.drawable.ic_fullscreen_white_48dp)), ICommandRequiringEditor {
+open class EnterViewingModeCommand : ToolbarCommand(CommandName.ENTER_VIEWING_MODE, AndroidIcon(R.drawable.ic_fullscreen_white_48dp)), ICommandRequiringEditor {
 
     override var editor: RichTextEditor? = null
 

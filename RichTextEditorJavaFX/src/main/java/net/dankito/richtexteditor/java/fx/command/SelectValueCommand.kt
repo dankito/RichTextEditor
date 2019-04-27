@@ -23,7 +23,7 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
     abstract fun valueSelected(executor: JavaScriptExecutorBase, position: Int, itemName: String)
 
 
-    fun valueSelected(itemName: String) {
+    open fun valueSelected(itemName: String) {
         executor?.let { executor ->
             getIndexOfItem(itemName)?.let { index ->
                 valueSelected(executor, index, itemName)
@@ -41,7 +41,7 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
         return getIndexOfItem(commandValue)
     }
 
-    protected fun getIndexOfItem(itemName: String): Int? {
+    protected open fun getIndexOfItem(itemName: String): Int? {
         val index = getItemNames().indexOf(itemName)
 
         if(index >= 0) {
@@ -59,11 +59,11 @@ abstract class SelectValueCommand(command: CommandName, icon: Icon, style: Toolb
     }
 
 
-    fun addCommandValueChangedListener(listener: (newValue: Any) -> Unit) {
+    open fun addCommandValueChangedListener(listener: (newValue: Any) -> Unit) {
         commandValueChangedListeners.add(listener)
     }
 
-    private fun fireCommandValueChangedListeners(newValue: Any) {
+    protected open fun fireCommandValueChangedListeners(newValue: Any) {
         commandValueChangedListeners.forEach {
             it.invoke(newValue)
         }

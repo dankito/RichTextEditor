@@ -8,7 +8,7 @@ import net.dankito.richtexteditor.android.command.util.FontNameUtils
 import net.dankito.richtexteditor.command.CommandName
 
 
-class SetFontNameCommand(icon: Icon = AndroidIcon(R.drawable.ic_font_download_white_48dp), protected var utils: FontNameUtils = FontNameUtils())
+open class SetFontNameCommand(icon: Icon = AndroidIcon(R.drawable.ic_font_download_white_48dp), protected var utils: FontNameUtils = FontNameUtils())
     : SelectValueCommand(CommandName.FONTNAME, icon) {
 
 
