@@ -22,15 +22,15 @@ ext {
     androidMinSdkVersion = 15
     androidTargetSdkVersion = 28
 
-    javaUtilsVersion = '1.0.3'
+    javaUtilsVersion = '1.0.6'
     metadataExtractorVersion = '2.11.0'
-    readability4JVersion = '1.0.1'
+    readability4JVersion = '1.0.3'
     slf4jVersion = "1.7.25"
 
 
     // Android
 
-    androidUtilsVersion = '1.0.6'
+    androidUtilsVersion = '1.1.0'
     fileChooserDialogVersion = '1.1.5'
     appCompatVersion = "27.1.1"
 
