@@ -113,7 +113,10 @@ abstract class JavaScriptExecutorBase {
     }
 
     /**
-     * Blocks while doing async getCurrentHtmlAsync() call. You shouldn't call this on UI thread.
+     * Blocks while doing async getCurrentHtmlAsync() call. You shouldn't call this on UI thread as till response from JavaScript is retrieved UI thread is blocked.
+     *
+     * Caution: Does not work if called from Android's UI thread!
+     * As JavaScript result callback will asynchronously be posted to UI thread. So while UI thread is being block, JavaScript result callback cannot be executed on UI thread.
      */
     open fun getCurrentHtmlBlocking(): String {
         val result = AtomicReference<String>(html)

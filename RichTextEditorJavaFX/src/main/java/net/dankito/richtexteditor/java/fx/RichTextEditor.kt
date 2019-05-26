@@ -133,7 +133,7 @@ open class RichTextEditor : VBox() {
     }
 
     /**
-     * Blocks while doing async getCurrentHtmlAsync() call. You shouldn't call this on UI thread.
+     * Blocks while doing async getCurrentHtmlAsync() call. You shouldn't call this on UI thread as till response from JavaScript is retrieved UI thread is blocked.
      */
     open fun getCurrentHtmlBlocking(): String {
         return javaScriptExecutor.getCurrentHtmlBlocking()
