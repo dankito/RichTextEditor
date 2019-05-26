@@ -94,15 +94,6 @@ open class RichTextEditor : VBox() {
     }
 
 
-    /**
-     * Returns the last cached editor's html.
-     * Usually this is the up to date html. But in case user uses swipe input, some swipe keyboards (especially Samsung's) or pasting text on Samsung devices doesn't fire text changed event,
-     * so we're not notified of last entered word. In this case use getCurrentHtmlAsync() to ensure to retrieve current html.
-     */
-    fun getCachedHtml(): String {
-        return javaScriptExecutor.getCachedHtml()
-    }
-
     @JvmOverloads
     fun setHtml(html: String, baseUrl: String? = null) {
         javaScriptExecutor.setHtml(html, baseUrl)
