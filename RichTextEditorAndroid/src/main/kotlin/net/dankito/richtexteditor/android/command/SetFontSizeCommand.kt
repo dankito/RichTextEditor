@@ -7,7 +7,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.command.util.FontSizeUtils
 import net.dankito.richtexteditor.command.CommandName
 
-class SetFontSizeCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_size_white_48dp), protected val utils: FontSizeUtils = FontSizeUtils())
+open class SetFontSizeCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_size_white_48dp), protected val utils: FontSizeUtils = FontSizeUtils())
     : SelectValueCommand(CommandName.FONTSIZE, icon) {
 
 

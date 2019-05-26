@@ -9,7 +9,7 @@ import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.SwitchColorOnOffCommand
 
 
-class SwitchTextColorOnOffCommand(offColor: Color = Color.Black, onColor: Color = Color.Red, icon: ImageReference = AndroidImageReference(R.drawable.ic_format_color_text_white_48dp),
+open class SwitchTextColorOnOffCommand(offColor: Color = Color.Black, onColor: Color = Color.Red, icon: ImageReference = AndroidImageReference(R.drawable.ic_format_color_text_white_48dp),
                                   showColorInCommandView: Boolean = true, setOnColorToCurrentColor: Boolean = true)
     : SwitchColorOnOffCommand(offColor, onColor, showColorInCommandView, setOnColorToCurrentColor, CommandName.FORECOLOR, icon) {
 

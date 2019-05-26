@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.InsertCheckboxCommandBase
 
 
-class InsertCheckboxCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_insert_checkbox)) : InsertCheckboxCommandBase(icon)
+open class InsertCheckboxCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_insert_checkbox)) : InsertCheckboxCommandBase(icon)

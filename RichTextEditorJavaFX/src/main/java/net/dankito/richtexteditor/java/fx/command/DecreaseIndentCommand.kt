@@ -5,4 +5,4 @@ import net.dankito.richtexteditor.command.DecreaseIndentCommandBase
 import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class DecreaseIndentCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_indent_decrease_black_36dp.png")) : DecreaseIndentCommandBase(icon)
+open class DecreaseIndentCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_indent_decrease_black_36dp.png")) : DecreaseIndentCommandBase(icon)

@@ -5,4 +5,4 @@ import net.dankito.richtexteditor.command.UndoCommandBase
 import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class UndoCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_undo_black_36dp.png")) : UndoCommandBase(icon)
+open class UndoCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_undo_black_36dp.png")) : UndoCommandBase(icon)

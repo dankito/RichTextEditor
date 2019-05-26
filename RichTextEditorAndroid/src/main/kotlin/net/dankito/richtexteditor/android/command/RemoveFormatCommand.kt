@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.RemoveFormatCommandBase
 
 
-class RemoveFormatCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_clear_white_48dp)) : RemoveFormatCommandBase(icon)
+open class RemoveFormatCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_clear_white_48dp)) : RemoveFormatCommandBase(icon)

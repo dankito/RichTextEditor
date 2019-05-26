@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.AlignLeftCommandBase
 
 
-class AlignLeftCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_align_left_white_48dp)) : AlignLeftCommandBase(icon)
+open class AlignLeftCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_align_left_white_48dp)) : AlignLeftCommandBase(icon)

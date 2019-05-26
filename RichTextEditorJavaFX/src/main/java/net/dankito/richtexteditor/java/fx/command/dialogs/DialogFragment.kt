@@ -11,7 +11,7 @@ import tornadofx.*
 
 abstract class DialogFragment : Fragment() {
 
-    fun show(title: String? = null, iconUrl: String? = null, stageStyle: StageStyle = StageStyle.DECORATED, modality: Modality = Modality.NONE,
+    open fun show(title: String? = null, iconUrl: String? = null, stageStyle: StageStyle = StageStyle.DECORATED, modality: Modality = Modality.NONE,
              owner: Window? = currentStage) : Stage {
         val dialogStage = Stage()
 
@@ -34,7 +34,7 @@ abstract class DialogFragment : Fragment() {
         return dialogStage
     }
 
-    fun closeDialog() {
+    open fun closeDialog() {
         this.modalStage?.close()
     }
 

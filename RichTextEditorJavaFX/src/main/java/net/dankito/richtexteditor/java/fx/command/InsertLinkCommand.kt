@@ -12,7 +12,7 @@ import net.dankito.richtexteditor.java.fx.localization.Localization
 import net.dankito.richtexteditor.java.fx.toolbar.EditorToolbar
 
 
-class InsertLinkCommand(private val toolbar: EditorToolbar, private val localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_insert_link_black_36dp.png"))
+open class InsertLinkCommand(private val toolbar: EditorToolbar, private val localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_insert_link_black_36dp.png"))
     : InsertLinkCommandBase(icon) {
 
 

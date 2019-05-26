@@ -9,7 +9,7 @@ import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 
 
-class AlignJustifyCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_align_justify_black_36dp.png")) : AlignJustifyCommandBase(icon) {
+open class AlignJustifyCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_align_justify_black_36dp.png")) : AlignJustifyCommandBase(icon) {
 
 
     init {

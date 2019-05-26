@@ -9,7 +9,7 @@ import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 
 
-class SubscriptCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_subscript_black_36dp.png")) : SubscriptCommandBase(icon) {
+open class SubscriptCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_subscript_black_36dp.png")) : SubscriptCommandBase(icon) {
 
 
     init {

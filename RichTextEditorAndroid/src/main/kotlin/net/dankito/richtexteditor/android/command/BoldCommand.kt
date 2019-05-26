@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.BoldCommandBase
 
 
-class BoldCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_bold_white_48dp)) : BoldCommandBase(icon)
+open class BoldCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_bold_white_48dp)) : BoldCommandBase(icon)

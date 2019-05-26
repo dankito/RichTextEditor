@@ -15,12 +15,12 @@ ext {
     appVersionCode = 3000000
 
 
-    kotlinVersion = '1.3.21'
+    kotlinVersion = '1.3.31'
 
-    androidCompileSdkVersion = 27
-    androidBuildToolsVersion = '27.0.3'
+    androidCompileSdkVersion = 28
+    androidBuildToolsVersion = '28.0.3'
     androidMinSdkVersion = 15
-    androidTargetSdkVersion = 27
+    androidTargetSdkVersion = 28
 
     javaUtilsVersion = '2.0.0-SNAPSHOT'
     metadataExtractorVersion = '2.11.0'

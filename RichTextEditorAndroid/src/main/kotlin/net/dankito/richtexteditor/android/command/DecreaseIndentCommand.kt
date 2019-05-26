@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.DecreaseIndentCommandBase
 
 
-class DecreaseIndentCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_indent_decrease_white_48dp)) : DecreaseIndentCommandBase(icon)
+open class DecreaseIndentCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_indent_decrease_white_48dp)) : DecreaseIndentCommandBase(icon)

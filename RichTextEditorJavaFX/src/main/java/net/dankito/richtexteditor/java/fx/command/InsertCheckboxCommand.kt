@@ -5,4 +5,4 @@ import net.dankito.richtexteditor.command.InsertCheckboxCommandBase
 import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class InsertCheckboxCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_insert_checkbox_black_36dp.png")) : InsertCheckboxCommandBase(icon)
+open class InsertCheckboxCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_insert_checkbox_black_36dp.png")) : InsertCheckboxCommandBase(icon)

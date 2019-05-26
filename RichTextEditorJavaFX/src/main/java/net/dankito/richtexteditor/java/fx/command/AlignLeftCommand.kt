@@ -9,7 +9,7 @@ import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 
 
-class AlignLeftCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_align_left_black_36dp.png")) : AlignLeftCommandBase(icon) {
+open class AlignLeftCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_align_left_black_36dp.png")) : AlignLeftCommandBase(icon) {
 
 
     init {

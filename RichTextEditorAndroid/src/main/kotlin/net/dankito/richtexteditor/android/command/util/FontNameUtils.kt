@@ -8,7 +8,7 @@ import net.dankito.utils.android.extensions.getSpannedFromHtml
 open class FontNameUtils {
 
 
-    private val fontInfos = SystemFontsParser().parseSystemFonts()
+    protected val fontInfos = SystemFontsParser().parseSystemFonts()
 
 
     open fun getAvailableFontsPreviews(): List<CharSequence> {

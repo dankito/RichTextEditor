@@ -21,21 +21,21 @@ import net.dankito.utils.android.permissions.IPermissionsService
 import net.dankito.utils.web.UrlUtil
 import java.io.File
 
-class EditImageDialog : DialogFragment() {
+open class EditImageDialog : DialogFragment() {
 
     companion object {
         val DialogTag = EditImageDialog::class.java.name
     }
 
 
-    private val urlUtil = UrlUtil()
+    protected val urlUtil = UrlUtil()
 
 
-    private lateinit var permissionsService: IPermissionsService
+    protected lateinit var permissionsService: IPermissionsService
 
-    private var downloadImageConfig: DownloadImageConfig? = null
+    protected var downloadImageConfig: DownloadImageConfig? = null
 
-    private var imageUrlEnteredListener: ((imageUrl: String, alternateText: String) -> Unit)? = null
+    protected var imageUrlEnteredListener: ((imageUrl: String, alternateText: String) -> Unit)? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -72,7 +72,7 @@ class EditImageDialog : DialogFragment() {
     }
 
 
-    fun show(fragmentManager: FragmentManager, permissionsService: IPermissionsService, downloadImageConfig: DownloadImageConfig? = null,
+    open fun show(fragmentManager: FragmentManager, permissionsService: IPermissionsService, downloadImageConfig: DownloadImageConfig? = null,
              imageUrlEnteredListener: (imageUrl: String, alternateText: String) -> Unit) {
         this.permissionsService = permissionsService
         this.downloadImageConfig = downloadImageConfig
@@ -82,7 +82,7 @@ class EditImageDialog : DialogFragment() {
     }
 
 
-    private fun handleEditTextAction(actionId: Int, keyEvent: KeyEvent?): Boolean {
+    protected open fun handleEditTextAction(actionId: Int, keyEvent: KeyEvent?): Boolean {
         if(actionId == EditorInfo.IME_ACTION_DONE || (actionId == EditorInfo.IME_NULL && keyEvent?.action == KeyEvent.ACTION_DOWN)) {
             enteringImageUrlDone()
 
@@ -92,7 +92,7 @@ class EditImageDialog : DialogFragment() {
         return false
     }
 
-    private fun selectLocalImage() {
+    protected open fun selectLocalImage() {
         activity?.let { activity ->
             val config = FileChooserDialogConfig(ExtensionsFilter.WebViewSupportedImages.filter, getCurrentDirectory())
 
@@ -104,7 +104,7 @@ class EditImageDialog : DialogFragment() {
         }
     }
 
-    private fun getCurrentDirectory(): File {
+    protected open fun getCurrentDirectory(): File {
         val folderUtils = AndroidFolderUtils(context!!)
 
         var currentDirectory = folderUtils.getCameraPhotosDirectory()
@@ -119,7 +119,7 @@ class EditImageDialog : DialogFragment() {
         return currentDirectory
     }
 
-    private fun enteringImageUrlDone() {
+    protected open fun enteringImageUrlDone() {
         val imageUrl = enteredImageUrl
 
         if (chkbxDownloadImage.isChecked) {
@@ -130,7 +130,7 @@ class EditImageDialog : DialogFragment() {
         }
     }
 
-    private fun downloadImageAndFireImageUrlEntered(imageUrl: String) {
+    protected open fun downloadImageAndFireImageUrlEntered(imageUrl: String) {
         context?.let { context ->
             val downloader = ImageDownloader()
             val targetFolder = downloader.selectDownloadFolder(downloadImageConfig, context.filesDir)
@@ -151,7 +151,7 @@ class EditImageDialog : DialogFragment() {
         }
     }
 
-    private fun downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl: String, targetFolder: File, downloader: ImageDownloader) {
+    protected open fun downloadImageAndFireImageUrlEnteredWithPermissionGranted(imageUrl: String, targetFolder: File, downloader: ImageDownloader) {
         targetFolder.mkdirs()
 
         val fileName = downloadImageConfig?.fileNameSelectorCallback?.invoke(imageUrl) ?: urlUtil.getFileName(imageUrl)
@@ -166,11 +166,11 @@ class EditImageDialog : DialogFragment() {
         }
     }
 
-    private fun isInternalFile(file: File): Boolean {
+    protected open fun isInternalFile(file: File): Boolean {
         return file.startsWith(context!!.filesDir.absoluteFile)
     }
 
-    private fun fireImageUrlEnteredAndDismiss(imageUrl: String) {
+    protected open fun fireImageUrlEnteredAndDismiss(imageUrl: String) {
         var alternateText = edtxtAlternateText.text.toString().trim()
         if (alternateText.isBlank()) {
             alternateText = imageUrl
@@ -181,11 +181,11 @@ class EditImageDialog : DialogFragment() {
         dismiss()
     }
 
-    private val enteredImageUrl: String
+    protected open val enteredImageUrl: String
         get() = edtxtImageUrl.text.toString().trim() // SwiftKey app enters ' ' at end which causes line break -> trim // TODO: is this reasonable in all cases?
 
 
-    private fun setDownloadOptionsState() {
+    protected open fun setDownloadOptionsState() {
         if (downloadImageConfig == null || downloadImageConfig?.uiSetting == DownloadImageUiSetting.Disallow) {
             lytDownloadImage.visibility = View.GONE
         }

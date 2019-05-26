@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.InsertNumberedListCommandBase
 
 
-class InsertNumberedListCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_list_numbered_white_48dp)) : InsertNumberedListCommandBase(icon)
+open class InsertNumberedListCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_list_numbered_white_48dp)) : InsertNumberedListCommandBase(icon)

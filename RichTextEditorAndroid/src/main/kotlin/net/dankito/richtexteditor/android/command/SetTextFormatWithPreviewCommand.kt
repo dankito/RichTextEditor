@@ -8,7 +8,7 @@ import net.dankito.richtexteditor.android.command.util.TextFormatUtils
 import net.dankito.richtexteditor.command.CommandName
 
 
-class SetTextFormatWithPreviewCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_text_format_white_48dp), protected var utils: TextFormatUtils = TextFormatUtils())
+open class SetTextFormatWithPreviewCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_text_format_white_48dp), protected var utils: TextFormatUtils = TextFormatUtils())
     : SelectValueWithPreviewCommand(CommandName.FORMATBLOCK, icon) {
 
     override fun getDefaultPreview(): CharSequence {

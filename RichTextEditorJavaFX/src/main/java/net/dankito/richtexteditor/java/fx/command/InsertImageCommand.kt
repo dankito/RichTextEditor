@@ -14,7 +14,7 @@ import net.dankito.utils.image.JavaImageUtils
 import java.io.File
 
 
-class InsertImageCommand(private val toolbar: EditorToolbar, private val localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_insert_photo_black_36dp.png"))
+open class InsertImageCommand(private val toolbar: EditorToolbar, private val localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_insert_photo_black_36dp.png"))
     : InsertImageCommandBase(icon) {
 
     val imageUtils = JavaImageUtils()

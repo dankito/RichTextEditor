@@ -9,7 +9,7 @@ import net.dankito.richtexteditor.android.command.dialogs.SelectColorDialog
 import net.dankito.richtexteditor.command.SetTextBackgroundColorCommandBase
 
 
-class SetTextBackgroundColorCommand(defaultColor: Color = Color.Transparent, icon: ImageReference = AndroidImageReference(R.drawable.ic_format_color_fill_white_48dp), showColorInCommandView: Boolean = true)
+open class SetTextBackgroundColorCommand(defaultColor: Color = Color.Transparent, icon: ImageReference = AndroidImageReference(R.drawable.ic_format_color_fill_white_48dp), showColorInCommandView: Boolean = true)
     : SetTextBackgroundColorCommandBase(icon, defaultColor, showColorInCommandView), ICommandRequiringEditor {
 
     override var editor: RichTextEditor? = null

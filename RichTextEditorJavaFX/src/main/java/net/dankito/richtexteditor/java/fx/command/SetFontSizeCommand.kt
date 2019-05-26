@@ -7,12 +7,12 @@ import net.dankito.utils.image.ImageReference
 import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class SetFontSizeCommand(localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_size_black_36dp.png"))
+open class SetFontSizeCommand(localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_size_black_36dp.png"))
     : SelectValueCommand(CommandName.FONTSIZE, icon) {
 
-    private val defaultFontSizeName = localization.getLocalizedString("font.size.medium")
+    protected val defaultFontSizeName = localization.getLocalizedString("font.size.medium")
 
-    private val fontSizeNames = listOf(
+    protected val fontSizeNames = listOf(
             localization.getLocalizedString("font.size.very.very.small"),
             localization.getLocalizedString("font.size.very.small"),
             localization.getLocalizedString("font.size.small"),
@@ -38,7 +38,7 @@ class SetFontSizeCommand(localization: Localization, icon: ImageReference = Java
         return ""
     }
 
-    private fun getItemSize(index: Int): String {
+    protected open fun getItemSize(index: Int): String {
         // see https://stackoverflow.com/a/5912671
         return when(index) {
             0 -> "9px"

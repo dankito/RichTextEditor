@@ -11,12 +11,12 @@ import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 import net.dankito.richtexteditor.java.fx.localization.Localization
 
 
-class SetTextFormatCommand(localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_text_format_black_36dp.png"))
+open class SetTextFormatCommand(localization: Localization, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_text_format_black_36dp.png"))
     : SelectValueCommand(CommandName.FORMATBLOCK, icon) {
 
-    private val defaultFormat = localization.getLocalizedString("text.format.paragraph")
+    protected val defaultFormat = localization.getLocalizedString("text.format.paragraph")
 
-    private val textFormats = listOf(
+    protected val textFormats = listOf(
             localization.getLocalizedString("text.format.heading.1"),
             localization.getLocalizedString("text.format.heading.2"),
             localization.getLocalizedString("text.format.heading.3"),
@@ -50,7 +50,7 @@ class SetTextFormatCommand(localization: Localization, icon: ImageReference = Ja
         return ""
     }
 
-    private fun getItemStyle(index: Int): String {
+    protected open fun getItemStyle(index: Int): String {
         // see for example https://www.w3schools.com/tags/tag_hn.asp
         return when(index) {
             0 -> "-fx-font-size: 2em; -fx-font-weight: bold"
@@ -96,7 +96,7 @@ class SetTextFormatCommand(localization: Localization, icon: ImageReference = Ja
     }
 
 
-    private fun setKeyboardShortcuts() {
+    protected open fun setKeyboardShortcuts() {
         this.addKeyboardShortcut(KeyCodeCombination(KeyCode.DIGIT1, KeyCombination.SHORTCUT_DOWN)) {
             executor?.setHeading(1)
         }

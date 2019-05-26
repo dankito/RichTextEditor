@@ -9,7 +9,7 @@ import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 
 
-class SuperscriptCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_superscript_black_36dp.png")) : SuperscriptCommandBase(icon) {
+open class SuperscriptCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_superscript_black_36dp.png")) : SuperscriptCommandBase(icon) {
 
 
     init {

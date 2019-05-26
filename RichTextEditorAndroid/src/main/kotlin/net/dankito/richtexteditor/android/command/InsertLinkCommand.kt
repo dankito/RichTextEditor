@@ -10,7 +10,7 @@ import net.dankito.richtexteditor.command.InsertLinkCommandBase
 import net.dankito.utils.android.extensions.asActivity
 
 
-class InsertLinkCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_insert_link_white_48dp)) : InsertLinkCommandBase(icon), ICommandRequiringEditor {
+open class InsertLinkCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_insert_link_white_48dp)) : InsertLinkCommandBase(icon), ICommandRequiringEditor {
 
     override var editor: RichTextEditor? = null
 

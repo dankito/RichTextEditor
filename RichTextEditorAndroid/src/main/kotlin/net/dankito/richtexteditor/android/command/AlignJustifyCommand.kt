@@ -6,4 +6,4 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.command.AlignJustifyCommandBase
 
 
-class AlignJustifyCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_align_justify_white_48dp)) : AlignJustifyCommandBase(icon)
+open class AlignJustifyCommand(icon: ImageReference = AndroidImageReference(R.drawable.ic_format_align_justify_white_48dp)) : AlignJustifyCommandBase(icon)

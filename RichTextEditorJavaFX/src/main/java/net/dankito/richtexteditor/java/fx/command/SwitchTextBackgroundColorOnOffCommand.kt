@@ -8,7 +8,7 @@ import net.dankito.richtexteditor.command.SwitchColorOnOffCommand
 import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 
 
-class SwitchTextBackgroundColorOnOffCommand(offColor: Color = Color.Transparent, onColor: Color = Color.Yellow, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_color_fill_black_36dp.png"),
+open class SwitchTextBackgroundColorOnOffCommand(offColor: Color = Color.Transparent, onColor: Color = Color.Yellow, icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_color_fill_black_36dp.png"),
                                             showColorInCommandView: Boolean = true, setOnColorToCurrentColor: Boolean = true)
     : SwitchColorOnOffCommand(offColor, onColor, showColorInCommandView, setOnColorToCurrentColor, CommandName.BACKCOLOR, icon) {
 

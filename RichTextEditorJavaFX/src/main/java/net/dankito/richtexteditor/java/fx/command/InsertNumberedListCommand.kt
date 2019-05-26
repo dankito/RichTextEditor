@@ -9,7 +9,7 @@ import net.dankito.utils.javafx.ui.image.JavaFXImageReference
 import net.dankito.richtexteditor.java.fx.extensions.addKeyboardShortcut
 
 
-class InsertNumberedListCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_list_numbered_black_36dp.png")) : InsertNumberedListCommandBase(icon) {
+open class InsertNumberedListCommand(icon: ImageReference = JavaFXImageReference.fromIconsResourceName("ic_format_list_numbered_black_36dp.png")) : InsertNumberedListCommandBase(icon) {
 
 
     init {
