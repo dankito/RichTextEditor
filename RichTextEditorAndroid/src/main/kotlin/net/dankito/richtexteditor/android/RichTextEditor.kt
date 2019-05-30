@@ -22,8 +22,6 @@ import net.dankito.utils.android.extensions.showKeyboard
 import net.dankito.utils.android.keyboard.KeyboardState
 import net.dankito.utils.android.permissions.IPermissionsService
 import java.io.File
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 open class RichTextEditor : FullscreenWebView {
@@ -128,12 +126,11 @@ open class RichTextEditor : FullscreenWebView {
     }
 
     private fun saveEditorState(bundle: Bundle) {
-        val filename = UUID.randomUUID().toString() + ".html"
-        val stateFile = getStateFilePath(filename)
+        val stateFile = File.createTempFile("RichTextEditorState", ".html")
 
         stateFile.writeText(getCachedHtml())
 
-        bundle.putString(HtmlFileToRestoreStateParamId, filename)
+        bundle.putString(HtmlFileToRestoreStateParamId, stateFile.absolutePath)
 
         javaScriptExecutor.baseUrl?.let {
             bundle.putString(BaseUrlToRestoreStateParamId, it)
@@ -152,8 +149,8 @@ open class RichTextEditor : FullscreenWebView {
     }
 
     private fun restoreEditorState(bundle: Bundle) {
-        bundle.getString(HtmlFileToRestoreStateParamId)?.let { restoreStateFilename ->
-            val stateFile = getStateFilePath(restoreStateFilename)
+        bundle.getString(HtmlFileToRestoreStateParamId)?.let { restoreStateFilePath ->
+            val stateFile = File(restoreStateFilePath)
 
             val htmlToRestore = stateFile.readText()
 
@@ -162,8 +159,6 @@ open class RichTextEditor : FullscreenWebView {
             setHtml(htmlToRestore, baseUrl)
         }
     }
-
-    private fun getStateFilePath(filename: String) = File(context.filesDir, filename)
 
 
     override fun onAttachedToWindow() {
