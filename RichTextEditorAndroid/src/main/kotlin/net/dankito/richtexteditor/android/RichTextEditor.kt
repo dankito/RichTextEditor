@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.MotionEvent
@@ -19,9 +21,19 @@ import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.showKeyboard
 import net.dankito.utils.android.keyboard.KeyboardState
 import net.dankito.utils.android.permissions.IPermissionsService
+import java.io.File
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 open class RichTextEditor : FullscreenWebView {
+
+    companion object {
+        const val HtmlFileToRestoreStateParamId = "RICH_TEXT_EDITOR_HTML_FILE_TO_RESTORE"
+        const val BaseUrlToRestoreStateParamId = "RICH_TEXT_EDITOR_BASE_URL_TO_RESTORE"
+        const val BaseClassStateParamId = "BASE_CLASS_STATE_TO_RESTORE"
+    }
+
 
     constructor(context: Context) : super(context) { initEditor(context, null) }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initEditor(context, attrs) }
@@ -103,6 +115,56 @@ open class RichTextEditor : FullscreenWebView {
             }
         }
     }
+
+
+    override fun onSaveInstanceState(): Parcelable? {
+        val bundle = Bundle()
+
+        bundle.putParcelable(BaseClassStateParamId, super.onSaveInstanceState())
+
+        saveEditorState(bundle)
+
+        return bundle
+    }
+
+    private fun saveEditorState(bundle: Bundle) {
+        val filename = UUID.randomUUID().toString() + ".html"
+        val stateFile = getStateFilePath(filename)
+
+        stateFile.writeText(getCachedHtml())
+
+        bundle.putString(HtmlFileToRestoreStateParamId, filename)
+
+        javaScriptExecutor.baseUrl?.let {
+            bundle.putString(BaseUrlToRestoreStateParamId, it)
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        (state as? Bundle)?.let { bundle ->
+            bundle.getParcelable<Parcelable>(BaseClassStateParamId)?.let { baseClassState ->
+                super.onRestoreInstanceState(baseClassState)
+            }
+
+            restoreEditorState(bundle)
+        }
+        ?: super.onRestoreInstanceState(state)
+    }
+
+    private fun restoreEditorState(bundle: Bundle) {
+        bundle.getString(HtmlFileToRestoreStateParamId)?.let { restoreStateFilename ->
+            val stateFile = getStateFilePath(restoreStateFilename)
+
+            val htmlToRestore = stateFile.readText()
+
+            val baseUrl = bundle.getString(BaseUrlToRestoreStateParamId)
+
+            setHtml(htmlToRestore, baseUrl)
+        }
+    }
+
+    private fun getStateFilePath(filename: String) = File(context.filesDir, filename)
+
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()

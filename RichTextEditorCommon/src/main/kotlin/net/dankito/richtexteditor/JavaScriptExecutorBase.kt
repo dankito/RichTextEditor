@@ -31,6 +31,10 @@ abstract class JavaScriptExecutorBase {
 
     private var html: String = ""
 
+    private var hasFirstStateBeenReceived = false
+
+    var baseUrl: String? = null
+
     private val objectMapper = ObjectMapper()
 
     private var commandStates: Map<CommandName, CommandState> = mapOf()
@@ -66,6 +70,8 @@ abstract class JavaScriptExecutorBase {
 
     @JvmOverloads
     fun setHtml(html: String, baseUrl: String? = null) {
+        this.baseUrl = baseUrl
+
         try {
             executeEditorJavaScriptFunction("setHtml('" + encodeHtml(html) + "', '$baseUrl');")
 
@@ -303,7 +309,11 @@ abstract class JavaScriptExecutorBase {
     private fun editorStateChanged(statesString: String) {
         try {
             val editorState = objectMapper.readValue<EditorState>(statesString, EditorState::class.java)
-            this.html = editorState.html
+
+            if (hasFirstStateBeenReceived) { // when first EditorState is received, its html is still the default value but not that one set by setHtml()
+                this.html = editorState.html
+            }
+            hasFirstStateBeenReceived = true
 
             retrievedEditorState(editorState.didHtmlChange, editorState.commandStates)
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
