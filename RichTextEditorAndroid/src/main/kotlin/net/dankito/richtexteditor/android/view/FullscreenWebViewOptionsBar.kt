@@ -12,6 +12,7 @@ import net.dankito.richtexteditor.android.R
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.richtexteditor.android.command.TextMarkerCommand
 import net.dankito.richtexteditor.android.util.StyleApplier
+import net.dankito.utils.android.extensions.getResourceIdForAttributeId
 
 
 class FullscreenWebViewOptionsBar @JvmOverloads constructor(
@@ -31,6 +32,8 @@ class FullscreenWebViewOptionsBar @JvmOverloads constructor(
         val rootView = inflater.inflate(R.layout.view_fullscreen_options_bar, this)
 
         btnMarkSelectedText = rootView.btnMarkSelectedText
+
+        rootView.setBackgroundResource(context.getResourceIdForAttributeId(R.attr.richTextEditorFullscreenOptionsBarBackground, R.color.colorPrimaryWithTransparency_Light))
     }
 
 
