@@ -90,9 +90,16 @@ open class RichTextEditor : FullscreenWebView {
         }
 
         (context as? Activity)?.runOnUiThread {
-            setEditorFontFamily("serif")
+            setInitialValues()
         }
     }
+
+    protected open fun setInitialValues() {
+        setEditorFontFamily(getDefaultFontFamily())
+    }
+
+    protected open fun getDefaultFontFamily() = "serif"
+
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
