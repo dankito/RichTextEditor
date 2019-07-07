@@ -13,10 +13,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebChromeClient
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
+import net.dankito.richtexteditor.listener.EditorLoadedListener
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.utils.android.KeyboardState
 import net.dankito.utils.android.extensions.showKeyboard
 import net.dankito.utils.android.permissions.IPermissionsService
+import org.slf4j.LoggerFactory
 
 
 open class RichTextEditor : FullscreenWebView {
@@ -24,6 +26,11 @@ open class RichTextEditor : FullscreenWebView {
     constructor(context: Context) : super(context) { initEditor(context, null) }
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) { initEditor(context, attrs) }
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { initEditor(context, attrs) }
+
+
+    companion object {
+        private val log = LoggerFactory.getLogger(RichTextEditor::class.java)
+    }
 
 
     val javaScriptExecutor = AndroidJavaScriptExecutor(this)
@@ -35,6 +42,9 @@ open class RichTextEditor : FullscreenWebView {
     protected var isLoaded = false
 
     protected var paddingToSetOnStart: Rect? = null
+
+
+    protected val editorLoadedListeners = ArrayList<() -> Unit>()
 
     protected val onTouchListeners = ArrayList<(MotionEvent) -> Unit>()
 
@@ -92,6 +102,8 @@ open class RichTextEditor : FullscreenWebView {
         (context as? Activity)?.runOnUiThread {
             setInitialValues()
         }
+
+        callEditorLoadedListeners()
     }
 
     protected open fun setInitialValues() {
@@ -274,6 +286,32 @@ open class RichTextEditor : FullscreenWebView {
                 "    head.appendChild(link);" +
                 "}) ();"
         javaScriptExecutor.executeJavaScript(jsCSSImport)
+    }
+
+
+    open fun addEditorLoadedListener(listener: EditorLoadedListener) {
+        addEditorLoadedListener { listener.editorLoaded() }
+    }
+
+    open fun addEditorLoadedListener(listener: () -> Unit) {
+        if (isLoaded) {
+            listener()
+        }
+        else {
+            editorLoadedListeners.add(listener)
+        }
+    }
+
+    protected open fun callEditorLoadedListeners() {
+        editorLoadedListeners.forEach { listener ->
+            try {
+                listener()
+            } catch (e: Exception) {
+                log.error("Could not call EditorLoadedListener $listener", e)
+            }
+        }
+
+        editorLoadedListeners.clear()
     }
 
 
