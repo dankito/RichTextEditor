@@ -10,7 +10,7 @@ import tornadofx.*
 
 open class RichTextEditor : VBox() {
 
-    private var webView = WebView()
+    protected var webView = WebView()
 
     val javaScriptExecutor = JavaFXJavaScriptExecutor(webView)
 
@@ -21,7 +21,7 @@ open class RichTextEditor : VBox() {
 
 
 
-    private fun setupHtmlEditor() {
+    protected open fun setupHtmlEditor() {
         minHeight = 200.0
         prefHeight = Region.USE_COMPUTED_SIZE
         useMaxWidth = true
@@ -53,7 +53,7 @@ open class RichTextEditor : VBox() {
 
 
     @JvmOverloads
-    fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
+    open fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
         webView.requestFocus()
 
         if(alsoCallJavaScriptFocusFunction) { // Calling focus() changes editor's state, this is not desirable in all circumstances
@@ -64,23 +64,23 @@ open class RichTextEditor : VBox() {
 
     /*      Editor base settings        */
 
-    fun setEditorFontFamily(fontFamily: String) {
+    open fun setEditorFontFamily(fontFamily: String) {
         executeEditorJavaScriptFunction("setBaseFontFamily('$fontFamily');")
     }
 
-    fun setEditorFontSize(px: Int) {
+    open fun setEditorFontSize(px: Int) {
         executeEditorJavaScriptFunction("setBaseFontSize('${px}px');")
     }
 
-    fun setPadding(padding: Double) {
+    open fun setPadding(padding: Double) {
         setPadding(padding, padding, padding, padding)
     }
 
-    fun setPadding(left: Double, top: Double, right: Double, bottom: Double) {
+    open fun setPadding(left: Double, top: Double, right: Double, bottom: Double) {
         executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
     }
 
-    private fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
+    protected open fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         javaScriptExecutor.executeEditorJavaScriptFunction(javaScript, resultCallback)
     }
 
@@ -90,12 +90,12 @@ open class RichTextEditor : VBox() {
      * Usually this is the up to date html. But in case user uses swipe input, some swipe keyboards (especially Samsung's) or pasting text on Samsung devices doesn't fire text changed event,
      * so we're not notified of last entered word. In this case use getCurrentHtmlAsync() to ensure to retrieve current html.
      */
-    fun getCachedHtml(): String {
+    open fun getCachedHtml(): String {
         return javaScriptExecutor.getCachedHtml()
     }
 
     @JvmOverloads
-    fun setHtml(html: String, baseUrl: String? = null) {
+    open fun setHtml(html: String, baseUrl: String? = null) {
         javaScriptExecutor.setHtml(html, baseUrl)
     }
 
@@ -108,7 +108,7 @@ open class RichTextEditor : VBox() {
      *
      * Convenience method for Kotlin users.
      */
-    fun getCurrentHtmlAsync(callback: (String) -> Unit) {
+    open fun getCurrentHtmlAsync(callback: (String) -> Unit) {
         getCurrentHtmlAsync(object : GetCurrentHtmlCallback {
 
             override fun htmlRetrieved(html: String) {
@@ -125,7 +125,7 @@ open class RichTextEditor : VBox() {
      *
      * See getCachedHtml() for explanation why it's sensible to use this method.
      */
-    fun getCurrentHtmlAsync(callback: GetCurrentHtmlCallback) {
+    open fun getCurrentHtmlAsync(callback: GetCurrentHtmlCallback) {
         javaScriptExecutor.getCurrentHtmlAsync(callback)
     }
 

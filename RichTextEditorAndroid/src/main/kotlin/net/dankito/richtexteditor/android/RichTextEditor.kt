@@ -32,15 +32,15 @@ open class RichTextEditor : FullscreenWebView {
 
     var downloadImageConfig: DownloadImageConfig? = null
 
-    private var isLoaded = false
+    protected var isLoaded = false
 
-    private var paddingToSetOnStart: Rect? = null
+    protected var paddingToSetOnStart: Rect? = null
 
-    private val onTouchListeners = ArrayList<(MotionEvent) -> Unit>()
+    protected val onTouchListeners = ArrayList<(MotionEvent) -> Unit>()
 
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun initEditor(context: Context, attributes: AttributeSet?) {
+    protected open fun initEditor(context: Context, attributes: AttributeSet?) {
         attributes?.let { applyAttributes(context, it) }
 
         this.isHorizontalScrollBarEnabled = false
@@ -60,7 +60,7 @@ open class RichTextEditor : FullscreenWebView {
         }
     }
 
-    private fun applyAttributes(context: Context, attrs: AttributeSet) {
+    protected open fun applyAttributes(context: Context, attrs: AttributeSet) {
         val attrsArray = intArrayOf(android.R.attr.gravity)
         val ta = context.obtainStyledAttributes(attrs, attrsArray)
 
@@ -81,7 +81,7 @@ open class RichTextEditor : FullscreenWebView {
         ta.recycle()
     }
 
-    private fun editorLoaded(context: Context) {
+    protected open fun editorLoaded(context: Context) {
         isLoaded = true
 
         paddingToSetOnStart?.let {
@@ -127,12 +127,12 @@ open class RichTextEditor : FullscreenWebView {
      * Usually this is the up to date html. But in case user uses swipe input, some swipe keyboards (especially Samsung's) or pasting text on Samsung devices doesn't fire text changed event,
      * so we're not notified of last entered word. In this case use getCurrentHtmlAsync() to ensure to retrieve current html.
      */
-    fun getCachedHtml(): String {
+    open fun getCachedHtml(): String {
         return javaScriptExecutor.getCachedHtml()
     }
 
     @JvmOverloads
-    fun setHtml(html: String, baseUrl: String? = null) {
+    open fun setHtml(html: String, baseUrl: String? = null) {
         javaScriptExecutor.setHtml(html, baseUrl)
     }
 
@@ -145,7 +145,7 @@ open class RichTextEditor : FullscreenWebView {
      *
      * Convenience method for Kotlin users.
      */
-    fun getCurrentHtmlAsync(callback: (String) -> Unit) {
+    open fun getCurrentHtmlAsync(callback: (String) -> Unit) {
         getCurrentHtmlAsync(object : GetCurrentHtmlCallback {
 
             override fun htmlRetrieved(html: String) {
@@ -162,29 +162,29 @@ open class RichTextEditor : FullscreenWebView {
      *
      * See getCachedHtml() for explanation why it's sensible to use this method.
      */
-    fun getCurrentHtmlAsync(callback: GetCurrentHtmlCallback) {
+    open fun getCurrentHtmlAsync(callback: GetCurrentHtmlCallback) {
         javaScriptExecutor.getCurrentHtmlAsync(callback)
     }
 
 
     /*      Editor base settings        */
 
-    fun setEditorFontColor(color: Int) {
+    open fun setEditorFontColor(color: Int) {
         val hex = convertHexColorString(color)
         executeEditorJavaScriptFunction("setBaseTextColor('$hex');")
     }
 
-    fun setEditorFontFamily(fontFamily: String) {
+    open fun setEditorFontFamily(fontFamily: String) {
         this.settings.standardFontFamily = fontFamily
         executeEditorJavaScriptFunction("setBaseFontFamily('$fontFamily');")
     }
 
-    fun setEditorFontSize(px: Int) {
+    open fun setEditorFontSize(px: Int) {
         this.settings.defaultFontSize = px
         executeEditorJavaScriptFunction("setBaseFontSize('${px}px');")
     }
 
-    fun setPadding(padding: Int) {
+    open fun setPadding(padding: Int) {
         setPadding(padding, padding, padding, padding)
     }
 
@@ -209,7 +209,7 @@ open class RichTextEditor : FullscreenWebView {
         setPadding(start, top, end, bottom)
     }
 
-    fun setEditorBackgroundColor(color: Int) {
+    open fun setEditorBackgroundColor(color: Int) {
         setBackgroundColor(color)
     }
 
@@ -226,37 +226,37 @@ open class RichTextEditor : FullscreenWebView {
         setBackground(bitmap)
     }
 
-    private fun setBackground(bitmap: Bitmap) {
+    protected open fun setBackground(bitmap: Bitmap) {
         val base64 = Utils.toBase64(bitmap)
         bitmap.recycle()
 
         executeEditorJavaScriptFunction("setBackgroundImage('url(data:image/png;base64,$base64)');")
     }
 
-    fun setBackground(url: String) {
+    open fun setBackground(url: String) {
         executeEditorJavaScriptFunction("setBackgroundImage('url($url)');")
     }
 
-    fun setEditorWidth(px: Int) {
+    open fun setEditorWidth(px: Int) {
         executeEditorJavaScriptFunction("setWidth('" + px + "px');")
     }
 
-    fun setEditorHeight(px: Int) {
+    open fun setEditorHeight(px: Int) {
         executeEditorJavaScriptFunction("setHeight('" + px + "px');")
     }
 
     /**
      * Does actually not work for me
      */
-    fun setPlaceholder(placeholder: String) {
+    open fun setPlaceholder(placeholder: String) {
         executeEditorJavaScriptFunction("setPlaceholder('$placeholder');")
     }
 
-    fun setInputEnabled(inputEnabled: Boolean) {
+    open fun setInputEnabled(inputEnabled: Boolean) {
         executeEditorJavaScriptFunction("setInputEnabled($inputEnabled)")
     }
 
-    fun loadCSS(cssFile: String) {
+    open fun loadCSS(cssFile: String) {
         val jsCSSImport = "(function() {" +
                 "    var head  = document.getElementsByTagName(\"head\")[0];" +
                 "    var link  = document.createElement(\"link\");" +
@@ -289,7 +289,7 @@ open class RichTextEditor : FullscreenWebView {
 
 
     @JvmOverloads
-    fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
+    open fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
         this.requestFocus()
 
         if(alsoCallJavaScriptFocusFunction) { // Calling focus() changes editor's state, this is not desirable in all circumstances
@@ -298,7 +298,7 @@ open class RichTextEditor : FullscreenWebView {
     }
 
     @JvmOverloads
-    fun focusEditorAndShowKeyboard(alsoCallJavaScriptFocusFunction: Boolean = true) {
+    open fun focusEditorAndShowKeyboard(alsoCallJavaScriptFocusFunction: Boolean = true) {
         focusEditor(alsoCallJavaScriptFocusFunction)
 
         this.showKeyboard()
@@ -308,7 +308,7 @@ open class RichTextEditor : FullscreenWebView {
      * At start up we have to wait some time till editor is ready to be focused
      */
     @JvmOverloads
-    fun focusEditorAndShowKeyboardDelayed(delayMillis: Long = 250, alsoCallJavaScriptFocusFunction: Boolean = true) {
+    open fun focusEditorAndShowKeyboardDelayed(delayMillis: Long = 250, alsoCallJavaScriptFocusFunction: Boolean = true) {
         postDelayed({
             focusEditorAndShowKeyboard(alsoCallJavaScriptFocusFunction)
         }, delayMillis)
@@ -320,7 +320,7 @@ open class RichTextEditor : FullscreenWebView {
         executeEditorJavaScriptFunction("blurFocus()")
     }
 
-    private fun convertHexColorString(color: Int): String {
+    protected open fun convertHexColorString(color: Int): String {
         val alpha = Color.alpha(color)
 
         if(alpha == 255) { // without alpha
@@ -332,7 +332,7 @@ open class RichTextEditor : FullscreenWebView {
     }
 
 
-    private fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
+    protected open fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         javaScriptExecutor.executeEditorJavaScriptFunction(javaScript, resultCallback)
     }
 
