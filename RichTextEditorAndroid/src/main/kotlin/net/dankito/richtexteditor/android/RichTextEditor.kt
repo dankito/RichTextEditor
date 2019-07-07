@@ -101,9 +101,9 @@ open class RichTextEditor : FullscreenWebView {
 
         (context as? Activity)?.runOnUiThread {
             setInitialValues()
-        }
 
-        callEditorLoadedListeners()
+            callEditorLoadedListeners()
+        }
     }
 
     protected open fun setInitialValues() {
@@ -140,6 +140,9 @@ open class RichTextEditor : FullscreenWebView {
         javaScriptExecutor.disableImageResizing()
     }
 
+
+//    open val baseUrl: String?
+//        get() = javaScriptExecutor.baseUrl
 
     /**
      * Returns the last cached editor's html.
