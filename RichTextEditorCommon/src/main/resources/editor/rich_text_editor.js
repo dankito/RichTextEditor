@@ -461,8 +461,22 @@ var editor = {
     },
 
     insertCheckbox: function(text) {
-        var html = '<input type="checkbox" name="'+ text +'" value="'+ text +'"/> &nbsp;';
+        var editor = this;
+
+        var html = '<input type="checkbox" name="'+ text +'" value="'+ text +'" onclick="editor._checkboxClicked(this)"/> &nbsp;';
         this._insertHtml(html);
+    },
+
+    _checkboxClicked: function(clickedCheckbox) {
+        // incredible, checked attribute doesn't get set in html, see issue https://github.com/dankito/RichTextEditor/issues/24
+        if (clickedCheckbox.checked) {
+            clickedCheckbox.setAttribute('checked', 'checked');
+        }
+        else {
+            clickedCheckbox.removeAttribute('checked');
+        }
+
+        this._updateEditorState();
     },
 
     insertHtml: function(encodedHtml) {
