@@ -10,9 +10,9 @@ ext {
     richTextEditorJavaFXMavenArtifactId = 'richtexteditor-javafx'
 
 
-    appVersionName = '2.0.11'
+    appVersionName = '2.0.12-SNAPSHOT'
 
-    appVersionCode = 2001100
+    appVersionCode = 2001200
 
 
     kotlinVersion = '1.3.31'
