@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebChromeClient
+import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.listener.EditorLoadedListener
 import net.dankito.richtexteditor.model.DownloadImageConfig
@@ -29,6 +30,8 @@ open class RichTextEditor : FullscreenWebView {
 
 
     companion object {
+        const val DefaultHtml = JavaScriptExecutorBase.DefaultHtml
+
         private val log = LoggerFactory.getLogger(RichTextEditor::class.java)
     }
 

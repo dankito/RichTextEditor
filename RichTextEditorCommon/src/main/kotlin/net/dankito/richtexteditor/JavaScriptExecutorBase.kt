@@ -17,6 +17,8 @@ import kotlin.concurrent.thread
 abstract class JavaScriptExecutorBase {
 
     companion object {
+        const val DefaultHtml = "<p>\u200B</p>"
+
         const val EditorStateChangedCallbackScheme = "editor-state-changed-callback://"
 
         const val DefaultEncoding = "UTF-8"

@@ -4,11 +4,17 @@ import javafx.scene.layout.Priority
 import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
 import javafx.scene.web.WebView
+import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import tornadofx.*
 
 
 open class RichTextEditor : VBox() {
+
+    companion object {
+        const val DefaultHtml = JavaScriptExecutorBase.DefaultHtml
+    }
+
 
     protected var webView = WebView()
 
