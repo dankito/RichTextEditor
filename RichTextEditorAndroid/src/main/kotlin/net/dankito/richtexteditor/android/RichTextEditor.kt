@@ -191,6 +191,14 @@ open class RichTextEditor : FullscreenWebView {
         javaScriptExecutor.getCurrentHtmlAsync(callback)
     }
 
+    /**
+     * Returns if html is equal to html RichTextEditor sets by default at start (<p>​</p>)
+     * so that RichTextEditor can be considered as 'empty'.
+     */
+    open fun isDefaultRichTextEditorHtml(html: String): Boolean {
+        return javaScriptExecutor.isDefaultRichTextEditorHtml(html)
+    }
+
 
     /*      Editor base settings        */
 

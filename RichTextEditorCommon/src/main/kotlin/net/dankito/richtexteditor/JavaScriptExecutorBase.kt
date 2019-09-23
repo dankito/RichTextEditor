@@ -91,6 +91,14 @@ abstract class JavaScriptExecutorBase {
         }
     }
 
+    /**
+     * Returns if html is equal to html RichTextEditor sets by default at start (<p>​</p>)
+     * so that RichTextEditor can be considered as 'empty'.
+     */
+    open fun isDefaultRichTextEditorHtml(html: String): Boolean {
+        return DefaultHtml == html
+    }
+
 
     /*      Text Commands        */
 
