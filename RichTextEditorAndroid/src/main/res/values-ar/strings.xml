@@ -1,0 +1,93 @@
+<resources>
+
+    <string name="dialog_edit_url_url_label">رابط الموقع</string>
+    <string name="dialog_edit_url_title_label">عرض النص</string>
+
+    <string name="dialog_edit_image_image_url_label">مسار الصورة أو عنوان الويب</string>
+    <string name="dialog_edit_image_select_local_file">…</string>
+    <string name="dialog_edit_image_alternate_text_label">نص بديل (اختياري)</string>
+    <string name="dialog_edit_image_download_image_to_device">تحميل على الجهاز</string>
+    <string name="dialog_edit_image_download_image_write_external_storage_rational">لحفظ الصورة خارج (غير مرئي) إذن مجلد التطبيق
+    للكتابة إلى وحدة التخزين الخارجية.</string>
+
+    <string name="dialog_select_text_color_title">اختيار لون النص</string>
+    <string name="dialog_select_text_background_color_title">حدد لون خلفية النص</string>
+
+
+    <!--        Text formats            -->
+
+    <string name="text_format_header_1"><![CDATA[
+        <h1>Heading 1</h1>
+    ]]></string>
+
+    <string name="text_format_header_2"><![CDATA[
+        <h2>Heading 2</h2>
+    ]]></string>
+
+    <string name="text_format_header_3"><![CDATA[
+        <h3>Heading 3</h3>
+    ]]></string>
+
+    <string name="text_format_header_4"><![CDATA[
+        <h4>Heading 4</h4>
+    ]]></string>
+
+    <string name="text_format_header_5"><![CDATA[
+        <h5>Heading 5</h5>
+    ]]></string>
+
+    <string name="text_format_header_6"><![CDATA[
+        <h6>Heading 6</h6>
+    ]]></string>
+
+    <string name="text_format_paragraph"><![CDATA[
+        <p>Text body</p>
+    ]]></string>
+
+    <string name="text_format_preformat"><![CDATA[
+        <pre><font face=\"courier\">Preformat</font></pre>
+    ]]></string>
+
+    <string name="text_format_block_quote"><![CDATA[
+        <blockquote>Quote</blockquote>
+    ]]></string>
+
+
+
+    <!--        Font sizes            -->
+
+    <!-- font size is not implemented in Html.fromHtml(), so use small and big -->
+
+    <string name="font_size_very_very_small"><![CDATA[
+        <small><small><small>Teeny</small></small></small>
+    ]]></string>
+
+    <string name="font_size_very_small"><![CDATA[
+        <small><small>Very small</small></small>
+    ]]></string>
+
+    <string name="font_size_small"><![CDATA[
+        <small>Small</small>
+    ]]></string>
+
+    <string name="font_size_medium"><![CDATA[
+        Medium
+    ]]></string>
+
+    <string name="font_size_large"><![CDATA[
+        <big>Large</big>
+    ]]></string>
+
+    <string name="font_size_very_large"><![CDATA[
+        <big><big>Very large</big></big>
+    ]]></string>
+
+    <string name="font_size_very_very_large"><![CDATA[
+        <big><big><big>Huge</big></big></big>
+    ]]></string>
+
+
+
+    <string name="count_search_results_label" formatted="false">%d of %d</string>
+
+</resources>
