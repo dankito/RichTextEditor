@@ -13,6 +13,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebChromeClient
 import net.dankito.richtexteditor.JavaScriptExecutorBase
+import net.dankito.richtexteditor.callback.DidHtmlChangeListener
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.listener.EditorLoadedListener
 import net.dankito.richtexteditor.model.DownloadImageConfig
@@ -302,6 +303,14 @@ open class RichTextEditor : FullscreenWebView {
         javaScriptExecutor.executeJavaScript(jsCSSImport)
     }
 
+
+    open fun addDidHtmlChangeListener(listener: (Boolean) -> Unit) {
+        javaScriptExecutor.addDidHtmlChangeListener(listener)
+    }
+
+    open fun addDidHtmlChangeListener(listener: DidHtmlChangeListener) {
+        javaScriptExecutor.addDidHtmlChangeListener(listener)
+    }
 
     open fun addEditorLoadedListener(listener: EditorLoadedListener) {
         addEditorLoadedListener { listener.editorLoaded() }
