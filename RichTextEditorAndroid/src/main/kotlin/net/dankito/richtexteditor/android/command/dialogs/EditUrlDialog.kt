@@ -28,6 +28,9 @@ open class EditUrlDialog : DialogFragment() {
 
             view.btnOk?.setOnClickListener { enteringUrlDone() }
 
+            view.edtxtUrl.setText(R.string.dialog_edit_url_default_value)
+            view.edtxtUrl.selectAll()
+
             view.edtxtUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextUrlAction(actionId, keyEvent) }
             view.edtxtUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {

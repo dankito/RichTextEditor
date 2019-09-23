@@ -2,6 +2,7 @@
 
     <string name="dialog_edit_url_url_label">Link Adresse</string>
     <string name="dialog_edit_url_title_label">Anzeigetext</string>
+    <string name="dialog_edit_url_default_value">http://www.</string>
 
     <string name="dialog_edit_image_image_url_label">Pfad oder Webadresse des Bildes</string>
     <string name="dialog_edit_image_select_local_file">…</string>

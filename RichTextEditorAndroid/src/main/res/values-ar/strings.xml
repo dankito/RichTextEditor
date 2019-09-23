@@ -1,18 +1,18 @@
 <resources>
 
-    <string name="dialog_edit_url_url_label">Link location</string>
-    <string name="dialog_edit_url_title_label">Display text</string>
+    <string name="dialog_edit_url_url_label">رابط الموقع</string>
+    <string name="dialog_edit_url_title_label">عرض النص</string>
     <string name="dialog_edit_url_default_value">http://www.</string>
 
-    <string name="dialog_edit_image_image_url_label">Image path or web address</string>
+    <string name="dialog_edit_image_image_url_label">مسار الصورة أو عنوان الويب</string>
     <string name="dialog_edit_image_select_local_file">…</string>
-    <string name="dialog_edit_image_alternate_text_label">Alternate text (optional)</string>
-    <string name="dialog_edit_image_download_image_to_device">Download to device</string>
-    <string name="dialog_edit_image_download_image_write_external_storage_rational">To save image outside (invisible) app folder permission
-        to write to external storage is required.</string>
+    <string name="dialog_edit_image_alternate_text_label">نص بديل (اختياري)</string>
+    <string name="dialog_edit_image_download_image_to_device">تحميل على الجهاز</string>
+    <string name="dialog_edit_image_download_image_write_external_storage_rational">لحفظ الصورة خارج (غير مرئي) إذن مجلد التطبيق
+    للكتابة إلى وحدة التخزين الخارجية.</string>
 
-    <string name="dialog_select_text_color_title">Select text color</string>
-    <string name="dialog_select_text_background_color_title">Select text background color</string>
+    <string name="dialog_select_text_color_title">اختيار لون النص</string>
+    <string name="dialog_select_text_background_color_title">حدد لون خلفية النص</string>
 
 
     <!--        Text formats            -->

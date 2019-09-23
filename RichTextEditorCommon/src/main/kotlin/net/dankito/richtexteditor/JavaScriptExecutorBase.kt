@@ -21,6 +21,8 @@ import kotlin.concurrent.thread
 abstract class JavaScriptExecutorBase {
 
     companion object {
+        const val DefaultHtml = "<p>\u200B</p>"
+
         const val EditorStateChangedCallbackScheme = "editor-state-changed-callback://"
 
         const val DefaultEncoding = "UTF-8"
@@ -29,31 +31,31 @@ abstract class JavaScriptExecutorBase {
     }
 
 
-    private var html: String = ""
+    protected var htmlField: String = ""
 
-    private var hasFirstStateBeenReceived = false
+    protected var hasFirstStateBeenReceived = false
 
     var baseUrl: String? = null
 
-    private val objectMapper = ObjectMapper()
+    protected val objectMapper = ObjectMapper()
 
-    private var commandStates: Map<CommandName, CommandState> = mapOf()
+    protected var commandStates: Map<CommandName, CommandState> = mapOf()
 
-    private val commandStatesChangedListeners = mutableSetOf<(Map<CommandName, CommandState>) -> Unit>()
+    protected val commandStatesChangedListeners = mutableSetOf<(Map<CommandName, CommandState>) -> Unit>()
 
     var didHtmlChange = false
-        private set
+        protected set
 
-    private val didHtmlChangeListeners = mutableSetOf<DidHtmlChangeListener>()
+    protected val didHtmlChangeListeners = mutableSetOf<DidHtmlChangeListener>()
 
-    private var isLoaded = false
+    protected var isLoaded = false
 
-    private val loadedListeners = mutableSetOf<LoadedListener>()
+    protected val loadedListeners = mutableSetOf<LoadedListener>()
 
 
     abstract fun executeJavaScript(javaScript: String, resultCallback: ((String) -> Unit)? = null)
 
-    fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
+    open fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         executeJavaScript("editor." + javaScript, resultCallback)
     }
 
@@ -65,17 +67,17 @@ abstract class JavaScriptExecutorBase {
      * so we're not notified of last entered word. In this case use getCurrentHtmlAsync() to ensure to retrieve current html.
      */
     open fun getCachedHtml(): String {
-        return html
+        return htmlField
     }
 
     @JvmOverloads
-    fun setHtml(html: String, baseUrl: String? = null) {
+    open fun setHtml(html: String, baseUrl: String? = null) {
         this.baseUrl = baseUrl
 
         try {
             executeEditorJavaScriptFunction("setHtml('" + encodeHtml(html) + "', '$baseUrl');")
 
-            this.html = html
+            this.htmlField = html
         } catch (e: UnsupportedEncodingException) {
             // No handling
         }
@@ -125,7 +127,7 @@ abstract class JavaScriptExecutorBase {
      * As JavaScript result callback will asynchronously be posted to UI thread. So while UI thread is being block, JavaScript result callback cannot be executed on UI thread.
      */
     open fun getCurrentHtmlBlocking(): String {
-        val result = AtomicReference<String>(html)
+        val result = AtomicReference(htmlField)
         val countDownLatch = CountDownLatch(1)
 
         getCurrentHtmlAsync {
@@ -138,118 +140,126 @@ abstract class JavaScriptExecutorBase {
         return result.get()
     }
 
+    /**
+     * Returns if html is equal to html RichTextEditor sets by default at start (<p>​</p>)
+     * so that RichTextEditor can be considered as 'empty'.
+     */
+    open fun isDefaultRichTextEditorHtml(html: String): Boolean {
+        return DefaultHtml == html
+    }
+
 
     /*      Text Commands        */
 
-    fun undo() {
+    open fun undo() {
         executeEditorJavaScriptFunction("undo()")
     }
 
-    fun redo() {
+    open fun redo() {
         executeEditorJavaScriptFunction("redo()")
     }
 
-    fun setBold() {
+    open fun setBold() {
         executeEditorJavaScriptFunction("setBold()")
     }
 
-    fun setItalic() {
+    open fun setItalic() {
         executeEditorJavaScriptFunction("setItalic()")
     }
 
-    fun setUnderline() {
+    open fun setUnderline() {
         executeEditorJavaScriptFunction("setUnderline()")
     }
 
-    fun setSubscript() {
+    open fun setSubscript() {
         executeEditorJavaScriptFunction("setSubscript()")
     }
 
-    fun setSuperscript() {
+    open fun setSuperscript() {
         executeEditorJavaScriptFunction("setSuperscript()")
     }
 
-    fun setStrikeThrough() {
+    open fun setStrikeThrough() {
         executeEditorJavaScriptFunction("setStrikeThrough()")
     }
 
-    fun setTextColor(color: Color) {
+    open fun setTextColor(color: Color) {
         val hex = color.toHexColorString()
         executeEditorJavaScriptFunction("setTextColor('$hex')")
     }
 
-    fun setTextBackgroundColor(color: Color) {
+    open fun setTextBackgroundColor(color: Color) {
         val hex = color.toHexColorString()
         executeEditorJavaScriptFunction("setTextBackgroundColor('$hex')")
     }
 
-    fun setFontName(fontName: String) {
+    open fun setFontName(fontName: String) {
         executeEditorJavaScriptFunction("setFontName('$fontName')")
     }
 
-    fun setFontSize(fontSize: Int) {
+    open fun setFontSize(fontSize: Int) {
         if (fontSize < 1 || fontSize > 7) {
             log.warn("Font size should have a value between 1-7")
         }
         executeEditorJavaScriptFunction("setFontSize('$fontSize')")
     }
 
-    fun setHeading(heading: Int) {
+    open fun setHeading(heading: Int) {
         executeEditorJavaScriptFunction("setHeading('$heading')")
     }
 
-    fun setFormattingToParagraph() {
+    open fun setFormattingToParagraph() {
         executeEditorJavaScriptFunction("setFormattingToParagraph()")
     }
 
-    fun setPreformat() {
+    open fun setPreformat() {
         executeEditorJavaScriptFunction("setPreformat()")
     }
 
-    fun setBlockQuote() {
+    open fun setBlockQuote() {
         executeEditorJavaScriptFunction("setBlockQuote()")
     }
 
-    fun removeFormat() {
+    open fun removeFormat() {
         executeEditorJavaScriptFunction("removeFormat()")
     }
 
-    fun setJustifyLeft() {
+    open fun setJustifyLeft() {
         executeEditorJavaScriptFunction("setJustifyLeft()")
     }
 
-    fun setJustifyCenter() {
+    open fun setJustifyCenter() {
         executeEditorJavaScriptFunction("setJustifyCenter()")
     }
 
-    fun setJustifyRight() {
+    open fun setJustifyRight() {
         executeEditorJavaScriptFunction("setJustifyRight()")
     }
 
-    fun setJustifyFull() {
+    open fun setJustifyFull() {
         executeEditorJavaScriptFunction("setJustifyFull()")
     }
 
-    fun setIndent() {
+    open fun setIndent() {
         executeEditorJavaScriptFunction("setIndent()")
     }
 
-    fun setOutdent() {
+    open fun setOutdent() {
         executeEditorJavaScriptFunction("setOutdent()")
     }
 
-    fun insertBulletList() {
+    open fun insertBulletList() {
         executeEditorJavaScriptFunction("insertBulletList()")
     }
 
-    fun insertNumberedList() {
+    open fun insertNumberedList() {
         executeEditorJavaScriptFunction("insertNumberedList()")
     }
 
 
     /*      Insert element              */
 
-    fun insertLink(url: String, title: String) {
+    open fun insertLink(url: String, title: String) {
         executeEditorJavaScriptFunction("insertLink('$url', '$title')")
     }
 
@@ -257,25 +267,25 @@ abstract class JavaScriptExecutorBase {
      * The rotation parameter is used to signal that the image is rotated and should be rotated by CSS by given value.
      * Rotation can be one of the following values: 0, 90, 180, 270.
      */
-    fun insertImage(url: String, alt: String, rotation: Int = 0) {
+    open fun insertImage(url: String, alt: String, rotation: Int = 0) {
         executeEditorJavaScriptFunction("insertImage('$url', '$alt', $rotation)")
     }
 
-    fun insertCheckbox(text: String) {
+    open fun insertCheckbox(text: String) {
         executeEditorJavaScriptFunction("insertCheckbox('$text')")
     }
 
-    fun insertHtml(html: String) {
+    open fun insertHtml(html: String) {
         val encodedHtml = encodeHtml(html)
         executeEditorJavaScriptFunction("insertHtml('$encodedHtml')")
     }
 
 
-    fun makeImagesResizeable() {
+    open fun makeImagesResizeable() {
         executeEditorJavaScriptFunction("makeImagesResizeable()")
     }
 
-    fun disableImageResizing() {
+    open fun disableImageResizing() {
         executeEditorJavaScriptFunction("disableImageResizing()")
     }
 
@@ -289,7 +299,7 @@ abstract class JavaScriptExecutorBase {
     }
 
 
-    protected fun shouldOverrideUrlLoading(url: String): Boolean {
+    protected open fun shouldOverrideUrlLoading(url: String): Boolean {
         val decodedUrl: String
         try {
             decodedUrl = decodeHtml(url)
@@ -306,12 +316,12 @@ abstract class JavaScriptExecutorBase {
         return false
     }
 
-    private fun editorStateChanged(statesString: String) {
+    protected open fun editorStateChanged(statesString: String) {
         try {
             val editorState = objectMapper.readValue<EditorState>(statesString, EditorState::class.java)
 
             if (hasFirstStateBeenReceived) { // when first EditorState is received, its html is still the default value but not that one set by setHtml()
-                this.html = editorState.html
+                this.htmlField = editorState.html
             }
             hasFirstStateBeenReceived = true
 
@@ -319,7 +329,7 @@ abstract class JavaScriptExecutorBase {
         } catch(e: Exception) { log.error("Could not parse command states: $statesString", e) }
     }
 
-    protected fun retrievedEditorState(didHtmlChange: Boolean, commandStates: MutableMap<CommandName, CommandState>) {
+    protected open fun retrievedEditorState(didHtmlChange: Boolean, commandStates: MutableMap<CommandName, CommandState>) {
         if(this.didHtmlChange != didHtmlChange) {
             this.didHtmlChange = didHtmlChange
             didHtmlChangeListeners.forEach { it.didHtmlChange(didHtmlChange) }
@@ -328,7 +338,7 @@ abstract class JavaScriptExecutorBase {
         handleRetrievedCommandStates(commandStates)
     }
 
-    private fun handleRetrievedCommandStates(commandStates: MutableMap<CommandName, CommandState>) {
+    protected open fun handleRetrievedCommandStates(commandStates: MutableMap<CommandName, CommandState>) {
         determineDerivedCommandStates(commandStates)
 
         this.commandStates = commandStates
@@ -336,7 +346,7 @@ abstract class JavaScriptExecutorBase {
         commandStatesChangedListeners.forEach { it.invoke(this.commandStates) }
     }
 
-    private fun determineDerivedCommandStates(commandStates: MutableMap<CommandName, CommandState>) {
+    protected open fun determineDerivedCommandStates(commandStates: MutableMap<CommandName, CommandState>) {
         commandStates[CommandName.FORMATBLOCK]?.let { formatCommandState ->
             commandStates.put(CommandName.H1, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h1")))
             commandStates.put(CommandName.H2, CommandState(formatCommandState.executable, isFormatActivated(formatCommandState, "h2")))
@@ -357,22 +367,22 @@ abstract class JavaScriptExecutorBase {
         }
     }
 
-    private fun isFormatActivated(formatCommandState: CommandState, format: String): String {
+    protected open fun isFormatActivated(formatCommandState: CommandState, format: String): String {
         return (formatCommandState.value == format).toString() // rich_text_editor.js reports boolean values as string, so we also have to convert it to string
     }
 
-    fun addCommandStatesChangedListener(listener: (commandStates: Map<CommandName, CommandState>) -> Unit) {
+    open fun addCommandStatesChangedListener(listener: (commandStates: Map<CommandName, CommandState>) -> Unit) {
         commandStatesChangedListeners.add(listener)
 
         listener.invoke(commandStates)
     }
 
 
-    protected fun encodeHtml(html: String, encoding: String = DefaultEncoding): String {
+    protected open fun encodeHtml(html: String, encoding: String = DefaultEncoding): String {
         return URLEncoder.encode(html, encoding)
     }
 
-    protected fun decodeHtml(html: String, encoding: String = DefaultEncoding): String {
+    protected open fun decodeHtml(html: String, encoding: String = DefaultEncoding): String {
         return URLDecoder.decode(html, encoding)
     }
 
@@ -380,7 +390,7 @@ abstract class JavaScriptExecutorBase {
     /**
      * Convenience function for Kotlin users
      */
-    fun addDidHtmlChangeListener(listener: (Boolean) -> Unit) {
+    open fun addDidHtmlChangeListener(listener: (Boolean) -> Unit) {
         addDidHtmlChangeListener(object : DidHtmlChangeListener {
 
             override fun didHtmlChange(didHtmlChange: Boolean) {
@@ -390,7 +400,7 @@ abstract class JavaScriptExecutorBase {
         })
     }
 
-    fun addDidHtmlChangeListener(listener: DidHtmlChangeListener) {
+    open fun addDidHtmlChangeListener(listener: DidHtmlChangeListener) {
         didHtmlChangeListeners.add(listener)
     }
 
@@ -398,17 +408,17 @@ abstract class JavaScriptExecutorBase {
     /**
      * Convenience function for Kotlin users
      */
-    fun addLoadedListener(listener: () -> Unit) {
+    open fun addLoadedListener(listener: () -> Unit) {
         addLoadedListener(object : LoadedListener {
 
-            override fun editorLoaded() {
+            override open fun editorLoaded() {
                 listener()
             }
 
         })
     }
 
-    fun addLoadedListener(listener: LoadedListener) {
+    open fun addLoadedListener(listener: LoadedListener) {
         if(isLoaded) {
             callInitializationListener(listener)
         }
@@ -429,7 +439,7 @@ abstract class JavaScriptExecutorBase {
         loadedListeners.clear()
     }
 
-    private fun callInitializationListener(listener: LoadedListener) {
+    protected open fun callInitializationListener(listener: LoadedListener) {
         listener.editorLoaded()
     }
 

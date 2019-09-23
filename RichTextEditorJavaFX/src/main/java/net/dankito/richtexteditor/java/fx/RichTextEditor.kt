@@ -4,6 +4,7 @@ import javafx.scene.layout.Priority
 import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
 import javafx.scene.web.WebView
+import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.model.Theme
 import tornadofx.*
@@ -11,7 +12,12 @@ import tornadofx.*
 
 open class RichTextEditor : VBox() {
 
-    private var webView = WebView()
+    companion object {
+        const val DefaultHtml = JavaScriptExecutorBase.DefaultHtml
+    }
+
+
+    protected var webView = WebView()
 
     val javaScriptExecutor = JavaFXJavaScriptExecutor(webView)
 
@@ -22,7 +28,7 @@ open class RichTextEditor : VBox() {
 
 
 
-    private fun setupHtmlEditor() {
+    protected open fun setupHtmlEditor() {
         minHeight = 200.0
         prefHeight = Region.USE_COMPUTED_SIZE
         useMaxWidth = true
@@ -54,7 +60,7 @@ open class RichTextEditor : VBox() {
 
 
     @JvmOverloads
-    fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
+    open fun focusEditor(alsoCallJavaScriptFocusFunction: Boolean = true) {
         webView.requestFocus()
 
         if(alsoCallJavaScriptFocusFunction) { // Calling focus() changes editor's state, this is not desirable in all circumstances
@@ -65,37 +71,37 @@ open class RichTextEditor : VBox() {
 
     /*      Editor base settings        */
 
-    fun setTheme(theme: Theme) {
+    open fun setTheme(theme: Theme) {
         javaScriptExecutor.setTheme(theme)
     }
 
-    fun setTheme(themeName: String) {
+    open fun setTheme(themeName: String) {
         javaScriptExecutor.setTheme(themeName)
     }
 
-    fun setEditorFontFamily(fontFamily: String) {
+    open fun setEditorFontFamily(fontFamily: String) {
         executeEditorJavaScriptFunction("setBaseFontFamily('$fontFamily');")
     }
 
-    fun setEditorFontSize(px: Int) {
+    open fun setEditorFontSize(px: Int) {
         executeEditorJavaScriptFunction("setBaseFontSize('${px}px');")
     }
 
-    fun setPadding(padding: Double) {
+    open fun setPadding(padding: Double) {
         setPadding(padding, padding, padding, padding)
     }
 
-    fun setPadding(left: Double, top: Double, right: Double, bottom: Double) {
+    open fun setPadding(left: Double, top: Double, right: Double, bottom: Double) {
         executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
     }
 
-    private fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
+    protected open fun executeEditorJavaScriptFunction(javaScript: String, resultCallback: ((String) -> Unit)? = null) {
         javaScriptExecutor.executeEditorJavaScriptFunction(javaScript, resultCallback)
     }
 
 
     @JvmOverloads
-    fun setHtml(html: String, baseUrl: String? = null) {
+    open fun setHtml(html: String, baseUrl: String? = null) {
         javaScriptExecutor.setHtml(html, baseUrl)
     }
 
@@ -128,6 +134,14 @@ open class RichTextEditor : VBox() {
      */
     open fun getCurrentHtmlBlocking(): String {
         return javaScriptExecutor.getCurrentHtmlBlocking()
+    }
+
+    /**
+     * Returns if html is equal to html RichTextEditor sets by default at start (<p>​</p>)
+     * so that RichTextEditor can be considered as 'empty'.
+     */
+    open fun isDefaultRichTextEditorHtml(html: String): Boolean {
+        return javaScriptExecutor.isDefaultRichTextEditorHtml(html)
     }
 
 }
