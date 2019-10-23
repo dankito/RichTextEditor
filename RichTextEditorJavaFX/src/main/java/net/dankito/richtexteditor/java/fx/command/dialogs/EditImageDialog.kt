@@ -38,7 +38,8 @@ open class EditImageDialog(private val localization: Localization, private val i
 
 
     override fun isOkButtonEnabled(stringOne: String, stringTwo: String): Boolean {
-        return isValidHttpUrl(stringOne) || fileUtils.isExistingFile(stringOne)
+        return isValidHttpUrl(stringOne) ||
+                (fileUtils != null && fileUtils.isExistingFile(stringOne)) // on creation fileUtils is null
     }
 
 
