@@ -127,6 +127,26 @@ public class MainActivity extends AppCompatActivity {
         // only needed if you allow to automatically download remote images
         editor.setDownloadImageConfig(new DownloadImageConfig(DownloadImageUiSetting.AllowSelectDownloadFolderInCode,
             new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "downloaded_images")));
+        
+        
+        /*      Set listeners on RichTextEditor         */
+        
+        // get informed when edited HTML changed
+        editor.addDidHtmlChangeListener(new DidHtmlChangeListener() {
+            @Override
+            public void didHtmlChange(boolean didHtmlChange) {
+                // e.g. set save button to enabled / disabled
+                // btnSave.setEnabled(didHtmlChange);
+            }
+        });
+        
+        // use this listener with care, it may decreases performance tremendously
+        editor.addHtmlChangedListener(new HtmlChangedListener() {
+            @Override
+            public void htmlChangedAsync(@NotNull String html) {
+                // htmlChangedAsync() gets called on a background thread, so if you want to use it on UI thread you have to call runOnUiThread()
+            }
+        });
     }
 
 

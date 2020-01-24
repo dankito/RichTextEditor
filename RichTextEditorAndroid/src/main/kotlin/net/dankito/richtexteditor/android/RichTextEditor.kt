@@ -15,6 +15,7 @@ import android.webkit.WebChromeClient
 import net.dankito.richtexteditor.JavaScriptExecutorBase
 import net.dankito.richtexteditor.callback.DidHtmlChangeListener
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
+import net.dankito.richtexteditor.callback.HtmlChangedListener
 import net.dankito.richtexteditor.listener.EditorLoadedListener
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.utils.android.KeyboardState
@@ -310,6 +311,34 @@ open class RichTextEditor : FullscreenWebView {
 
     open fun addDidHtmlChangeListener(listener: DidHtmlChangeListener) {
         javaScriptExecutor.addDidHtmlChangeListener(listener)
+    }
+
+    /**
+     * Convenience method for Kotlin users:
+     *
+     * Adds a listener that gets called each time when edited HTML changes.
+     *
+     * Use this method with care:
+     * 1. It may is very inperformant, especially on large documents.
+     * 2. It's callback method (htmlChangedAsync() for Java users) is called from a background thread. If you want to use returned HTML in UI to have to call Activity.runOnUiThread().
+     *
+     * If you just want to know if the edited HTML changed, e.g. to enable or disable a save button, preferably call [addDidHtmlChangeListener].
+     */
+    open fun addHtmlChangedListener(listener: (String) -> Unit) {
+        javaScriptExecutor.addHtmlChangedListener(listener)
+    }
+
+    /**
+     * Adds a listener that gets called each time when edited HTML changes.
+     *
+     * Use this method with care:
+     * 1. It may is very inperformant, especially on large documents.
+     * 2. It's callback method (htmlChangedAsync() for Java users) is called from a background thread. If you want to use returned HTML in UI to have to call Activity.runOnUiThread().
+     *
+     * If you just want to know if the edited HTML changed, e.g. to enable or disable a save button, preferably call [addDidHtmlChangeListener].
+     */
+    open fun addHtmlChangedListener(listener: HtmlChangedListener) {
+        javaScriptExecutor.addHtmlChangedListener(listener)
     }
 
     open fun addEditorLoadedListener(listener: EditorLoadedListener) {
