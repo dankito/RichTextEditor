@@ -19,12 +19,14 @@ class SystemFontsParser {
 
         fontInfos.addAll(parseFontInfosFromSystemFontsXml()) // older systems
 
-        return fontInfos
+        val uniqueFamilies = fontInfos.associateBy { it.fontFamily } // some fonts are multiple times in xml files -> show each font only one time
+
+        return uniqueFamilies.values.toList()
     }
 
 
     private fun parseFontInfosFromFontsXml(): Collection<FontInfo> {
-        val fontInfoMap = HashMap<String, FontInfo>()
+        val fontInfoMap = mutableListOf<FontInfo>()
 
         try {
             val fontsFile = File("/system/etc/fonts.xml")
@@ -33,7 +35,7 @@ class SystemFontsParser {
                 for(i in 0..lines.size - 1) {
                     tryToParseFontsXmlLineToFontFamily(lines[i])?.let { fontFamily ->
                         val fontInfo = FontInfo(fontFamily)
-                        fontInfoMap.put(fontFamily, fontInfo)
+                        fontInfoMap.add(fontInfo)
 
                         if(i < lines.size - 2) {
                             tryToParseFontsXmlFontName(lines[i + 1], fontInfo)
@@ -43,7 +45,7 @@ class SystemFontsParser {
             }
         } catch(e: Exception) { log.error("Could not parse font xml file /system/etc/fonts.xml", e) }
 
-        return fontInfoMap.values
+        return fontInfoMap
     }
 
     private fun tryToParseFontsXmlLineToFontFamily(line: String): String? {
