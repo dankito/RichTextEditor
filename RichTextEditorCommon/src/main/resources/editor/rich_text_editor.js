@@ -18,6 +18,8 @@ var editor = {
         "endOffset": 0
     },
 
+    _useWindowLocationForEditorStateChangedCallback: false,
+
     _imageMinWidth: 100,
     _imageMinHeight: 50,
 
@@ -249,6 +251,10 @@ var editor = {
 
         baseElement.setAttribute('href', baseUrl);
         baseElement.setAttribute('target', '_blank');
+    },
+
+    useWindowLocationForEditorStateChangedCallback: function() {
+        this._useWindowLocationForEditorStateChangedCallback = true;
     },
 
     makeImagesResizeable: function() {
@@ -596,10 +602,10 @@ var editor = {
         var didHtmlChange = (this._htmlSetByApplication != null && this._htmlSetByApplication != html) || // html set by application changed
                             (this._htmlSetByApplication == null && html != EditorDefaultHtml); // or if html not set by application: default html changed
 
-        if(typeof javafx !== 'undefined') { // in JavaFX changing window.location.href doesn't work -> JavaFX determines editor state manually
-            javafx.updateEditorState(didHtmlChange)
+        if (typeof editorCallback !== 'undefined') { // in most applications like in the JavaFX app changing window.location.href doesn't work -> tell them via callback that editor state changed
+            editorCallback.updateEditorState(didHtmlChange) // these applications determine editor state manually
         }
-        else {
+        else if (this._useWindowLocationForEditorStateChangedCallback) { // Android can handle changes to windows.location -> communicate editor changes via a self defined protocol name
             var commandStates = this._determineCommandStates();
 
             var editorState = {

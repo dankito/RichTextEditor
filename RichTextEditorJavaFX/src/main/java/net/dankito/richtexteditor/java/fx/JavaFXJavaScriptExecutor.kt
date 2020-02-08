@@ -18,7 +18,7 @@ class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("
 
     companion object {
 
-        private val JavaScriptMemberName = "javafx"
+        private val EditorCallbackJavaScriptMemberName = "editorCallback"
 
         private val commandNames = listOf(CommandName.BOLD, CommandName.ITALIC, CommandName.UNDERLINE, CommandName.STRIKETHROUGH,
                 CommandName.SUPERSCRIPT, CommandName.SUBSCRIPT, CommandName.FORMATBLOCK, CommandName.REMOVEFORMAT,
@@ -65,16 +65,16 @@ class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("
             this.page = pageField.get(engine) as? WebPage
         } catch(e: Exception) { log.error("Could not access page object", e) }
 
-        setJavaScriptMember(JavaScriptMemberName, this)
+        setJavaScriptMember(EditorCallbackJavaScriptMemberName, this)
 
         engine.load(htmlEditorFile.toURI().toString())
     }
 
 
     override fun editorLoaded() {
-        // JavaFX by default doesn't print console.log() messages to console / log output -> use JavaScriptMemberName's log() bridge method to do that
+        // JavaFX by default doesn't print console.log() messages to console / log output -> use EditorCallbackJavaScriptMemberName's log() bridge method to do that
         engine.executeScript("console.log = function(message) {\n" +
-                "    $JavaScriptMemberName.log(message);\n" +
+                "    $EditorCallbackJavaScriptMemberName.log(message);\n" +
                 "};")
 
         super.editorLoaded()
@@ -131,7 +131,7 @@ class JavaFXJavaScriptExecutor(webView: WebView, htmlEditorFolder: File = File("
     }
 
 
-    /*      JavaScript bridge methods       */
+    /*      JavaScript bridge methods for editorCallback       */
 
     fun updateEditorState(didHtmlChange: Boolean) {
         page?.let { page ->

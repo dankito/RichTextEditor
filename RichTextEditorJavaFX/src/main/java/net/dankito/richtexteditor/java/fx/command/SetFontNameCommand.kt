@@ -19,7 +19,7 @@ open class SetFontNameCommand(icon: ImageReference = JavaFXImageReference.fromIc
 
     override fun getItemStyle(itemName: String): String {
         getIndexOfItem(itemName)?.let {
-            return "-fx-font-family: $itemName"
+            return "-fx-font-family: \"${itemName.replace("\"", "\\\"")}\""
         }
 
         return ""

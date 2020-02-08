@@ -3,10 +3,12 @@ package net.dankito.richtexteditor
 import com.fasterxml.jackson.databind.ObjectMapper
 import net.dankito.richtexteditor.callback.DidHtmlChangeListener
 import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
+import net.dankito.richtexteditor.callback.HtmlChangedListener
 import net.dankito.richtexteditor.callback.LoadedListener
 import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.CommandState
 import net.dankito.richtexteditor.model.Theme
+import net.dankito.utils.AsyncProducerConsumerQueue
 import net.dankito.utils.Color
 import org.slf4j.LoggerFactory
 import java.io.UnsupportedEncodingException
@@ -47,6 +49,13 @@ abstract class JavaScriptExecutorBase {
         protected set
 
     protected val didHtmlChangeListeners = mutableSetOf<DidHtmlChangeListener>()
+
+    protected val htmlChangedListeners = mutableSetOf<HtmlChangedListener>()
+
+    // TODO: replace with RxJava
+    protected val fireHtmlChangedListenersQueue = AsyncProducerConsumerQueue<String>(1) { html ->
+        fireHtmlChangedListeners(html)
+    }
 
     protected var isLoaded = false
 
@@ -321,7 +330,12 @@ abstract class JavaScriptExecutorBase {
             val editorState = objectMapper.readValue<EditorState>(statesString, EditorState::class.java)
 
             if (hasFirstStateBeenReceived) { // when first EditorState is received, its html is still the default value but not that one set by setHtml()
+                val currentHtmlChanged = this.htmlField != editorState.html
                 this.htmlField = editorState.html
+
+                if (currentHtmlChanged) {
+                    fireHtmlChangedListenersAsync(editorState.html)
+                }
             }
             hasFirstStateBeenReceived = true
 
@@ -402,6 +416,53 @@ abstract class JavaScriptExecutorBase {
 
     open fun addDidHtmlChangeListener(listener: DidHtmlChangeListener) {
         didHtmlChangeListeners.add(listener)
+    }
+
+
+    /**
+     * Convenience method for Kotlin users:
+     *
+     * Adds a listener that gets called each time when edited HTML changes.
+     *
+     * Use this method with care:
+     * 1. It may is very inperformant, especially on large documents.
+     * 2. It's callback method (htmlChangedAsync() for Java users) is called from a background thread. If you want to use returned HTML in UI to have to call Activity.runOnUiThread().
+     *
+     * If you just want to know if the edited HTML changed, e.g. to enable or disable a save button, preferably call [addDidHtmlChangeListener].
+     */
+    open fun addHtmlChangedListener(listener: (String) -> Unit) {
+        addHtmlChangedListener(object : HtmlChangedListener {
+
+            override fun htmlChangedAsync(html: String) {
+                listener(html)
+            }
+
+        })
+    }
+
+    /**
+     * Adds a listener that gets called each time when edited HTML changes.
+     *
+     * Use this method with care:
+     * 1. It may is very inperformant, especially on large documents.
+     * 2. It's callback method (htmlChangedAsync() for Java users) is called from a background thread. If you want to use returned HTML in UI to have to call Activity.runOnUiThread().
+     *
+     * If you just want to know if the edited HTML changed, e.g. to enable or disable a save button, preferably call [addDidHtmlChangeListener].
+     */
+    open fun addHtmlChangedListener(listener: HtmlChangedListener) {
+        htmlChangedListeners.add(listener)
+    }
+
+    protected open fun fireHtmlChangedListenersAsync(html: String) {
+        if (htmlChangedListeners.isNotEmpty()) {
+            fireHtmlChangedListenersQueue.add(html)
+        }
+    }
+
+    protected fun fireHtmlChangedListeners(html: String) {
+        ArrayList(htmlChangedListeners).forEach { listener ->
+            listener.htmlChangedAsync(html)
+        }
     }
 
 

@@ -40,7 +40,7 @@ You can download it from [PlayStore](https://play.google.com/store/apps/details?
 Gradle:
 ```
 dependencies {
-  implementation 'net.dankito.richtexteditor:richtexteditor-android:2.0.13'
+  implementation 'net.dankito.richtexteditor:richtexteditor-android:2.0.15'
 }
 ```
 
@@ -49,7 +49,7 @@ Maven:
 <dependency>
    <groupId>net.dankito.richtexteditor</groupId>
    <artifactId>richtexteditor-android</artifactId>
-   <version>2.0.13</version>
+   <version>2.0.15</version>
 </dependency>
 ```
 
@@ -128,6 +128,26 @@ public class MainActivity extends AppCompatActivity {
         // only needed if you allow to automatically download remote images
         editor.setDownloadImageConfig(new DownloadImageConfig(DownloadImageUiSetting.AllowSelectDownloadFolderInCode,
             new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "downloaded_images")));
+        
+        
+        /*      Set listeners on RichTextEditor         */
+        
+        // get informed when edited HTML changed
+        editor.addDidHtmlChangeListener(new DidHtmlChangeListener() {
+            @Override
+            public void didHtmlChange(boolean didHtmlChange) {
+                // e.g. set save button to enabled / disabled
+                // btnSave.setEnabled(didHtmlChange);
+            }
+        });
+        
+        // use this listener with care, it may decreases performance tremendously
+        editor.addHtmlChangedListener(new HtmlChangedListener() {
+            @Override
+            public void htmlChangedAsync(@NotNull String html) {
+                // htmlChangedAsync() gets called on a background thread, so if you want to use it on UI thread you have to call runOnUiThread()
+            }
+        });
     }
 
 
