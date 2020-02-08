@@ -4,7 +4,7 @@ import org.slf4j.LoggerFactory
 import java.io.File
 
 
-class SystemFontsParser {
+open class SystemFontsParser {
 
     companion object {
         private val log = LoggerFactory.getLogger(SystemFontsParser::class.java)
@@ -12,7 +12,7 @@ class SystemFontsParser {
 
 
     // TODO: for a real parsing of file see https://stackoverflow.com/a/29533686
-    fun parseSystemFonts(): List<FontInfo> {
+    open fun parseSystemFonts(): List<FontInfo> {
         val fontInfos = ArrayList<FontInfo>()
 
         fontInfos.addAll(parseFontInfosFromFontsXml()) // newer Androids
@@ -25,7 +25,7 @@ class SystemFontsParser {
     }
 
 
-    private fun parseFontInfosFromFontsXml(): Collection<FontInfo> {
+    protected open fun parseFontInfosFromFontsXml(): Collection<FontInfo> {
         val fontInfoMap = mutableListOf<FontInfo>()
 
         try {
@@ -48,7 +48,7 @@ class SystemFontsParser {
         return fontInfoMap
     }
 
-    private fun tryToParseFontsXmlLineToFontFamily(line: String): String? {
+    protected open fun tryToParseFontsXmlLineToFontFamily(line: String): String? {
         try {
             if(line.trim().startsWith("<family name=\"")) {
                 var fontFamily = line.substring(line.indexOf("<family name=\"") + "<family name=\"".length)
@@ -63,7 +63,7 @@ class SystemFontsParser {
         return null
     }
 
-    private fun tryToParseFontsXmlFontName(line: String, fontInfo: FontInfo) {
+    protected open fun tryToParseFontsXmlFontName(line: String, fontInfo: FontInfo) {
         try {
             if(line.trim().startsWith("<font weight=\"")) {
                 val startIndex = line.indexOf("\">")
@@ -77,7 +77,7 @@ class SystemFontsParser {
     }
 
 
-    private fun parseFontInfosFromSystemFontsXml(): Collection<FontInfo> {
+    protected open fun parseFontInfosFromSystemFontsXml(): Collection<FontInfo> {
         val fontInfos = ArrayList<FontInfo>()
 
         try {
@@ -95,7 +95,7 @@ class SystemFontsParser {
         return fontInfos
     }
 
-    private fun tryToParseSystemFontsXmlLineToFontInfo(lines: List<String>, index: Int): FontInfo? {
+    protected open fun tryToParseSystemFontsXmlLineToFontInfo(lines: List<String>, index: Int): FontInfo? {
         try {
             val line = lines[index]
             if(line.trim() == "<nameset>") {
@@ -116,7 +116,7 @@ class SystemFontsParser {
         return null
     }
 
-    private fun tryToParseSystemFontsXmlLineToFontFamily(lines: List<String>, index: Int): String? {
+    protected open fun tryToParseSystemFontsXmlLineToFontFamily(lines: List<String>, index: Int): String? {
         try {
             val line = lines[index]
 
@@ -131,7 +131,7 @@ class SystemFontsParser {
         return null
     }
 
-    private fun parseSystemFontsXmlFontName(fontInfo: FontInfo, lines: List<String>, fontFamilyIndex: Int) {
+    protected open fun parseSystemFontsXmlFontName(fontInfo: FontInfo, lines: List<String>, fontFamilyIndex: Int) {
         var nextIndex = fontFamilyIndex
 
         do {
@@ -141,7 +141,7 @@ class SystemFontsParser {
         } while(nextIndex < lines.size - 1)
     }
 
-    private fun tryToParseSystemFontsXmlLineToFontName(lines: List<String>, index: Int, fontInfo: FontInfo): Boolean {
+    protected open fun tryToParseSystemFontsXmlLineToFontName(lines: List<String>, index: Int, fontInfo: FontInfo): Boolean {
         try {
             val line = lines[index]
 
@@ -158,7 +158,7 @@ class SystemFontsParser {
     }
 
 
-    private fun getFontNameFromLine(fontNameLine: String, fontInfo: FontInfo) {
+    protected open fun getFontNameFromLine(fontNameLine: String, fontInfo: FontInfo) {
         var endIndex = fontNameLine.indexOf('-')
         if(endIndex < 0) {
             endIndex = fontNameLine.indexOf('.')
