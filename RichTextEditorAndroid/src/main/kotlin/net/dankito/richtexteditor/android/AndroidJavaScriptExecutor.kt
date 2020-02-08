@@ -117,6 +117,7 @@ class AndroidJavaScriptExecutor(private val webView: WebView) : JavaScriptExecut
     private val editorWebViewClient = object : WebViewClient() {
         override fun onPageFinished(view: WebView, url: String) {
             if(url == EditorHtmlPath) {
+                executeEditorJavaScriptFunction("useWindowLocationForEditorStateChangedCallback()") // enable editor-state-changed-callback://
                 editorLoaded()
             }
 
