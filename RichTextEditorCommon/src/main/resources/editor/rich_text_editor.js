@@ -592,8 +592,8 @@ var editor = {
         var didHtmlChange = (this._htmlSetByApplication != null && this._htmlSetByApplication != html) || // html set by application changed
                             (this._htmlSetByApplication == null && html != EditorDefaultHtml); // or if html not set by application: default html changed
 
-        if(typeof javafx !== 'undefined') { // in JavaFX changing window.location.href doesn't work -> JavaFX determines editor state manually
-            javafx.updateEditorState(didHtmlChange)
+        if (typeof editorCallback !== 'undefined') { // in most applications like in the JavaFX app changing window.location.href doesn't work -> tell them via callback that editor state changed
+            editorCallback.updateEditorState(didHtmlChange) // these applications determine editor state manually
         }
         else {
             var commandStates = this._determineCommandStates();
