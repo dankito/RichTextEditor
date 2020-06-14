@@ -207,7 +207,7 @@ var editor = {
     },
 
     getEncodedHtml: function() {
-        return encodeURI(this._getHtmlWithoutInternalModifications());
+        return encodeURIComponent(this._getHtmlWithoutInternalModifications());
     },
 
     setHtml: function(html, baseUrl) {
@@ -610,7 +610,7 @@ var editor = {
                 'commandStates': commandStates
             };
 
-            window.location.href = "editor-state-changed-callback://" + encodeURI(JSON.stringify(editorState));
+            window.location.href = "editor-state-changed-callback://" + encodeURIComponent(JSON.stringify(editorState));
         }
     },
 
