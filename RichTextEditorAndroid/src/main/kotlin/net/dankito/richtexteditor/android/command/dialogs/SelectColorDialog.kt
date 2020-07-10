@@ -7,6 +7,7 @@ import net.dankito.utils.Color
 import net.dankito.richtexteditor.android.RichTextEditor
 import net.dankito.utils.android.KeyboardState
 import net.dankito.utils.android.extensions.hideKeyboard
+import net.dankito.utils.android.keyboard.KeyboardState
 
 
 open class SelectColorDialog {
@@ -41,7 +42,7 @@ open class SelectColorDialog {
     }
 
     protected open fun getIsKeyboardVisibleAndCloseIfSo(editor: RichTextEditor): Boolean {
-        val isVisible = KeyboardState.isKeyboardVisible
+        val isVisible = KeyboardState().isKeyboardVisible
 
         if(isVisible) {
             editor.hideKeyboard()

@@ -20,6 +20,7 @@ import net.dankito.richtexteditor.listener.EditorLoadedListener
 import net.dankito.richtexteditor.model.DownloadImageConfig
 import net.dankito.utils.android.KeyboardState
 import net.dankito.utils.android.extensions.showKeyboard
+import net.dankito.utils.android.keyboard.KeyboardState
 import net.dankito.utils.android.permissions.IPermissionsService
 import org.slf4j.LoggerFactory
 
@@ -43,6 +44,9 @@ open class RichTextEditor : FullscreenWebView {
     var permissionsService: IPermissionsService? = null
 
     var downloadImageConfig: DownloadImageConfig? = null
+
+
+    protected var keyboardState = KeyboardState()
 
     protected var isLoaded = false
 
@@ -121,11 +125,11 @@ open class RichTextEditor : FullscreenWebView {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        KeyboardState.init(context as Activity)
+        keyboardState.init(context as Activity)
     }
 
     override fun onDetachedFromWindow() {
-        KeyboardState.cleanUp() // to avoid memory leaks
+        keyboardState.cleanUp() // to avoid memory leaks
 
         super.onDetachedFromWindow()
     }
