@@ -5,7 +5,7 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import net.dankito.utils.Color
 import net.dankito.richtexteditor.android.RichTextEditor
-import net.dankito.utils.android.KeyboardState
+import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.hideKeyboard
 import net.dankito.utils.android.keyboard.KeyboardState
 
@@ -38,7 +38,7 @@ open class SelectColorDialog {
 
         })
 
-        colorPickerDialog.show((editor.context as Activity).fragmentManager, "")
+        colorPickerDialog.show(editor.context.asActivity()?.fragmentManager, "")
     }
 
     protected open fun getIsKeyboardVisibleAndCloseIfSo(editor: RichTextEditor): Boolean {

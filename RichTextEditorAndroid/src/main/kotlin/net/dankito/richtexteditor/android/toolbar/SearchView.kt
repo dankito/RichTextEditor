@@ -291,7 +291,9 @@ open class SearchView : LinearLayout, IHandlesBackButtonPress {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        keyboardUtils.addKeyboardToggleListener(context as Activity,, softKeyboardToggleListener)
+        context.asActivity()?.let { activity ->
+            keyboardUtils.addKeyboardToggleListener(activity, softKeyboardToggleListener)
+        }
     }
 
     override fun onDetachedFromWindow() {

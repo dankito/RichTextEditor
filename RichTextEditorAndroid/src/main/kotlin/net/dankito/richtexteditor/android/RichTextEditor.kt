@@ -18,7 +18,7 @@ import net.dankito.richtexteditor.callback.GetCurrentHtmlCallback
 import net.dankito.richtexteditor.callback.HtmlChangedListener
 import net.dankito.richtexteditor.listener.EditorLoadedListener
 import net.dankito.richtexteditor.model.DownloadImageConfig
-import net.dankito.utils.android.KeyboardState
+import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.showKeyboard
 import net.dankito.utils.android.keyboard.KeyboardState
 import net.dankito.utils.android.permissions.IPermissionsService
@@ -108,7 +108,7 @@ open class RichTextEditor : FullscreenWebView {
             paddingToSetOnStart = null
         }
 
-        (context as? Activity)?.runOnUiThread {
+        context.asActivity()?.runOnUiThread {
             setInitialValues()
 
             callEditorLoadedListeners()
@@ -125,7 +125,9 @@ open class RichTextEditor : FullscreenWebView {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
-        keyboardState.init(context as Activity)
+        context.asActivity()?.let { activity ->
+            keyboardState.init(activity)
+        }
     }
 
     override fun onDetachedFromWindow() {
@@ -228,8 +230,8 @@ open class RichTextEditor : FullscreenWebView {
     }
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
-        if(isLoaded) {
-            (context as? Activity)?.runOnUiThread {
+        if (isLoaded) {
+            context.asActivity()?.runOnUiThread {
                 super.setPadding(left, top, right, bottom)
                 executeEditorJavaScriptFunction("setPadding('${left}px', '${top}px', '${right}px', '${bottom}px');")
             }

@@ -16,6 +16,7 @@ import net.dankito.richtexteditor.command.CommandName
 import net.dankito.richtexteditor.command.ToolbarCommand
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.extensions.ColorExtensions
+import net.dankito.utils.android.extensions.asActivity
 
 
 open class GroupedCommandsView : RelativeLayout, IFloatingView {
@@ -74,7 +75,7 @@ open class GroupedCommandsView : RelativeLayout, IFloatingView {
     }
 
     protected open fun getPrimaryColor(addTransparencyToBackground: Boolean): Int? {
-        val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", (context as Activity).packageName)
+        val primaryColorIdentifier = resources.getIdentifier("colorPrimary", "color", context.asActivity()?.packageName)
         if (primaryColorIdentifier > 0) { // returns 0 in case resource is not found
             var backgroundColor = ContextCompat.getColor(context, primaryColorIdentifier)
 

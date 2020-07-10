@@ -15,6 +15,7 @@ import net.dankito.richtexteditor.android.toolbar.SearchViewStyle
 import net.dankito.richtexteditor.android.view.FullscreenWebViewOptionsBar
 import net.dankito.richtexteditor.command.ToolbarCommandStyle
 import net.dankito.utils.android.OnSwipeTouchListener
+import net.dankito.utils.android.extensions.asActivity
 import net.dankito.utils.android.extensions.getColorFromResource
 import net.dankito.utils.android.extensions.hideKeyboard
 import net.dankito.utils.android.extensions.showKeyboard
@@ -326,7 +327,7 @@ open class FullscreenWebView : WebView {
     }
 
     private fun showOptionsBar() {
-        (context as? Activity)?.let { activity ->
+        context.asActivity()?.let { activity ->
             activity.runOnUiThread {
                 showOptionsBarOnUiThread()
             }
