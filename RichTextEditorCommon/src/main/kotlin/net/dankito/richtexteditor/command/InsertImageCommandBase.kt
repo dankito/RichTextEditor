@@ -13,7 +13,7 @@ abstract class InsertImageCommandBase(icon: Icon) : ToolbarCommand(CommandName.I
 
     override fun executeCommand(executor: JavaScriptExecutorBase) {
         selectImageToInsert { imageUrl, alternateText ->
-            executor.insertImage(imageUrl, alternateText, getRotationToShowImageCorrectlyOrientated(imageUrl))
+            executor.insertImage(imageUrl, alternateText, rotation = getRotationToShowImageCorrectlyOrientated(imageUrl))
         }
     }
 
