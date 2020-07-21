@@ -434,13 +434,21 @@ var editor = {
        }
     },
 
-    insertImage: function(url, alt, rotation) {
+    insertImage: function(url, alt, width, height, rotation) {
         var imageElement = document.createElement('img');
 
         imageElement.setAttribute('src', url);
 
         if(alt) {
             imageElement.setAttribute('alt', alt);
+        }
+
+        if(width)  {
+            imageElement.setAttribute('width', width);
+        }
+
+        if(height)  {
+            imageElement.setAttribute('height', height);
         }
 
         if(this._isImageResizingEnabled) {
