@@ -5,6 +5,7 @@
 >
 
     <application
+        android:name=".DemoApplication"
         android:allowBackup="true"
         tools:replace="android:label"
         android:label="@string/editor_app_name"

@@ -20,6 +20,8 @@ android {
         versionCode appVersionCode
         versionName appVersionName
 
+        multiDexEnabled true
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -80,6 +82,8 @@ dependencies {
 
     implementation "net.dankito.readability4j:readability4j:$readability4JVersion"
     implementation "org.slf4j:slf4j-android:$slf4jVersion"
+
+    implementation "com.android.support:multidex:$multiDexVersion"
 
     implementation "com.android.support:appcompat-v7:$appCompatVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
