@@ -466,28 +466,28 @@ open class FullscreenWebView : WebView {
 
     /*      Ensure that a scroll due to loadData() doesn't toggle Fullscreen        */
 
-    override fun loadData(data: String?, mimeType: String?, encoding: String?) {
+    override fun loadData(data: String, mimeType: String?, encoding: String?) {
         updateLastOnScrollFullscreenModeTogglingTimestamp()
         super.loadData(data, mimeType, encoding)
 
         mayRestoreScrollPosition()
     }
 
-    override fun loadDataWithBaseURL(baseUrl: String?, data: String?, mimeType: String?, encoding: String?, historyUrl: String?) {
+    override fun loadDataWithBaseURL(baseUrl: String?, data: String, mimeType: String?, encoding: String?, historyUrl: String?) {
         updateLastOnScrollFullscreenModeTogglingTimestamp()
         super.loadDataWithBaseURL(baseUrl, data, mimeType, encoding, historyUrl)
 
         mayRestoreScrollPosition()
     }
 
-    override fun loadUrl(url: String?) {
+    override fun loadUrl(url: String) {
         updateLastOnScrollFullscreenModeTogglingTimestamp()
         super.loadUrl(url)
 
         mayRestoreScrollPosition()
     }
 
-    override fun loadUrl(url: String?, additionalHttpHeaders: MutableMap<String, String>?) {
+    override fun loadUrl(url: String, additionalHttpHeaders: MutableMap<String, String>) {
         updateLastOnScrollFullscreenModeTogglingTimestamp()
         super.loadUrl(url, additionalHttpHeaders)
 

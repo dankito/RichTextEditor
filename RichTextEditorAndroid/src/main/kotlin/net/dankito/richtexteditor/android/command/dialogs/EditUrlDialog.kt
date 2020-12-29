@@ -34,7 +34,7 @@ open class EditUrlDialog : DialogFragment() {
             view.edtxtUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextUrlAction(actionId, keyEvent) }
             view.edtxtUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {
-                    dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+                    dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
                 }
             }
         }

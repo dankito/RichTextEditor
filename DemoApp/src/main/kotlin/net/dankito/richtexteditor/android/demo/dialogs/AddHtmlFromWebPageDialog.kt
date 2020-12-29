@@ -41,7 +41,7 @@ class AddHtmlFromWebPageDialog : DialogFragment() {
             edtxtUrl.setOnEditorActionListener { _, actionId, keyEvent -> handleEditTextUrlAction(actionId, keyEvent) }
             edtxtUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {
-                    dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+                    dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
                 }
             }
 

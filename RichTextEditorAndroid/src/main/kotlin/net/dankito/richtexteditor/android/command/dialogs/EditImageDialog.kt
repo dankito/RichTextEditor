@@ -52,7 +52,7 @@ open class EditImageDialog : DialogFragment() {
             view.edtxtImageUrl.addTextChangedListener(GenericTextWatcher( { _, _, _, _ -> setDownloadOptionsState() } ) )
             view.edtxtImageUrl.setOnFocusChangeListener { _, hasFocus ->
                 if(hasFocus) {
-                    dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+                    dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
                 }
             }
 
