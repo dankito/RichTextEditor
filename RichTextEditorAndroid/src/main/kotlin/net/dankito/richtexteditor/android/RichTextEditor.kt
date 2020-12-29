@@ -64,6 +64,7 @@ open class RichTextEditor : FullscreenWebView {
 
         this.isHorizontalScrollBarEnabled = false
         this.settings.javaScriptEnabled = true
+        this.settings.allowFileAccess = true // needed to load images (files) into WebView on Android 11 and above
 
         this.webChromeClient = WebChromeClient()
 
