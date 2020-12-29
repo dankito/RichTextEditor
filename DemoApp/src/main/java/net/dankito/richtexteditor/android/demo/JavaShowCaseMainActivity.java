@@ -54,10 +54,15 @@ public class JavaShowCaseMainActivity extends AppCompatActivity {
         editor.setEditorFontSize(20);
         editor.setPadding((4 * (int) getResources().getDisplayMetrics().density));
 
-        // some properties you also can set on editor
-//        editor.setEditorBackgroundColor(Color.YELLOW)
-//        editor.setEditorFontColor(Color.MAGENTA)
-//        editor.setEditorFontFamily("cursive")
+        // some properties you also can set on editor - but that only works reliably after editor is loaded!
+//        editor.addEditorLoadedListener(new EditorLoadedListener() {
+//            @Override
+//            public void editorLoaded() {
+//                editor.setEditorBackgroundColor(Color.YELLOW);
+//                editor.setEditorFontColor(Color.MAGENTA);
+//                editor.setEditorFontFamily("cursive");
+//            }
+//        });
 
         // show keyboard right at start up
 //        editor.focusEditorAndShowKeyboardDelayed()

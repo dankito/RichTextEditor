@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         editor.setEditorFontSize(20)
         editor.setPadding((4 * resources.displayMetrics.density).toInt())
 
-        // some properties you also can set on editor
+        // some properties you also can set on editor - but that only works reliably after editor is loaded!
 //        editor.addEditorLoadedListener {
 //            editor.setEditorBackgroundColor(Color.YELLOW)
 //            editor.setEditorFontColor(Color.MAGENTA)
